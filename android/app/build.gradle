@@ -1,0 +1,77 @@
+plugins {
+    id "com.android.application"
+    id "kotlin-android"
+    id "dev.flutter.flutter-gradle-plugin"
+}
+
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file('local.properties')
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withReader('UTF-8') { reader ->
+        localProperties.load(reader)
+    }
+}
+
+def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
+if (flutterVersionCode == null) {
+    flutterVersionCode = '1'
+}
+
+def flutterVersionName = localProperties.getProperty('flutter.versionName')
+if (flutterVersionName == null) {
+    flutterVersionName = '1.0'
+}
+
+def minSdk = localProperties.getProperty('flutter.minSdkVersion').toInteger()
+if (minSdk == null) {
+    minSdk = 30
+}
+
+def compileSdk = localProperties.getProperty('flutter.compileSdkVersion').toInteger()
+if (compileSdk == null) {
+    compileSdk = 34
+}
+
+def targetSdk = localProperties.getProperty('flutter.targetSdkVersion').toInteger()
+if (targetSdk == null) {
+    targetSdk = 34
+}
+
+android {
+    namespace "com.sidharth.touristic"
+    compileSdkVersion compileSdk
+    ndkVersion flutter.ndkVersion
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+
+    defaultConfig {
+        applicationId "com.sidharth.touristic"
+        minSdkVersion minSdk
+        targetSdkVersion targetSdk
+        versionCode flutterVersionCode.toInteger()
+        versionName flutterVersionName
+    }
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.debug
+        }
+    }
+}
+
+flutter {
+    source '../..'
+}
+
+dependencies {}
