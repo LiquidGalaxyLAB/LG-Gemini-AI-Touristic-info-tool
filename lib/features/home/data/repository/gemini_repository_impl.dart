@@ -27,7 +27,7 @@ class GeminiRepositoryImpl implements GeminiRepository {
   }
 
   @override
-  Future<DataState> getSuggestions() {
+  Future<DataState> getActivities() {
     throw UnimplementedError();
   }
 

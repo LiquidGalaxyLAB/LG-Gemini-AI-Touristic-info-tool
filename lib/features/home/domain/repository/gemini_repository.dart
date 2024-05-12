@@ -7,7 +7,7 @@ abstract class GeminiRepository {
 
   Future<DataState<dynamic>> getLocalCuisine();
 
-  Future<DataState<dynamic>> getSuggestions();
+  Future<DataState<dynamic>> getActivities();
 
   Future<DataState<dynamic>> getBudgetPlan();
 
