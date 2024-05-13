@@ -12,4 +12,7 @@ abstract class TouristPlacesDao {
   
   @Query('SELECT * FROM tourist_places')
   Future<dynamic> getTouristPlaces();
+
+  @Query('value')
+  Future<dynamic> clearTouristPlaces();
 }
