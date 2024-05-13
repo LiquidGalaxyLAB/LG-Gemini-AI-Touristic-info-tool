@@ -1,4 +1,4 @@
-import 'package:touristic/core/resources/data_state.dart';
+import '../../core/resources/data_state.dart';
 
 abstract class GeminiRepository {
   Future<DataState<dynamic>> getTouristPlaces();
@@ -12,4 +12,6 @@ abstract class GeminiRepository {
   Future<DataState<dynamic>> getBudgetPlan();
 
   Future<DataState<dynamic>> getRecommendations();
+
+  Future<DataState<dynamic>> getChatReply();
 }

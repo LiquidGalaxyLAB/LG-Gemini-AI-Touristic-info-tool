@@ -1,10 +1,12 @@
-import 'package:touristic/core/resources/data_state.dart';
-import 'package:touristic/features/home/data/data_sources/remote/gemini_service.dart';
-import 'package:touristic/features/home/domain/repository/gemini_repository.dart';
+import '../../core/resources/data_state.dart';
+import '../../domain/repository/gemini_repository.dart';
+import '../data_sources/local/tourist_places_dao.dart';
+import '../data_sources/remote/gemini_service.dart';
 
 class GeminiRepositoryImpl implements GeminiRepository {
   final GeminiService _geminiService;
-  GeminiRepositoryImpl(this._geminiService);
+  final TouristPlacesDao _touristPlaceDao;
+  GeminiRepositoryImpl(this._geminiService, this._touristPlaceDao);
 
   @override
   Future<DataState> getBudgetPlan() {
@@ -33,6 +35,11 @@ class GeminiRepositoryImpl implements GeminiRepository {
 
   @override
   Future<DataState> getTouristPlaces() {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<DataState> getChatReply() {
     throw UnimplementedError();
   }
 
