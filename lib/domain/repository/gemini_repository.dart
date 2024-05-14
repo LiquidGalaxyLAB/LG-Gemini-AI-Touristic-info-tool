@@ -1,26 +1,26 @@
 import 'package:touristic/domain/model/tourist_place.dart';
 
-import '../../data/model/activities_response.dart';
-import '../../data/model/budget_plan_response.dart';
-import '../../data/model/itinerary_response.dart';
-import '../../data/model/local_cuisines_response.dart';
-import '../../data/model/recommendations_response.dart';
-import '../../data/model/tourist_places_response.dart';
+import '../../domain/model/activities.dart';
+import '../../domain/model/budget_plan.dart';
+import '../../domain/model/itinerary.dart';
+import '../../domain/model/cuisines.dart';
+import '../../domain/model/recommendations.dart';
+import '../../domain/model/tourist_places.dart';
 
 import '../../core/resources/data_state.dart';
 
 abstract class GeminiRepository {
-  Future<DataState<TouristPlacesResponse>> getTouristPlaces();
+  Future<DataState<TouristPlaces>> getTouristPlaces();
 
-  Future<DataState<ItineraryResponse>> getItinerary();
+  Future<DataState<Itinerary>> getItinerary();
 
-  Future<DataState<LocalCuisinesResponse>> getLocalCuisine();
+  Future<DataState<Cuisines>> getLocalCuisine();
 
-  Future<DataState<ActivitiesResponse>> getActivities();
+  Future<DataState<Activities>> getActivities();
 
-  Future<DataState<BudgetPlanResponse>> getBudgetPlan();
+  Future<DataState<BudgetPlan>> getBudgetPlan();
 
-  Future<DataState<RecommendationsResponse>> getRecommendations();
+  Future<DataState<Recommendations>> getRecommendations();
 
   Future<DataState<String>> getChatReply();
 

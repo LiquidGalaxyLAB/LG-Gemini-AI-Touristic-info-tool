@@ -26,7 +26,7 @@ Future<void> initializeDependencies() async {
   // sl.registerSingleton<GeminiService>(GeminiService(sl()));
 
   // Database
-  // final AppDatabase database = await $FloorAppDatabase.databaseBuilder('app_database.db').build();
+  // final AppDatabase database = await $FloorAppDatabase.databaseBuilder(appDatabase).build();
   // sl.registerSingleton<TouristPlacesDao>(database.touristPlacesDao);
 
   // Repositories

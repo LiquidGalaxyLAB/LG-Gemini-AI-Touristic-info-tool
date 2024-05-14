@@ -1,15 +1,14 @@
-import 'package:touristic/data/model/activities_response.dart';
-import 'package:touristic/data/model/budget_plan_response.dart';
-import 'package:touristic/data/model/local_cuisines_response.dart';
-import 'package:touristic/data/model/itinerary_response.dart';
-import 'package:touristic/data/model/tourist_places_response.dart';
-import 'package:touristic/domain/model/tourist_place.dart';
-
 import '../../core/resources/data_state.dart';
+import '../../domain/model/activities.dart';
+import '../../domain/model/budget_plan.dart';
+import '../../domain/model/cuisines.dart';
+import '../../domain/model/itinerary.dart';
+import '../../domain/model/recommendations.dart';
+import '../../domain/model/tourist_place.dart';
+import '../../domain/model/tourist_places.dart';
 import '../../domain/repository/gemini_repository.dart';
 import '../data_sources/local/tourist_places_dao.dart';
 import '../data_sources/remote/gemini_service.dart';
-import '../model/recommendations_response.dart';
 
 class GeminiRepositoryImpl implements GeminiRepository {
   final GeminiService _geminiService;
@@ -17,32 +16,32 @@ class GeminiRepositoryImpl implements GeminiRepository {
   GeminiRepositoryImpl(this._geminiService, this._touristPlaceDao);
 
   @override
-  Future<DataState<BudgetPlanResponse>> getBudgetPlan() {
+  Future<DataState<BudgetPlan>> getBudgetPlan() {
     throw UnimplementedError();
   }
 
   @override
-  Future<DataState<ItineraryResponse>> getItinerary() {
+  Future<DataState<Itinerary>> getItinerary() {
     throw UnimplementedError();
   }
 
   @override
-  Future<DataState<LocalCuisinesResponse>> getLocalCuisine() {
+  Future<DataState<Cuisines>> getLocalCuisine() {
     throw UnimplementedError();
   }
 
   @override
-  Future<DataState<RecommendationsResponse>> getRecommendations() {
+  Future<DataState<Recommendations>> getRecommendations() {
     throw UnimplementedError();
   }
 
   @override
-  Future<DataState<ActivitiesResponse>> getActivities() {
+  Future<DataState<Activities>> getActivities() {
     throw UnimplementedError();
   }
 
   @override
-  Future<DataState<TouristPlacesResponse>> getTouristPlaces() {
+  Future<DataState<TouristPlaces>> getTouristPlaces() {
     throw UnimplementedError();
   }
 

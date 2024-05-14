@@ -1,18 +1,21 @@
 import 'package:floor/floor.dart';
 
+import '../../../core/constants/constants.dart';
+import '../../model/tourist_place.dart';
+
 
 @dao
 abstract class TouristPlacesDao {
 
   @Insert()
-  Future<dynamic> insertTouristPlace();
+  Future<void> insertTouristPlace();
 
   @delete
-  Future<dynamic> deleteTouristPlace();
+  Future<void> deleteTouristPlace();
   
-  @Query('SELECT * FROM tourist_places')
-  Future<dynamic> getTouristPlaces();
+  @Query('SELECT * FROM $touristPlacesTable')
+  Future<List<TouristPlace>> getTouristPlaces();
 
-  @Query('value')
-  Future<dynamic> clearTouristPlaces();
+  @Query('DELETE FROM $touristPlacesTable')
+  Future<void> clearTouristPlaces();
 }
