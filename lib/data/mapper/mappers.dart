@@ -9,6 +9,8 @@ import 'package:touristic/domain/model/cuisines.dart';
 import 'package:touristic/domain/model/itinerary.dart';
 import 'package:touristic/domain/model/recommendations.dart';
 
+import '../../domain/model/tourist_place.dart' as domain;
+import '../../data/model/tourist_place.dart' as data;
 import '../../domain/model/tourist_places.dart';
 import '../model/tourist_places_response.dart';
 
@@ -34,4 +36,8 @@ Activities responseToActivities(ActivitiesResponse response) {
 
 Itinerary responseToItinerary(ItineraryResponse response) {
   return Itinerary();
+}
+
+List<domain.TouristPlace> responseToTouristPlace(List<data.TouristPlace> places) {
+  return [];
 }

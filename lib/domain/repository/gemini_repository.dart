@@ -30,5 +30,5 @@ abstract class GeminiRepository {
 
   Future<DataState<List<TouristPlace>>> getHistory();
 
-  Future<DataState<List<void>>> clearHistory();
+  Future<DataState<void>> clearHistory();
 }
