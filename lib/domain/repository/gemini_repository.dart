@@ -1,14 +1,13 @@
 import '../../core/resources/data_state.dart';
-import '../../domain/model/activities.dart';
+import '../../domain/model/activitiy.dart';
 import '../../domain/model/budget_plan.dart';
-import '../../domain/model/cuisines.dart';
+import '../../domain/model/cuisine.dart';
 import '../../domain/model/itinerary.dart';
-import '../../domain/model/recommendations.dart';
-import '../../domain/model/tourist_places.dart';
-import '../model/tourist_place.dart';
+import '../../domain/model/recommendation.dart';
+import '../../domain/model/tourist_place.dart';
 
 abstract class GeminiRepository {
-  Future<DataState<TouristPlaces>> getTouristPlaces(
+  Future<DataState<List<TouristPlace>>> getTouristPlaces(
     Map<String, dynamic> params,
   );
 
@@ -16,11 +15,11 @@ abstract class GeminiRepository {
     Map<String, dynamic> params,
   );
 
-  Future<DataState<Cuisines>> getLocalCuisine(
+  Future<DataState<List<Cuisine>>> getLocalCuisine(
     Map<String, dynamic> params,
   );
 
-  Future<DataState<Activities>> getActivities(
+  Future<DataState<List<Activity>>> getActivities(
     Map<String, dynamic> params,
   );
 
@@ -28,7 +27,7 @@ abstract class GeminiRepository {
     Map<String, dynamic> params,
   );
 
-  Future<DataState<Recommendations>> getRecommendations(
+  Future<DataState<List<Recommendation>>> getRecommendations(
     Map<String, dynamic> params,
   );
 
