@@ -23,7 +23,7 @@ List<TouristPlace> requestToTouristPlaces(List<TouristPlaceRequest> response) {
 
 
 BudgetPlan responseToBudgetPlan(BudgetPlanResponse response) {
-  return BudgetPlan();
+  return const BudgetPlan(name: '', travelRoute: [], places: [], accommodation: [], additionalExpenses: [], startingPoint: '', totalCost: '');
 }
 
 List<Cuisine> responseToCuisines(LocalCuisinesResponse response) {
@@ -39,5 +39,5 @@ List<Activity> responseToActivities(ActivitiesResponse response) {
 }
 
 Itinerary responseToItinerary(ItineraryResponse response) {
-  return Itinerary();
+  return const Itinerary(name: '', startingPoint: '', travelRoute: [], places: []);
 }
