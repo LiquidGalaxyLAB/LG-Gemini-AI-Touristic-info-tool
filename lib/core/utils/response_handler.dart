@@ -2,7 +2,8 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
-import 'package:touristic/core/resources/data_state.dart';
+
+import '../resources/data_state.dart';
 
 Future<DataState<U>> handleApiResponse<T, U>({
   required Future<HttpResponse<T>> Function() execute,

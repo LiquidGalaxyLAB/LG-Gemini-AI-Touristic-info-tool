@@ -1,18 +1,17 @@
-import 'package:touristic/core/utils/response_handler.dart';
-import 'package:touristic/data/mapper/mappers.dart';
-
+import '../../core/utils/response_handler.dart';
+import '../mapper/mappers.dart';
 import '../../core/resources/data_state.dart';
 import '../../domain/model/activities.dart';
 import '../../domain/model/budget_plan.dart';
 import '../../domain/model/cuisines.dart';
 import '../../domain/model/itinerary.dart';
 import '../../domain/model/recommendations.dart';
-import '../../domain/model/tourist_place.dart' as domain;
-import '../../data/model/tourist_place.dart' as data;
+import '../../domain/model/tourist_place.dart';
 import '../../domain/model/tourist_places.dart';
 import '../../domain/repository/gemini_repository.dart';
 import '../data_sources/local/tourist_places_dao.dart';
 import '../data_sources/remote/gemini_service.dart';
+import '../model/request/tourist_place_request.dart';
 
 class GeminiRepositoryImpl implements GeminiRepository {
   final GeminiService _geminiService;
@@ -21,7 +20,9 @@ class GeminiRepositoryImpl implements GeminiRepository {
   GeminiRepositoryImpl(this._geminiService, this._touristPlaceDao);
 
   @override
-  Future<DataState<BudgetPlan>> getBudgetPlan() {
+  Future<DataState<BudgetPlan>> getBudgetPlan(
+    Map<String, dynamic> params,
+  ) {
     return handleApiResponse(
       execute: () {
         return _geminiService.getBudgetPlan();
@@ -31,7 +32,9 @@ class GeminiRepositoryImpl implements GeminiRepository {
   }
 
   @override
-  Future<DataState<Itinerary>> getItinerary() {
+  Future<DataState<Itinerary>> getItinerary(
+    Map<String, dynamic> params,
+  ) {
     return handleApiResponse(
       execute: () {
         return _geminiService.getItinerary();
@@ -41,7 +44,9 @@ class GeminiRepositoryImpl implements GeminiRepository {
   }
 
   @override
-  Future<DataState<Cuisines>> getLocalCuisine() {
+  Future<DataState<Cuisines>> getLocalCuisine(
+    Map<String, dynamic> params,
+  ) {
     return handleApiResponse(
       execute: () {
         return _geminiService.getLocalCuisine();
@@ -51,7 +56,9 @@ class GeminiRepositoryImpl implements GeminiRepository {
   }
 
   @override
-  Future<DataState<Recommendations>> getRecommendations() {
+  Future<DataState<Recommendations>> getRecommendations(
+    Map<String, dynamic> params,
+  ) {
     return handleApiResponse(
       execute: () {
         return _geminiService.getRecommendations();
@@ -61,7 +68,9 @@ class GeminiRepositoryImpl implements GeminiRepository {
   }
 
   @override
-  Future<DataState<Activities>> getActivities() {
+  Future<DataState<Activities>> getActivities(
+    Map<String, dynamic> params,
+  ) {
     return handleApiResponse(
       execute: () {
         return _geminiService.getActivities();
@@ -71,7 +80,9 @@ class GeminiRepositoryImpl implements GeminiRepository {
   }
 
   @override
-  Future<DataState<TouristPlaces>> getTouristPlaces() {
+  Future<DataState<TouristPlaces>> getTouristPlaces(
+    Map<String, dynamic> params,
+  ) {
     return handleApiResponse(
       execute: () {
         return _geminiService.getTouristPlaces();
@@ -81,51 +92,60 @@ class GeminiRepositoryImpl implements GeminiRepository {
   }
 
   @override
-  Future<DataState<String>> getChatReply() {
+  Future<DataState<String>> getChatReply(
+    Map<String, dynamic> params,
+  ) {
     return handleApiResponse(
       execute: () {
         return _geminiService.getChatReply();
       },
-      mapper: (p0) { return p0; },
+      mapper: (p0) {
+        return p0;
+      },
     );
   }
 
   @override
-  Future<DataState<void>> addTouristPlace(domain.TouristPlace touristPlace) async {
+  Future<DataState<bool>> addTouristPlace(
+    TouristPlace touristPlace,
+  ) async {
     try {
       await _touristPlaceDao.insertTouristPlace();
-      return const DataSuccess(null);
-    } on Exception catch(e) {
+      return const DataSuccess(true);
+    } on Exception catch (e) {
       return DataFailure(e);
     }
   }
 
   @override
-  Future<DataState<void>> clearHistory() async {
-    try {
-      await _touristPlaceDao.clearTouristPlaces();
-      return const DataSuccess(null);
-    } on Exception catch(e) {
-      return DataFailure(e);
-    }
-  }
-
-  @override
-  Future<DataState<List<domain.TouristPlace>>> getHistory() async {
-    try {
-      final response = await _touristPlaceDao.getTouristPlaces();
-      return DataSuccess(responseToTouristPlace(response.cast<data.TouristPlace>()));
-    } on Exception catch(e) {
-      return DataFailure(e);
-    }
-  }
-
-  @override
-  Future<DataState<void>> removeTouristPlace(domain.TouristPlace touristPlace) async {
+  Future<DataState<bool>> removeTouristPlace(
+    TouristPlace touristPlace,
+  ) async {
     try {
       await _touristPlaceDao.deleteTouristPlace();
-      return const DataSuccess(null);
-    } on Exception catch(e) {
+      return const DataSuccess(true);
+    } on Exception catch (e) {
+      return DataFailure(e);
+    }
+  }
+
+  @override
+  Future<DataState<bool>> clearHistory() async {
+    try {
+      await _touristPlaceDao.clearTouristPlaces();
+      return const DataSuccess(true);
+    } on Exception catch (e) {
+      return DataFailure(e);
+    }
+  }
+
+  @override
+  Future<DataState<List<TouristPlace>>> getHistory() async {
+    try {
+      final response = await _touristPlaceDao.getTouristPlaces();
+      return DataSuccess(
+          responseToTouristPlace(response.cast<TouristPlaceRequest>()));
+    } on Exception catch (e) {
       return DataFailure(e);
     }
   }

@@ -1,18 +1,17 @@
-import 'package:touristic/data/model/activities_response.dart';
-import 'package:touristic/data/model/budget_plan_response.dart';
-import 'package:touristic/data/model/itinerary_response.dart';
-import 'package:touristic/data/model/local_cuisines_response.dart';
-import 'package:touristic/data/model/recommendations_response.dart';
-import 'package:touristic/domain/model/activities.dart';
-import 'package:touristic/domain/model/budget_plan.dart';
-import 'package:touristic/domain/model/cuisines.dart';
-import 'package:touristic/domain/model/itinerary.dart';
-import 'package:touristic/domain/model/recommendations.dart';
-
-import '../../domain/model/tourist_place.dart' as domain;
-import '../../data/model/tourist_place.dart' as data;
+import '../model/response/activities_response.dart';
+import '../model/response/budget_plan_response.dart';
+import '../model/response/itinerary_response.dart';
+import '../model/response/local_cuisines_response.dart';
+import '../model/response/recommendations_response.dart';
+import '../model/response/tourist_places_response.dart';
+import '../model/request/tourist_place_request.dart';
+import '../../domain/model/activities.dart';
+import '../../domain/model/budget_plan.dart';
+import '../../domain/model/cuisines.dart';
+import '../../domain/model/itinerary.dart';
+import '../../domain/model/recommendations.dart';
 import '../../domain/model/tourist_places.dart';
-import '../model/tourist_places_response.dart';
+import '../../domain/model/tourist_place.dart';
 
 TouristPlaces responseToTouristPlaces(TouristPlacesResponse response) {
   return TouristPlaces();
@@ -38,6 +37,6 @@ Itinerary responseToItinerary(ItineraryResponse response) {
   return Itinerary();
 }
 
-List<domain.TouristPlace> responseToTouristPlace(List<data.TouristPlace> places) {
+List<TouristPlace> responseToTouristPlace(List<TouristPlaceRequest> places) {
   return [];
 }
