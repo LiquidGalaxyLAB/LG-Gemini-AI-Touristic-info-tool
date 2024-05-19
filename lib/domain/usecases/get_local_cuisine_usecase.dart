@@ -10,7 +10,7 @@ class GetLocalCuisineUseCase
   GetLocalCuisineUseCase(this._geminiRepository);
 
   @override
-  Future<DataState<List<Cuisine>>> call(params) {
-    return _geminiRepository.getLocalCuisine(params);
+  Future<DataState<List<Cuisine>>> call({Map<String, dynamic>? params}) {
+    return _geminiRepository.getLocalCuisine(params!);
   }
 }

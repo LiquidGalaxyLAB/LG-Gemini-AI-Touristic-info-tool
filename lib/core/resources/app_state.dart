@@ -1,20 +1,18 @@
-import 'package:dio/dio.dart';
-
 abstract class AppState<T> {
   final T? data;
-  final DioException ? exception;
+  final Exception? exception;
 
   const AppState({this.data, this.exception});
 }
 
 class AppSuccess<T> extends AppState<T> {
-  const AppSuccess(T data): super(data: data);
+  const AppSuccess(T data) : super(data: data);
 }
 
 class AppLoading<T> extends AppState<T> {
-  const AppLoading(T data): super(data: data);
+  const AppLoading();
 }
 
 class AppFailure<T> extends AppState<T> {
-  const AppFailure(DioException exception): super(exception: exception);
+  const AppFailure(Exception exception) : super(exception: exception);
 }

@@ -105,47 +105,46 @@ class GeminiRepositoryImpl implements GeminiRepository {
   }
 
   @override
-  Future<DataState<bool>> addTouristPlace(
+  Future<bool> addFavourite(
     TouristPlace touristPlace,
   ) async {
     try {
-      await _touristPlaceDao.insertTouristPlace();
-      return const DataSuccess(true);
-    } on Exception catch (e) {
-      return DataFailure(e);
+      await _touristPlaceDao.insertFavourite();
+      return true;
+    } on Exception {
+      return false;
     }
   }
 
   @override
-  Future<DataState<bool>> removeTouristPlace(
+  Future<bool> removeFavourite(
     TouristPlace touristPlace,
   ) async {
     try {
-      await _touristPlaceDao.deleteTouristPlace();
-      return const DataSuccess(true);
-    } on Exception catch (e) {
-      return DataFailure(e);
+      await _touristPlaceDao.deleteFavourite();
+      return true;
+    } on Exception {
+      return false;
     }
   }
 
   @override
-  Future<DataState<bool>> clearHistory() async {
+  Future<bool> clearFavourites() async {
     try {
-      await _touristPlaceDao.clearTouristPlaces();
-      return const DataSuccess(true);
-    } on Exception catch (e) {
-      return DataFailure(e);
+      await _touristPlaceDao.clearFavourites();
+      return true;
+    } on Exception {
+      return false;
     }
   }
 
   @override
-  Future<DataState<List<TouristPlace>>> getHistory() async {
+  Future<List<TouristPlace>> getFavourites() async {
     try {
-      final response = await _touristPlaceDao.getTouristPlaces();
-      return DataSuccess(
-          requestToTouristPlaces(response.cast<TouristPlaceRequest>()));
-    } on Exception catch (e) {
-      return DataFailure(e);
+      final response = await _touristPlaceDao.getFavourites();
+      return requestToTouristPlaces(response.cast<TouristPlaceRequest>());
+    } on Exception {
+      return [];
     }
   }
 }

@@ -4,18 +4,17 @@ import 'data/data_sources/local/tourist_places_dao.dart';
 import 'data/data_sources/remote/gemini_service.dart';
 import 'data/repository/gemini_repository_impl.dart';
 import 'domain/repository/gemini_repository.dart';
-import 'domain/usecases/add_tourist_place_usecase.dart';
-import 'domain/usecases/clear_history_usecase.dart';
+import 'domain/usecases/add_favourite_usecase.dart';
+import 'domain/usecases/clear_favourite_usecase.dart';
 import 'domain/usecases/get_activities_usecase.dart';
 import 'domain/usecases/get_budget_plan_usecase.dart';
-import 'domain/usecases/get_history_usecase.dart';
+import 'domain/usecases/get_favourites_usecase.dart';
 import 'domain/usecases/get_itinerary_usecase.dart';
 import 'domain/usecases/get_local_cuisine_usecase.dart';
 import 'domain/usecases/get_recommendations_usecase.dart';
 import 'domain/usecases/get_tourist_places_usecase.dart';
-import 'domain/usecases/remove_tourist_place_usecase.dart';
+import 'domain/usecases/remove_favourite_usecase.dart';
 
-import 'data/data_sources/local/app_database.dart';
 
 final GetIt sl = GetIt.instance;
 
@@ -38,10 +37,10 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton(GetLocalCuisineUseCase(sl()));
   sl.registerSingleton(GetRecommendationsUseCase(sl()));
   sl.registerSingleton(GetTouristPlacesUseCase(sl()));
-  sl.registerSingleton(AddTouristPlaceUseCase(sl()));
-  sl.registerSingleton(RemoveTouristPlaceUseCase(sl()));
-  sl.registerSingleton(GetHistoryPlaceUseCase(sl()));
-  sl.registerSingleton(ClearHistoryUseCase(sl()));
+  sl.registerSingleton(AddFavouriteUseCase(sl()));
+  sl.registerSingleton(RemoveFavouriteUseCase(sl()));
+  sl.registerSingleton(GetFavouritesUseCase(sl()));
+  sl.registerSingleton(ClearFavouritesUseCase(sl()));
 
   // Blocs
 }

@@ -10,7 +10,7 @@ class GetItineraryUseCase
   GetItineraryUseCase(this._geminiRepository);
 
   @override
-  Future<DataState<Itinerary>> call(params) {
-    return _geminiRepository.getItinerary(params);
+  Future<DataState<Itinerary>> call({Map<String, dynamic>? params}) {
+    return _geminiRepository.getItinerary(params!);
   }
 }

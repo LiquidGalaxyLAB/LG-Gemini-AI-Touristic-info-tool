@@ -10,7 +10,7 @@ class GetBudgetPlanUseCase
   GetBudgetPlanUseCase(this._geminiRepository);
 
   @override
-  Future<DataState<BudgetPlan>> call(params) {
-    return _geminiRepository.getBudgetPlan(params);
+  Future<DataState<BudgetPlan>> call({Map<String, dynamic>? params}) {
+    return _geminiRepository.getBudgetPlan(params!);
   }
 }

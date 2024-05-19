@@ -35,15 +35,15 @@ abstract class GeminiRepository {
     Map<String, dynamic> params,
   );
 
-  Future<DataState<bool>> addTouristPlace(
+  Future<bool> addFavourite(
     TouristPlace touristPlace,
   );
 
-  Future<DataState<bool>> removeTouristPlace(
+  Future<bool> removeFavourite(
     TouristPlace touristPlace,
   );
 
-  Future<DataState<List<TouristPlace>>> getHistory();
+  Future<List<TouristPlace>> getFavourites();
 
-  Future<DataState<bool>> clearHistory();
+  Future<bool> clearFavourites();
 }

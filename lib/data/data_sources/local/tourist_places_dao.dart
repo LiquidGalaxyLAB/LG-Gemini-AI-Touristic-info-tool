@@ -8,14 +8,14 @@ import '../../model/request/tourist_place_request.dart';
 abstract class TouristPlacesDao {
 
   @Insert(onConflict: OnConflictStrategy.replace)
-  Future<void> insertTouristPlace();
+  Future<void> insertFavourite();
 
   @delete
-  Future<void> deleteTouristPlace();
+  Future<void> deleteFavourite();
   
   @Query('SELECT * FROM $touristPlacesTable')
-  Future<List<TouristPlaceRequest>> getTouristPlaces();
+  Future<List<TouristPlaceRequest>> getFavourites();
 
   @Query('DELETE FROM $touristPlacesTable')
-  Future<void> clearTouristPlaces();
+  Future<void> clearFavourites();
 }

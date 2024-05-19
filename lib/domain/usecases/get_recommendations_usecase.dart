@@ -10,7 +10,7 @@ class GetRecommendationsUseCase
   GetRecommendationsUseCase(this._geminiRepository);
 
   @override
-  Future<DataState<List<Recommendation>>> call(params) {
-    return _geminiRepository.getRecommendations(params);
+  Future<DataState<List<Recommendation>>> call({Map<String, dynamic>? params}) {
+    return _geminiRepository.getRecommendations(params!);
   }
 }

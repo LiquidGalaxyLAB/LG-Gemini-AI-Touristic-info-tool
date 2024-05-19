@@ -10,7 +10,7 @@ class GetTouristPlacesUseCase
   GetTouristPlacesUseCase(this._geminiRepository);
 
   @override
-  Future<DataState<List<TouristPlace>>> call(params) {
-    return _geminiRepository.getTouristPlaces(params);
+  Future<DataState<List<TouristPlace>>> call({Map<String, dynamic>? params}) {
+    return _geminiRepository.getTouristPlaces(params!);
   }
 }

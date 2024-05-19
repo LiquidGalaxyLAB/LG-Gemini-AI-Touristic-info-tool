@@ -7,8 +7,8 @@ class GetChatReplyUseCase implements UseCase<DataState<String>, Map<String, dyna
   GetChatReplyUseCase(this._geminiRepository);
 
   @override
-  Future<DataState<String>> call(params) {
-    return _geminiRepository.getChatReply(params);
+  Future<DataState<String>> call({Map<String, dynamic>? params}) {
+    return _geminiRepository.getChatReply(params!);
   }
 
 }
