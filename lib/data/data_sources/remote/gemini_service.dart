@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 
 import '../../../core/constants/constants.dart';
