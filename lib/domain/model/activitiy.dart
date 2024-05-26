@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 class Activity extends Equatable {
   final String name;
   final String description;
-  final String procedure;
+  final List<String> procedure;
   final List<String> precautions;
   final double duration;
   final double cost;

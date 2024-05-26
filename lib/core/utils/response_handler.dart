@@ -7,14 +7,20 @@ import '../resources/data_state.dart';
 
 Future<DataState<U>> handleApiResponse<T, U>({
   required Future<HttpResponse<T>> Function() execute,
-  required U Function(T) mapper,
+  required U? Function(T) mapper,
 }) async {
   try {
     final response = await execute();
 
     if (response.response.statusCode == HttpStatus.ok) {
-      return DataSuccess(
-        mapper(response.response.data),
+      final data = mapper(response.response.data);
+
+      if (data != null) {
+        return DataSuccess(data);
+      }
+
+      return DataFailure(
+        Exception("Invalid Response"),
       );
     } else {
       return DataFailure(
