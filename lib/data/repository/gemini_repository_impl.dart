@@ -109,7 +109,9 @@ class GeminiRepositoryImpl implements GeminiRepository {
     TouristPlace touristPlace,
   ) async {
     try {
-      await _touristPlaceDao.insertFavourite();
+      await _touristPlaceDao.insertFavourite(
+        touristPlaceToRequest(touristPlace),
+      );
       return true;
     } on Exception {
       return false;
@@ -121,7 +123,9 @@ class GeminiRepositoryImpl implements GeminiRepository {
     TouristPlace touristPlace,
   ) async {
     try {
-      await _touristPlaceDao.deleteFavourite();
+      await _touristPlaceDao.deleteFavourite(
+        touristPlaceToRequest(touristPlace),
+      );
       return true;
     } on Exception {
       return false;
