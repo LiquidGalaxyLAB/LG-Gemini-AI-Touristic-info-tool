@@ -1,7 +1,17 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:touristic/presentation/bloc/chat/chat_bloc.dart';
+import 'package:touristic/presentation/bloc/favourite/favourite_bloc.dart';
+import 'package:touristic/presentation/bloc/home/activties/activities_bloc.dart';
+import 'package:touristic/presentation/bloc/home/budget_plan/budget_plan_bloc.dart';
+import 'package:touristic/presentation/bloc/home/cuisines/cuisines_bloc.dart';
+import 'package:touristic/presentation/bloc/home/itinerary/itinerary_bloc.dart';
+import 'package:touristic/presentation/bloc/home/recommendations/recommendations_bloc.dart';
+import 'package:touristic/presentation/bloc/home/tourist_places/tourist_places_bloc.dart';
+
+import 'core/constants/constants.dart';
+import 'data/data_sources/local/app_database.dart';
 import 'data/data_sources/local/tourist_places_dao.dart';
-import 'data/data_sources/remote/gemini_service.dart';
 import 'data/repository/gemini_repository_impl.dart';
 import 'domain/repository/gemini_repository.dart';
 import 'domain/usecases/add_favourite_usecase.dart';
@@ -15,7 +25,6 @@ import 'domain/usecases/get_recommendations_usecase.dart';
 import 'domain/usecases/get_tourist_places_usecase.dart';
 import 'domain/usecases/remove_favourite_usecase.dart';
 
-
 final GetIt sl = GetIt.instance;
 
 Future<void> initializeDependencies() async {
@@ -24,8 +33,8 @@ Future<void> initializeDependencies() async {
   // sl.registerSingleton<GeminiService>(GeminiService(sl()));
 
   // Database
-  // final AppDatabase database = await $FloorAppDatabase.databaseBuilder(appDatabase).build();
-  // sl.registerSingleton<TouristPlacesDao>(database.touristPlacesDao);
+  final AppDatabase database = await $FloorAppDatabase.databaseBuilder(appDatabase).build();
+  sl.registerSingleton<TouristPlacesDao>(database.touristPlacesDao);
 
   // Repositories
   sl.registerSingleton<GeminiRepository>(GeminiRepositoryImpl(sl(), sl()));
@@ -43,4 +52,12 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton(ClearFavouritesUseCase(sl()));
 
   // Blocs
+  sl.registerFactory<ChatBloc>(() => ChatBloc(sl()));
+  sl.registerFactory<FavouriteBloc>(() => FavouriteBloc(sl(), sl(), sl(), sl()));
+  sl.registerFactory<ActivitiesBloc>(() => ActivitiesBloc(sl()));
+  sl.registerFactory<ItineraryBloc>(() => ItineraryBloc(sl()));
+  sl.registerFactory<BudgetPlanBloc>(() => BudgetPlanBloc(sl()));
+  sl.registerFactory<CuisinesBloc>(() => CuisinesBloc(sl()));
+  sl.registerFactory<RecommendationsBloc>(() => RecommendationsBloc(sl()));
+  sl.registerFactory<TouristPlacesBloc>(() => TouristPlacesBloc(sl()));
 }
