@@ -1,17 +1,10 @@
-import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
-import 'package:touristic/presentation/bloc/chat/chat_bloc.dart';
-import 'package:touristic/presentation/bloc/favourite/favourite_bloc.dart';
-import 'package:touristic/presentation/bloc/home/activties/activities_bloc.dart';
-import 'package:touristic/presentation/bloc/home/budget_plan/budget_plan_bloc.dart';
-import 'package:touristic/presentation/bloc/home/cuisines/cuisines_bloc.dart';
-import 'package:touristic/presentation/bloc/home/itinerary/itinerary_bloc.dart';
-import 'package:touristic/presentation/bloc/home/recommendations/recommendations_bloc.dart';
-import 'package:touristic/presentation/bloc/home/tourist_places/tourist_places_bloc.dart';
+import 'package:google_generative_ai/google_generative_ai.dart';
 
 import 'core/constants/constants.dart';
 import 'data/data_sources/local/app_database.dart';
 import 'data/data_sources/local/tourist_places_dao.dart';
+import 'data/data_sources/remote/gemini_service.dart';
 import 'data/repository/gemini_repository_impl.dart';
 import 'domain/repository/gemini_repository.dart';
 import 'domain/usecases/add_favourite_usecase.dart';
@@ -24,16 +17,31 @@ import 'domain/usecases/get_local_cuisine_usecase.dart';
 import 'domain/usecases/get_recommendations_usecase.dart';
 import 'domain/usecases/get_tourist_places_usecase.dart';
 import 'domain/usecases/remove_favourite_usecase.dart';
+import 'presentation/bloc/chat/chat_bloc.dart';
+import 'presentation/bloc/favourite/favourite_bloc.dart';
+import 'presentation/bloc/home/activties/activities_bloc.dart';
+import 'presentation/bloc/home/budget_plan/budget_plan_bloc.dart';
+import 'presentation/bloc/home/cuisines/cuisines_bloc.dart';
+import 'presentation/bloc/home/itinerary/itinerary_bloc.dart';
+import 'presentation/bloc/home/recommendations/recommendations_bloc.dart';
+import 'presentation/bloc/home/tourist_places/tourist_places_bloc.dart';
 
 final GetIt sl = GetIt.instance;
 
 Future<void> initializeDependencies() async {
   // Network
-  sl.registerSingleton<Dio>(Dio());
-  // sl.registerSingleton<GeminiService>(GeminiService(sl()));
+  // sl.registerSingleton<Dio>(Dio());
+  sl.registerSingleton<GenerativeModel>(
+    GenerativeModel(
+      model: geminiFlashLatest,
+      apiKey: geminiApiKey,
+    ),
+  );
+  sl.registerSingleton<GeminiService>(GeminiService(sl()));
 
   // Database
-  final AppDatabase database = await $FloorAppDatabase.databaseBuilder(appDatabase).build();
+  final AppDatabase database =
+      await $FloorAppDatabase.databaseBuilder(appDatabase).build();
   sl.registerSingleton<TouristPlacesDao>(database.touristPlacesDao);
 
   // Repositories
@@ -53,7 +61,8 @@ Future<void> initializeDependencies() async {
 
   // Blocs
   sl.registerFactory<ChatBloc>(() => ChatBloc(sl()));
-  sl.registerFactory<FavouriteBloc>(() => FavouriteBloc(sl(), sl(), sl(), sl()));
+  sl.registerFactory<FavouriteBloc>(
+      () => FavouriteBloc(sl(), sl(), sl(), sl()));
   sl.registerFactory<ActivitiesBloc>(() => ActivitiesBloc(sl()));
   sl.registerFactory<ItineraryBloc>(() => ItineraryBloc(sl()));
   sl.registerFactory<BudgetPlanBloc>(() => BudgetPlanBloc(sl()));

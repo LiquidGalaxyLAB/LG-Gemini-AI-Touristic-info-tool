@@ -22,7 +22,7 @@ class GeminiRepositoryImpl implements GeminiRepository {
   Future<DataState<BudgetPlan>> getBudgetPlan(
     Map<String, dynamic> params,
   ) {
-    return handleApiResponse(
+    return handleResponse(
       execute: () {
         return _geminiService.getBudgetPlan();
       },
@@ -34,7 +34,7 @@ class GeminiRepositoryImpl implements GeminiRepository {
   Future<DataState<Itinerary>> getItinerary(
     Map<String, dynamic> params,
   ) {
-    return handleApiResponse(
+    return handleResponse(
       execute: () {
         return _geminiService.getItinerary();
       },
@@ -46,7 +46,7 @@ class GeminiRepositoryImpl implements GeminiRepository {
   Future<DataState<List<Cuisine>>> getLocalCuisine(
     Map<String, dynamic> params,
   ) {
-    return handleApiResponse(
+    return handleResponse(
       execute: () {
         return _geminiService.getLocalCuisine();
       },
@@ -58,7 +58,7 @@ class GeminiRepositoryImpl implements GeminiRepository {
   Future<DataState<List<Recommendation>>> getRecommendations(
     Map<String, dynamic> params,
   ) {
-    return handleApiResponse(
+    return handleResponse(
       execute: () {
         return _geminiService.getRecommendations();
       },
@@ -70,7 +70,7 @@ class GeminiRepositoryImpl implements GeminiRepository {
   Future<DataState<List<Activity>>> getActivities(
     Map<String, dynamic> params,
   ) {
-    return handleApiResponse(
+    return handleResponse(
       execute: () {
         return _geminiService.getActivities();
       },
@@ -82,7 +82,7 @@ class GeminiRepositoryImpl implements GeminiRepository {
   Future<DataState<List<TouristPlace>>> getTouristPlaces(
     Map<String, dynamic> params,
   ) {
-    return handleApiResponse(
+    return handleResponse(
       execute: () {
         return _geminiService.getTouristPlaces();
       },
@@ -94,7 +94,7 @@ class GeminiRepositoryImpl implements GeminiRepository {
   Future<DataState<String>> getChatReply(
     Map<String, dynamic> params,
   ) {
-    return handleApiResponse(
+    return handleResponse(
       execute: () {
         return _geminiService.getChatReply();
       },

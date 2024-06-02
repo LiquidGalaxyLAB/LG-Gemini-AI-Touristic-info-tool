@@ -1,7 +1,7 @@
-import 'package:dio/dio.dart';
-import 'package:retrofit/retrofit.dart';
+import 'dart:convert';
 
-import '../../../core/constants/constants.dart';
+import 'package:google_generative_ai/google_generative_ai.dart';
+
 import '../../model/response/activities_response.dart';
 import '../../model/response/budget_plan_response.dart';
 import '../../model/response/itinerary_response.dart';
@@ -9,30 +9,73 @@ import '../../model/response/local_cuisines_response.dart';
 import '../../model/response/recommendations_response.dart';
 import '../../model/response/tourist_places_response.dart';
 
-// part 'gemini_service.g.dart';
+class GeminiService {
+  final GenerativeModel model;
 
-@RestApi(baseUrl: geminiBaseUrl)
-abstract class GeminiService {
-  // factory GeminiService(Dio dio) = _GeminiService;
+  const GeminiService(this.model);
 
-  @GET("")
-  Future<HttpResponse<TouristPlacesResponse>> getTouristPlaces();
+  Future<TouristPlacesResponse?> getTouristPlaces() async {
+    final response = await model.generateContent([Content.text("text")]);
+    if (response.text != null) {
+      final json = jsonDecode(response.text!);
+      return TouristPlacesResponse.fromJson(json);
+    } else {
+      return null;
+    }
+  }
 
-  @GET("")
-  Future<HttpResponse<ItineraryResponse>> getItinerary();
+  Future<ItineraryResponse?> getItinerary() async {
+    final response = await model.generateContent([Content.text("text")]);
+    if (response.text != null) {
+      final json = jsonDecode(response.text!);
+      return ItineraryResponse.fromJson(json);
+    } else {
+      return null;
+    }
+  }
 
-  @GET("")
-  Future<HttpResponse<LocalCuisinesResponse>> getLocalCuisine();
+  Future<LocalCuisinesResponse?> getLocalCuisine() async {
+    final response = await model.generateContent([Content.text("text")]);
+    if (response.text != null) {
+      final json = jsonDecode(response.text!);
+      return LocalCuisinesResponse.fromJson(json);
+    } else {
+      return null;
+    }
+  }
 
-  @GET("")
-  Future<HttpResponse<ActivitiesResponse>> getActivities();
+  Future<ActivitiesResponse?> getActivities() async {
+    final response = await model.generateContent([Content.text("text")]);
+    if (response.text != null) {
+      final json = jsonDecode(response.text!);
+      return ActivitiesResponse.fromJson(json);
+    } else {
+      return null;
+    }
+  }
 
-  @GET("")
-  Future<HttpResponse<BudgetPlanResponse>> getBudgetPlan();
+  Future<BudgetPlanResponse?> getBudgetPlan() async {
+    final response = await model.generateContent([Content.text("text")]);
+    if (response.text != null) {
+      final json = jsonDecode(response.text!);
+      return BudgetPlanResponse.fromJson(json);
+    } else {
+      return null;
+    }
+  }
 
-  @GET("")
-  Future<HttpResponse<RecommendationsResponse>> getRecommendations();
+  Future<RecommendationsResponse?> getRecommendations() async {
+    final response = await model.generateContent([Content.text("text")]);
+    if (response.text != null) {
+      final json = jsonDecode(response.text!);
+      return RecommendationsResponse.fromJson(json);
+    } else {
+      return null;
+    }
+  }
 
-  @GET("")
-  Future<HttpResponse<String>> getChatReply();
+  Future<String?> getChatReply() async {
+    final response = await model.generateContent([Content.text("text")]);
+    return response.text;
+  }
 }
