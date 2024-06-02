@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Touristic IA',
-      debugShowCheckedModeBanner: true,
+      debugShowCheckedModeBanner: false,
       theme: appTheme(),
       onGenerateRoute: AppRoutes.onGenerateRoutes,
     );

@@ -30,7 +30,6 @@ final GetIt sl = GetIt.instance;
 
 Future<void> initializeDependencies() async {
   // Network
-  // sl.registerSingleton<Dio>(Dio());
   sl.registerSingleton<GenerativeModel>(
     GenerativeModel(
       model: geminiFlashLatest,
