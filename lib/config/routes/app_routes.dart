@@ -12,10 +12,12 @@ class AppRoutes {
   static Route onGenerateRoutes(RouteSettings settings) {
     switch (settings.name) {
       case root:
-        return _materialRoute(const HomeScreen());
+        return _materialRoute(Container(
+          color: Colors.red,
+        ));
 
       default:
-        return _materialRoute(const HomeScreen());
+        return _materialRoute(Container());
     }
   }
 

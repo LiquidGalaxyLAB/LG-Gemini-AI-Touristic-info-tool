@@ -1,8 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
-import 'package:touristic/presentation/widgets/item_card_home.dart';
+import 'package:touristic/core/constants/constants.dart';
+import 'package:touristic/presentation/widgets/item_card_dashboard.dart';
+
+import '../../../config/routes/app_routes.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -12,85 +12,38 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  var color = Colors.redAccent;
-  var as = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButtonLocation: ExpandableFab.location,
-      floatingActionButton: ExpandableFab(
+      body: Row(
         children: [
-          FloatingActionButton(
-            heroTag: null,
-            child: const Icon(Icons.chat_rounded),
-            onPressed: () {
-              setState(() {
-                color = Colors.blueAccent;
-              });
-            },
+          Flexible(
+            flex: 25,
+            child: _dashboard(),
           ),
-          FloatingActionButton(
-            heroTag: null,
-            child: const Icon(Icons.favorite_rounded),
-            onPressed: () {
-              setState(() {
-                color = Colors.amberAccent;
-              });
-            },
-          ),
-          FloatingActionButton(
-            heroTag: null,
-            child: const Icon(Icons.settings_rounded),
-            onPressed: () {
-              setState(() {
-                color = Colors.redAccent;
-              });
-            },
-          ),
+          Flexible(
+            flex: 100,
+            child: _content(),
+          )
         ],
       ),
-          // assetName: "assets/images/placeholder.png",
-          // title: "as hafs sau asf hafu",
-          // description: "as hasfiu asf uiasfai sf",
-      body: Container(
-        child: Row (
-          children: [
-            if (as)
-            Flexible(
-              flex: 2,
-              child: GridView.builder(
-                itemCount: 6,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
-                    crossAxisCount: 2),
-                itemBuilder: (BuildContext context, int index) {
-                  return new ItemCardHome(
-                    assetName: "assets/images/placeholder.png",
-                    title: "as hafs sau asf hafu",
-                    description: "as hasfiu asf uiasfai sf",
-                  );
-                },
-              ),
-            ),
-            Flexible(
-              flex: 1,
-              child: Container(
-                color: color,
-                child: TextButton(
-                  onPressed: () {
-                    setState(() {
-                      as = !as;
+    );
+  }
 
-                    });{
-                    }
-                  }, child: Text("sadusda"),
-                ),
-              ),
-            )
-          ],
-        ),
-      ),
+  Widget _dashboard() {
+    return ListView(
+      children: dashboardItems.entries.map((entry) {
+        return ItemCardDashboard(
+          title: entry.key,
+          iconData: entry.value,
+        );
+      }).toList(),
+    );
+  }
+
+  Widget _content() {
+    return const Navigator(
+      onGenerateRoute: AppRoutes.onGenerateRoutes,
     );
   }
 }
