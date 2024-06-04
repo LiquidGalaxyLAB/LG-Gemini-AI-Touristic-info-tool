@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:touristic/config/theme/app_theme.dart';
 
 class ItemCardDashboard extends StatelessWidget {
   final String title;
@@ -12,27 +13,38 @@ class ItemCardDashboard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: Colors.green,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+      ),
       child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           verticalDirection: VerticalDirection.up,
           children: [
             Container(
-              padding: EdgeInsets.all(6),
+              padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: Colors.red,
+                color: AppTheme.blue70,
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Icon(
                 iconData,
+                size: 18,
+                color: AppTheme.gray10,
               ),
+            ),
+            const SizedBox(
+              width: 10,
             ),
             Text(
               title,
+              style: TextStyle(
+                color: AppTheme.gray10,
+                fontFamily: "Noto",
+                fontWeight: FontWeight.w700,
+              ),
             )
           ],
         ),

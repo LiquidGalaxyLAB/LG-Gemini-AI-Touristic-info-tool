@@ -3,6 +3,7 @@ import 'package:touristic/core/constants/constants.dart';
 import 'package:touristic/presentation/widgets/item_card_dashboard.dart';
 
 import '../../../config/routes/app_routes.dart';
+import '../../../config/theme/app_theme.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -30,16 +31,21 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _dashboard() {
-    return ListView(
-      children: dashboardItems.entries.map((entry) {
-        return ItemCardDashboard(
-          title: entry.key,
-          iconData: entry.value,
-        );
-      }).toList(),
-    );
-  }
+    Widget _dashboard() {
+      return Container(
+        color: AppTheme.blue80,
+        child: ListView(
+          children: [
+            ...dashboardItems.entries.map((entry) {
+              return ItemCardDashboard(
+                title: entry.key,
+                iconData: entry.value,
+              );
+            }).toList()
+          ],
+        ),
+      );
+    }
 
   Widget _content() {
     return const Navigator(

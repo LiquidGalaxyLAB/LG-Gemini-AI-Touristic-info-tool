@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:touristic/core/utils/app_utils.dart';
-import 'package:touristic/presentation/pages/home/home_screen.dart';
+
+import '../theme/app_theme.dart';
 
 class AppRoutes {
   static const String root = "/";
@@ -13,7 +14,7 @@ class AppRoutes {
     switch (settings.name) {
       case root:
         return _materialRoute(Container(
-          color: Colors.red,
+          color: AppTheme.blue90,
         ));
 
       default:
