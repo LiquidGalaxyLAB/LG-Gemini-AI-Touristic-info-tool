@@ -1,32 +1,30 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:touristic/core/constants/constants.dart';
 import 'package:touristic/presentation/widgets/item_card_dashboard.dart';
 
 import '../../../config/routes/app_routes.dart';
 import '../../../config/theme/app_theme.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomePageState extends State<HomePage> {
   int _selected = 0;
+  bool _expanded = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Row(
         children: [
-          Flexible(
-            flex: 25,
-            child: _dashboard(),
-          ),
-          Flexible(
-            flex: 100,
+          _dashboard(),
+          Expanded(
             child: _content(),
           )
         ],
@@ -40,19 +38,35 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Container(
       color: AppTheme.blue80,
-      padding: EdgeInsets.only(top: mediaQuery.viewPadding.top),
+      padding: EdgeInsets.only(top: mediaQuery.viewPadding.top, right: _expanded ? 8 : 0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
+          InkWell(
+            onTap: () {
+              setState(() {
+                _expanded = !_expanded;
+              });
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(left: 8.0, top: 8.0),
+              child: Icon(
+                  Icons.menu_open_rounded,
+                color: AppTheme.gray10,
+                size: 28,
+              ),
+            ),
+          ),
           SizedBox(height: 10,),
+
+          if (_expanded)
           Padding(
             padding: const EdgeInsets.only(left: 8.0),
             child: Text(
               "Liquid Galaxy",
               style: TextStyle(
                 color: AppTheme.gray10,
-                fontFamily: "Noto",
                 fontSize: 14,
                 fontWeight: FontWeight.w800
               ),
@@ -60,13 +74,13 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
 
+          if (_expanded)
           Padding(
             padding: const EdgeInsets.only(left: 8.0),
             child: Text(
               "Touristic AI",
               style: TextStyle(
                 color: AppTheme.gray10,
-                fontFamily: "Noto",
                   fontSize: 20,
                   fontWeight: FontWeight.w800
               ),
@@ -75,7 +89,16 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
 
           SizedBox(height: 10,),
-          ..._getDashboardItems()
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: _getDashboardItems(),
+              ),
+            ),
+          ),
+          SizedBox(height: 8,),
         ],
       ),
     );
@@ -92,14 +115,18 @@ class _HomeScreenState extends State<HomeScreen> {
             child: InkWell(
               splashColor: AppTheme.blue70,
               onTap: () {
+                  if (list[i].key == "Settings") {
+                Navigator.of(context).pushNamed(AppRoutes.settings);
+              }
                 setState(() {
                   _selected = i;
-                });
+            });
               },
               child: ItemCardDashboard(
                 title: list[i].key,
                 iconData: list[i].value,
                 selected: _selected == i,
+                expanded: _expanded,
               ),
             ),
           )

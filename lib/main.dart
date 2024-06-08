@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:touristic/presentation/pages/home/home_screen.dart';
+import 'package:touristic/presentation/pages/home/home_page.dart';
 
 import 'config/theme/app_theme.dart';
 import 'injection_container.dart';
@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
       title: 'Touristic IA',
       debugShowCheckedModeBanner: false,
       theme: appTheme(),
-      home: const HomeScreen(),
+      home: const HomePage(),
     );
   }
 }

@@ -5,12 +5,14 @@ class ItemCardDashboard extends StatelessWidget {
   final String title;
   final IconData iconData;
   final bool selected;
+  final bool expanded;
 
   const ItemCardDashboard({
     super.key,
     required this.title,
     required this.iconData,
     required this.selected,
+    required this.expanded,
   });
 
   @override
@@ -33,9 +35,13 @@ class ItemCardDashboard extends StatelessWidget {
               color: selected ? AppTheme.gray10 : AppTheme.gray10,
             ),
           ),
+
+          if (expanded)
           const SizedBox(
             width: 10,
           ),
+
+          if (expanded)
           Text(
             title,
             style: TextStyle(

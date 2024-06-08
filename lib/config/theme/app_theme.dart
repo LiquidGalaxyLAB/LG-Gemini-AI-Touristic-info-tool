@@ -41,11 +41,13 @@ class AppTheme {
   static const Color gray30 = Color.fromRGBO(140, 158, 186, 1.0);
   static const Color gray20 = Color.fromRGBO(178, 201, 232, 1.0);
   static const Color gray10 = Color.fromRGBO(217, 229, 252, 1.0);
+
+  static const String notoFont = "Noto";
 }
 
 ThemeData appTheme() {
   return ThemeData(
       scaffoldBackgroundColor: Colors.white,
-      fontFamily: 'Noto',
+      fontFamily: AppTheme.notoFont,
   );
 }

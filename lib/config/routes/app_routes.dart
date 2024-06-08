@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:touristic/core/utils/app_utils.dart';
+import 'package:touristic/presentation/pages/settings/settings_page.dart';
 
 import '../theme/app_theme.dart';
 
@@ -10,12 +11,15 @@ class AppRoutes {
   static const String favourites = "/favourites";
   static const String chat = "/chat";
 
-  static Route onGenerateRoutes(RouteSettings settings) {
-    switch (settings.name) {
+  static Route onGenerateRoutes(RouteSettings routeSettings) {
+    switch (routeSettings.name) {
       case root:
         return _materialRoute(Container(
           color: AppTheme.blue90,
         ));
+
+      case settings:
+        return _materialRoute(SettingsPage());
 
       default:
         return _materialRoute(Container());
