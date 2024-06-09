@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:touristic/core/utils/app_utils.dart';
+import 'package:touristic/presentation/pages/home/content_main_page.dart';
 import 'package:touristic/presentation/pages/settings/settings_page.dart';
 import 'package:touristic/presentation/widgets/maps_widget.dart';
 
@@ -15,12 +16,10 @@ class AppRoutes {
   static Route onGenerateRoutes(RouteSettings routeSettings) {
     switch (routeSettings.name) {
       case root:
-        return _materialRoute(Container(
-          color: AppTheme.blue90,
-        ));
+        return _materialRoute(ContentMainPage());
 
       case settings:
-        return _materialRoute(MapsWidget());
+        return _materialRoute(SettingsPage());
 
       default:
         return _materialRoute(Container());

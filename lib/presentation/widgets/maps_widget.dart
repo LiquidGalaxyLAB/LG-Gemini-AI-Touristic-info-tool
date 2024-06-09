@@ -34,12 +34,7 @@ class MapsWidgetState extends State<MapsWidget> {
         onMapCreated: (GoogleMapController controller) {
           _controller.complete(controller);
         },
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: _goToTheLake,
-        label: const Text('To the lake!'),
-        icon: const Icon(Icons.directions_boat),
-      ),
+      )
     );
   }
 

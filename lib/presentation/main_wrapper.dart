@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:touristic/core/constants/constants.dart';
 import 'package:touristic/presentation/widgets/item_card_dashboard.dart';
 
-import '../../../config/routes/app_routes.dart';
-import '../../../config/theme/app_theme.dart';
+import '../config/routes/app_routes.dart';
+import '../config/theme/app_theme.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class MainWrapper extends StatefulWidget {
+  const MainWrapper({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<MainWrapper> createState() => _MainWrapperState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _MainWrapperState extends State<MainWrapper> {
   final _navigatorKey = GlobalKey<NavigatorState>();
   int _selected = 0;
   bool _expanded = false;
@@ -33,7 +33,6 @@ class _HomePageState extends State<HomePage> {
 
   Widget _dashboard() {
     final mediaQuery = MediaQuery.of(context);
-    final list = _getDashboardItems();
 
     return Container(
       color: AppTheme.blue80,

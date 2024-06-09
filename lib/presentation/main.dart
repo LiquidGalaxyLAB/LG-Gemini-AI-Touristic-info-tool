@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:touristic/presentation/pages/home/home_page.dart';
+import 'package:touristic/presentation/main_wrapper.dart';
 
-import 'config/theme/app_theme.dart';
-import 'injection_container.dart';
+import '../config/theme/app_theme.dart';
+import '../core/di/dependency_injection.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
       title: 'Touristic IA',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.appTheme(),
-      home: const HomePage(),
+      home: const MainWrapper(),
     );
   }
 }
