@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:touristic/core/utils/app_utils.dart';
 import 'package:touristic/presentation/pages/settings/settings_page.dart';
+import 'package:touristic/presentation/widgets/maps_widget.dart';
 
 import '../theme/app_theme.dart';
 
@@ -19,7 +20,7 @@ class AppRoutes {
         ));
 
       case settings:
-        return _materialRoute(SettingsPage());
+        return _materialRoute(MapsWidget());
 
       default:
         return _materialRoute(Container());
