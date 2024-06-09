@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:touristic/core/constants/constants.dart';
 import 'package:touristic/presentation/widgets/item_card_dashboard.dart';
 
@@ -15,6 +13,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final _navigatorKey = GlobalKey<NavigatorState>();
   int _selected = 0;
   bool _expanded = false;
 
@@ -38,7 +37,8 @@ class _HomePageState extends State<HomePage> {
 
     return Container(
       color: AppTheme.blue80,
-      padding: EdgeInsets.only(top: mediaQuery.viewPadding.top, right: _expanded ? 8 : 0),
+      padding: EdgeInsets.only(
+          top: mediaQuery.viewPadding.top, right: _expanded ? 8 : 0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -52,53 +52,57 @@ class _HomePageState extends State<HomePage> {
             child: Padding(
               padding: const EdgeInsets.only(left: 8.0, top: 8.0),
               child: Icon(
-                  Icons.menu_open_rounded,
+                Icons.menu_open_rounded,
                 color: AppTheme.gray10,
                 size: 28,
               ),
             ),
           ),
-          SizedBox(height: 10,),
-
-          if (_expanded)
-          Padding(
-            padding: const EdgeInsets.only(left: 8.0),
-            child: Text(
-              "Liquid Galaxy",
-              style: TextStyle(
-                color: AppTheme.gray10,
-                fontSize: 14,
-                fontWeight: FontWeight.w800
-              ),
-              textAlign: TextAlign.start,
-            ),
+          SizedBox(
+            height: 10,
           ),
-
           if (_expanded)
-          Padding(
-            padding: const EdgeInsets.only(left: 8.0),
-            child: Text(
-              "Touristic AI",
-              style: TextStyle(
-                color: AppTheme.gray10,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w800
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: Text(
+                "Liquid Galaxy",
+                style: TextStyle(
+                    color: AppTheme.gray10,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w800),
+                textAlign: TextAlign.start,
               ),
-              textAlign: TextAlign.start,
             ),
+          if (_expanded)
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: Text(
+                "Touristic AI",
+                style: TextStyle(
+                    color: AppTheme.gray10,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w800),
+                textAlign: TextAlign.start,
+              ),
+            ),
+          SizedBox(
+            height: 10,
           ),
-
-          SizedBox(height: 10,),
           Expanded(
             child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: _getDashboardItems(),
+              child: Material(
+                color: AppTheme.blue80,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: _getDashboardItems(),
+                ),
               ),
             ),
           ),
-          SizedBox(height: 8,),
+          SizedBox(
+            height: 8,
+          ),
         ],
       ),
     );
@@ -109,35 +113,34 @@ class _HomePageState extends State<HomePage> {
     final list = dashboardItems.entries.toList();
 
     for (int i = 0; i < dashboardItems.length; i++) {
-      items.add(
-          Material(
-            color: AppTheme.blue80,
-            child: InkWell(
-              splashColor: AppTheme.blue70,
-              onTap: () {
-                  if (list[i].key == "Settings") {
-                Navigator.of(context).pushNamed(AppRoutes.settings);
-              }
-                setState(() {
-                  _selected = i;
+      items.add(InkWell(
+        splashColor: AppTheme.blue70,
+        onTap: () {
+          if (_selected != i) {
+            if (list[i].key == "Settings") {
+              Navigator.pushNamed(
+                  _navigatorKey.currentContext!, AppRoutes.settings);
+            }
+            setState(() { 
+              _selected = i;
             });
-              },
-              child: ItemCardDashboard(
-                title: list[i].key,
-                iconData: list[i].value,
-                selected: _selected == i,
-                expanded: _expanded,
-              ),
-            ),
-          )
-      );
+          }
+        },
+        child: ItemCardDashboard(
+          title: list[i].key,
+          iconData: list[i].value,
+          selected: _selected == i,
+          expanded: _expanded,
+        ),
+      ));
     }
 
     return items;
   }
 
   Widget _content() {
-    return const Navigator(
+    return Navigator(
+      key: _navigatorKey,
       onGenerateRoute: AppRoutes.onGenerateRoutes,
     );
   }

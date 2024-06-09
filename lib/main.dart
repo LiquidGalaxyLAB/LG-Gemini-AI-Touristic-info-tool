@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Touristic IA',
       debugShowCheckedModeBanner: false,
-      theme: appTheme(),
+      theme: AppTheme.appTheme(),
       home: const HomePage(),
     );
   }
