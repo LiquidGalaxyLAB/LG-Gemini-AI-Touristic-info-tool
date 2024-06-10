@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_resizable_container/flutter_resizable_container.dart';
 import 'package:touristic/presentation/widgets/maps_widget.dart';
 
 class ContentMainPage extends StatefulWidget {
@@ -11,28 +12,49 @@ class ContentMainPage extends StatefulWidget {
 class _ContentMainPageState extends State<ContentMainPage> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Row(
-        children: [
-          Flexible(
-            flex: 60,
-            child: Container(
-              color: Colors.blue,
-            ),
-          ),
-          Flexible(
-            flex: 40,
-            child: Column(
-              children: [
-                Expanded(child: MapsWidget()),
-                Expanded(child: Container(
-                  color: Colors.orange,
-                )),
-              ],
-            ),
-          )
-        ],
+    final query = MediaQuery.of(context);
+
+    return ResizableContainer(
+      direction: Axis.horizontal,
+      controller: ResizableController(),
+      divider: ResizableDivider(
+        thickness: 5,
+        size: 5,
+        indent: 5,
+        endIndent: 5,
       ),
+      children: [
+        ResizableChild(
+          minSize: query.size.width * 0.4,
+          child: Container(
+            color: Colors.redAccent,
+          ),
+        ),
+        ResizableChild(
+          minSize: query.size.width * 0.3,
+          child: ResizableContainer(
+            direction: Axis.vertical,
+            divider: ResizableDivider(
+              thickness: 5,
+              size: 5,
+              indent: 5,
+              endIndent: 5,
+            ),
+            children: [
+              ResizableChild(
+                minSize: query.size.height * 0.4,
+                child: Container(
+                  color: Colors.blueAccent,
+                ),
+              ),
+              ResizableChild(
+                minSize: query.size.height * 0.3,
+                child: MapsWidget(),
+              ),
+            ],
+          ),
+        )
+      ],
     );
   }
 }

@@ -1,7 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 
-import '../constants/constants.dart';
 import '../../data/data_sources/local/app_database.dart';
 import '../../data/data_sources/local/tourist_places_dao.dart';
 import '../../data/data_sources/remote/gemini_service.dart';
@@ -25,6 +24,7 @@ import '../../presentation/bloc/home/cuisines/cuisines_bloc.dart';
 import '../../presentation/bloc/home/itinerary/itinerary_bloc.dart';
 import '../../presentation/bloc/home/recommendations/recommendations_bloc.dart';
 import '../../presentation/bloc/home/tourist_places/tourist_places_bloc.dart';
+import '../core/constants/constants.dart';
 
 final GetIt sl = GetIt.instance;
 

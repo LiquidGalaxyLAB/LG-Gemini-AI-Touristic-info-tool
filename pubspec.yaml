@@ -38,6 +38,7 @@ dependencies:
   # widgets
   flutter_hooks: ^0.20.5
   flutter_expandable_fab: ^2.0.0
+  flutter_resizable_container: ^2.0.0
 
 dev_dependencies:
   flutter_test:
