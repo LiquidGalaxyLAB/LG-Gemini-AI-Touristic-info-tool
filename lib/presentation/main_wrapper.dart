@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:touristic/core/constants/constants.dart';
+import 'package:touristic/core/enums/touristic_feature.dart';
 import 'package:touristic/presentation/widgets/item_card_dashboard.dart';
 
 import '../config/routes/app_routes.dart';
@@ -14,7 +15,7 @@ class MainWrapper extends StatefulWidget {
 
 class _MainWrapperState extends State<MainWrapper> {
   final _navigatorKey = GlobalKey<NavigatorState>();
-  int _selected = 0;
+  TouristicFeature _selected = TouristicFeature.chat;
   bool _expanded = false;
 
   @override
@@ -115,20 +116,20 @@ class _MainWrapperState extends State<MainWrapper> {
       items.add(InkWell(
         splashColor: AppTheme.blue70,
         onTap: () {
-          if (_selected != i) {
-            if (list[i].key == "Settings") {
-              Navigator.pushNamed(
-                  _navigatorKey.currentContext!, AppRoutes.settings);
-            }
-            setState(() { 
-              _selected = i;
+          if (i != _selected.index) {
+            Navigator.pushNamed(
+              _navigatorKey.currentContext!,
+              AppRoutes.routeMap[i]!,
+            );
+            setState(() {
+              _selected = TouristicFeature.values[i];
             });
           }
         },
         child: ItemCardDashboard(
           title: list[i].key,
           iconData: list[i].value,
-          selected: _selected == i,
+          selected: i == _selected.index,
           expanded: _expanded,
         ),
       ));

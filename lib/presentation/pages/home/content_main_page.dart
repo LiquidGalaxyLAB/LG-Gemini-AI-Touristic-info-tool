@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_resizable_container/flutter_resizable_container.dart';
+import 'package:touristic/core/enums/touristic_feature.dart';
 import 'package:touristic/presentation/widgets/maps_widget.dart';
 
 class ContentMainPage extends StatefulWidget {
-  const ContentMainPage({super.key});
+  final TouristicFeature feature;
+  const ContentMainPage({super.key, required this.feature});
 
   @override
   State<ContentMainPage> createState() => _ContentMainPageState();
@@ -48,7 +50,7 @@ class _ContentMainPageState extends State<ContentMainPage> {
                 ),
               ),
               ResizableChild(
-                minSize: query.size.height * 0.3,
+                minSize: query.size.height * 0.4,
                 child: MapsWidget(),
               ),
             ],
