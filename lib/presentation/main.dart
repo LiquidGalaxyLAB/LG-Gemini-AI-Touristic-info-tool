@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:touristic/presentation/main_wrapper.dart';
+import 'package:touristic/presentation/splash_screen.dart';
 
 import '../config/theme/app_theme.dart';
 import '../di/dependency_injection.dart';
@@ -19,7 +20,11 @@ class MyApp extends StatelessWidget {
       title: 'Touristic IA',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.appTheme(),
-      home: const MainWrapper(),
+      initialRoute: SplashScreen.route,
+      routes: {
+        SplashScreen.route: (context) => SplashScreen(),
+        "/": (context) => MainWrapper(),
+      },
     );
   }
 }
