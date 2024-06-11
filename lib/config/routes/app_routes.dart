@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:touristic/core/utils/app_utils.dart';
 import 'package:touristic/presentation/pages/about/about_page.dart';
 import 'package:touristic/presentation/pages/chat/chat_page.dart';
 import 'package:touristic/presentation/pages/favourite/favourite_page.dart';
@@ -84,9 +83,26 @@ class AppRoutes {
   }
 
   static Route<dynamic> _materialRoute(Widget view) {
-    return MaterialPageRoute(builder: (context) {
-      setPreferredOrientations(context);
-      return view;
-    });
+    return PageRouteBuilder(
+      pageBuilder: (
+        context,
+        animation,
+        secondaryAnimation,
+      ) {
+        return view;
+      },
+      transitionsBuilder: (
+        context,
+        animation,
+        secondaryAnimation,
+        child,
+      ) {
+        return FadeTransition(
+          opacity: animation,
+          child: child,
+        );
+      },
+      transitionDuration: const Duration(milliseconds: 300)
+    );
   }
 }
