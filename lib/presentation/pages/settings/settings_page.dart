@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:touristic/presentation/pages/settings/liquid_galaxy_page.dart';
+
+import 'connection_page.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -18,8 +21,8 @@ class SettingsPage extends StatelessWidget {
             ]),
           ),
           body: TabBarView(children: [
-            Tab(icon: Icon(Icons.add)),
-            Tab(icon: Icon(Icons.minimize))
+            ConnectionPage(),
+            LiquidGalaxyPage()
           ])
         ),
       )
