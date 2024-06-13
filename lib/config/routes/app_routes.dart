@@ -5,7 +5,7 @@ import 'package:touristic/presentation/pages/favourite/favourite_page.dart';
 import 'package:touristic/presentation/pages/home/content_main_page.dart';
 import 'package:touristic/presentation/pages/settings/settings_page.dart';
 
-import '../../core/enums/touristic_feature.dart';
+import '../../core/enums/app_feature.dart';
 import '../theme/app_theme.dart';
 
 class AppRoutes {
@@ -38,17 +38,17 @@ class AppRoutes {
       case chat:
         return _materialRoute(const ChatPage());
       case place:
-        return _contentMainPageRoute(TouristicFeature.touristPlace);
+        return _contentMainPageRoute(AppFeature.touristPlace);
       case budget:
-        return _contentMainPageRoute(TouristicFeature.budgetPlan);
+        return _contentMainPageRoute(AppFeature.budgetPlan);
       case itinerary:
-        return _contentMainPageRoute(TouristicFeature.itinerary);
+        return _contentMainPageRoute(AppFeature.itinerary);
       case activity:
-        return _contentMainPageRoute(TouristicFeature.activities);
+        return _contentMainPageRoute(AppFeature.activities);
       case recommendation:
-        return _contentMainPageRoute(TouristicFeature.recommendation);
+        return _contentMainPageRoute(AppFeature.recommendation);
       case cuisine:
-        return _contentMainPageRoute(TouristicFeature.localCuisine);
+        return _contentMainPageRoute(AppFeature.localCuisine);
       case favourites:
         return _materialRoute(const FavouritePage());
       case settings:
@@ -60,7 +60,7 @@ class AppRoutes {
     }
   }
 
-  static Route<dynamic> _contentMainPageRoute(TouristicFeature feature) {
+  static Route<dynamic> _contentMainPageRoute(AppFeature feature) {
     return _materialRoute(ContentMainPage(feature: feature));
   }
 

@@ -19,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void _navigateToHome() {
-    Future.delayed(Duration(seconds: 3), () {
+    Future.delayed(Duration(milliseconds: 300), () {
     Navigator.of(context).pushReplacementNamed("/");
     });
   }

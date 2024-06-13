@@ -1,4 +1,4 @@
-enum TouristicFeature {
+enum AppFeature {
   chat,
   touristPlace,
   budgetPlan,

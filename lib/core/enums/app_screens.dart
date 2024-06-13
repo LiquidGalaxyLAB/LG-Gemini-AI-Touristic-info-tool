@@ -1,4 +1,4 @@
-enum Screens {
+enum AppScreens {
   chat("/"),
   place("/tourist_place"),
   budget("/budget_plan"),
@@ -10,5 +10,5 @@ enum Screens {
   about("/about");
 
   final String route;
-  const Screens(this.route);
+  const AppScreens(this.route);
 }

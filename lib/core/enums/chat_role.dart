@@ -1,0 +1,3 @@
+enum ChatRole {
+  sender, receiver;
+}

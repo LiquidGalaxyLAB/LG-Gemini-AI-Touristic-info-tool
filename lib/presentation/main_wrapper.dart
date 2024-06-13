@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:touristic/core/constants/constants.dart';
-import 'package:touristic/core/enums/touristic_feature.dart';
+import 'package:touristic/core/enums/app_feature.dart';
 import 'package:touristic/presentation/widgets/item_card_dashboard.dart';
 
 import '../config/routes/app_routes.dart';
@@ -15,7 +15,7 @@ class MainWrapper extends StatefulWidget {
 
 class _MainWrapperState extends State<MainWrapper> {
   final _navigatorKey = GlobalKey<NavigatorState>();
-  TouristicFeature _selected = TouristicFeature.chat;
+  AppFeature _selected = AppFeature.chat;
   bool _expanded = false;
 
   @override
@@ -122,7 +122,7 @@ class _MainWrapperState extends State<MainWrapper> {
               AppRoutes.routeMap[i]!,
             );
             setState(() {
-              _selected = TouristicFeature.values[i];
+              _selected = AppFeature.values[i];
             });
           }
         },
