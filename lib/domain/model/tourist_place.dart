@@ -8,6 +8,7 @@ class TouristPlace extends Equatable {
   final String significance;
   final String cuisine;
   final String specialty;
+  final String location;
 
   const TouristPlace({
     required this.name,
@@ -17,6 +18,7 @@ class TouristPlace extends Equatable {
     required this.significance,
     required this.cuisine,
     required this.specialty,
+    required this.location,
   });
 
   @override
@@ -28,5 +30,6 @@ class TouristPlace extends Equatable {
         significance,
         cuisine,
         specialty,
+        location
       ];
 }

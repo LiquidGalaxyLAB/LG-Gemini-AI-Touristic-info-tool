@@ -78,6 +78,7 @@ class TravelRouteResponse extends Equatable {
 
 class PlaceResponse extends Equatable {
   final String? name;
+  final String? location;
   final double? latitude;
   final double? longitude;
   final String? description;
@@ -85,6 +86,7 @@ class PlaceResponse extends Equatable {
 
   const PlaceResponse({
     this.name,
+    this.location,
     this.latitude,
     this.longitude,
     this.description,
@@ -94,6 +96,7 @@ class PlaceResponse extends Equatable {
   @override
   List<Object?> get props => [
         name,
+        location,
         latitude,
         longitude,
         description,
@@ -103,6 +106,7 @@ class PlaceResponse extends Equatable {
   factory PlaceResponse.fromJson(Map<String, dynamic> json) {
     return PlaceResponse(
       name: json['name'] as String?,
+      location: json['location'] as String?,
       latitude: (json['latitude'] as num?)?.toDouble(),
       longitude: (json['longitude'] as num?)?.toDouble(),
       description: json['description'] as String?,

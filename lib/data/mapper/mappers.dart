@@ -32,6 +32,7 @@ List<TouristPlace>? responseToTouristPlaces(
   return response.touristPlaces
       ?.map((place) => TouristPlace(
             name: place.name ?? "",
+            location: place.location ?? "",
             latitude: place.latitude ?? 0,
             longitude: place.longitude ?? 0,
             history: place.history ?? "",
@@ -54,6 +55,7 @@ List<TouristPlace> requestToTouristPlaces(
             significance: place.significance ?? "",
             cuisine: place.cuisine ?? "",
             specialty: place.specialty ?? "",
+            location: place.location ?? "",
           ))
       .toList();
 }
@@ -170,6 +172,7 @@ itinerary.Itinerary? responseToItinerary(
     places: response.places
             ?.map((e) => itinerary.Place(
                   name: e.name ?? "",
+                  location: e.location ?? "",
                   latitude: e.latitude ?? 0,
                   longitude: e.longitude ?? 0,
                   description: e.description ?? "",

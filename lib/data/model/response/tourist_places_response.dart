@@ -21,6 +21,7 @@ class TouristPlacesResponse extends Equatable {
 
 class TouristPlaceResponse extends Equatable {
   final String? name;
+  final String? location;
   final double? latitude;
   final double? longitude;
   final String? history;
@@ -29,13 +30,14 @@ class TouristPlaceResponse extends Equatable {
   final String? specialty;
 
   const TouristPlaceResponse({
-    required this.name,
-    required this.latitude,
-    required this.longitude,
-    required this.history,
-    required this.significance,
-    required this.cuisine,
-    required this.specialty,
+    this.name,
+    this.location,
+    this.latitude,
+    this.longitude,
+    this.history,
+    this.significance,
+    this.cuisine,
+    this.specialty,
   });
 
   @override
@@ -47,11 +49,13 @@ class TouristPlaceResponse extends Equatable {
     significance,
     cuisine,
     specialty,
+    location
   ];
 
   factory TouristPlaceResponse.fromJson(Map<String, dynamic> json) {
     return TouristPlaceResponse(
       name: json['name'] as String?,
+      location: json['location'] as String?,
       latitude: (json['latitude'] as num?)?.toDouble(),
       longitude: (json['longitude'] as num?)?.toDouble(),
       history: json['history'] as String?,

@@ -5,6 +5,7 @@ import 'package:equatable/equatable.dart';
 @Entity(tableName: 'tourist_places', primaryKeys: ['latitude', 'longitude'])
 class TouristPlaceRequest extends Equatable {
   final String? name;
+  final String? location;
   final double? latitude;
   final double? longitude;
   final String? history;
@@ -13,6 +14,7 @@ class TouristPlaceRequest extends Equatable {
   final String? specialty;
 
   const TouristPlaceRequest({
+    this.location,
     this.name,
     this.latitude,
     this.longitude,
@@ -28,6 +30,7 @@ class TouristPlaceRequest extends Equatable {
     latitude,
     longitude,
     history,
+    location,
     significance,
     cuisine,
     specialty,
@@ -36,6 +39,7 @@ class TouristPlaceRequest extends Equatable {
   factory TouristPlaceRequest.fromJson(Map<String, dynamic> json) {
     return TouristPlaceRequest(
       name: json['name'] as String?,
+      location: json['location'] as String?,
       latitude: json['latitude'] as double?,
       longitude: json['longitude'] as double?,
       history: json['history'] as String?,
@@ -48,6 +52,7 @@ class TouristPlaceRequest extends Equatable {
   Map<String, dynamic> toJson() {
     return {
       'name': name,
+      'location': location,
       'latitude': latitude,
       'longitude': longitude,
       'history': history,

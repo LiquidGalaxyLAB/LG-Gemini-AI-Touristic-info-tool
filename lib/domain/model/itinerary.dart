@@ -52,6 +52,7 @@ class TravelRoute extends Equatable {
 
 class Place extends Equatable {
   final String name;
+  final String location;
   final double latitude;
   final double longitude;
   final String description;
@@ -59,6 +60,7 @@ class Place extends Equatable {
 
   const Place({
     required this.name,
+    required this.location,
     required this.latitude,
     required this.longitude,
     required this.description,
@@ -72,5 +74,6 @@ class Place extends Equatable {
         longitude,
         description,
         highlights,
+        location
       ];
 }

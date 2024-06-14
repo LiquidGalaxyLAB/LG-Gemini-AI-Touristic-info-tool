@@ -58,9 +58,9 @@ class TravelRoute extends Equatable {
 
 class Place extends Equatable {
   final String name;
-  final String? entranceFee;
-  final String? guidedTourFee;
-  final String? averageMealCost;
+  final String entranceFee;
+  final String guidedTourFee;
+  final String averageMealCost;
 
   const Place({
     required this.name,
