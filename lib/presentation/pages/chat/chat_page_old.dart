@@ -19,19 +19,19 @@ class ChatPage extends StatefulWidget {
 
 class _ChatPageState extends State<ChatPage> {
   final List<ChatMessage> messages = [
-    ChatMessage(message: "Hi there!", role: ChatRole.receiver),
-    ChatMessage(message: "Hello!", role: ChatRole.sender),
-    ChatMessage(message: "How are you?", role: ChatRole.receiver),
-    ChatMessage(message: "I'm good, thanks! How about you?", role: ChatRole.sender),
-    ChatMessage(message: "I'm great!", role: ChatRole.receiver),
-    ChatMessage(message: "What are you up to?", role: ChatRole.sender),
+    ChatMessage(message: "Hi there!", role: ChatRole.gemini),
+    ChatMessage(message: "Hello!", role: ChatRole.user),
+    ChatMessage(message: "How are you?", role: ChatRole.gemini),
+    ChatMessage(message: "I'm good, thanks! How about you?", role: ChatRole.user),
+    ChatMessage(message: "I'm great!", role: ChatRole.gemini),
+    ChatMessage(message: "What are you up to?", role: ChatRole.user),
   ];
   final TextEditingController _controller = TextEditingController();
 
   void _sendMessage() {
     if (_controller.text.isNotEmpty) {
       setState(() {
-        messages.add(ChatMessage(message: _controller.text, role: ChatRole.sender));
+        messages.add(ChatMessage(message: _controller.text, role: ChatRole.user));
         _controller.clear();
       });
     }

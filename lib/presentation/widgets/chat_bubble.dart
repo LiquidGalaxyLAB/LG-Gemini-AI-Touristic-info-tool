@@ -14,7 +14,7 @@ class ChatBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isSender = role == ChatRole.sender;
+    bool isSender = role == ChatRole.gemini;
     Alignment alignment = isSender ? Alignment.topRight : Alignment.topLeft;
     Color bubbleColor = isSender ? Colors.blue : Colors.grey.shade200;
     Color textColor = isSender ? Colors.white : Colors.black;

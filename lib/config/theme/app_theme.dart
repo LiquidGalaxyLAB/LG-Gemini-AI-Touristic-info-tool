@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:touristic/config/theme/color/app_color.dart';
+import 'package:touristic/config/theme/style/card_theme.dart';
+import 'package:touristic/core/enums/app_color_scheme.dart';
 
 class AppTheme {
   static const Color blue90 = Color.fromRGBO(5, 9, 17, 1);
@@ -34,7 +36,8 @@ class AppTheme {
 
   static const String notoFont = "Noto";
 
-  final appColor = AppColor();
+  static AppColor gray = AppColor(colorScheme: AppColorScheme.gray);
+  static AppColor color = AppColor(colorScheme: AppColorScheme.blue);
 
   static ThemeData appTheme() {
     const TextTheme textTheme = TextTheme(
@@ -124,6 +127,7 @@ class AppTheme {
         background: AppTheme.blue90,
       ),
       textTheme: textTheme,
+      cardTheme: appCardTheme
     );
   }
 }

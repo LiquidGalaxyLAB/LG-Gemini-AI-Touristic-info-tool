@@ -1,3 +1,7 @@
 enum ChatRole {
-  sender, receiver;
+  gemini("Gemini"),
+  user("User");
+
+  final String title;
+  const ChatRole(this.title);
 }

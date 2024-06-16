@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import '../app_color.dart';
 
-class YellowColor extends AppColor {
+class YellowColor implements AppColor {
   @override
   Color get shade50 => const Color(0xFFFDFDEA);
   @override

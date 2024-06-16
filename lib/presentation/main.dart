@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:touristic/core/enums/chat_role.dart';
 import 'package:touristic/presentation/main_wrapper.dart';
+import 'package:touristic/presentation/pages/chat/widgets/chat_bubble.dart';
 import 'package:touristic/presentation/splash_screen.dart';
 
 import '../config/theme/app_theme.dart';
