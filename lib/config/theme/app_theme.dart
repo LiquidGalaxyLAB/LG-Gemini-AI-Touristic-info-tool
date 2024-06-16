@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:touristic/config/theme/color/app_color.dart';
 
 class AppTheme {
   static const Color blue90 = Color.fromRGBO(5, 9, 17, 1);
@@ -32,6 +33,8 @@ class AppTheme {
   static const Color gray10 = Color.fromRGBO(217, 229, 252, 1.0);
 
   static const String notoFont = "Noto";
+
+  final appColor = AppColor();
 
   static ThemeData appTheme() {
     const TextTheme textTheme = TextTheme(
@@ -117,8 +120,8 @@ class AppTheme {
       scaffoldBackgroundColor: Colors.white,
       fontFamily: AppTheme.notoFont,
       colorScheme: ColorScheme.fromSeed(
-          seedColor: AppTheme.blue60,
-          background: AppTheme.blue90,
+        seedColor: AppTheme.blue60,
+        background: AppTheme.blue90,
       ),
       textTheme: textTheme,
     );
