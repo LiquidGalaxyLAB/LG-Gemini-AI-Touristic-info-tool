@@ -178,7 +178,7 @@ class _FavouritesPageState extends State<FavouritesPage> {
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.w600,
-                color: AppTheme.gray.shade400,
+                color: AppTheme.gray.shade300,
               ),
             ),
             const SizedBox(height: 10),
@@ -225,9 +225,9 @@ class _FavouritesPageState extends State<FavouritesPage> {
         Text(
           title,
           style: TextStyle(
-            fontSize: 14,
+            fontSize: 12,
             fontWeight: FontWeight.w500,
-            color: AppTheme.gray.shade500,
+            color: AppTheme.gray.shade400,
           ),
         ),
         Text(
@@ -235,7 +235,7 @@ class _FavouritesPageState extends State<FavouritesPage> {
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w400,
-            color: AppTheme.gray.shade400,
+            color: AppTheme.gray.shade300,
           ),
         ),
         if (spacing) const SizedBox(height: 10)

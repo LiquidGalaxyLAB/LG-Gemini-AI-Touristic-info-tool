@@ -37,7 +37,7 @@ class AppTheme {
   static const String notoFont = "Noto";
 
   static AppColor gray = AppColor(colorScheme: AppColorScheme.gray);
-  static AppColor color = AppColor(colorScheme: AppColorScheme.blue);
+  static AppColor color = AppColor(colorScheme: AppColorScheme.indigo);
 
   static ThemeData appTheme() {
     const TextTheme textTheme = TextTheme(
