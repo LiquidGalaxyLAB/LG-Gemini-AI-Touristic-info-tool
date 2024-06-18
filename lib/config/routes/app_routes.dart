@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:touristic/presentation/pages/about/about_page.dart';
 import 'package:touristic/presentation/pages/chat/chat_page_old.dart';
-import 'package:touristic/presentation/pages/favourite/favourite_page.dart';
 import 'package:touristic/presentation/pages/home/content_main_page.dart';
 import 'package:touristic/presentation/pages/settings/settings_page.dart';
 
 import '../../core/enums/app_feature.dart';
+import '../../presentation/pages/favourites/favourites_page.dart';
 import '../theme/app_theme.dart';
 
 class AppRoutes {
@@ -16,7 +16,7 @@ class AppRoutes {
   static const String recommendation = "/recommendation";
   static const String cuisine = "/cuisine";
   static const String itinerary = "/itinerary";
-  static const String favourites = "/favourites";
+  static const String favourites = "/";
   static const String settings = "/settings";
   static const String about = "/about";
 
@@ -50,7 +50,7 @@ class AppRoutes {
       case cuisine:
         return _contentMainPageRoute(AppFeature.localCuisine);
       case favourites:
-        return _materialRoute(const FavouritePage());
+        return _materialRoute(const FavouritesPage());
       case settings:
         return _materialRoute(const SettingsPage());
       case about:

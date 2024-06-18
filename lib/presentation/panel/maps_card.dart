@@ -3,14 +3,14 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class MapsPanel extends StatefulWidget {
-  const MapsPanel({super.key});
+class MapsCard extends StatefulWidget {
+  const MapsCard({super.key});
 
   @override
-  State<MapsPanel> createState() => MapsPanelState();
+  State<MapsCard> createState() => MapsCardState();
 }
 
-class MapsPanelState extends State<MapsPanel> {
+class MapsCardState extends State<MapsCard> {
   final Completer<GoogleMapController> _controller =
   Completer<GoogleMapController>();
 
@@ -27,14 +27,15 @@ class MapsPanelState extends State<MapsPanel> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: GoogleMap(
+    return ClipRRect(
+      borderRadius: const BorderRadius.all(Radius.circular(10)),
+      child: GoogleMap(
         mapType: MapType.hybrid,
         initialCameraPosition: _kGooglePlex,
         onMapCreated: (GoogleMapController controller) {
           _controller.complete(controller);
         },
-      )
+      ),
     );
   }
 

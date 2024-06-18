@@ -6,15 +6,15 @@ import '../../../domain/usecases/add_favourite_usecase.dart';
 import '../../../domain/usecases/clear_favourite_usecase.dart';
 import '../../../domain/usecases/get_favourites_usecase.dart';
 import '../../../domain/usecases/remove_favourite_usecase.dart';
-import 'favourite_event.dart';
+import 'favourites_event.dart';
 
-class FavouriteBloc extends Bloc<FavouriteEvent, AppState<List<TouristPlace>>> {
+class FavouritesBloc extends Bloc<FavouritesEvent, AppState<List<TouristPlace>>> {
   final GetFavouritesUseCase _getFavouritesUseCase;
   final ClearFavouritesUseCase _clearFavouritesUseCase;
   final AddFavouriteUseCase _addFavouriteUseCase;
   final RemoveFavouriteUseCase _removeFavouriteUseCase;
 
-  FavouriteBloc(
+  FavouritesBloc(
     this._getFavouritesUseCase,
     this._clearFavouritesUseCase,
     this._addFavouriteUseCase,

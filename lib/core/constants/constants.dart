@@ -17,7 +17,7 @@ const Map<String, IconData> dashboardItems = {
   "Recommendation": Icons.star_rounded,
   "Local Cuisine": Icons.emoji_food_beverage_rounded,
   "Itinerary": Icons.location_on_rounded,
-  "Favourite": Icons.favorite_rounded,
+  "Favourites": Icons.favorite_rounded,
   "Settings": Icons.settings_rounded,
   "About": Icons.info_rounded,
 };

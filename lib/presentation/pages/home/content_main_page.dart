@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_resizable_container/flutter_resizable_container.dart';
 import 'package:touristic/core/enums/app_feature.dart';
-import 'package:touristic/presentation/panel/maps_panel.dart';
+import 'package:touristic/presentation/panel/maps_card.dart';
 
 class ContentMainPage extends StatefulWidget {
   final AppFeature feature;
@@ -51,7 +51,7 @@ class _ContentMainPageState extends State<ContentMainPage> {
               ),
               ResizableChild(
                 minSize: query.size.height * 0.4,
-                child: MapsPanel(),
+                child: MapsCard(),
               ),
             ],
           ),

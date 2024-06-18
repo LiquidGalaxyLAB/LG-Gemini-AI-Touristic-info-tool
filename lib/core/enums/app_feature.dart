@@ -6,7 +6,7 @@ enum AppFeature {
   recommendation,
   localCuisine,
   itinerary,
-  favourite,
+  favourites,
   settings,
   about
 }

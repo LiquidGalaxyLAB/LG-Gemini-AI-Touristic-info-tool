@@ -17,7 +17,7 @@ import '../../domain/usecases/get_recommendations_usecase.dart';
 import '../../domain/usecases/get_tourist_places_usecase.dart';
 import '../../domain/usecases/remove_favourite_usecase.dart';
 import '../../presentation/bloc/chat/chat_bloc.dart';
-import '../../presentation/bloc/favourite/favourite_bloc.dart';
+import '../../presentation/bloc/favourites/favourites_bloc.dart';
 import '../../presentation/bloc/home/activties/activities_bloc.dart';
 import '../../presentation/bloc/home/budget_plan/budget_plan_bloc.dart';
 import '../../presentation/bloc/home/cuisines/cuisines_bloc.dart';
@@ -60,8 +60,8 @@ Future<void> initializeDependencies() async {
 
   // Blocs
   sl.registerFactory<ChatBloc>(() => ChatBloc(sl()));
-  sl.registerFactory<FavouriteBloc>(
-      () => FavouriteBloc(sl(), sl(), sl(), sl()));
+  sl.registerFactory<FavouritesBloc>(
+      () => FavouritesBloc(sl(), sl(), sl(), sl()));
   sl.registerFactory<ActivitiesBloc>(() => ActivitiesBloc(sl()));
   sl.registerFactory<ItineraryBloc>(() => ItineraryBloc(sl()));
   sl.registerFactory<BudgetPlanBloc>(() => BudgetPlanBloc(sl()));

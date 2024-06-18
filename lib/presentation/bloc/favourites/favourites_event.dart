@@ -2,30 +2,30 @@ import 'package:equatable/equatable.dart';
 
 import '../../../domain/model/tourist_place.dart';
 
-abstract class FavouriteEvent extends Equatable {
+abstract class FavouritesEvent extends Equatable {
   final TouristPlace? touristPlace;
 
-  const FavouriteEvent({this.touristPlace});
+  const FavouritesEvent({this.touristPlace});
 
   @override
   List<Object> get props => [touristPlace!];
 }
 
-class GetFavourites extends FavouriteEvent {
+class GetFavourites extends FavouritesEvent {
   const GetFavourites();
 }
 
-class ClearFavourites extends FavouriteEvent {
+class ClearFavourites extends FavouritesEvent {
   const ClearFavourites();
 }
 
-class AddFavourite extends FavouriteEvent {
+class AddFavourite extends FavouritesEvent {
   const AddFavourite(
     TouristPlace touristPlace,
   ) : super(touristPlace: touristPlace);
 }
 
-class RemoveFavourite extends FavouriteEvent {
+class RemoveFavourite extends FavouritesEvent {
   const RemoveFavourite(
     TouristPlace touristPlace,
   ) : super(touristPlace: touristPlace);

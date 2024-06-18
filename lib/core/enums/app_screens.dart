@@ -5,7 +5,7 @@ enum AppScreens {
   activity("/activity"),
   cuisine("/cuisine"),
   itinerary("/itinerary"),
-  favourite("/favourite"),
+  favourites("/favourites"),
   settings("/settings"),
   about("/about");
 
