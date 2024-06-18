@@ -2,6 +2,14 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <supports-screens
+        android:smallScreens="false"
+        android:normalScreens="false"
+        android:largeScreens="true"
+        android:xlargeScreens="true"
+        android:requiresSmallestWidthDp="600"
+        android:largestWidthLimitDp="840" />
+
     <application
         android:label="touristic"
         android:name="${applicationName}"
