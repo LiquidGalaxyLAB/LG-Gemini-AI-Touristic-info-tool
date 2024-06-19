@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:touristic/presentation/pages/settings/liquid_galaxy_page.dart';
 
+import '../../../config/theme/app_theme.dart';
 import 'general_settings_page.dart';
-import 'connection_page.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -28,103 +27,90 @@ class _SettingsPageState extends State<SettingsPage>
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
+      extendBody: true,
       appBar: AppBar(
         titleSpacing: 0,
         backgroundColor: Colors.transparent,
         elevation: 0,
-        flexibleSpace: PreferredSize(
-          preferredSize: const Size.fromHeight(40),
-          child: ClipRRect(
-            child: Container(
-              color: Colors.green.shade100,
-              child: TabBar(
-                controller: _tabController,
-                indicatorSize: TabBarIndicatorSize.tab,
-                indicator: _buildIndicator(),
-                labelColor: Colors.white,
-                unselectedLabelColor: Colors.black54,
-                tabs: [
-                  _buildTab(
-                    Icons.settings_accessibility_rounded,
-                    "General",
-                  ),
-                  _buildTab(
-                    Icons.connected_tv_rounded,
-                    "Connection",
-                  ),
-                  _buildTab(
-                    Icons.adb_rounded,
-                    "Liquid Galaxy",
-                  ),
-                ],
+        flexibleSpace: Container(
+          color: AppTheme.gray.shade800,
+          child: TabBar(
+            dividerHeight: 0,
+            padding: EdgeInsets.zero,
+            controller: _tabController,
+            indicatorSize: TabBarIndicatorSize.tab,
+            indicator: UnderlineTabIndicator(
+              insets: const EdgeInsets.symmetric(horizontal: 60),
+              borderRadius: const BorderRadius.vertical(
+                top: Radius.circular(10),
               ),
+              borderSide: BorderSide(
+                color: AppTheme.color.shade700,
+                width: 4.0
+              )
             ),
+            labelColor: AppTheme.gray.shade200,
+            unselectedLabelColor: AppTheme.gray.shade400,
+            tabs: [
+              _buildTab(
+                Icons.settings_accessibility_rounded,
+                "General",
+                _tabController.index == 0,
+              ),
+              _buildTab(
+                Icons.connected_tv_rounded,
+                "Connection",
+                _tabController.index == 1,
+              ),
+              _buildTab(
+                Icons.adb_rounded,
+                "Liquid Galaxy",
+                _tabController.index == 2,
+              ),
+            ],
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.only(top: 50),
+      body: Container(
+        color: AppTheme.gray.shade900,
+        padding: const EdgeInsets.only(top: 48),
         child: TabBarView(
           controller: _tabController,
           children: const [
             GeneralSettingsPage(),
-            ConnectionPage(),
-            LiquidGalaxyPage(),
+            GeneralSettingsPage(),
+            GeneralSettingsPage(),
+            // ConnectionPage(),
+            // LiquidGalaxyPage(),
           ],
         ),
       ),
     );
   }
 
-  BoxDecoration _buildIndicator() {
-    switch (_tabController.index) {
-      case 0:
-        return const BoxDecoration(
-          color: Colors.green,
-          border: Border(bottom: BorderSide(width: 3, color: Colors.red)),
-          borderRadius: BorderRadius.only(
-            topRight: Radius.circular(10),
-          ),
-        );
-      case 2:
-        return const BoxDecoration(
-          color: Colors.green,
-          border: Border(bottom: BorderSide(width: 3, color: Colors.red)),
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(10),
-          ),
-        );
-      default:
-        return const BoxDecoration(
-          color: Colors.green,
-          border: Border(bottom: BorderSide(width: 3, color: Colors.red)),
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(10),
-            topRight: Radius.circular(10),
-          ),
-        );
-    }
-  }
-
   Widget _buildTab(
     IconData iconData,
     String title,
+    bool selected,
   ) {
     return Tab(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(
-              iconData,
+            iconData,
             size: 18,
+            color: selected ? AppTheme.color.shade200 : AppTheme.gray.shade400,
           ),
           const SizedBox(width: 4),
           Text(
             title,
             overflow: TextOverflow.ellipsis,
-            style:  const TextStyle(
+            style: TextStyle(
               fontSize: 18,
-              fontWeight: FontWeight.w600
+              fontWeight: FontWeight.w600,
+              color:
+                  selected ? AppTheme.color.shade200 : AppTheme.gray.shade400,
             ),
           ),
         ],

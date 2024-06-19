@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../config/routes/app_routes.dart';
+import '../config/theme/app_theme.dart';
 import 'widgets/side_bar.dart';
 
 class MainWrapper extends StatefulWidget {
@@ -22,7 +23,8 @@ class _MainWrapperState extends State<MainWrapper> {
             navigatorKey: _navigatorKey,
           ),
           Expanded(
-            child: Padding(
+            child: Container(
+              color: AppTheme.gray.shade800,
               padding: EdgeInsets.only(
                 top: MediaQuery.of(context).viewPadding.top,
               ),
