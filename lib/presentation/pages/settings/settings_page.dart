@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../../../config/theme/app_theme.dart';
+import 'connection_page.dart';
 import 'general_settings_page.dart';
+import 'liquid_galaxy_page.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -78,10 +80,8 @@ class _SettingsPageState extends State<SettingsPage>
           controller: _tabController,
           children: const [
             GeneralSettingsPage(),
-            GeneralSettingsPage(),
-            GeneralSettingsPage(),
-            // ConnectionPage(),
-            // LiquidGalaxyPage(),
+            ConnectionPage(),
+            LiquidGalaxyPage(),
           ],
         ),
       ),
@@ -96,13 +96,14 @@ class _SettingsPageState extends State<SettingsPage>
     return Tab(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Icon(
             iconData,
-            size: 18,
+            size: 16,
             color: selected ? AppTheme.color.shade200 : AppTheme.gray.shade400,
           ),
-          const SizedBox(width: 4),
+          const SizedBox(width: 8),
           Text(
             title,
             overflow: TextOverflow.ellipsis,
