@@ -45,16 +45,20 @@ class _ConnectionPageState extends State<ConnectionPage> {
       color: AppTheme.gray.shade900,
       child: Row(
         children: [
-          StatusPanel(connected: _connected),
-          InputPanel(
-            userController: userController,
-            passController: passController,
-            ipController: ipController,
-            portController: portController,
-            slavesController: slavesController,
-            onPressed: _connectToLiquidGalaxy,
-            connected: _connected,
-          )
+          Expanded(
+            child: StatusPanel(connected: _connected),
+          ),
+          Expanded(
+            child: InputPanel(
+              userController: userController,
+              passController: passController,
+              ipController: ipController,
+              portController: portController,
+              slavesController: slavesController,
+              onPressed: _connectToLiquidGalaxy,
+              connected: _connected,
+            ),
+          ),
         ],
       ),
     );

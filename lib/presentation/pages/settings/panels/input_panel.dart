@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:touristic/presentation/pages/settings/widget/input_field.dart';
 
+import '../../../../config/theme/app_theme.dart';
+
 class InputPanel extends StatelessWidget {
   static const double spacing = 12.0;
   final TextEditingController _userController;
@@ -79,27 +81,23 @@ class InputPanel extends StatelessWidget {
           prefixIcon: Icons.smart_screen_rounded,
         ),
         const SizedBox(height: 28),
-        Align(
-          alignment: Alignment.center,
-          child: FilledButton(
-            onPressed: () {
-              _onPressed();
-            },
-            style: FilledButton.styleFrom(
-              padding: const EdgeInsets.symmetric(
-                vertical: 20,
-                horizontal: 24,
-              ),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(50),
-              ),
+        FilledButton(
+          onPressed: () {
+            _onPressed();
+          },
+          style: FilledButton.styleFrom(
+            fixedSize: const Size(250, 50),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
             ),
-            child: Text(
-              _connected ? "Disconnect" : "Connect",
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w700,
-              ),
+            backgroundColor: AppTheme.color.shade700
+          ),
+          child: Text(
+            _connected ? "Disconnect" : "Connect",
+            style: TextStyle(
+              color: AppTheme.gray.shade200,
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
             ),
           ),
         )
