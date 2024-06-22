@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:touristic/presentation/pages/settings/pages/liquid_galaxy_page.dart';
 
 import '../../../config/theme/app_theme.dart';
 import 'pages/connection_page.dart';
 import 'pages/general_settings_page.dart';
+import 'pages/liquid_galaxy_page.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -42,15 +42,12 @@ class _SettingsPageState extends State<SettingsPage>
             controller: _tabController,
             indicatorSize: TabBarIndicatorSize.tab,
             indicator: UnderlineTabIndicator(
-              insets: const EdgeInsets.symmetric(horizontal: 60),
-              borderRadius: const BorderRadius.vertical(
-                top: Radius.circular(10),
-              ),
-              borderSide: BorderSide(
-                color: AppTheme.color.shade700,
-                width: 4.0
-              )
-            ),
+                insets: const EdgeInsets.symmetric(horizontal: 60),
+                borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(10),
+                ),
+                borderSide:
+                    BorderSide(color: AppTheme.color.shade700, width: 4.0)),
             labelColor: AppTheme.gray.shade200,
             unselectedLabelColor: AppTheme.gray.shade400,
             tabs: [
@@ -79,9 +76,9 @@ class _SettingsPageState extends State<SettingsPage>
         child: TabBarView(
           controller: _tabController,
           children: const [
-            LiquidGalaxyPage(),
             GeneralSettingsPage(),
             ConnectionPage(),
+            LiquidGalaxyPage(),
           ],
         ),
       ),

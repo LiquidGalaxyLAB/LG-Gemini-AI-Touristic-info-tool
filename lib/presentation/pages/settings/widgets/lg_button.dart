@@ -20,7 +20,7 @@ class LGButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: 350,
-      height: 50,
+      height: 60,
       child: FilledButton(
         onPressed: () {
           if (enabled) {

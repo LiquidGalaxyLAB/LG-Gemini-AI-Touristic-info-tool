@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:touristic/config/theme/app_theme.dart';
+
+import '../../../../config/theme/app_theme.dart';
 
 class StatusPanel extends StatelessWidget {
   final bool _connected;
