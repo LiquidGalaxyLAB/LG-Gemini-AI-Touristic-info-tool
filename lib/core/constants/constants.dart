@@ -1,4 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:touristic/config/theme/color/app_color.dart';
+import 'package:touristic/config/theme/color/impl/red_color.dart';
+
+import '../../config/theme/color/impl/blue_color.dart';
+import '../../config/theme/color/impl/green_color.dart';
+import '../../config/theme/color/impl/indigo_color.dart';
+import '../../config/theme/color/impl/pink_color.dart';
+import '../../config/theme/color/impl/purple_color.dart';
+import '../../config/theme/color/impl/yellow_color.dart';
+import '../../config/theme/maps_theme.dart';
 
 const String geminiBaseUrl = "";
 const String openAiBaseUrl = "";
@@ -20,4 +30,21 @@ const Map<String, IconData> dashboardItems = {
   "Favourites": Icons.favorite_rounded,
   "Settings": Icons.settings_rounded,
   "About": Icons.info_rounded,
+};
+
+List<AppColor> appThemes = [
+  RedColor(), YellowColor(), GreenColor(), BlueColor(), IndigoColor(), PurpleColor(), PinkColor(),
+];
+
+List<String> mapsStyles = [];
+
+const Map<String, String> mapsThemesMap = {
+  "assets/maps/none.png": mapsThemeNone,
+  "assets/maps/blue.png": mapsThemeBlue,
+  "assets/maps/pink.png": mapsThemePink,
+  "assets/maps/indigo.png": mapsThemeIndigo,
+  "assets/maps/red.png": mapsThemeRed,
+  "assets/maps/green.png": mapsThemeGreen,
+  "assets/maps/purple.png": mapsThemePurple,
+  "assets/maps/yellow.png": mapsThemeYellow,
 };

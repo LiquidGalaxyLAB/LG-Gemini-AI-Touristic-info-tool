@@ -74,6 +74,7 @@ class _SettingsPageState extends State<SettingsPage>
         color: AppTheme.gray.shade900,
         padding: const EdgeInsets.only(top: 48),
         child: TabBarView(
+          physics: const NeverScrollableScrollPhysics(),
           controller: _tabController,
           children: const [
             GeneralSettingsPage(),
