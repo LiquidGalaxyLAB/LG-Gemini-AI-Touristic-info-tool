@@ -19,7 +19,7 @@ class SideBar extends StatefulWidget {
 
 class _SideBarState extends State<SideBar> {
   bool _expanded = true;
-  AppFeature _selected = AppFeature.settings;
+  AppFeature _selected = AppFeature.chat;
 
   @override
   Widget build(BuildContext context) {
