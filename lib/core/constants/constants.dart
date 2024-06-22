@@ -36,15 +36,20 @@ List<AppColor> appThemes = [
   RedColor(), YellowColor(), GreenColor(), BlueColor(), IndigoColor(), PurpleColor(), PinkColor(),
 ];
 
-List<String> mapsStyles = [];
+List<String> mapsStyles = [
+  "assets/maps/style/normal.png",
+  "assets/maps/style/terrain.png",
+  "assets/maps/style/satellite.png",
+  "assets/maps/style/hybrid.png",
+];
 
 const Map<String, String> mapsThemesMap = {
-  "assets/maps/none.png": mapsThemeNone,
-  "assets/maps/blue.png": mapsThemeBlue,
-  "assets/maps/pink.png": mapsThemePink,
-  "assets/maps/indigo.png": mapsThemeIndigo,
-  "assets/maps/red.png": mapsThemeRed,
-  "assets/maps/green.png": mapsThemeGreen,
-  "assets/maps/purple.png": mapsThemePurple,
-  "assets/maps/yellow.png": mapsThemeYellow,
+  "assets/maps/theme/none.png": mapsThemeNone,
+  "assets/maps/theme/blue.png": mapsThemeBlue,
+  "assets/maps/theme/pink.png": mapsThemePink,
+  "assets/maps/theme/indigo.png": mapsThemeIndigo,
+  "assets/maps/theme/red.png": mapsThemeRed,
+  "assets/maps/theme/green.png": mapsThemeGreen,
+  "assets/maps/theme/purple.png": mapsThemePurple,
+  "assets/maps/theme/yellow.png": mapsThemeYellow,
 };

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 import '../../../../config/theme/app_theme.dart';
-import '../../../../config/theme/color/app_color.dart';
 import '../../../../core/constants/constants.dart';
+import '../panels/color_card.dart';
+import '../panels/connection_type_card.dart';
+import '../panels/image_card.dart';
 
 class GeneralSettingsPage extends StatefulWidget {
   const GeneralSettingsPage({super.key});
@@ -13,12 +15,12 @@ class GeneralSettingsPage extends StatefulWidget {
 
 class _GeneralSettingsPageState extends State<GeneralSettingsPage> {
   static const double spacing = 12.0;
-  bool _autoConnect = true;
 
-  final _mapsThemes = mapsThemesMap.entries.toList();
+  final _mapsThemes = mapsThemesMap.keys.toList();
   final _mapsStyles = mapsStyles;
   final _appThemes = appThemes;
 
+  int _selectedConnectionMethod = 0;
   int _selectedAppTheme = 0;
   int _selectedMapsStyle = 0;
   int _selectedMapsTheme = 0;
@@ -31,24 +33,35 @@ class _GeneralSettingsPageState extends State<GeneralSettingsPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Auto Connect",
+            "Connection Method",
             style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
                 color: AppTheme.gray.shade400),
           ),
           const SizedBox(height: 6),
-          Switch(
-            value: _autoConnect,
-            activeTrackColor: AppTheme.color.shade700,
-            activeColor: AppTheme.gray.shade200,
-            inactiveTrackColor: AppTheme.gray.shade200,
-            inactiveThumbColor: AppTheme.gray.shade400,
-            onChanged: (value) {
-              setState(() {
-                _autoConnect = value;
-              });
-            },
+          Row(
+            children: [
+              ConnectionTypeCard(
+                label: "Automatic",
+                selected: _selectedConnectionMethod == 0,
+                onPressed: () {
+                  setState(() {
+                    _selectedConnectionMethod = 0;
+                  });
+                },
+              ),
+              const SizedBox(width: spacing),
+              ConnectionTypeCard(
+                label: "Manual",
+                selected: _selectedConnectionMethod == 1,
+                onPressed: () {
+                  setState(() {
+                    _selectedConnectionMethod = 1;
+                  });
+                },
+              ),
+            ],
           ),
           const SizedBox(height: spacing * 2),
           Text(
@@ -67,10 +80,10 @@ class _GeneralSettingsPageState extends State<GeneralSettingsPage> {
               itemBuilder: (BuildContext context, int index) {
                 return Row(
                   children: [
-                    _buildColorCard(
-                      _appThemes[index],
-                      _selectedAppTheme == index,
-                      () {
+                    ColorCard(
+                      color: _appThemes[index],
+                      selected: _selectedAppTheme == index,
+                      onTap: () {
                         setState(() {
                           _selectedAppTheme = index;
                         });
@@ -92,21 +105,22 @@ class _GeneralSettingsPageState extends State<GeneralSettingsPage> {
           ),
           const SizedBox(height: 6),
           SizedBox(
-            height: 60,
+            height: 100,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: _mapsStyles.length,
               itemBuilder: (BuildContext context, int index) {
                 return Row(
                   children: [
-                    _buildImageCard(
-                      _mapsStyles[index],
-                      _selectedMapsStyle == index,
-                      () {
+                    ImageCard(
+                      name: _mapsStyles[index],
+                      selected: _selectedMapsStyle == index,
+                      onTap: () {
                         setState(() {
                           _selectedMapsStyle = index;
                         });
                       },
+                      scale: 4,
                     ),
                     if (index < 9) const SizedBox(width: 12.0)
                   ],
@@ -124,17 +138,17 @@ class _GeneralSettingsPageState extends State<GeneralSettingsPage> {
           ),
           const SizedBox(height: 6),
           SizedBox(
-            height: 60,
+            height: 100,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: _mapsThemes.length,
               itemBuilder: (BuildContext context, int index) {
                 return Row(
                   children: [
-                    _buildImageCard(
-                      mapsThemesMap[_mapsThemes[index]]!,
-                      _selectedMapsTheme == index,
-                      () {
+                    ImageCard(
+                      name: _mapsThemes[index],
+                      selected: _selectedMapsTheme == index,
+                      onTap: () {
                         setState(() {
                           _selectedMapsTheme = index;
                         });
@@ -148,50 +162,6 @@ class _GeneralSettingsPageState extends State<GeneralSettingsPage> {
           ),
           const SizedBox(height: spacing),
         ],
-      ),
-    );
-  }
-
-  Widget _buildImageCard(
-    String name,
-    bool selected,
-    Function onTap,
-  ) {
-    return GestureDetector(
-      onTap: () {
-        onTap();
-      },
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 250),
-        width: 100,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10.0),
-          border: Border.all(
-            color: AppTheme.color.shade700,
-            width: 1.3,
-          ),
-        ),
-        child: Image.asset(name),
-      ),
-    );
-  }
-
-  Widget _buildColorCard(
-    AppColor color,
-    bool selected,
-    Function onTap,
-  ) {
-    return GestureDetector(
-      onTap: () {
-        onTap();
-      },
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 250),
-        width: 100,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10.0),
-          color: selected ? color.shade700 : color.shade800,
-        ),
       ),
     );
   }
