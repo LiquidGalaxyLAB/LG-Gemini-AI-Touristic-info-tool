@@ -79,8 +79,8 @@ class _SettingsPageState extends State<SettingsPage>
         child: TabBarView(
           controller: _tabController,
           children: const [
-            GeneralSettingsPage(),
             ConnectionPage(),
+            GeneralSettingsPage(),
             LiquidGalaxyPage(),
           ],
         ),

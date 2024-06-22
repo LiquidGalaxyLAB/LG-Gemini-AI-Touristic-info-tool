@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../config/theme/app_theme.dart';
 import '../../../service/lg_service.dart';
-import '../../widgets/lg_button.dart';
+import 'widget/lg_button.dart';
 
 class LiquidGalaxyPage extends StatefulWidget {
   const LiquidGalaxyPage({super.key});
