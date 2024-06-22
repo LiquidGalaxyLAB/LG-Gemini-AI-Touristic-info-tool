@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:touristic/presentation/pages/settings/panels/input_panel.dart';
 import 'package:touristic/presentation/pages/settings/panels/status_panel.dart';
 
-import '../../../config/theme/app_theme.dart';
-import '../../../service/lg_service.dart';
+import '../../../../config/theme/app_theme.dart';
+import '../../../../service/lg_service.dart';
 
 const String connect = "Connect";
 const String disconnect = "Disconnect";
@@ -46,7 +46,12 @@ class _ConnectionPageState extends State<ConnectionPage> {
       child: Row(
         children: [
           Expanded(
-            child: StatusPanel(connected: _connected),
+            child: StatusPanel(
+              connected: _connected,
+              iconData: Icons.connect_without_contact_rounded,
+              title: "Establish Connection with LG",
+              description: "We will establish a connection with Liquid Galaxy to display data.",
+            ),
           ),
           Expanded(
             child: InputPanel(

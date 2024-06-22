@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:touristic/presentation/pages/settings/pages/liquid_galaxy_page.dart';
 
 import '../../../config/theme/app_theme.dart';
-import 'connection_page.dart';
-import 'general_settings_page.dart';
-import 'liquid_galaxy_page.dart';
+import 'pages/connection_page.dart';
+import 'pages/general_settings_page.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -79,9 +79,9 @@ class _SettingsPageState extends State<SettingsPage>
         child: TabBarView(
           controller: _tabController,
           children: const [
-            ConnectionPage(),
-            GeneralSettingsPage(),
             LiquidGalaxyPage(),
+            GeneralSettingsPage(),
+            ConnectionPage(),
           ],
         ),
       ),

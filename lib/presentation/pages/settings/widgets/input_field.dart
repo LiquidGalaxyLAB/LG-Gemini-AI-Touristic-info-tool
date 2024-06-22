@@ -50,7 +50,8 @@ class _InputFieldState extends State<InputField> {
 
   @override
   Widget build(BuildContext context) {
-    Color iconColor = _focusNode.hasFocus ? AppTheme.gray.shade400 : AppTheme.gray.shade700;
+    Color iconColor =
+        _focusNode.hasFocus ? AppTheme.gray.shade400 : AppTheme.gray.shade700;
 
     return SizedBox(
       width: 350,
@@ -106,11 +107,11 @@ class _InputFieldState extends State<InputField> {
                 )
               : null,
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(10),
             borderSide: BorderSide(color: AppTheme.gray.shade700),
           ),
           focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(10),
             borderSide: BorderSide(color: AppTheme.color.shade700, width: 1.3),
           ),
           floatingLabelStyle: TextStyle(

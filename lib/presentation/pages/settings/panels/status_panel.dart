@@ -3,11 +3,20 @@ import 'package:touristic/config/theme/app_theme.dart';
 
 class StatusPanel extends StatelessWidget {
   final bool _connected;
+  final String _title;
+  final String _description;
+  final IconData _iconData;
 
   const StatusPanel({
     super.key,
     required bool connected,
-  }) : _connected = connected;
+    required String title,
+    required String description,
+    required IconData iconData,
+  })  : _title = title,
+        _description = description,
+        _iconData = iconData,
+        _connected = connected;
 
   @override
   Widget build(BuildContext context) {
@@ -16,13 +25,13 @@ class StatusPanel extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Icon(
-          Icons.connect_without_contact_rounded,
+          _iconData,
           color: AppTheme.gray.shade400,
           size: 72,
         ),
         const SizedBox(height: 12),
         Text(
-          'Establish Connection with LG',
+          _title,
           style: TextStyle(
             color: AppTheme.gray.shade400,
             fontSize: 20,
@@ -31,7 +40,7 @@ class StatusPanel extends StatelessWidget {
           textAlign: TextAlign.center,
         ),
         Text(
-          'We will establish a connection with Liquid Galaxy to display data.',
+          _description,
           style: TextStyle(
             color: AppTheme.gray.shade400,
             fontSize: 12,

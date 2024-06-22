@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:touristic/presentation/pages/settings/widget/input_field.dart';
 
 import '../../../../config/theme/app_theme.dart';
+import '../widgets/input_field.dart';
 
 class InputPanel extends StatelessWidget {
   static const double spacing = 12.0;
@@ -90,7 +90,7 @@ class InputPanel extends StatelessWidget {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),
-            backgroundColor: AppTheme.color.shade700
+            backgroundColor: AppTheme.color.shade700,
           ),
           child: Text(
             _connected ? "Disconnect" : "Connect",
