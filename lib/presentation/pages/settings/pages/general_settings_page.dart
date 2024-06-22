@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../../../../config/theme/app_theme.dart';
 import '../../../../core/constants/constants.dart';
-import '../panels/color_card.dart';
-import '../panels/connection_type_card.dart';
-import '../panels/image_card.dart';
+import '../widgets/color_card.dart';
+import '../widgets/connection_type_card.dart';
+import '../widgets/image_card.dart';
 
 class GeneralSettingsPage extends StatefulWidget {
   const GeneralSettingsPage({super.key});
