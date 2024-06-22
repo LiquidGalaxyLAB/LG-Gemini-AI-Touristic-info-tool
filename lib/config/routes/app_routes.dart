@@ -15,9 +15,9 @@ class AppRoutes {
   static const String recommendation = "/recommendation";
   static const String cuisine = "/cuisine";
   static const String itinerary = "/itinerary";
-  static const String favourites = "/";
+  static const String favourites = "/favourites";
   static const String settings = "/settings";
-  static const String about = "/";
+  static const String about = "/about";
 
   static const Map<int, String> routeMap = {
     0: AppRoutes.chat,
