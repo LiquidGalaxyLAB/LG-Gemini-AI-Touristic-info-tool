@@ -1,257 +1,248 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+import 'package:touristic/presentation/pages/about/widgets/social_button.dart';
 
-class AboutPage extends StatelessWidget {
+import '../../../config/theme/app_theme.dart';
+
+const String appDescription = """The Gemini AI-based touristic app utilizes advanced AI through Gemini API to offer personalized travel recommendations and interactive experiences. Available on Android and compatible with Liquid Galaxy, it facilitates easy exploration of tourist places, budget planning, and interactive chat-based guidance.
+
+Users can explore global tourist destinations, receive personalized itinerary suggestions, and interact via AI-powered chatbots for real-time travel advice. The app seamlessly integrates with Liquid Galaxy for immersive visualizations of geographical data and touristic locations, enhancing user engagement and travel planning efficiency.""";
+
+const String lgDescription =
+    """Liquid Galaxy is a remarkable panoramic system that is tremendously compelling. It started off as a Google 20% project created by Google engineer Jason Holt to run Google Earth across a cluster of PC's and it has grown from there!
+
+Liquid Galaxy hardware consists of 3 or more computers driving multiple displays, usually one computer for each display. Liquid Galaxy applications have been developed using a master/slave architecture. The view orientation of each slave display is configured in reference to the view of the master display. Navigation on the system is done from the master instance and the location on the master is broadcast to the slaves over UDP. The slave instances, knowing their own locations in reference to the master, then change their views accordingly.""";
+
+class AboutPage extends StatefulWidget {
+  static const double spacing = 24.0;
+  static const double gap = 6.0;
+
+  final IconData twitter = const IconData(
+    0xf099,
+    fontFamily: "icons",
+    fontPackage: null,
+  );
+  final IconData github = const IconData(
+    0xf09b,
+    fontFamily: "icons",
+    fontPackage: null,
+  );
+  final IconData linkedin = const IconData(
+    0xf0e1,
+    fontFamily: "icons",
+    fontPackage: null,
+  );
+  final IconData instagram = const IconData(
+    0xf16d,
+    fontFamily: "icons",
+    fontPackage: null,
+  );
+  final IconData googlePlay = const IconData(
+    0xf3ab,
+    fontFamily: "icons",
+    fontPackage: null,
+  );
+
   const AboutPage({super.key});
 
   @override
+  State<AboutPage> createState() => _AboutPageState();
+}
+
+class _AboutPageState extends State<AboutPage> {
+  String _appVersion = "";
+
+  @override
+  void initState() {
+    super.initState();
+    _getAppVersion();
+  }
+
+  void _getAppVersion() async {
+    final appVersion = await PackageInfo.fromPlatform();
+    setState(() {
+      _appVersion = appVersion.version;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              // App logo
-              // Container(
-              //   width: MediaQuery.of(context).size.width * 0.5,
-              //   height: MediaQuery.of(context).size.width * 0.5,
-              //   decoration: BoxDecoration(
-              //     shape: BoxShape.circle,
-              //     image: DecorationImage(
-              //       image: AssetImage('assets/img_face.png'),
-              //       fit: BoxFit.cover,
-              //     ),
-              //   ),
-              // ),
-              SizedBox(height: 15),
-
-              // App name
-              Text(
-                'App Name',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.w800,
-                  fontSize: 28,
-                ),
+    return Container(
+      color: AppTheme.gray.shade900,
+      padding: const EdgeInsets.all(12.0),
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              color: Colors.red,
+              width: 250,
+              height: 250,
+            ),
+            const SizedBox(height: AboutPage.spacing),
+            _buildHeaderText("App Name", fontSize: 28),
+            const SizedBox(height: AboutPage.gap),
+            _buildDescriptionText(appDescription),
+            const SizedBox(height: AboutPage.spacing),
+            Divider(
+              color: AppTheme.gray.shade800,
+              thickness: 1,
+              indent: MediaQuery.of(context).size.width * 0.2,
+              endIndent: MediaQuery.of(context).size.width * 0.2,
+            ),
+            const SizedBox(height: AboutPage.spacing),
+            _buildHeaderText("Developer"),
+            const SizedBox(height: AboutPage.gap),
+            _buildDescriptionText("Sidharth Mudgil"),
+            const SizedBox(height: AboutPage.gap),
+            _buildDeveloperSocials(),
+            const SizedBox(height: AboutPage.spacing),
+            SvgPicture.asset(
+              "assets/images/lg_logo.svg",
+              width: 450,
+              height: 250,
+            ),
+            const SizedBox(height: AboutPage.spacing),
+            _buildDescriptionText(lgDescription),
+            const SizedBox(height: AboutPage.spacing),
+            Divider(
+              color: AppTheme.gray.shade800,
+              thickness: 1,
+              indent: MediaQuery.of(context).size.width * 0.2,
+              endIndent: MediaQuery.of(context).size.width * 0.2,
+            ),
+            const SizedBox(height: AboutPage.spacing),
+            _buildHeaderText("Organization"),
+            const SizedBox(height: AboutPage.gap),
+            _buildDescriptionText("Liquid Galaxy"),
+            const SizedBox(height: AboutPage.gap),
+            _buildOrganizationSocials(),
+            const SizedBox(height: AboutPage.spacing),
+            _buildHeaderText("Credits"),
+            const SizedBox(height: AboutPage.gap),
+            _buildDescriptionText("Special thanks to all contributors."),
+            const SizedBox(height: AboutPage.spacing),
+            Text(
+              _appVersion,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: AppTheme.gray.shade700,
+                fontWeight: FontWeight.w400,
+                fontSize: 16,
               ),
-              SizedBox(height: 5),
-
-              // App description
-              Text(
-                'This is a brief description of the app.',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 18,
-                ),
-              ),
-              SizedBox(height: 25),
-
-              // Divider
-              Divider(
-                color: Colors.black,
-                thickness: 1,
-                indent: MediaQuery.of(context).size.width * 0.2,
-                endIndent: MediaQuery.of(context).size.width * 0.2,
-              ),
-              SizedBox(height: 25),
-
-              // Developer label
-              Text(
-                'Developer',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.w800,
-                  fontSize: 14,
-                ),
-              ),
-              SizedBox(height: 5),
-
-              // Developer name
-              Text(
-                'John Doe',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 18,
-                ),
-              ),
-              SizedBox(height: 10),
-
-              // Developer social media icons
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  IconButton(
-                    icon: Icon(Icons.email),
-                    onPressed: () {},
-                    color: Colors.black,
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.code),
-                    onPressed: () {},
-                    color: Colors.black,
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.linked_camera),
-                    onPressed: () {},
-                    color: Colors.black,
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.question_answer),
-                    onPressed: () {},
-                    color: Colors.black,
-                  ),
-                ],
-              ),
-              SizedBox(height: 35),
-
-              // Organization logo
-              Container(
-                width: MediaQuery.of(context).size.width * 0.7,
-                height: MediaQuery.of(context).size.width * 0.7,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  image: DecorationImage(
-                    image: AssetImage('assets/img_hand.png'),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-              SizedBox(height: 35),
-
-              // Organization description
-              Text(
-                'This is a brief description of the organization.',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 18,
-                ),
-              ),
-              SizedBox(height: 25),
-
-              // Divider
-              Divider(
-                color: Colors.black,
-                thickness: 1,
-                indent: MediaQuery.of(context).size.width * 0.2,
-                endIndent: MediaQuery.of(context).size.width * 0.2,
-              ),
-              SizedBox(height: 25),
-
-              // Organization label
-              Text(
-                'Organization',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.w800,
-                  fontSize: 14,
-                ),
-              ),
-              SizedBox(height: 5),
-
-              // Organization name
-              Text(
-                'Tech Solutions',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 18,
-                ),
-              ),
-              SizedBox(height: 10),
-
-              // Organization social media icons
-              Wrap(
-                alignment: WrapAlignment.center,
-                spacing: 15,
-                children: [
-                  IconButton(
-                    icon: Icon(Icons.web),
-                    onPressed: () {},
-                    color: Colors.black,
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.email),
-                    onPressed: () {},
-                    color: Colors.black,
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.code),
-                    onPressed: () {},
-                    color: Colors.black,
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.camera),
-                    onPressed: () {},
-                    color: Colors.black,
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.linked_camera),
-                    onPressed: () {},
-                    color: Colors.black,
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.question_answer),
-                    onPressed: () {},
-                    color: Colors.black,
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.phone_android),
-                    onPressed: () {},
-                    color: Colors.black,
-                  ),
-                ],
-              ),
-              SizedBox(height: 25),
-
-              // Credits label
-              Text(
-                'Credits',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.w800,
-                  fontSize: 14,
-                ),
-              ),
-              SizedBox(height: 5),
-
-              // Credits text
-              Text(
-                'Special thanks to all contributors.',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 18,
-                ),
-              ),
-              SizedBox(height: 25),
-
-              // App version
-              Text(
-                'Version 1.0',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 16,
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
+    );
+  }
+
+  Widget _buildIconButton(
+    IconData iconData,
+    Function onClick,
+  ) {
+    return Placeholder();
+  }
+
+  Widget _buildHeaderText(
+    String text, {
+    double fontSize = 18,
+  }) {
+    return Text(
+      text,
+      textAlign: TextAlign.center,
+      style: TextStyle(
+        color: AppTheme.gray.shade400,
+        fontWeight: FontWeight.w600,
+        fontSize: fontSize,
+      ),
+    );
+  }
+
+  Widget _buildDescriptionText(String text) {
+    return Text(
+      text,
+      textAlign: TextAlign.center,
+      style: TextStyle(
+        color: AppTheme.gray.shade300,
+        fontWeight: FontWeight.w500,
+        fontSize: 16,
+      ),
+    );
+  }
+
+  Widget _buildDeveloperSocials() {
+    String authorEmail = 'smudgil101@gmail.com';
+    String authorGitHub = 'sidharthmudgil';
+    String authorLinkedIn = 'sidharthmudgil';
+
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        SocialButton(
+          tooltip: authorEmail,
+          iconData: Icons.mail_rounded,
+          url: authorEmail,
+        ),
+        SocialButton(
+          tooltip: authorGitHub,
+          iconData: widget.github,
+          url: authorGitHub,
+        ),
+        SocialButton(
+          tooltip: authorLinkedIn,
+          iconData: widget.linkedin,
+          url: authorLinkedIn,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildOrganizationSocials() {
+    String orgInstagram = '_liquidgalaxy';
+    String orgTwitter = '_liquidgalaxy';
+    String orgGitHub = 'LiquidGalaxyLAB';
+    String orgLinkedIn = 'google-summer-of-code---liquid-galaxy-project';
+    String orgWebsite = 'www.liquidgalaxy.eu';
+    String orgMail = 'liquidgalaxylab@gmail.com';
+
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        SocialButton(
+          tooltip: "@$orgInstagram",
+          iconData: widget.instagram,
+          url: orgInstagram,
+        ),
+        SocialButton(
+          tooltip: "@$orgTwitter",
+          iconData: widget.twitter,
+          url: orgTwitter,
+        ),
+        SocialButton(
+          tooltip: orgGitHub,
+          iconData: widget.github,
+          url: orgGitHub,
+        ),
+        SocialButton(
+          tooltip: "company/$orgLinkedIn",
+          iconData: widget.linkedin,
+          url: orgLinkedIn,
+        ),
+        SocialButton(
+          tooltip: orgWebsite,
+          iconData: Icons.language_rounded,
+          url: orgWebsite,
+        ),
+        SocialButton(
+          tooltip: orgMail,
+          iconData: Icons.mail_rounded,
+          url: orgMail,
+        ),
+      ],
     );
   }
 }
