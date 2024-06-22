@@ -1,8 +1,12 @@
+import 'dart:async';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:touristic/config/theme/app_theme.dart';
 import 'package:touristic/domain/model/tourist_place.dart';
-import 'package:touristic/presentation/pages/favourites/widgets/favourite_card.dart';
-import 'package:touristic/presentation/pages/favourites/widgets/favourite_details_card.dart';
+import 'package:touristic/presentation/pages/favourites/panels/favourite_card.dart';
+import 'package:touristic/presentation/pages/favourites/panels/favourite_details_card.dart';
 import 'package:touristic/presentation/panel/maps_card.dart';
 
 class FavouritesPage extends StatefulWidget {
@@ -16,16 +20,27 @@ class _FavouritesPageState extends State<FavouritesPage> {
   var _selected = 0;
   List<TouristPlace> favourites = [];
   static const double spacing = 12.0;
+  final Completer<GoogleMapController> _controller =
+  Completer<GoogleMapController>();
+
+  // final CameraPosition _cameraPosition = CameraPosition(
+  //   target: LatLng(
+  //     favourites[_selected].longitude,
+  //     favourites[_selected].latitude,
+  //   ),
+  //   zoom: 14.4746,
+  // );
 
   @override
   void initState() {
     super.initState();
+    final random = Random();
     for (int i = 0; i < 10; i++) {
       favourites.add(TouristPlace(
         name: "Beautiful Place$i",
         location: "Haryana",
-        latitude: 12.9716,
-        longitude: 77.5946,
+        latitude: double.parse((random.nextDouble() * 1000).toStringAsFixed(2)),
+        longitude: double.parse((random.nextDouble() * 100).toStringAsFixed(2)),
         history: "This place has a rich history...",
         significance: "It is significant because...",
         cuisine: "Famous for its delicious cuisine...",
@@ -50,9 +65,18 @@ class _FavouritesPageState extends State<FavouritesPage> {
             flex: 5,
             child: Column(
               children: [
-                const Flexible(
+                Flexible(
                   flex: 4,
-                  child: MapsCard(),
+                  child: MapsCard(
+                    cameraPosition: CameraPosition(
+                      target: LatLng(
+                        favourites[_selected].longitude,
+                        favourites[_selected].latitude,
+                      ),
+                      zoom: 7,
+                    ),
+                    controller: _controller,
+                  ),
                 ),
                 const SizedBox(height: spacing),
                 Flexible(
@@ -69,9 +93,7 @@ class _FavouritesPageState extends State<FavouritesPage> {
     );
   }
 
-  Widget _buildFavouriteList(
-    List<TouristPlace> favourites,
-  ) {
+  Widget _buildFavouriteList(List<TouristPlace> favourites,) {
     return Container(
       padding: const EdgeInsets.all(spacing),
       decoration: BoxDecoration(
@@ -93,6 +115,7 @@ class _FavouritesPageState extends State<FavouritesPage> {
                     setState(() {
                       _selected = index;
                     });
+                    _goToFavourite();
                   },
                 ),
                 if (index < favourites.length - 1) const SizedBox(height: 8)
@@ -101,6 +124,19 @@ class _FavouritesPageState extends State<FavouritesPage> {
           },
         ),
       ),
+    );
+  }
+
+  Future<void> _goToFavourite() async {
+    final GoogleMapController controller = await _controller.future;
+    await controller.animateCamera(
+      CameraUpdate.newCameraPosition(CameraPosition(
+        target: LatLng(
+          favourites[_selected].longitude,
+          favourites[_selected].latitude,
+        ),
+        zoom: 7,
+      ),),
     );
   }
 }

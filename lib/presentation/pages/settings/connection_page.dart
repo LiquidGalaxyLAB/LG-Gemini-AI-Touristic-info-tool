@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:touristic/presentation/pages/settings/panels/input_panel.dart';
+import 'package:touristic/presentation/pages/settings/panels/status_panel.dart';
 
 import '../../../config/theme/app_theme.dart';
 import '../../../service/lg_service.dart';
-import 'widget/input_field.dart';
 
 const String connect = "Connect";
 const String disconnect = "Disconnect";
@@ -44,8 +45,16 @@ class _ConnectionPageState extends State<ConnectionPage> {
       color: AppTheme.gray.shade900,
       child: Row(
         children: [
-          Container(),
-          _buildInputPanel()
+          StatusPanel(connected: _connected),
+          InputPanel(
+            userController: userController,
+            passController: passController,
+            ipController: ipController,
+            portController: portController,
+            slavesController: slavesController,
+            onPressed: _connectToLiquidGalaxy,
+            connected: _connected,
+          )
         ],
       ),
     );
@@ -91,105 +100,5 @@ class _ConnectionPageState extends State<ConnectionPage> {
     );
 
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
-  }
-
-  Widget _buildSidePanel() {
-    return Column(
-      children: [
-        const SizedBox(height: 16),
-        const Text(
-          'Establish connection with LG',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
-          textAlign: TextAlign.center,
-        ),
-        const SizedBox(height: 8),
-        Text(
-          _connected ? 'Connected' : 'Disconnected',
-          style: TextStyle(
-            color: _connected ? Colors.green : Colors.red,
-            fontSize: 28,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildInputPanel() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        InputField(
-          label: "Username",
-          hint: "lg",
-          controller: userController,
-          type: TextInputType.name,
-          prefixIcon: Icons.person_rounded,
-        ),
-        const SizedBox(height: spacing),
-        InputField(
-          label: "Password",
-          hint: "lg",
-          controller: passController,
-          type: TextInputType.visiblePassword,
-          prefixIcon: Icons.key_rounded,
-          suffixIcons: const [
-            Icons.visibility_rounded,
-            Icons.visibility_off_rounded,
-          ],
-        ),
-        const SizedBox(height: spacing),
-        InputField(
-          label: "IP Address",
-          hint: "192.168.0.1",
-          controller: ipController,
-          type: TextInputType.phone,
-          prefixIcon: Icons.router_rounded,
-        ),
-        const SizedBox(height: spacing),
-        InputField(
-          label: "Port Number",
-          hint: "22",
-          controller: portController,
-          type: TextInputType.number,
-          prefixIcon: Icons.account_tree_rounded,
-        ),
-        const SizedBox(height: spacing),
-        InputField(
-          label: "Total Screens",
-          hint: "3",
-          controller: slavesController,
-          type: TextInputType.number,
-          prefixIcon: Icons.smart_screen_rounded,
-        ),
-        const SizedBox(height: 28),
-        Align(
-          alignment: Alignment.center,
-          child: FilledButton(
-            onPressed: _connectToLiquidGalaxy,
-            style: FilledButton.styleFrom(
-              padding: const EdgeInsets.symmetric(
-                vertical: 20,
-                horizontal: 24,
-              ),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(50),
-              ),
-            ),
-            child: Text(
-              _connected ? disconnect : connect,
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-          ),
-        )
-      ],
-    );
   }
 }
