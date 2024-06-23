@@ -34,13 +34,14 @@ class LayoutBlueprint extends StatelessWidget {
       padding: const EdgeInsets.all(spacing),
       child: Row(
         children: [
-          Flexible(
+          Expanded(
             flex: 5,
             child: Column(
               children: [
-                Flexible(
-                  flex: _panelDividedLeft == null ? 10 : 5,
+                Expanded(
+                  flex: _panelDividedLeft == null ? 10 : 6,
                   child: Container(
+                    width: double.infinity,
                     padding: const EdgeInsets.all(spacing),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10.0),
@@ -52,26 +53,27 @@ class LayoutBlueprint extends StatelessWidget {
                 if (_panelDividedLeft != null)
                 const SizedBox(height: spacing),
                 if (_panelDividedLeft != null)
-                Flexible(
+                Expanded(
                   flex: 4,
                   child: Container(
+                    width: double.infinity,
                     padding: const EdgeInsets.all(spacing),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10.0),
                       color: AppTheme.gray.shade800,
                     ),
-                    child: _panelRight,
+                    child: _panelDividedLeft,
                   ),
                 ),
               ],
             ),
           ),
           const SizedBox(width: spacing),
-          Flexible(
+          Expanded(
             flex: 5,
             child: Column(
               children: [
-                Flexible(
+                Expanded(
                   flex: 4,
                   child: MapsCard(
                     cameraPosition: _cameraPosition,
@@ -79,15 +81,16 @@ class LayoutBlueprint extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: spacing),
-                Flexible(
+                Expanded(
                   flex: 5,
                   child: Container(
+                    width: double.infinity,
                     padding: const EdgeInsets.all(spacing),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10.0),
                       color: AppTheme.gray.shade800,
                     ),
-                    child: _panelDividedLeft,
+                    child: _panelRight,
                   ),
                 ),
               ],

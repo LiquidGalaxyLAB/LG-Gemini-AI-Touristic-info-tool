@@ -6,6 +6,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../../config/theme/app_theme.dart';
 import '../../components/layout_blueprint.dart';
 import '../../components/maps_card.dart';
+import '../../components/user_input_card.dart';
 
 class ItineraryPage extends StatefulWidget {
 
@@ -30,7 +31,9 @@ class _ItineraryPageState extends State<ItineraryPage> {
         zoom: 7,
       ),
       controller: _controller,
-      panelLeft: Placeholder(),
+      panelLeft: UserInputCard(
+        onContinueClick: () {},
+      ),
       panelRight: Placeholder(),
       panelDividedLeft: Placeholder(),
     );

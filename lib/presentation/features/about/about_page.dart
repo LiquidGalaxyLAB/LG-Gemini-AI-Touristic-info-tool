@@ -82,7 +82,7 @@ class _AboutPageState extends State<AboutPage> {
               height: 250,
             ),
             const SizedBox(height: AboutPage.spacing),
-            _buildHeaderText("App Name", fontSize: 28),
+            _buildHeaderText("Touristic AI", fontSize: 28, fontColor: AppTheme.gray.shade300),
             const SizedBox(height: AboutPage.gap),
             _buildDescriptionText(appDescription),
             const SizedBox(height: AboutPage.spacing),
@@ -142,12 +142,13 @@ class _AboutPageState extends State<AboutPage> {
   Widget _buildHeaderText(
     String text, {
     double fontSize = 18,
+    Color? fontColor,
   }) {
     return Text(
       text,
       textAlign: TextAlign.center,
       style: TextStyle(
-        color: AppTheme.gray.shade400,
+        color: fontColor ?? AppTheme.gray.shade400,
         fontWeight: FontWeight.w600,
         fontSize: fontSize,
       ),

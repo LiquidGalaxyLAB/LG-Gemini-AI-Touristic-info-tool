@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-import '../../../../config/theme/app_theme.dart';
-import '../../../../domain/model/tourist_place.dart';
+import '../../config/theme/app_theme.dart';
+import '../../domain/model/tourist_place.dart';
 
-class FavouriteCard extends StatelessWidget {
+class TouristPlaceCard extends StatelessWidget {
   final Function _onTap;
   final bool _selected;
   final TouristPlace _touristPlace;
 
-  const FavouriteCard({
+  const TouristPlaceCard({
     super.key,
     required TouristPlace touristPlace,
     required bool selected,

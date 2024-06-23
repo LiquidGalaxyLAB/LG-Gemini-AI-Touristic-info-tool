@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:touristic/config/theme/app_theme.dart';
 import 'package:touristic/presentation/main_wrapper.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -27,10 +28,11 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppTheme.gray.shade900,
       body: Center(
         child: Text(
           'Splash Screen',
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.cyanAccent),
         ),
       ),
     );
