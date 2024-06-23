@@ -57,14 +57,14 @@ class _InputCardState extends State<InputCard> {
               style: TextStyle(
                 color: AppTheme.gray.shade300,
                 fontWeight: FontWeight.w400,
-                fontSize: 18,
+                fontSize: 16,
               ),
               decoration: InputDecoration(
                 contentPadding: const EdgeInsets.symmetric(horizontal: 12.0),
                 hintStyle: TextStyle(
                   color: AppTheme.gray.shade700,
                   fontWeight: FontWeight.w400,
-                  fontSize: 18,
+                  fontSize: 16,
                 ),
                 hintText: "Hi Gemini, Recommend me some mountain places to visit in India",
                 enabledBorder: OutlineInputBorder(
