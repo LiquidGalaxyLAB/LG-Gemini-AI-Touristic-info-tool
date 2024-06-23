@@ -22,5 +22,7 @@ class GrayColor implements AppColor {
   @override
   Color get shade800 => const Color(0xFF1F2937);
   @override
-  Color get shade900 => const Color(0xFF111827);
+  Color get shade900 => const Color(0xFF0B111E);
+
+  Color get shade1000 => const Color(0xFF0B1222);
 }

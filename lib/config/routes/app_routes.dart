@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 
-import '../../core/enums/app_feature.dart';
 import '../../presentation/features/about/about_page.dart';
+import '../../presentation/features/activity/activity_page.dart';
+import '../../presentation/features/budget/budget_page.dart';
 import '../../presentation/features/chat/chat_page.dart';
+import '../../presentation/features/cuisine/cuisine_page.dart';
 import '../../presentation/features/favourites/favourites_page.dart';
+import '../../presentation/features/itinerary/itinerary_page.dart';
+import '../../presentation/features/recommendation/recommendation_page.dart';
 import '../../presentation/features/settings/settings_page.dart';
+import '../../presentation/features/tourist_place/tourist_place_page.dart';
 import '../theme/app_theme.dart';
 
 class AppRoutes {
@@ -37,17 +42,17 @@ class AppRoutes {
       case chat:
         return _materialRoute(const ChatPage());
       case place:
-        return _contentMainPageRoute(AppFeature.touristPlace);
+        return _materialRoute(const TouristPlacePage());
       case budget:
-        return _contentMainPageRoute(AppFeature.budgetPlan);
+        return _materialRoute(const BudgetPage());
       case itinerary:
-        return _contentMainPageRoute(AppFeature.itinerary);
+        return _materialRoute(const ItineraryPage());
       case activity:
-        return _contentMainPageRoute(AppFeature.activities);
+        return _materialRoute(const ActivityPage());
       case recommendation:
-        return _contentMainPageRoute(AppFeature.recommendation);
+        return _materialRoute(const RecommendationPage());
       case cuisine:
-        return _contentMainPageRoute(AppFeature.localCuisine);
+        return _materialRoute(const CuisinePage());
       case favourites:
         return _materialRoute(const FavouritesPage());
       case settings:
@@ -57,12 +62,6 @@ class AppRoutes {
       default:
         return _notFoundRoute();
     }
-  }
-
-  static Route<dynamic> _contentMainPageRoute(AppFeature feature) {
-    return _materialRoute(Container(
-      color: AppTheme.purple40,
-    ));
   }
 
   static Route<dynamic> _notFoundRoute() {

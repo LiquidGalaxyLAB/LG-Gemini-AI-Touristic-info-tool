@@ -17,21 +17,27 @@ class _MainWrapperState extends State<MainWrapper> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Row(
-        children: [
-          SideBar(
-            navigatorKey: _navigatorKey,
-          ),
-          Expanded(
-            child: Container(
-              color: AppTheme.gray.shade800,
-              padding: EdgeInsets.only(
-                top: MediaQuery.of(context).viewPadding.top,
+      backgroundColor: AppTheme.gray.shade800,
+      body: Padding(
+        padding: EdgeInsets.only(
+          top: MediaQuery.of(context).viewPadding.top,
+        ),
+        child: Row(
+          children: [
+            Container(
+              color: AppTheme.gray.shade900,
+              child: SideBar(
+                navigatorKey: _navigatorKey,
               ),
-              child: _content(),
             ),
-          )
-        ],
+            Expanded(
+              child: Container(
+                color: AppTheme.gray.shade900,
+                child: _content(),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

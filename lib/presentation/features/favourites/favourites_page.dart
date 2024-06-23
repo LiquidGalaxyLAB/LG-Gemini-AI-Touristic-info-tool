@@ -24,14 +24,6 @@ class _FavouritesPageState extends State<FavouritesPage> {
   final Completer<GoogleMapController> _controller =
       Completer<GoogleMapController>();
 
-  // final CameraPosition _cameraPosition = CameraPosition(
-  //   target: LatLng(
-  //     favourites[_selected].longitude,
-  //     favourites[_selected].latitude,
-  //   ),
-  //   zoom: 14.4746,
-  // );
-
   @override
   void initState() {
     super.initState();

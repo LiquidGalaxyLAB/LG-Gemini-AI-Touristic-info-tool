@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:touristic/config/theme/color/app_color.dart';
+import 'package:touristic/config/theme/color/impl/gray_color.dart';
 import 'package:touristic/config/theme/style/card_theme.dart';
 import 'package:touristic/core/enums/app_color_scheme.dart';
 
@@ -15,7 +16,7 @@ class AppTheme {
 
   static const String notoFont = "Noto";
 
-  static AppColor gray = AppColor(colorScheme: AppColorScheme.gray);
+  static GrayColor gray = GrayColor();
   static AppColor color = AppColor(colorScheme: AppColorScheme.indigo);
 
   static ThemeData appTheme() {

@@ -26,7 +26,7 @@ class _SideBarState extends State<SideBar> {
     final mediaQuery = MediaQuery.of(context);
 
     return Container(
-      color: AppTheme.blue80,
+      color: AppTheme.gray.shade1000,
       padding: EdgeInsets.only(
         top: mediaQuery.viewPadding.top,
         right: 8,
@@ -67,7 +67,7 @@ class _SideBarState extends State<SideBar> {
       },
       child: Icon(
         iconData,
-        color: AppTheme.gray10,
+        color: AppTheme.gray.shade200,
         size: 28,
       ),
     );
@@ -114,8 +114,7 @@ class _SideBarState extends State<SideBar> {
     required bool expanded,
     required Function onTap,
   }) {
-    return InkWell(
-      splashColor: AppTheme.blue70,
+    return GestureDetector(
       onTap: () {
         onTap();
       },
@@ -129,13 +128,13 @@ class _SideBarState extends State<SideBar> {
             Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: selected ? AppTheme.purple40 : AppTheme.blue70,
+                color: selected ? AppTheme.color.shade700 : AppTheme.gray.shade800,
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Icon(
                 iconData,
                 size: 18,
-                color: selected ? AppTheme.gray10 : AppTheme.gray10,
+                color: selected ? AppTheme.gray.shade200 : AppTheme.gray.shade400,
               ),
             ),
             if (expanded)
@@ -146,8 +145,7 @@ class _SideBarState extends State<SideBar> {
               Text(
                 title,
                 style: TextStyle(
-                  color: selected ? AppTheme.gray10 : AppTheme.gray30,
-                  fontFamily: "Noto",
+                  color: selected ? AppTheme.gray.shade200 : AppTheme.gray.shade400,
                   fontWeight: FontWeight.w700,
                 ),
               )
