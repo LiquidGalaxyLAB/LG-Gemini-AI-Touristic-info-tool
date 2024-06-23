@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:touristic/core/enums/chat_role.dart';
-import 'package:touristic/presentation/main_wrapper.dart';
-import 'package:touristic/presentation/pages/chat/widgets/chat_bubble.dart';
-import 'package:touristic/presentation/splash_screen.dart';
 
 import '../config/theme/app_theme.dart';
 import '../di/dependency_injection.dart';
+import 'main_wrapper.dart';
+import 'splash_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,8 +22,8 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.appTheme(),
       initialRoute: SplashScreen.route,
       routes: {
-        SplashScreen.route: (context) => SplashScreen(),
-        "/": (context) => MainWrapper(),
+        SplashScreen.route: (context) => const SplashScreen(),
+        "/": (context) => const MainWrapper(),
       },
     );
   }

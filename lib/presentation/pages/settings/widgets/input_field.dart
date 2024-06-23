@@ -62,6 +62,7 @@ class _InputFieldState extends State<InputField> {
         controller: widget.controller,
         keyboardType: widget.type,
         obscureText: _obscure,
+        cursorColor: AppTheme.color.shade700,
         enableSuggestions: false,
         autocorrect: false,
         textAlign: TextAlign.start,

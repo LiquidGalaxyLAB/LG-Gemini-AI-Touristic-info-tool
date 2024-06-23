@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../config/routes/app_routes.dart';
 import '../config/theme/app_theme.dart';
-import 'widgets/side_bar.dart';
+import 'components/side_bar.dart';
 
 class MainWrapper extends StatefulWidget {
   const MainWrapper({super.key});

@@ -1,72 +1,47 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:touristic/core/enums/chat_role.dart';
+import 'package:touristic/config/theme/app_theme.dart';
 
 class ChatBubble extends StatelessWidget {
-  final ChatRole _role;
+  final bool _isMe;
   final String _message;
   final File? _image;
 
   const ChatBubble({
     super.key,
-    required ChatRole role,
+    required bool isMe,
     required String message,
     File? image,
   })  : _image = image,
-        _role = role,
+        _isMe = isMe,
         _message = message;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        if (_role == ChatRole.gemini)
-        const Icon(
-          Icons.face_rounded,
-        ),
-        Card(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-              topLeft: _role == ChatRole.user ? Radius.circular(10) : Radius.zero,
-              topRight: _role == ChatRole.gemini ? Radius.circular(10) : Radius.zero,
-              bottomLeft: Radius.circular(10),
-              bottomRight: Radius.circular(10),
-            ),
+    return Align(
+      alignment: _isMe ? Alignment.centerRight : Alignment.centerLeft,
+      child: Container(
+        constraints: const BoxConstraints(maxWidth: 550),
+        padding: const EdgeInsets.all(12.0),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(_isMe ? 10.0 : 0.0),
+            topRight: const Radius.circular(10.0),
+            bottomLeft: const Radius.circular(10.0),
+            bottomRight: Radius.circular(_isMe ? 0.0 : 10.0),
           ),
-          margin: const EdgeInsets.only(left: 4),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              vertical: 8,
-              horizontal: 12,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  _role.title,
-                ),
-                if (_image != null)
-                  Image.file(
-                    _image,
-                  ),
-                Text(
-                  _message,
-                  overflow: TextOverflow.visible,
-                ),
-              ],
-            ),
+          color: _isMe ? AppTheme.color.shade700 : AppTheme.gray.shade700,
+        ),
+        child: Text(
+          _message,
+          style: TextStyle(
+            color: _isMe ? AppTheme.gray.shade200 : AppTheme.gray.shade400,
+            fontSize: 18,
+            fontWeight: FontWeight.w400
           ),
         ),
-        if (_role == ChatRole.user)
-          const Icon(
-            Icons.person_rounded,
-          ),
-      ],
+      ),
     );
   }
 }

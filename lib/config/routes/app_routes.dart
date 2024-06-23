@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:touristic/presentation/pages/about/about_page.dart';
-import 'package:touristic/presentation/pages/chat/chat_page_old.dart';
+import 'package:touristic/presentation/pages/chat/chat_page.dart';
 import 'package:touristic/presentation/pages/settings/settings_page.dart';
 
 import '../../core/enums/app_feature.dart';
