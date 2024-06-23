@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-import '../../../domain/model/tourist_place.dart';
+import '../../../../domain/model/tourist_place.dart';
 
 abstract class FavouritesEvent extends Equatable {
   final TouristPlace? touristPlace;

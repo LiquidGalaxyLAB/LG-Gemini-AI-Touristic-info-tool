@@ -3,11 +3,12 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:touristic/config/theme/app_theme.dart';
-import 'package:touristic/domain/model/tourist_place.dart';
-import 'package:touristic/presentation/pages/favourites/panels/favourite_card.dart';
-import 'package:touristic/presentation/pages/favourites/panels/favourite_details_card.dart';
-import 'package:touristic/presentation/panel/maps_card.dart';
+
+import '../../../config/theme/app_theme.dart';
+import '../../../domain/model/tourist_place.dart';
+import '../../components/maps_card.dart';
+import 'panels/favourite_card.dart';
+import 'panels/favourite_details_card.dart';
 
 class FavouritesPage extends StatefulWidget {
   const FavouritesPage({super.key});
@@ -21,7 +22,7 @@ class _FavouritesPageState extends State<FavouritesPage> {
   List<TouristPlace> favourites = [];
   static const double spacing = 12.0;
   final Completer<GoogleMapController> _controller =
-  Completer<GoogleMapController>();
+      Completer<GoogleMapController>();
 
   // final CameraPosition _cameraPosition = CameraPosition(
   //   target: LatLng(
@@ -93,7 +94,9 @@ class _FavouritesPageState extends State<FavouritesPage> {
     );
   }
 
-  Widget _buildFavouriteList(List<TouristPlace> favourites,) {
+  Widget _buildFavouriteList(
+    List<TouristPlace> favourites,
+  ) {
     return Container(
       padding: const EdgeInsets.all(spacing),
       decoration: BoxDecoration(
@@ -130,13 +133,15 @@ class _FavouritesPageState extends State<FavouritesPage> {
   Future<void> _goToFavourite() async {
     final GoogleMapController controller = await _controller.future;
     await controller.animateCamera(
-      CameraUpdate.newCameraPosition(CameraPosition(
-        target: LatLng(
-          favourites[_selected].longitude,
-          favourites[_selected].latitude,
+      CameraUpdate.newCameraPosition(
+        CameraPosition(
+          target: LatLng(
+            favourites[_selected].longitude,
+            favourites[_selected].latitude,
+          ),
+          zoom: 7,
         ),
-        zoom: 7,
-      ),),
+      ),
     );
   }
 }

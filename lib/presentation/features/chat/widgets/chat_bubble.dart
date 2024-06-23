@@ -31,14 +31,14 @@ class ChatBubble extends StatelessWidget {
             bottomLeft: const Radius.circular(10.0),
             bottomRight: Radius.circular(_isMe ? 0.0 : 10.0),
           ),
-          color: _isMe ? AppTheme.color.shade700 : AppTheme.gray.shade700,
+          color: _isMe ? AppTheme.color.shade700 : AppTheme.gray.shade900,
         ),
         child: Text(
           _message,
           style: TextStyle(
-            color: _isMe ? AppTheme.gray.shade200 : AppTheme.gray.shade400,
+            color: _isMe ? AppTheme.gray.shade200 : AppTheme.gray.shade500,
             fontSize: 18,
-            fontWeight: FontWeight.w400
+            fontWeight: FontWeight.w500
           ),
         ),
       ),

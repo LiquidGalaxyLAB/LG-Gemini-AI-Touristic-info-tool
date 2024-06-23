@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../config/theme/app_theme.dart';
-import '../../../domain/model/ChatItem.dart';
+import '../../../domain/model/chat_item.dart';
 import 'widgets/chat_bubble.dart';
 import 'widgets/input_card.dart';
 

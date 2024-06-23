@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:touristic/presentation/pages/about/about_page.dart';
-import 'package:touristic/presentation/pages/chat/chat_page.dart';
-import 'package:touristic/presentation/pages/settings/settings_page.dart';
 
 import '../../core/enums/app_feature.dart';
-import '../../presentation/pages/favourites/favourites_page.dart';
+import '../../presentation/features/about/about_page.dart';
+import '../../presentation/features/chat/chat_page.dart';
+import '../../presentation/features/favourites/favourites_page.dart';
+import '../../presentation/features/settings/settings_page.dart';
 import '../theme/app_theme.dart';
 
 class AppRoutes {
@@ -60,7 +60,9 @@ class AppRoutes {
   }
 
   static Route<dynamic> _contentMainPageRoute(AppFeature feature) {
-    return _materialRoute(Container(color: AppTheme.purple40,));
+    return _materialRoute(Container(
+      color: AppTheme.purple40,
+    ));
   }
 
   static Route<dynamic> _notFoundRoute() {
@@ -83,25 +85,24 @@ class AppRoutes {
 
   static Route<dynamic> _materialRoute(Widget view) {
     return PageRouteBuilder(
-      pageBuilder: (
-        context,
-        animation,
-        secondaryAnimation,
-      ) {
-        return view;
-      },
-      transitionsBuilder: (
-        context,
-        animation,
-        secondaryAnimation,
-        child,
-      ) {
-        return FadeTransition(
-          opacity: animation,
-          child: child,
-        );
-      },
-      transitionDuration: const Duration(milliseconds: 300)
-    );
+        pageBuilder: (
+          context,
+          animation,
+          secondaryAnimation,
+        ) {
+          return view;
+        },
+        transitionsBuilder: (
+          context,
+          animation,
+          secondaryAnimation,
+          child,
+        ) {
+          return FadeTransition(
+            opacity: animation,
+            child: child,
+          );
+        },
+        transitionDuration: const Duration(milliseconds: 300));
   }
 }

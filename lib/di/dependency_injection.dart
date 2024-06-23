@@ -16,15 +16,15 @@ import '../../domain/usecases/get_local_cuisine_usecase.dart';
 import '../../domain/usecases/get_recommendations_usecase.dart';
 import '../../domain/usecases/get_tourist_places_usecase.dart';
 import '../../domain/usecases/remove_favourite_usecase.dart';
-import '../../presentation/bloc/chat/chat_bloc.dart';
-import '../../presentation/bloc/favourites/favourites_bloc.dart';
-import '../../presentation/bloc/home/activties/activities_bloc.dart';
-import '../../presentation/bloc/home/budget_plan/budget_plan_bloc.dart';
-import '../../presentation/bloc/home/cuisines/cuisines_bloc.dart';
-import '../../presentation/bloc/home/itinerary/itinerary_bloc.dart';
-import '../../presentation/bloc/home/recommendations/recommendations_bloc.dart';
-import '../../presentation/bloc/home/tourist_places/tourist_places_bloc.dart';
+import '../presentation/features/activities/bloc/activities_bloc.dart';
+import '../presentation/features/budget/bloc/budget_plan_bloc.dart';
+import '../presentation/features/cuisines/bloc/cuisines_bloc.dart';
+import '../presentation/features/itinerary/bloc/itinerary_bloc.dart';
+import '../presentation/features/recommendations/bloc/recommendations_bloc.dart';
+import '../presentation/features/tourist_place/bloc/tourist_places_bloc.dart';
 import '../core/constants/constants.dart';
+import '../presentation/features/chat/bloc/chat_bloc.dart';
+import '../presentation/features/favourites/bloc/favourites_bloc.dart';
 
 final GetIt sl = GetIt.instance;
 

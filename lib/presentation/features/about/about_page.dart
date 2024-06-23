@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:touristic/presentation/pages/about/widgets/social_button.dart';
 
 import '../../../config/theme/app_theme.dart';
+import 'widgets/social_button.dart';
 
-const String appDescription = """The Gemini AI-based touristic app utilizes advanced AI through Gemini API to offer personalized travel recommendations and interactive experiences. Available on Android and compatible with Liquid Galaxy, it facilitates easy exploration of tourist places, budget planning, and interactive chat-based guidance.
+const String appDescription =
+    """The Gemini AI-based touristic app utilizes advanced AI through Gemini API to offer personalized travel recommendations and interactive experiences. Available on Android and compatible with Liquid Galaxy, it facilitates easy exploration of tourist places, budget planning, and interactive chat-based guidance.
 
 Users can explore global tourist destinations, receive personalized itinerary suggestions, and interact via AI-powered chatbots for real-time travel advice. The app seamlessly integrates with Liquid Galaxy for immersive visualizations of geographical data and touristic locations, enhancing user engagement and travel planning efficiency.""";
 
@@ -136,13 +137,6 @@ class _AboutPageState extends State<AboutPage> {
         ),
       ),
     );
-  }
-
-  Widget _buildIconButton(
-    IconData iconData,
-    Function onClick,
-  ) {
-    return Placeholder();
   }
 
   Widget _buildHeaderText(

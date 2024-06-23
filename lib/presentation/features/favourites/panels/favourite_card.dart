@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:touristic/domain/model/tourist_place.dart';
 
 import '../../../../config/theme/app_theme.dart';
+import '../../../../domain/model/tourist_place.dart';
 
 class FavouriteCard extends StatelessWidget {
   final Function _onTap;

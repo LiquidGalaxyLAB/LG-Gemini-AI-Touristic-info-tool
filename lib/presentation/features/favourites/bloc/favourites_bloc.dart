@@ -1,11 +1,11 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../core/resources/app_state.dart';
-import '../../../domain/model/tourist_place.dart';
-import '../../../domain/usecases/add_favourite_usecase.dart';
-import '../../../domain/usecases/clear_favourite_usecase.dart';
-import '../../../domain/usecases/get_favourites_usecase.dart';
-import '../../../domain/usecases/remove_favourite_usecase.dart';
+import '../../../../core/resources/app_state.dart';
+import '../../../../domain/model/tourist_place.dart';
+import '../../../../domain/usecases/add_favourite_usecase.dart';
+import '../../../../domain/usecases/clear_favourite_usecase.dart';
+import '../../../../domain/usecases/get_favourites_usecase.dart';
+import '../../../../domain/usecases/remove_favourite_usecase.dart';
 import 'favourites_event.dart';
 
 class FavouritesBloc extends Bloc<FavouritesEvent, AppState<List<TouristPlace>>> {
