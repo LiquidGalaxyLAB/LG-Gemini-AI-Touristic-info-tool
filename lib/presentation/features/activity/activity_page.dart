@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:touristic/presentation/features/activity/panels/activity_input_card.dart';
 
 import '../../../config/theme/app_theme.dart';
 import '../../components/layout_blueprint.dart';
@@ -30,7 +31,7 @@ class _ActivityPageState extends State<ActivityPage> {
         zoom: 7,
       ),
       controller: _controller,
-      panelLeft: Placeholder(),
+      panelLeft: ActivityInputCard(onContinueClick: (){}),
       panelRight: Placeholder(),
       panelDividedLeft: Placeholder(),
     );

@@ -8,7 +8,7 @@ import '../../../domain/model/tourist_place.dart';
 import '../../components/layout_blueprint.dart';
 import '../../components/tourist_place_card.dart';
 import '../../components/tourist_place_details_card.dart';
-import '../../components/user_input_card.dart';
+import 'panels/tourist_place_input_card.dart';
 
 class TouristPlacePage extends StatefulWidget {
   const TouristPlacePage({super.key});
@@ -52,7 +52,7 @@ class _TouristPlacePageState extends State<TouristPlacePage> {
         zoom: 7,
       ),
       controller: _controller,
-      panelLeft: UserInputCard(
+      panelLeft: TouristPlaceInputCard(
         onContinueClick: () {},
       ),
       panelDividedLeft: ListView.builder(

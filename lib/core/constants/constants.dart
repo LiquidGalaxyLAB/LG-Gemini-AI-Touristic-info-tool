@@ -21,7 +21,7 @@ const String appDatabase = "app_database.db";
 
 const Map<String, IconData> dashboardItems = {
   "Chat": Icons.chat_rounded,
-  "Tourist PLace": Icons.tour_rounded,
+  "Tourist Place": Icons.tour_rounded,
   "Budget Plan": Icons.attach_money_rounded,
   "Activity": Icons.skateboarding_rounded,
   "Recommendation": Icons.star_rounded,
