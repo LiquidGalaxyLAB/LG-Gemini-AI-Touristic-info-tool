@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:touristic/presentation/components/input_item_card.dart';
+import '../../../components/input_item_card.dart';
 
 import '../../../components/input_submit_button.dart';
 import '../../../components/user_choice_card.dart';
-import '../../../components/user_input_field.dart';
 
 class BudgetInputCard extends StatefulWidget {
   final Function _onContinueClick;
@@ -20,8 +19,6 @@ class BudgetInputCard extends StatefulWidget {
 class _BudgetInputCardState extends State<BudgetInputCard> {
   static const double _spacing = 12.0;
 
-  final _destinationController = TextEditingController();
-
   final List<String> _budget = [
     "\$500",
     "\$1000",
@@ -29,7 +26,6 @@ class _BudgetInputCardState extends State<BudgetInputCard> {
     "\$3000",
     "\$5000+",
   ];
-
   final List<String> _duration = [
     "1-3 days", "4-7 days", "8-14 days", "15+ days"
   ];
@@ -48,12 +44,8 @@ class _BudgetInputCardState extends State<BudgetInputCard> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                InputItemCard(title: "as"),
-                UserInputField(
-                  controller: _destinationController,
-                  inputType: TextInputType.text,
-                  hint: "Agra, India",
-                  title: "What's your target destination?",
+                const InputItemCard(
+                    title: "What are the places you are planing to visit?",
                 ),
                 const SizedBox(height: _spacing),
                 UserChoiceCard(

@@ -17,7 +17,7 @@ class _GeneralSettingsPageState extends State<GeneralSettingsPage> {
   static const double spacing = 12.0;
 
   final _mapsThemes = mapsThemesMap.keys.toList();
-  final _mapsStyles = mapsStyles;
+  final _mapsStyles = mapsStylesMap.keys.toList();
   final _appThemes = appThemes;
 
   int _selectedConnectionMethod = 0;
@@ -67,9 +67,10 @@ class _GeneralSettingsPageState extends State<GeneralSettingsPage> {
           Text(
             "Color Theme",
             style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
-                color: AppTheme.gray.shade400),
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+              color: AppTheme.gray.shade400,
+            ),
           ),
           const SizedBox(height: 6),
           SizedBox(
@@ -86,6 +87,7 @@ class _GeneralSettingsPageState extends State<GeneralSettingsPage> {
                       onTap: () {
                         setState(() {
                           _selectedAppTheme = index;
+                          AppTheme.color = _appThemes[index];
                         });
                       },
                     ),
@@ -99,9 +101,10 @@ class _GeneralSettingsPageState extends State<GeneralSettingsPage> {
           Text(
             "Maps Style",
             style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
-                color: AppTheme.gray.shade400),
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+              color: AppTheme.gray.shade400,
+            ),
           ),
           const SizedBox(height: 6),
           SizedBox(
@@ -118,6 +121,7 @@ class _GeneralSettingsPageState extends State<GeneralSettingsPage> {
                       onTap: () {
                         setState(() {
                           _selectedMapsStyle = index;
+                          AppTheme.mapStyle = mapsStylesMap[_mapsStyles[index]]!;
                         });
                       },
                       scale: 4,
@@ -151,6 +155,7 @@ class _GeneralSettingsPageState extends State<GeneralSettingsPage> {
                       onTap: () {
                         setState(() {
                           _selectedMapsTheme = index;
+                          AppTheme.mapTheme = mapsThemesMap[_mapsThemes[index]]!;
                         });
                       },
                     ),

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:touristic/config/theme/color/app_color.dart';
-import 'package:touristic/config/theme/color/impl/red_color.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import '../../config/theme/color/app_color.dart';
 import '../../config/theme/color/impl/blue_color.dart';
 import '../../config/theme/color/impl/green_color.dart';
 import '../../config/theme/color/impl/indigo_color.dart';
 import '../../config/theme/color/impl/pink_color.dart';
 import '../../config/theme/color/impl/purple_color.dart';
+import '../../config/theme/color/impl/red_color.dart';
 import '../../config/theme/color/impl/yellow_color.dart';
 import '../../config/theme/maps_theme.dart';
 
@@ -33,15 +34,21 @@ const Map<String, IconData> dashboardItems = {
 };
 
 List<AppColor> appThemes = [
-  RedColor(), YellowColor(), GreenColor(), BlueColor(), IndigoColor(), PurpleColor(), PinkColor(),
+  RedColor(),
+  YellowColor(),
+  GreenColor(),
+  BlueColor(),
+  IndigoColor(),
+  PurpleColor(),
+  PinkColor(),
 ];
 
-List<String> mapsStyles = [
-  "assets/maps/style/normal.png",
-  "assets/maps/style/terrain.png",
-  "assets/maps/style/satellite.png",
-  "assets/maps/style/hybrid.png",
-];
+const Map<String, MapType> mapsStylesMap = {
+  "assets/maps/style/normal.png": MapType.normal,
+  "assets/maps/style/terrain.png": MapType.terrain,
+  "assets/maps/style/satellite.png": MapType.satellite,
+  "assets/maps/style/hybrid.png": MapType.hybrid,
+};
 
 const Map<String, String> mapsThemesMap = {
   "assets/maps/theme/none.png": mapsThemeNone,

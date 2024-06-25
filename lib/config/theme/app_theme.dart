@@ -1,21 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:touristic/config/theme/color/app_color.dart';
-import 'package:touristic/config/theme/color/impl/gray_color.dart';
-import 'package:touristic/config/theme/style/card_theme.dart';
-import 'package:touristic/core/enums/app_color_scheme.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+
+import '../../core/enums/app_color_scheme.dart';
+import 'color/app_color.dart';
+import 'color/impl/gray_color.dart';
+import 'maps_theme.dart';
+import 'style/card_theme.dart';
 
 class AppTheme {
-  static const Color blue90 = Color.fromRGBO(5, 9, 17, 1);
-  static const Color blue80 = Color.fromRGBO(10, 18, 35, 1);
-  static const Color blue70 = Color.fromRGBO(15, 27, 52, 1);
-  static const Color blue60 = Color.fromRGBO(20, 36, 70, 1);
-  static const Color purple40 = Color.fromRGBO(80, 60, 199, 1);
-  static const Color gray30 = Color.fromRGBO(140, 158, 186, 1.0);
-  static const Color gray20 = Color.fromRGBO(178, 201, 232, 1.0);
-  static const Color gray10 = Color.fromRGBO(217, 229, 252, 1.0);
-
   static const String notoFont = "Noto";
 
+  static String mapTheme = mapsThemeNone;
+  static MapType mapStyle = MapType.hybrid;
   static GrayColor gray = GrayColor();
   static AppColor color = AppColor(colorScheme: AppColorScheme.indigo);
 
@@ -99,15 +95,14 @@ class AppTheme {
     );
 
     return ThemeData(
-      useMaterial3: true,
-      scaffoldBackgroundColor: Colors.white,
-      fontFamily: AppTheme.notoFont,
-      colorScheme: ColorScheme.fromSeed(
-        seedColor: AppTheme.blue60,
-        background: AppTheme.blue90,
-      ),
-      textTheme: textTheme,
-      cardTheme: appCardTheme
-    );
+        useMaterial3: true,
+        scaffoldBackgroundColor: AppTheme.gray.shade900,
+        fontFamily: AppTheme.notoFont,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: AppTheme.color.shade700,
+          surface: AppTheme.gray.shade900,
+        ),
+        textTheme: textTheme,
+        cardTheme: appCardTheme);
   }
 }

@@ -67,14 +67,14 @@ class AppRoutes {
   static Route<dynamic> _notFoundRoute() {
     return _materialRoute(
       Container(
-        color: AppTheme.blue90,
-        child: const Center(
+        color: AppTheme.gray.shade900,
+        child: Center(
           child: Text(
             "Screen not found.",
             style: TextStyle(
               fontSize: 48,
               fontWeight: FontWeight.w700,
-              color: AppTheme.gray20,
+              color: AppTheme.gray.shade400,
             ),
           ),
         ),

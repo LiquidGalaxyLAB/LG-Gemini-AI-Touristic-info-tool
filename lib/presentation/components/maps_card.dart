@@ -2,7 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:touristic/config/theme/maps_theme.dart';
+
+import '../../config/theme/app_theme.dart';
 
 class MapsCard extends StatefulWidget {
   final Completer<GoogleMapController> _controller;
@@ -24,8 +25,8 @@ class MapsCardState extends State<MapsCard> {
     return ClipRRect(
       borderRadius: const BorderRadius.all(Radius.circular(10)),
       child: GoogleMap(
-        mapType: MapType.normal,
-        // style: mapsThemeIndigo,
+        mapType: AppTheme.mapStyle,
+        style: AppTheme.mapTheme,
         initialCameraPosition: widget._cameraPosition,
         onMapCreated: (GoogleMapController controller) {
           widget._controller.complete(controller);

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+
 import '../../config/theme/app_theme.dart'; // Ensure you import your AppTheme here
+import 'input_dialog.dart';
 
 class InputItemCard extends StatefulWidget {
   final String title;
@@ -56,7 +58,23 @@ class _InputItemCardState extends State<InputItemCard> {
     List<Widget> chips = [];
     for (int i = 0; i < _choices.length; i++) {
       chips.add(InputChip(
-        label: Text(_choices[i]),
+        label: Text(
+          _choices[i],
+          style: TextStyle(
+            color: AppTheme.gray.shade400,
+            fontWeight: FontWeight.w500,
+            fontSize: 14,
+          ),
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          side: BorderSide(
+            color: AppTheme.gray.shade900,
+          ),
+        ),
+        deleteIconColor: AppTheme.gray.shade400,
+        elevation: 0,
+        backgroundColor: AppTheme.gray.shade900,
         onDeleted: () {
           setState(() {
             _choices.removeAt(i);
@@ -69,17 +87,23 @@ class _InputItemCardState extends State<InputItemCard> {
   }
 
   Widget _buildAddButton() {
-    return GestureDetector(
-      onTap: () {
+    return ActionChip(
+      onPressed: () {
         _showInputItemDialog();
       },
-      child: Chip(
-        backgroundColor: Colors.transparent,
-        label: Icon(Icons.add, color: AppTheme.color.shade700),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
-          side: BorderSide(color: AppTheme.color.shade700),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+        side: BorderSide(
+          color: AppTheme.gray.shade900,
         ),
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+      elevation: 0,
+      backgroundColor: AppTheme.gray.shade900,
+      label: Icon(
+        Icons.add,
+        color: AppTheme.gray.shade400,
+        size: 24,
       ),
     );
   }
@@ -88,36 +112,18 @@ class _InputItemCardState extends State<InputItemCard> {
     String? newChoice = await showDialog<String>(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Add New Choice'),
-          content: TextField(
-            controller: _textEditingController,
-            decoration: InputDecoration(
-              hintText: 'Enter choice',
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('Cancel'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                String newChoice = _textEditingController.text.trim();
-                if (newChoice.isNotEmpty) {
-                  setState(() {
-                    _choices.add(newChoice);
-                    _textEditingController.clear();
-                    _notifyChoicesChanged();
-                    Navigator.of(context).pop(newChoice);
-                  });
-                }
-              },
-              child: Text('Add'),
-            ),
-          ],
+        return InputDialog(
+          title: "Add new tourist place",
+          hint: "Taj Mahal, Agra",
+          textInputType: TextInputType.text,
+          onClick: (newChoice) {
+            setState(() {
+              _choices.add(newChoice);
+              _textEditingController.clear();
+              _notifyChoicesChanged();
+              Navigator.of(context).pop(newChoice);
+            });
+          },
         );
       },
     );
