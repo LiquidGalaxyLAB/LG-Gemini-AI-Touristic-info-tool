@@ -27,6 +27,7 @@ class ImageCard extends StatelessWidget {
       },
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 250),
+        height: 100,
         width: 150,
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(10.0)),
         child: Stack(
@@ -40,7 +41,11 @@ class ImageCard extends StatelessWidget {
                     Colors.black.withOpacity(_selected ? 0.2 : 1),
                     BlendMode.dstATop,
                   ),
-                  child: Image.asset(_name, fit: BoxFit.cover),
+                  child: Image.asset(
+                    _name,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
             ),

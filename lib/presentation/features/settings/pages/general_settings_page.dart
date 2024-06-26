@@ -91,7 +91,7 @@ class _GeneralSettingsPageState extends State<GeneralSettingsPage> {
                         });
                       },
                     ),
-                    if (index < 9) const SizedBox(width: 12.0)
+                    if (index < _appThemes.length - 1) const SizedBox(width: 12.0)
                   ],
                 );
               },
@@ -126,7 +126,7 @@ class _GeneralSettingsPageState extends State<GeneralSettingsPage> {
                       },
                       scale: 4,
                     ),
-                    if (index < 9) const SizedBox(width: 12.0)
+                    if (index < _mapsStyles.length - 1) const SizedBox(width: 12.0)
                   ],
                 );
               },
@@ -159,7 +159,7 @@ class _GeneralSettingsPageState extends State<GeneralSettingsPage> {
                         });
                       },
                     ),
-                    if (index < 9) const SizedBox(width: 12.0)
+                    if (index < _mapsThemes.length - 1) const SizedBox(width: 12.0)
                   ],
                 );
               },
