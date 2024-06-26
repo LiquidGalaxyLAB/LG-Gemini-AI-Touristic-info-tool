@@ -22,8 +22,8 @@ class RecommendationsResponse extends Equatable {
 class RecommendationResponse extends Equatable {
   final String? name;
   final String? description;
-  final double? cost;
-  final double? duration;
+  final String? cost;
+  final String? duration;
   final List<String>? highlights;
 
   const RecommendationResponse({
@@ -47,8 +47,8 @@ class RecommendationResponse extends Equatable {
     return RecommendationResponse(
       name: json['name'] as String?,
       description: json['description'] as String?,
-      cost: (json['cost'] as num?)?.toDouble(),
-      duration: (json['duration'] as num?)?.toDouble(),
+      cost: json['cost'] as String?,
+      duration: json['duration'] as String?,
       highlights: (json['highlights'] as List<dynamic>?)?.map((item) => item as String).toList(),
     );
   }

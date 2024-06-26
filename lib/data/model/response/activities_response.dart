@@ -25,8 +25,8 @@ class ActivityResponse extends Equatable {
   final String? description;
   final List<String>? procedure;
   final List<String>? precautions;
-  final double? duration;
-  final double? cost;
+  final String? duration;
+  final String? cost;
 
   const ActivityResponse({
     this.name,
@@ -57,8 +57,8 @@ class ActivityResponse extends Equatable {
       precautions: (json['precautions'] as List<dynamic>?)
           ?.map((item) => item as String)
           .toList(),
-      duration: (json['duration'] as num?)?.toDouble(),
-      cost: (json['cost'] as num?)?.toDouble(),
+      duration: json['duration'] as String?,
+      cost: json['cost'] as String?,
     );
   }
 }

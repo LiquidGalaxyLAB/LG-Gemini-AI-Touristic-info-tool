@@ -5,7 +5,7 @@ class Cuisine extends Equatable {
   final List<String> aliases;
   final String description;
   final String origin;
-  final double duration;
+  final String duration;
   final List<String> ingredients;
   final List<String> recipe;
 

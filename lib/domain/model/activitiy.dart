@@ -5,8 +5,8 @@ class Activity extends Equatable {
   final String description;
   final List<String> procedure;
   final List<String> precautions;
-  final double duration;
-  final double cost;
+  final String duration;
+  final String cost;
 
   const Activity({
     required this.name,

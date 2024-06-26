@@ -116,7 +116,7 @@ List<Cuisine>? responseToCuisines(
             aliases: cuisine.aliases ?? [],
             description: cuisine.description ?? "",
             origin: cuisine.origin ?? "",
-            duration: cuisine.duration ?? 0,
+            duration: cuisine.duration ?? "",
             ingredients: cuisine.ingredients ?? [],
             recipe: cuisine.recipe ?? [],
           ))
@@ -130,8 +130,8 @@ List<Recommendation>? responseToRecommendations(
       ?.map((recommendation) => Recommendation(
             name: recommendation.name ?? "",
             description: recommendation.description ?? "",
-            cost: recommendation.cost ?? 0,
-            duration: recommendation.duration ?? 0,
+            cost: recommendation.cost ?? "",
+            duration: recommendation.duration ?? "",
             highlights: recommendation.highlights ?? [],
           ))
       .toList();
@@ -146,8 +146,8 @@ List<Activity>? responseToActivities(
             description: activity.description ?? "",
             procedure: activity.procedure ?? [],
             precautions: activity.precautions ?? [],
-            duration: activity.duration ?? 0,
-            cost: activity.cost ?? 0,
+            duration: activity.duration ?? "",
+            cost: activity.cost ?? "",
           ))
       .toList();
 }

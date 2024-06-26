@@ -24,7 +24,7 @@ class CuisineResponse extends Equatable {
   final List<String>? aliases;
   final String? description;
   final String? origin;
-  final double? duration;
+  final String? duration;
   final List<String>? ingredients;
   final List<String>? recipe;
 
@@ -55,7 +55,7 @@ class CuisineResponse extends Equatable {
       aliases: (json['aliases'] as List<dynamic>?)?.map((item) => item as String).toList(),
       description: json['description'] as String?,
       origin: json['origin'] as String?,
-      duration: (json['duration'] as num?)?.toDouble(),
+      duration: json['duration'] as String?,
       ingredients: (json['ingredients'] as List<dynamic>?)?.map((item) => item as String).toList(),
       recipe: (json['recipe'] as List<dynamic>?)?.map((item) => item as String).toList(),
     );

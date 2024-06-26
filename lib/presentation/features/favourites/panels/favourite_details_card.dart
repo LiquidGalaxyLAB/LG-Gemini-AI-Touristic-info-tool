@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 
-import '../../config/theme/app_theme.dart';
-import '../../domain/model/tourist_place.dart';
+import '../../../../config/theme/app_theme.dart';
+import '../../../../domain/model/tourist_place.dart';
+import '../../../components/item_title_description.dart';
 
-class TouristPlaceDetailsCard extends StatefulWidget {
+class FavouriteDetailsCard extends StatefulWidget {
   final TouristPlace _touristPlace;
   final bool _liked;
   final Function _onIconClick;
 
-  const TouristPlaceDetailsCard({
+  const FavouriteDetailsCard({
     super.key,
     required TouristPlace touristPlace,
     required bool liked,
@@ -18,11 +19,10 @@ class TouristPlaceDetailsCard extends StatefulWidget {
         _touristPlace = touristPlace;
 
   @override
-  State<TouristPlaceDetailsCard> createState() =>
-      _TouristPlaceDetailsCardState();
+  State<FavouriteDetailsCard> createState() => _FavouriteDetailsCardState();
 }
 
-class _TouristPlaceDetailsCardState extends State<TouristPlaceDetailsCard> {
+class _FavouriteDetailsCardState extends State<FavouriteDetailsCard> {
   late bool isLiked;
 
   @override
@@ -62,70 +62,42 @@ class _TouristPlaceDetailsCardState extends State<TouristPlaceDetailsCard> {
                       ? Icons.favorite_rounded
                       : Icons.favorite_outline_rounded,
                   size: 24,
-                  color:
-                  isLiked ? AppTheme.color.shade600 : AppTheme.gray.shade400,
+                  color: isLiked
+                      ? AppTheme.color.shade600
+                      : AppTheme.gray.shade400,
                 ),
               ),
             ],
           ),
           const SizedBox(height: 10),
-          _buildTitleDescriptionItem(
+          ItemTitleDescription(
             title: "Location",
             description: widget._touristPlace.location,
           ),
-          _buildTitleDescriptionItem(
+          ItemTitleDescription(
             title: "Coordinates",
             description:
                 "${widget._touristPlace.latitude}, ${widget._touristPlace.longitude}",
           ),
-          _buildTitleDescriptionItem(
+          ItemTitleDescription(
             title: "History",
             description: widget._touristPlace.history,
           ),
-          _buildTitleDescriptionItem(
+          ItemTitleDescription(
             title: "Significance",
             description: widget._touristPlace.significance,
           ),
-          _buildTitleDescriptionItem(
+          ItemTitleDescription(
             title: "Cuisine",
             description: widget._touristPlace.cuisine,
           ),
-          _buildTitleDescriptionItem(
-              title: "Speciality",
-              description: widget._touristPlace.specialty,
-              spacing: false),
+          ItemTitleDescription(
+            title: "Speciality",
+            description: widget._touristPlace.specialty,
+            spacing: false,
+          ),
         ],
       ),
-    );
-  }
-
-  Widget _buildTitleDescriptionItem({
-    required String title,
-    required String description,
-    bool spacing = true,
-  }) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          title,
-          style: TextStyle(
-            fontSize: 12,
-            fontWeight: FontWeight.w500,
-            color: AppTheme.gray.shade400,
-          ),
-        ),
-        Text(
-          description,
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w400,
-            color: AppTheme.gray.shade300,
-          ),
-        ),
-        if (spacing) const SizedBox(height: 10)
-      ],
     );
   }
 }

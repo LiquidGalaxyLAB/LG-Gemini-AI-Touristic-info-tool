@@ -4,10 +4,11 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import '../../../core/utils/maps_utils.dart';
 import '../../../domain/model/tourist_place.dart';
 import '../../components/layout_blueprint.dart';
-import '../../components/tourist_place_card.dart';
-import '../../components/tourist_place_details_card.dart';
+import '../../components/response_item_card.dart';
+import 'panels/tourist_place_details_card.dart';
 import 'panels/tourist_place_input_card.dart';
 
 class TouristPlacePage extends StatefulWidget {
@@ -61,14 +62,23 @@ class _TouristPlacePageState extends State<TouristPlacePage> {
         itemBuilder: (context, index) {
           return Column(
             children: [
-              TouristPlaceCard(
-                touristPlace: touristPlaces[index],
+              ResponseItemCard(
+                title: touristPlaces[index].name,
+                description: touristPlaces[index].specialty,
+                label:
+                    "(${touristPlaces[index].latitude}, ${touristPlaces[index].longitude})",
                 selected: _selected == index,
                 onTap: () {
                   setState(() {
                     _selected = index;
                   });
-                  _goToTouristPlace();
+                  moveToPlace(
+                    _controller,
+                    LatLng(
+                      touristPlaces[_selected].longitude,
+                      touristPlaces[_selected].latitude,
+                    ),
+                  );
                 },
               ),
               if (index < touristPlaces.length - 1) const SizedBox(height: 8)
@@ -80,21 +90,6 @@ class _TouristPlacePageState extends State<TouristPlacePage> {
         touristPlace: touristPlaces[_selected],
         liked: false,
         onIconClick: () {},
-      ),
-    );
-  }
-
-  Future<void> _goToTouristPlace() async {
-    final GoogleMapController controller = await _controller.future;
-    await controller.animateCamera(
-      CameraUpdate.newCameraPosition(
-        CameraPosition(
-          target: LatLng(
-            touristPlaces[_selected].longitude,
-            touristPlaces[_selected].latitude,
-          ),
-          zoom: 7,
-        ),
       ),
     );
   }

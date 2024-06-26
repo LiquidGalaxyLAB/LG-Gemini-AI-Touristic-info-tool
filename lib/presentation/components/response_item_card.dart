@@ -1,21 +1,26 @@
 import 'package:flutter/material.dart';
 
 import '../../config/theme/app_theme.dart';
-import '../../domain/model/tourist_place.dart';
 
-class TouristPlaceCard extends StatelessWidget {
+class ResponseItemCard extends StatelessWidget {
   final Function _onTap;
   final bool _selected;
-  final TouristPlace _touristPlace;
+  final String _title;
+  final String _description;
+  final String? _label;
 
-  const TouristPlaceCard({
+  const ResponseItemCard({
     super.key,
-    required TouristPlace touristPlace,
     required bool selected,
     required Function onTap,
-  })  : _onTap = onTap,
-        _selected = selected,
-        _touristPlace = touristPlace;
+    required String title,
+    required String description,
+    String? label,
+  })  : _label = label,
+        _description = description,
+        _title = title,
+        _onTap = onTap,
+        _selected = selected;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +44,9 @@ class TouristPlaceCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  _touristPlace.name,
+                  _title,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
@@ -48,20 +55,25 @@ class TouristPlaceCard extends StatelessWidget {
                         : AppTheme.gray.shade400,
                   ),
                 ),
-                Text(
-                  "(${_touristPlace.latitude}, ${_touristPlace.longitude})",
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w400,
-                    color: _selected
-                        ? AppTheme.gray.shade300
-                        : AppTheme.gray.shade600,
+                if (_label != null)
+                  Text(
+                    _label,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w400,
+                      color: _selected
+                          ? AppTheme.gray.shade300
+                          : AppTheme.gray.shade600,
+                    ),
                   ),
-                ),
               ],
             ),
             Text(
-              _touristPlace.specialty,
+              _description,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w400,
