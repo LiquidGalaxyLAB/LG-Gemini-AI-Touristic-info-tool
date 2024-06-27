@@ -69,7 +69,6 @@ class _FavouriteDetailsCardState extends State<FavouriteDetailsCard> {
               ),
             ],
           ),
-          const SizedBox(height: 10),
           ItemTitleDescription(
             title: "Location",
             description: widget._touristPlace.location,

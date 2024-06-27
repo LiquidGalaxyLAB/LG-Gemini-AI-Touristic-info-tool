@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:touristic/presentation/components/user_choice_card.dart';
 
 import '../../../components/input_submit_button.dart';
+import '../../../components/user_choice_card.dart';
 import '../../../components/user_input_field.dart';
 
 class ItineraryInputCard extends StatefulWidget {
@@ -27,7 +27,10 @@ class _ItineraryInputCardState extends State<ItineraryInputCard> {
     "\$5000+",
   ];
   final List<String> _duration = [
-    "1-3 days", "4-7 days", "8-14 days", "15+ days"
+    "1-3 days",
+    "4-7 days",
+    "8-14 days",
+    "15+ days"
   ];
 
   @override
