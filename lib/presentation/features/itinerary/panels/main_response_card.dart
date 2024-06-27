@@ -130,12 +130,6 @@ class _MainResponseCardState extends State<MainResponseCard> {
     bool selected,
     int index,
   ) {
-    final style = TextStyle(
-      fontSize: 14,
-      fontWeight: FontWeight.w400,
-      color: selected ? AppTheme.gray.shade300 : AppTheme.gray.shade400,
-    );
-
     final headerStyle = TextStyle(
       fontSize: 14,
       fontWeight: FontWeight.w600,
@@ -157,10 +151,11 @@ class _MainResponseCardState extends State<MainResponseCard> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Mode", style: headerStyle),
-                Text("From", style: headerStyle),
-                Text("To", style: headerStyle),
-                Text("Duration", style: headerStyle),
+                SizedBox(width: 90, child: Text("From", style: headerStyle)),
+                SizedBox(width: 90, child: Text("To", style: headerStyle)),
+                SizedBox(width: 90, child: Text("Mode", style: headerStyle)),
+                SizedBox(
+                    width: 90, child: Text("Duration", style: headerStyle)),
               ],
             ),
           ),
@@ -186,19 +181,34 @@ class _MainResponseCardState extends State<MainResponseCard> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(route.mode,
-                    maxLines: 1, overflow: TextOverflow.ellipsis, style: style),
-                Text(route.from,
-                    maxLines: 1, overflow: TextOverflow.ellipsis, style: style),
-                Text(route.to,
-                    maxLines: 1, overflow: TextOverflow.ellipsis, style: style),
-                Text(route.duration,
-                    maxLines: 1, overflow: TextOverflow.ellipsis, style: style),
+                _buildTableCell(route.from, selected),
+                _buildTableCell(route.to, selected),
+                _buildTableCell(route.mode, selected),
+                _buildTableCell(route.duration, selected),
               ],
             ),
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildTableCell(String label, bool selected) {
+    final style = TextStyle(
+      fontSize: 14,
+      fontWeight: FontWeight.w400,
+      color: selected ? AppTheme.gray.shade300 : AppTheme.gray.shade400,
+    );
+
+    return SizedBox(
+      width: 90,
+      child: Text(
+        label,
+        maxLines: 1,
+        textAlign: TextAlign.start,
+        overflow: TextOverflow.ellipsis,
+        style: style,
+      ),
     );
   }
 }
