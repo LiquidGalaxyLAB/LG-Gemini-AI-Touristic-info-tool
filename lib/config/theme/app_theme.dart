@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:touristic/core/constants/constants.dart';
 
+import '../../core/constants/constants.dart';
 import '../../core/enums/app_color_scheme.dart';
 import '../../core/enums/preferences.dart';
 import '../../core/utils/preferences_utils.dart';
@@ -23,7 +23,6 @@ class AppTheme {
     int appThemeIndex = await PreferencesUtils().getValue<int>(PreferencesKeys.appTheme.name) ?? 0;
     int mapsThemeIndex = await PreferencesUtils().getValue<int>(PreferencesKeys.mapsTheme.name) ?? 0;
     int mapsStyleIndex = await PreferencesUtils().getValue<int>(PreferencesKeys.mapsStyle.name) ?? 0;
-
 
     color = AppColor(colorScheme: AppColorScheme.values[appThemeIndex]);
     mapTheme = mapsThemesMap.values.toList()[mapsThemeIndex];

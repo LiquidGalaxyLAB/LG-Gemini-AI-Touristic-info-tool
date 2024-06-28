@@ -2,12 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:touristic/core/utils/maps_utils.dart';
 
 import '../../../../config/theme/app_theme.dart';
-import '../../../../core/utils/maps_utils.dart';
 import '../../../../domain/model/itinerary.dart';
 import '../../../components/item_title_description.dart';
-import '../../../components/response_item_card.dart';
+import '../widgets/table_row_place_card.dart';
+import '../widgets/table_row_route_card.dart';
 
 class MainResponseCard extends StatefulWidget {
   final Completer<GoogleMapController> _controller;
@@ -43,6 +44,14 @@ class MainResponseCard extends StatefulWidget {
 }
 
 class _MainResponseCardState extends State<MainResponseCard> {
+  bool showRoute = true;
+
+  @override
+  void initState() {
+    super.initState();
+    showRoute = widget._showRouteTable;
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -58,18 +67,17 @@ class _MainResponseCardState extends State<MainResponseCard> {
                 title: "Name",
                 description: widget._itinerary.name,
               ),
-              Transform.scale(
-                scale: 1.1,
-                child: Checkbox(
-                  value: widget._showRouteTable,
-                  onChanged: (value) {
-                    widget._onTap(value == true);
-                  },
-                  activeColor: AppTheme.color.shade700,
-                  checkColor: AppTheme.gray.shade300,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
+              IconButton(
+                onPressed: () {
+                  widget._onTap(!showRoute);
+                  showRoute = !showRoute;
+                },
+                icon: Icon(
+                  showRoute
+                      ? Icons.location_on_rounded
+                      : Icons.route_rounded,
+                  size: 24,
+                  color: AppTheme.color.shade600,
                 ),
               ),
             ],
@@ -87,122 +95,38 @@ class _MainResponseCardState extends State<MainResponseCard> {
                   widget._showRouteTable ? widget._itinerary.travelRoute.length : widget._itinerary.places.length,
               itemBuilder: (context, index) {
                 return widget._showRouteTable
-                    ? _buildTableRow(
-                        widget._itinerary.travelRoute[index],
-                        widget._selectedRoute == index,
-                        index,
+                    ? TableRowRouteCard(
+                        route: widget._itinerary.travelRoute[index],
+                        selected: widget._selectedRoute == index,
+                        index: index,
+                        totalRoutes: widget._itinerary.travelRoute.length,
+                        onRouteTap: (int tappedIndex) {
+                          setState(() {
+                            widget._onRouteTap(index);
+                          });
+                        },
                       )
-                    : Column(
-                        children: [
-                          ResponseItemCard(
-                            title: widget._itinerary.places[index].name,
-                            description: widget._itinerary.places[index].description,
-                            label:
-                                "${widget._itinerary.places[index].latitude}, ${widget._itinerary.places[index].latitude}",
-                            selected: widget._selectedPlace == index,
-                            onTap: () {
-                              widget._onPlaceTap(index);
-                              moveToPlace(
+                    : TableRowPlaceCard(
+                        place: widget._itinerary.places[index],
+                        selected: widget._selectedPlace == index,
+                        index: index,
+                        totalPlaces: widget._itinerary.places.length,
+                        onPlaceTap: (int tappedIndex) {
+                          setState(() {
+                            widget._onPlaceTap(index);
+                            moveToPlace(
                                 widget._controller,
                                 LatLng(
                                   widget._itinerary.places[index].latitude,
-                                  widget._itinerary.places[index].latitude,
-                                ),
-                              );
-                            },
-                          ),
-                          if (index < widget._itinerary.places.length - 1) const SizedBox(height: 8)
-                        ],
+                                  widget._itinerary.places[index].longitude,
+                                ));
+                          });
+                        },
                       );
               },
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _buildTableRow(
-    TravelRoute route,
-    bool selected,
-    int index,
-  ) {
-    final headerStyle = TextStyle(
-      fontSize: 14,
-      fontWeight: FontWeight.w600,
-      color: AppTheme.gray.shade300,
-    );
-
-    return Column(
-      children: [
-        if (index == 0)
-          Container(
-            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-            decoration: BoxDecoration(
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(10),
-                topRight: Radius.circular(10),
-              ),
-              color: AppTheme.gray.shade700,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                SizedBox(width: 90, child: Text("From", style: headerStyle)),
-                SizedBox(width: 90, child: Text("To", style: headerStyle)),
-                SizedBox(width: 90, child: Text("Mode", style: headerStyle)),
-                SizedBox(width: 90, child: Text("Duration", style: headerStyle)),
-              ],
-            ),
-          ),
-        GestureDetector(
-          onTap: () {
-            widget._onRouteTap(index);
-          },
-          child: AnimatedContainer(
-            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(
-                  index == widget._itinerary.travelRoute.length - 1 ? 10 : 0,
-                ),
-                bottomRight: Radius.circular(
-                  index == widget._itinerary.travelRoute.length - 1 ? 10 : 0,
-                ),
-              ),
-              color: selected ? AppTheme.color.shade700 : AppTheme.gray.shade900,
-            ),
-            duration: const Duration(milliseconds: 250),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                _buildTableCell(route.from, selected),
-                _buildTableCell(route.to, selected),
-                _buildTableCell(route.mode, selected),
-                _buildTableCell(route.duration, selected),
-              ],
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildTableCell(String label, bool selected) {
-    final style = TextStyle(
-      fontSize: 14,
-      fontWeight: FontWeight.w400,
-      color: selected ? AppTheme.gray.shade300 : AppTheme.gray.shade400,
-    );
-
-    return SizedBox(
-      width: 90,
-      child: Text(
-        label,
-        maxLines: 1,
-        textAlign: TextAlign.start,
-        overflow: TextOverflow.ellipsis,
-        style: style,
       ),
     );
   }
