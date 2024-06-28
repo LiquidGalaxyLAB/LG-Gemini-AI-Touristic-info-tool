@@ -5,7 +5,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../../config/theme/app_theme.dart';
 import '../../../../core/utils/maps_utils.dart';
-import '../../../../domain/model/itinerary.dart';
+import '../../../../domain/model/budget_plan.dart';
 import '../../../components/item_title_description.dart';
 import '../widgets/table_row_place_card.dart';
 import '../widgets/table_row_route_card.dart';
@@ -16,6 +16,8 @@ class MainResponseCard extends StatefulWidget {
   final Function(bool) _onTap;
   final Function(int) _onRouteTap;
   final Function(int) _onPlaceTap;
+  final Function(int) _onExpenseTap;
+  final Function(int) _onAccommodationTap;
   final int _selectedPlace;
   final int _selectedRoute;
   final bool _showRouteTable;
@@ -26,6 +28,8 @@ class MainResponseCard extends StatefulWidget {
     required dynamic Function(bool) onTap,
     required dynamic Function(int) onPlaceTap,
     required dynamic Function(int) onRouteTap,
+    required dynamic Function(int) onExpenseTap,
+    required dynamic Function(int) onAccommodationTap,
     required Itinerary itinerary,
     required int selectedPlace,
     required int selectedRoute,
@@ -34,6 +38,8 @@ class MainResponseCard extends StatefulWidget {
         _showRouteTable = showRouteTable,
         _selectedRoute = selectedRoute,
         _selectedPlace = selectedPlace,
+        _onAccommodationTap = onAccommodationTap,
+        _onExpenseTap = onExpenseTap,
         _itinerary = itinerary,
         _onTap = onTap,
         _onPlaceTap = onPlaceTap,
@@ -44,12 +50,15 @@ class MainResponseCard extends StatefulWidget {
 }
 
 class _MainResponseCardState extends State<MainResponseCard> {
-  bool showRoute = true;
+  int state = 0;
+  List<IconData> icons = [
+    Icons.location_on_rounded, Icons.route_rounded, Icons.emoji_food_beverage_rounded, Icons.hotel_rounded
+  ];
 
   @override
   void initState() {
     super.initState();
-    showRoute = widget._showRouteTable;
+    // showRoute = widget._showRouteTable;
   }
 
   @override
@@ -69,11 +78,12 @@ class _MainResponseCardState extends State<MainResponseCard> {
               ),
               IconButton(
                 onPressed: () {
-                  widget._onTap(!showRoute);
-                  showRoute = !showRoute;
+                  state = (state + 1) % icons.length;
+                  // widget._onTap(!showRoute);
+                  // showRoute = !showRoute;
                 },
                 icon: Icon(
-                  showRoute ? Icons.location_on_rounded : Icons.route_rounded,
+                  icons[state],
                   size: 24,
                   color: AppTheme.color.shade600,
                 ),
