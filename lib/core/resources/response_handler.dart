@@ -1,6 +1,6 @@
 import 'package:touristic/core/exception/invalid_response.dart';
 
-import '../resources/data_state.dart';
+import 'data_state.dart';
 
 Future<DataState<U>> handleResponse<T, U>({
   required Future<T?> Function() execute,

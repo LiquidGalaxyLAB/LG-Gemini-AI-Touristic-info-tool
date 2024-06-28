@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../../../config/theme/app_theme.dart';
 import '../../../../core/constants/constants.dart';
+import '../../../../core/enums/preferences.dart';
+import '../../../../core/utils/preferences_utils.dart';
 import '../widgets/color_card.dart';
 import '../widgets/connection_type_card.dart';
 import '../widgets/image_card.dart';
@@ -26,6 +28,25 @@ class _GeneralSettingsPageState extends State<GeneralSettingsPage> {
   int _selectedMapsTheme = 0;
 
   @override
+  void initState() {
+    super.initState();
+    _loadPreferences();
+  }
+
+  Future<void> _loadPreferences() async {
+    _selectedConnectionMethod = await PreferencesUtils().getValue<int>(PreferencesKeys.connectionMethod.name) ?? 0;
+    _selectedAppTheme = await PreferencesUtils().getValue<int>(PreferencesKeys.appTheme.name) ?? 0;
+    _selectedMapsStyle = await PreferencesUtils().getValue<int>(PreferencesKeys.mapsStyle.name) ?? 0;
+    _selectedMapsTheme = await PreferencesUtils().getValue<int>(PreferencesKeys.mapsTheme.name) ?? 0;
+
+    setState(() {});
+  }
+
+  Future<void> _savePreference(String key, int value) async {
+    await PreferencesUtils().saveValue(key, value);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(spacing),
@@ -34,10 +55,7 @@ class _GeneralSettingsPageState extends State<GeneralSettingsPage> {
         children: [
           Text(
             "Connection Method",
-            style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
-                color: AppTheme.gray.shade400),
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: AppTheme.gray.shade400),
           ),
           const SizedBox(height: 6),
           Row(
@@ -48,6 +66,7 @@ class _GeneralSettingsPageState extends State<GeneralSettingsPage> {
                 onPressed: () {
                   setState(() {
                     _selectedConnectionMethod = 0;
+                    _savePreference(PreferencesKeys.connectionMethod.name, 0);
                   });
                 },
               ),
@@ -58,6 +77,7 @@ class _GeneralSettingsPageState extends State<GeneralSettingsPage> {
                 onPressed: () {
                   setState(() {
                     _selectedConnectionMethod = 1;
+                    _savePreference(PreferencesKeys.connectionMethod.name, 1);
                   });
                 },
               ),
@@ -88,6 +108,7 @@ class _GeneralSettingsPageState extends State<GeneralSettingsPage> {
                         setState(() {
                           _selectedAppTheme = index;
                           AppTheme.color = _appThemes[index];
+                          _savePreference(PreferencesKeys.appTheme.name, index);
                         });
                       },
                     ),
@@ -122,6 +143,7 @@ class _GeneralSettingsPageState extends State<GeneralSettingsPage> {
                         setState(() {
                           _selectedMapsStyle = index;
                           AppTheme.mapStyle = mapsStylesMap[_mapsStyles[index]]!;
+                          _savePreference(PreferencesKeys.mapsStyle.name, index);
                         });
                       },
                       scale: 4,
@@ -135,10 +157,7 @@ class _GeneralSettingsPageState extends State<GeneralSettingsPage> {
           const SizedBox(height: spacing * 2),
           Text(
             "Maps Theme",
-            style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
-                color: AppTheme.gray.shade400),
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: AppTheme.gray.shade400),
           ),
           const SizedBox(height: 6),
           SizedBox(
@@ -156,6 +175,7 @@ class _GeneralSettingsPageState extends State<GeneralSettingsPage> {
                         setState(() {
                           _selectedMapsTheme = index;
                           AppTheme.mapTheme = mapsThemesMap[_mapsThemes[index]]!;
+                          _savePreference(PreferencesKeys.mapsTheme.name, index);
                         });
                       },
                     ),

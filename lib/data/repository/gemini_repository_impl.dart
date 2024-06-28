@@ -1,5 +1,5 @@
 import '../../core/resources/data_state.dart';
-import '../../core/utils/response_handler.dart';
+import '../../core/resources/response_handler.dart';
 import '../../domain/model/activitiy.dart';
 import '../../domain/model/budget_plan.dart';
 import '../../domain/model/cuisine.dart';

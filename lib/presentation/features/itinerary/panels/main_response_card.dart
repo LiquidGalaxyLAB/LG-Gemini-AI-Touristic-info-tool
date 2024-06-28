@@ -83,9 +83,8 @@ class _MainResponseCardState extends State<MainResponseCard> {
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               padding: EdgeInsets.zero,
-              itemCount: widget._showRouteTable
-                  ? widget._itinerary.travelRoute.length
-                  : widget._itinerary.places.length,
+              itemCount:
+                  widget._showRouteTable ? widget._itinerary.travelRoute.length : widget._itinerary.places.length,
               itemBuilder: (context, index) {
                 return widget._showRouteTable
                     ? _buildTableRow(
@@ -97,8 +96,7 @@ class _MainResponseCardState extends State<MainResponseCard> {
                         children: [
                           ResponseItemCard(
                             title: widget._itinerary.places[index].name,
-                            description:
-                                widget._itinerary.places[index].description,
+                            description: widget._itinerary.places[index].description,
                             label:
                                 "${widget._itinerary.places[index].latitude}, ${widget._itinerary.places[index].latitude}",
                             selected: widget._selectedPlace == index,
@@ -113,8 +111,7 @@ class _MainResponseCardState extends State<MainResponseCard> {
                               );
                             },
                           ),
-                          if (index < widget._itinerary.places.length - 1)
-                            const SizedBox(height: 8)
+                          if (index < widget._itinerary.places.length - 1) const SizedBox(height: 8)
                         ],
                       );
               },
@@ -154,8 +151,7 @@ class _MainResponseCardState extends State<MainResponseCard> {
                 SizedBox(width: 90, child: Text("From", style: headerStyle)),
                 SizedBox(width: 90, child: Text("To", style: headerStyle)),
                 SizedBox(width: 90, child: Text("Mode", style: headerStyle)),
-                SizedBox(
-                    width: 90, child: Text("Duration", style: headerStyle)),
+                SizedBox(width: 90, child: Text("Duration", style: headerStyle)),
               ],
             ),
           ),
@@ -174,8 +170,7 @@ class _MainResponseCardState extends State<MainResponseCard> {
                   index == widget._itinerary.travelRoute.length - 1 ? 10 : 0,
                 ),
               ),
-              color:
-                  selected ? AppTheme.color.shade700 : AppTheme.gray.shade900,
+              color: selected ? AppTheme.color.shade700 : AppTheme.gray.shade900,
             ),
             duration: const Duration(milliseconds: 250),
             child: Row(
