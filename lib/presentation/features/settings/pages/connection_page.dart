@@ -50,8 +50,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
               connected: _connected,
               iconData: Icons.connect_without_contact_rounded,
               title: "Establish Connection with LG",
-              description:
-                  "We will establish a connection with Liquid Galaxy to display data.",
+              description: "We will establish a connection with Liquid Galaxy to display data.",
             ),
           ),
           Expanded(
@@ -105,8 +104,16 @@ class _ConnectionPageState extends State<ConnectionPage> {
 
   void showSnackBar(String msg) {
     final snackBar = SnackBar(
-      content: Text(msg),
+      content: Text(
+        msg,
+        style: TextStyle(
+          color: AppTheme.gray.shade300,
+          fontSize: 16,
+          fontWeight: FontWeight.w400,
+        ),
+      ),
       duration: const Duration(seconds: 3),
+      backgroundColor: AppTheme.gray.shade800,
     );
 
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
