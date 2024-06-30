@@ -109,7 +109,7 @@ class _InputItemCardState extends State<InputItemCard> {
   }
 
   Future<void> _showInputItemDialog() async {
-    String? newChoice = await showDialog<String>(
+    await showDialog<String>(
       context: context,
       builder: (BuildContext context) {
         return InputDialog(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:touristic/presentation/features/settings/widgets/authentication_dialog.dart';
 
 import '../../../config/theme/app_theme.dart';
 import 'pages/connection_page.dart';
@@ -12,8 +13,7 @@ class SettingsPage extends StatefulWidget {
   State<SettingsPage> createState() => _SettingsPageState();
 }
 
-class _SettingsPageState extends State<SettingsPage>
-    with SingleTickerProviderStateMixin {
+class _SettingsPageState extends State<SettingsPage> with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
   @override
@@ -37,6 +37,16 @@ class _SettingsPageState extends State<SettingsPage>
         flexibleSpace: Container(
           color: AppTheme.gray.shade800,
           child: TabBar(
+            onTap: (value) {
+              if (value == 2) {
+                if (AppTheme.canAccessLGControls) {
+                  _tabController.index = value;
+                } else {
+                  _showAuthenticationDialog(value, _tabController.previousIndex);
+                  _tabController.index = _tabController.previousIndex;
+                }
+              }
+            },
             dividerHeight: 0,
             padding: EdgeInsets.zero,
             controller: _tabController,
@@ -46,8 +56,7 @@ class _SettingsPageState extends State<SettingsPage>
                 borderRadius: const BorderRadius.vertical(
                   top: Radius.circular(10),
                 ),
-                borderSide:
-                    BorderSide(color: AppTheme.color.shade700, width: 4.0)),
+                borderSide: BorderSide(color: AppTheme.color.shade700, width: 4.0)),
             labelColor: AppTheme.gray.shade200,
             unselectedLabelColor: AppTheme.gray.shade400,
             tabs: [
@@ -108,12 +117,31 @@ class _SettingsPageState extends State<SettingsPage>
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w600,
-              color:
-                  selected ? AppTheme.color.shade200 : AppTheme.gray.shade400,
+              color: selected ? AppTheme.color.shade200 : AppTheme.gray.shade400,
             ),
           ),
         ],
       ),
+    );
+  }
+
+  Future<void> _showAuthenticationDialog(int index, int previous) async {
+    await showDialog<String>(
+      context: context,
+      builder: (BuildContext context) {
+        return AuthenticationDialog(
+          onClick: (user, pass) {
+            setState(() {
+              if (user == "admin" && pass == "admin123") {
+                AppTheme.canAccessLGControls =  true;
+                _tabController.index = index;
+              } else {
+                _tabController.index = previous;
+              }
+            });
+          },
+        );
+      },
     );
   }
 }

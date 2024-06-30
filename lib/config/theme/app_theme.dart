@@ -15,6 +15,7 @@ class AppTheme {
 
   static GrayColor gray = GrayColor();
 
+  static bool canAccessLGControls = false;
   static String mapTheme = mapsThemeNone;
   static MapType mapStyle = MapType.hybrid;
   static AppColor color = AppColor(colorScheme: AppColorScheme.blue);
