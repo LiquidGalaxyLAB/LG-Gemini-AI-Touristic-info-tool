@@ -31,6 +31,9 @@ class MapsCardState extends State<MapsCard> {
         onMapCreated: (GoogleMapController controller) {
           widget._controller.complete(controller);
         },
+        onCameraMove: (cameraPosition) {
+
+        },
       ),
     );
   }

@@ -1,4 +1,6 @@
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:ssh2/ssh2.dart';
+import 'package:touristic/core/utils/kml_utils.dart';
 
 class LGService {
   late SSHClient _client;
@@ -75,6 +77,14 @@ class LGService {
       await _client.execute(query);
       return true;
     } catch (e) {
+      return false;
+    }
+  }
+
+  Future<bool> flyTo(CameraPosition cameraPosition) async{
+    try {
+      return _execute("echo 'flytoview=${KmlUtils.lookAt(cameraPosition)}' > /tmp/query.txt");
+    } catch (error) {
       return false;
     }
   }
