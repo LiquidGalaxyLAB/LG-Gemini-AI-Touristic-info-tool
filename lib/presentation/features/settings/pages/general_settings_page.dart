@@ -22,7 +22,7 @@ class _GeneralSettingsPageState extends State<GeneralSettingsPage> {
   final _mapsStyles = mapsStylesMap.keys.toList();
   final _appThemes = appThemes;
 
-  int _selectedConnectionMethod = 0;
+  int _selectedConnectionMethod = 1;
   int _selectedAppTheme = 3;
   int _selectedMapsStyle = 3;
   int _selectedMapsTheme = 0;
@@ -34,7 +34,7 @@ class _GeneralSettingsPageState extends State<GeneralSettingsPage> {
   }
 
   Future<void> _loadPreferences() async {
-    _selectedConnectionMethod = await PreferencesUtils().getValue<int>(GeneralPreferences.connectionMethod.name) ?? 0;
+    _selectedConnectionMethod = await PreferencesUtils().getValue<int>(GeneralPreferences.connectionMethod.name) ?? 1;
     _selectedAppTheme = await PreferencesUtils().getValue<int>(GeneralPreferences.appTheme.name) ?? 3;
     _selectedMapsStyle = await PreferencesUtils().getValue<int>(GeneralPreferences.mapsStyle.name) ?? 3;
     _selectedMapsTheme = await PreferencesUtils().getValue<int>(GeneralPreferences.mapsTheme.name) ?? 0;

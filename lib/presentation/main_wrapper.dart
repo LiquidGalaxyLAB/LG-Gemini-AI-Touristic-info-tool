@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../config/routes/app_routes.dart';
 import '../config/theme/app_theme.dart';
+import '../core/enums/preferences.dart';
+import '../core/utils/preferences_utils.dart';
+import '../service/lg_service.dart';
 import 'components/side_bar.dart';
 
 class MainWrapper extends StatefulWidget {
@@ -13,6 +16,58 @@ class MainWrapper extends StatefulWidget {
 
 class _MainWrapperState extends State<MainWrapper> {
   final GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
+
+  @override
+  void initState() {
+    super.initState();
+    _loadLocalPreferences();
+  }
+
+  void _loadLocalPreferences() async {
+    int connectionMethod = await PreferencesUtils().getValue<int>(GeneralPreferences.connectionMethod.name) ?? 1;
+    if (connectionMethod == 0) {
+      _connectToLg();
+    }
+  }
+
+  void _connectToLg() async {
+    final PreferencesUtils preferencesUtils = PreferencesUtils();
+    String username = (await preferencesUtils.getValue(ConnectionPreferences.username.name)) ?? "";
+    String password = (await preferencesUtils.getValue(ConnectionPreferences.password.name)) ?? "";
+    String ip = (await preferencesUtils.getValue(ConnectionPreferences.ip.name)) ?? "";
+    String port = (await preferencesUtils.getValue(ConnectionPreferences.port.name)) ?? "0";
+    String screens = (await preferencesUtils.getValue(ConnectionPreferences.screens.name)) ?? "0";
+
+    final lgService = LGService(
+      host: ip,
+      port: int.parse(port),
+      username: username,
+      password: password,
+      slaves: int.parse(screens),
+    );
+
+    final result = await lgService.connect();
+    if (result) {
+      _showSnackbar();
+    }
+  }
+
+  void _showSnackbar() {
+    final snackBar = SnackBar(
+      content: Text(
+        "Connected Automatically",
+        style: TextStyle(
+          color: AppTheme.gray.shade300,
+          fontSize: 16,
+          fontWeight: FontWeight.w400,
+        ),
+      ),
+      duration: const Duration(seconds: 3),
+      backgroundColor: AppTheme.gray.shade800,
+    );
+
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
 
   @override
   Widget build(BuildContext context) {
