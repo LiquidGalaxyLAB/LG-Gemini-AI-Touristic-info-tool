@@ -9,6 +9,10 @@ class AppSuccess<T> extends AppState<T> {
   const AppSuccess(T data) : super(data: data);
 }
 
+class AppEmpty<T> extends AppState<T> {
+  const AppEmpty();
+}
+
 class AppLoading<T> extends AppState<T> {
   const AppLoading();
 }

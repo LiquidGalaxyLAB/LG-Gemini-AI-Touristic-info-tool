@@ -11,7 +11,7 @@ class ItineraryBloc extends Bloc<ItineraryEvent, AppState<Itinerary>> {
 
   ItineraryBloc(
     this._getItineraryUseCase,
-  ) : super(const AppLoading()) {
+  ) : super(const AppEmpty()) {
     on<GetItinerary>(onGetItinerary);
   }
 
@@ -19,6 +19,7 @@ class ItineraryBloc extends Bloc<ItineraryEvent, AppState<Itinerary>> {
     GetItinerary event,
     Emitter<AppState<Itinerary>> emit,
   ) async {
+    emit(const AppLoading());
     final dataState = await _getItineraryUseCase();
     if (dataState is DataSuccess) {
       emit(AppSuccess(dataState.data!));

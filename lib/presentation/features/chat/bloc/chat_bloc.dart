@@ -10,7 +10,7 @@ class ChatBloc extends Bloc<ChatEvent, AppState<String>> {
 
   ChatBloc(
     this._getChatReplyUseCase,
-  ) : super(const AppLoading()) {
+  ) : super(const AppEmpty()) {
     on<GetChatReply>(onGetChatReply);
   }
 
@@ -18,6 +18,7 @@ class ChatBloc extends Bloc<ChatEvent, AppState<String>> {
     GetChatReply event,
     Emitter<AppState<String>> emit,
   ) async {
+    emit(const AppLoading());
     final dataState = await _getChatReplyUseCase();
     if (dataState is DataSuccess && dataState.data!.isNotEmpty) {
       emit(AppSuccess(dataState.data!));

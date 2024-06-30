@@ -19,7 +19,7 @@ class FavouritesBloc extends Bloc<FavouritesEvent, AppState<List<TouristPlace>>>
     this._clearFavouritesUseCase,
     this._addFavouriteUseCase,
     this._removeFavouriteUseCase,
-  ): super(const AppLoading()) {
+  ): super(const AppEmpty()) {
     on<GetFavourites>(onGetFavourites);
     on<AddFavourite>(onAddFavourite);
     on<RemoveFavourite>(onRemoveFavourite);
@@ -30,6 +30,7 @@ class FavouritesBloc extends Bloc<FavouritesEvent, AppState<List<TouristPlace>>>
     GetFavourites event,
     Emitter<AppState<List<TouristPlace>>> emit,
   ) async {
+    emit(const AppLoading());
     final result = await _getFavouritesUseCase();
     emit(AppSuccess(result));
   }
@@ -38,6 +39,7 @@ class FavouritesBloc extends Bloc<FavouritesEvent, AppState<List<TouristPlace>>>
     AddFavourite event,
       Emitter<AppState<List<TouristPlace>>> emit,
   ) async {
+    emit(const AppLoading());
     final result = await _addFavouriteUseCase();
     if (result) {
       final favourites = await _getFavouritesUseCase();
@@ -51,6 +53,7 @@ class FavouritesBloc extends Bloc<FavouritesEvent, AppState<List<TouristPlace>>>
     RemoveFavourite event,
       Emitter<AppState<List<TouristPlace>>> emit,
   ) async {
+    emit(const AppLoading());
     final result = await _removeFavouriteUseCase();
     if (result) {
       final favourites = await _getFavouritesUseCase();
@@ -64,6 +67,7 @@ class FavouritesBloc extends Bloc<FavouritesEvent, AppState<List<TouristPlace>>>
       ClearFavourites event,
       Emitter<AppState<List<TouristPlace>>> emit,
       ) async {
+    emit(const AppLoading());
     final result = await _clearFavouritesUseCase();
     if (result) {
       final favourites = await _getFavouritesUseCase();

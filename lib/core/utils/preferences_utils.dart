@@ -59,16 +59,3 @@ class PreferencesUtils {
     await prefs.remove(key);
   }
 }
-
-// Usage example:
-// Saving a value
-// await PreferencesUtils().saveValue('key', 'value');
-
-// Getting a value
-// var value = await PreferencesUtils().getValue('key');
-
-// Updating a value
-// await PreferencesUtils().updateValue('key', 'newValue');
-
-// Deleting a value
-// await PreferencesUtils().deleteValue('key');

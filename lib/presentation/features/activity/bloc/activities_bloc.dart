@@ -11,7 +11,7 @@ class ActivitiesBloc extends Bloc<ActivitiesEvent, AppState<List<Activity>>> {
 
   ActivitiesBloc(
     this._getActivitiesUseCase,
-  ) : super(const AppLoading()) {
+  ) : super(const AppEmpty()) {
     on<GetActivities>(onGetActivities);
   }
 
@@ -19,6 +19,7 @@ class ActivitiesBloc extends Bloc<ActivitiesEvent, AppState<List<Activity>>> {
     GetActivities event,
     Emitter<AppState<List<Activity>>> emit,
   ) async {
+    emit(const AppLoading());
     final dataState = await _getActivitiesUseCase();
     if (dataState is DataSuccess && dataState.data!.isNotEmpty) {
       emit(AppSuccess(dataState.data!));

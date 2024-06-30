@@ -11,7 +11,7 @@ class BudgetPlanBloc extends Bloc<BudgetPlanEvent, AppState<BudgetPlan>> {
 
   BudgetPlanBloc(
     this._getBudgetPlanUseCase,
-  ) : super(const AppLoading()) {
+  ) : super(const AppEmpty()) {
     on<GetBudgetPlan>(onGetBudgetPlan);
   }
 
@@ -19,6 +19,7 @@ class BudgetPlanBloc extends Bloc<BudgetPlanEvent, AppState<BudgetPlan>> {
     GetBudgetPlan event,
     Emitter<AppState<BudgetPlan>> emit,
   ) async {
+    emit(const AppLoading());
     final dataState = await _getBudgetPlanUseCase();
     if (dataState is DataSuccess) {
       emit(AppSuccess(dataState.data!));

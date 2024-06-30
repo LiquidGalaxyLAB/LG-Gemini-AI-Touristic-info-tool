@@ -12,7 +12,7 @@ class RecommendationsBloc
 
   RecommendationsBloc(
     this._getRecommendationsUseCase,
-  ) : super(const AppLoading()) {
+  ) : super(const AppEmpty()) {
     on<GetRecommendations>(onGetRecommendations);
   }
 
@@ -20,6 +20,7 @@ class RecommendationsBloc
     GetRecommendations event,
     Emitter<AppState<List<Recommendation>>> emit,
   ) async {
+    emit(const AppLoading());
     final dataState = await _getRecommendationsUseCase();
     if (dataState is DataSuccess) {
       emit(AppSuccess(dataState.data!));

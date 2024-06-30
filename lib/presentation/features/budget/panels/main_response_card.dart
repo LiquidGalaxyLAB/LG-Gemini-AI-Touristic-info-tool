@@ -98,6 +98,10 @@ class _MainResponseCardState extends State<MainResponseCard> {
               ),
             ],
           ),
+          ItemTitleDescription(
+            title: "Total cost",
+            description: widget._budgetPlan.totalCost,
+          ),
           Text(
             _titles[widget._selectedDetails],
             style: TextStyle(

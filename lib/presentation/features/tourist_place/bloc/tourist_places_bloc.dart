@@ -12,7 +12,7 @@ class TouristPlacesBloc
 
   TouristPlacesBloc(
     this._getTouristPlacesUseCase,
-  ) : super(const AppLoading()) {
+  ) : super(const AppEmpty()) {
     on<GetTouristPlaces>(onGetTouristPlaces);
   }
 
@@ -20,6 +20,7 @@ class TouristPlacesBloc
     GetTouristPlaces event,
     Emitter<AppState<List<TouristPlace>>> emit,
   ) async {
+    emit(const AppLoading());
     final dataState = await _getTouristPlacesUseCase();
     if (dataState is DataSuccess) {
       emit(AppSuccess(dataState.data!));
