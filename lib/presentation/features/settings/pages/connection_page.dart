@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:touristic/core/enums/preferences.dart';
+import 'package:touristic/core/utils/preferences_utils.dart';
 
 import '../../../../config/theme/app_theme.dart';
 import '../../../../service/lg_service.dart';
@@ -17,11 +19,11 @@ class ConnectionPage extends StatefulWidget {
 
 class _ConnectionPageState extends State<ConnectionPage> {
   static const double spacing = 12.0;
-  final TextEditingController userController = TextEditingController();
-  final TextEditingController passController = TextEditingController();
-  final TextEditingController ipController = TextEditingController();
-  final TextEditingController portController = TextEditingController();
-  final TextEditingController slavesController = TextEditingController();
+  TextEditingController userController = TextEditingController();
+  TextEditingController passController = TextEditingController();
+  TextEditingController ipController = TextEditingController();
+  TextEditingController portController = TextEditingController();
+  TextEditingController slavesController = TextEditingController();
 
   bool _connected = false;
 
@@ -29,6 +31,16 @@ class _ConnectionPageState extends State<ConnectionPage> {
   void initState() {
     super.initState();
     _isConnected();
+    _loadPreferences();
+  }
+
+  void _loadPreferences() async {
+    final PreferencesUtils preferencesUtils = PreferencesUtils();
+    userController = TextEditingController(text: await preferencesUtils.getValue(ConnectionPreferences.username.name));
+    passController = TextEditingController(text: await preferencesUtils.getValue(ConnectionPreferences.password.name));
+    ipController = TextEditingController(text: await preferencesUtils.getValue(ConnectionPreferences.ip.name));
+    portController = TextEditingController(text: await preferencesUtils.getValue(ConnectionPreferences.port.name));
+    slavesController = TextEditingController(text: await preferencesUtils.getValue(ConnectionPreferences.screens.name));
   }
 
   void _isConnected() async {
@@ -96,6 +108,12 @@ class _ConnectionPageState extends State<ConnectionPage> {
     if (result) {
       _isConnected();
       showSnackBar("successful");
+      final PreferencesUtils preferencesUtils = PreferencesUtils();
+      preferencesUtils.updateValue(ConnectionPreferences.username.name, userController.text);
+      preferencesUtils.updateValue(ConnectionPreferences.password.name, passController.text);
+      preferencesUtils.updateValue(ConnectionPreferences.ip.name, ipController.text);
+      preferencesUtils.updateValue(ConnectionPreferences.port.name, portController.text);
+      preferencesUtils.updateValue(ConnectionPreferences.screens.name, slavesController.text);
     } else {
       _isConnected();
       showSnackBar("failed");

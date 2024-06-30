@@ -34,10 +34,10 @@ class _GeneralSettingsPageState extends State<GeneralSettingsPage> {
   }
 
   Future<void> _loadPreferences() async {
-    _selectedConnectionMethod = await PreferencesUtils().getValue<int>(PreferencesKeys.connectionMethod.name) ?? 0;
-    _selectedAppTheme = await PreferencesUtils().getValue<int>(PreferencesKeys.appTheme.name) ?? 3;
-    _selectedMapsStyle = await PreferencesUtils().getValue<int>(PreferencesKeys.mapsStyle.name) ?? 3;
-    _selectedMapsTheme = await PreferencesUtils().getValue<int>(PreferencesKeys.mapsTheme.name) ?? 0;
+    _selectedConnectionMethod = await PreferencesUtils().getValue<int>(GeneralPreferences.connectionMethod.name) ?? 0;
+    _selectedAppTheme = await PreferencesUtils().getValue<int>(GeneralPreferences.appTheme.name) ?? 3;
+    _selectedMapsStyle = await PreferencesUtils().getValue<int>(GeneralPreferences.mapsStyle.name) ?? 3;
+    _selectedMapsTheme = await PreferencesUtils().getValue<int>(GeneralPreferences.mapsTheme.name) ?? 0;
 
     setState(() {});
   }
@@ -66,7 +66,7 @@ class _GeneralSettingsPageState extends State<GeneralSettingsPage> {
                 onPressed: () {
                   setState(() {
                     _selectedConnectionMethod = 0;
-                    _savePreference(PreferencesKeys.connectionMethod.name, 0);
+                    _savePreference(GeneralPreferences.connectionMethod.name, 0);
                   });
                 },
               ),
@@ -77,7 +77,7 @@ class _GeneralSettingsPageState extends State<GeneralSettingsPage> {
                 onPressed: () {
                   setState(() {
                     _selectedConnectionMethod = 1;
-                    _savePreference(PreferencesKeys.connectionMethod.name, 1);
+                    _savePreference(GeneralPreferences.connectionMethod.name, 1);
                   });
                 },
               ),
@@ -108,7 +108,7 @@ class _GeneralSettingsPageState extends State<GeneralSettingsPage> {
                         setState(() {
                           _selectedAppTheme = index;
                           AppTheme.color = _appThemes[index];
-                          _savePreference(PreferencesKeys.appTheme.name, index);
+                          _savePreference(GeneralPreferences.appTheme.name, index);
                         });
                       },
                     ),
@@ -143,7 +143,7 @@ class _GeneralSettingsPageState extends State<GeneralSettingsPage> {
                         setState(() {
                           _selectedMapsStyle = index;
                           AppTheme.mapStyle = mapsStylesMap[_mapsStyles[index]]!;
-                          _savePreference(PreferencesKeys.mapsStyle.name, index);
+                          _savePreference(GeneralPreferences.mapsStyle.name, index);
                         });
                       },
                       scale: 4,
@@ -175,7 +175,7 @@ class _GeneralSettingsPageState extends State<GeneralSettingsPage> {
                         setState(() {
                           _selectedMapsTheme = index;
                           AppTheme.mapTheme = mapsThemesMap[_mapsThemes[index]]!;
-                          _savePreference(PreferencesKeys.mapsTheme.name, index);
+                          _savePreference(GeneralPreferences.mapsTheme.name, index);
                         });
                       },
                     ),

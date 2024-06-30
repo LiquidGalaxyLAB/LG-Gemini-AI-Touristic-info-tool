@@ -21,9 +21,9 @@ class AppTheme {
   static AppColor color = AppColor(colorScheme: AppColorScheme.blue);
 
   static Future<void> loadPreferences() async {
-    int appThemeIndex = await PreferencesUtils().getValue<int>(PreferencesKeys.appTheme.name) ?? 3;
-    int mapsStyleIndex = await PreferencesUtils().getValue<int>(PreferencesKeys.mapsStyle.name) ?? 3;
-    int mapsThemeIndex = await PreferencesUtils().getValue<int>(PreferencesKeys.mapsTheme.name) ?? 0;
+    int appThemeIndex = await PreferencesUtils().getValue<int>(GeneralPreferences.appTheme.name) ?? 3;
+    int mapsStyleIndex = await PreferencesUtils().getValue<int>(GeneralPreferences.mapsStyle.name) ?? 3;
+    int mapsThemeIndex = await PreferencesUtils().getValue<int>(GeneralPreferences.mapsTheme.name) ?? 0;
 
     color = AppColor(colorScheme: AppColorScheme.values[appThemeIndex + 1]);
     mapTheme = mapsThemesMap.values.toList()[mapsThemeIndex];
