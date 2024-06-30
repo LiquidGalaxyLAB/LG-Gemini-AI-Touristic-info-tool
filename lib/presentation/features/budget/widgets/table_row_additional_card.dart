@@ -15,10 +15,10 @@ class TableRowAdditionalCard extends StatelessWidget {
     required AdditionalExpense expense,
     required bool selected,
     required int index,
-    required int totalExpanses,
+    required int totalExpenses,
     required dynamic Function(int) onExpenseTap,
   })  : _onExpanseTap = onExpenseTap,
-        _totalExpenses = totalExpanses,
+        _totalExpenses = totalExpenses,
         _index = index,
         _selected = selected,
         _expense = expense;
@@ -46,9 +46,9 @@ class TableRowAdditionalCard extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Flexible(flex: 6, child: Text("Name", style: headerStyle)),
+                Expanded(flex: 6, child: Text("Name", style: headerStyle)),
                 const SizedBox(width: 12),
-                Flexible(
+                Expanded(
                   flex: 4,
                   child: Align(
                     alignment: Alignment.centerLeft,
@@ -79,9 +79,9 @@ class TableRowAdditionalCard extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Flexible(flex: 6, child: _buildTableCell(_expense.name, _selected)),
+                Expanded(flex: 6, child: _buildTableCell(_expense.name, _selected)),
                 const SizedBox(width: 12),
-                Flexible(flex: 4, child: _buildTableCell(_expense.estimatedCost, _selected)),
+                Expanded(flex: 4, child: _buildTableCell(_expense.estimatedCost, _selected)),
               ],
             ),
           ),

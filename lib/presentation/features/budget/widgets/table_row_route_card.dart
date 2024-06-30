@@ -45,10 +45,10 @@ class TableRowRouteCard extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                SizedBox(width: 90, child: Text("From", style: headerStyle)),
-                SizedBox(width: 90, child: Text("To", style: headerStyle)),
-                SizedBox(width: 90, child: Text("Mode", style: headerStyle)),
-                SizedBox(width: 90, child: Text("Cost", style: headerStyle)),
+                Expanded(flex: 25, child: Text("From", style: headerStyle)),
+                Expanded(flex: 25, child: Text("To", style: headerStyle)),
+                Expanded(flex: 25, child: Text("Mode", style: headerStyle)),
+                Expanded(flex: 25, child: Text("Cost", style: headerStyle)),
               ],
             ),
           ),
@@ -92,14 +92,17 @@ class TableRowRouteCard extends StatelessWidget {
       color: selected ? AppTheme.gray.shade300 : AppTheme.gray.shade400,
     );
 
-    return SizedBox(
-      width: 90,
-      child: Text(
-        label,
-        maxLines: 1,
-        textAlign: TextAlign.start,
-        overflow: TextOverflow.ellipsis,
-        style: style,
+    return Expanded(
+      flex: 25,
+      child: Align(
+        alignment: Alignment.centerLeft,
+        child: Text(
+          label,
+          maxLines: 1,
+          textAlign: TextAlign.start,
+          overflow: TextOverflow.ellipsis,
+          style: style,
+        ),
       ),
     );
   }

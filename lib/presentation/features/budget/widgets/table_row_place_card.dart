@@ -46,9 +46,9 @@ class TableRowPlaceCard extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Flexible(flex: 3, child: Text("Name", style: headerStyle)),
+                Expanded(flex: 3, child: Text("Name", style: headerStyle)),
                 const SizedBox(width: 12),
-                Flexible(
+                Expanded(
                   flex: 2,
                   child: Align(
                     alignment: Alignment.centerLeft,
@@ -56,7 +56,7 @@ class TableRowPlaceCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 12),
-                Flexible(
+                Expanded(
                   flex: 2,
                   child: Align(
                     alignment: Alignment.centerLeft,
@@ -64,7 +64,7 @@ class TableRowPlaceCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 12),
-                Flexible(
+                Expanded(
                   flex: 2,
                   child: Align(
                     alignment: Alignment.centerLeft,
@@ -95,13 +95,13 @@ class TableRowPlaceCard extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Flexible(flex: 3, child: _buildTableCell(_place.name, _selected)),
+                Expanded(flex: 3, child: _buildTableCell(_place.name, _selected)),
                 const SizedBox(width: 12),
-                Flexible(flex: 2, child: _buildTableCell(_place.entranceFee, _selected)),
+                Expanded(flex: 2, child: _buildTableCell(_place.entranceFee, _selected)),
                 const SizedBox(width: 12),
-                Flexible(flex: 2, child: _buildTableCell(_place.guidedTourFee, _selected)),
+                Expanded(flex: 2, child: _buildTableCell(_place.guidedTourFee, _selected)),
                 const SizedBox(width: 12),
-                Flexible(flex: 2, child: _buildTableCell(_place.averageMealCost, _selected)),
+                Expanded(flex: 2, child: _buildTableCell(_place.averageMealCost, _selected)),
               ],
             ),
           ),
