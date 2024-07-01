@@ -6,7 +6,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../core/utils/app_utils.dart';
 import '../../../core/utils/maps_utils.dart';
-import '../../../di/dependency_injection.dart';
 import '../../../domain/model/cuisine.dart';
 import '../../components/layout_blueprint.dart';
 import '../../components/response_item_card.dart';
@@ -31,57 +30,54 @@ class _CuisinePageState extends State<CuisinePage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => sl<CuisinesBloc>(),
-      child: LayoutBlueprint(
-        cameraPosition: const CameraPosition(
-          target: LatLng(
-            12.0,
-            412.2,
-          ),
-          zoom: 7,
+    return LayoutBlueprint(
+      cameraPosition: const CameraPosition(
+        target: LatLng(
+          12.0,
+          412.2,
         ),
-        controller: _controller,
-        panelLeft: CuisineInputCard(
-          onContinueClick: () {
-            BlocProvider.of<CuisinesBloc>(context).add(const GetCuisines({}));
-          },
-        ),
-        panelDividedLeft: blocBuilder<CuisinesBloc, T>(onSuccess: (result) {
-          setState(() {
-            _cuisines = result;
-          });
-
-          return ListView.builder(
-            padding: EdgeInsets.zero,
-            itemCount: _cuisines.length,
-            itemBuilder: (context, index) {
-              return Column(
-                children: [
-                  ResponseItemCard(
-                    title: _cuisines[index].name,
-                    description: _cuisines[index].description,
-                    label: _cuisines[index].duration,
-                    selected: _selected == index,
-                    onTap: () {
-                      setState(() {
-                        _selected = index;
-                      });
-                      moveToPlace(_controller, const LatLng(21, 214));
-                    },
-                  ),
-                  if (index < _cuisines.length - 1) const SizedBox(height: 8)
-                ],
-              );
-            },
-          );
-        }),
-        panelRight: blocBuilder<CuisinesBloc, T>(onSuccess: (result) {
-          return CuisineDetailsCard(
-            cuisine: _cuisines[_selected],
-          );
-        }),
+        zoom: 7,
       ),
+      controller: _controller,
+      panelLeft: CuisineInputCard(
+        onContinueClick: () {
+          BlocProvider.of<CuisinesBloc>(context).add(const GetCuisines({}));
+        },
+      ),
+      panelDividedLeft: blocBuilder<CuisinesBloc, T>(onSuccess: (result) {
+        setState(() {
+          _cuisines = result;
+        });
+
+        return ListView.builder(
+          padding: EdgeInsets.zero,
+          itemCount: _cuisines.length,
+          itemBuilder: (context, index) {
+            return Column(
+              children: [
+                ResponseItemCard(
+                  title: _cuisines[index].name,
+                  description: _cuisines[index].description,
+                  label: _cuisines[index].duration,
+                  selected: _selected == index,
+                  onTap: () {
+                    setState(() {
+                      _selected = index;
+                    });
+                    moveToPlace(_controller, const LatLng(21, 214));
+                  },
+                ),
+                if (index < _cuisines.length - 1) const SizedBox(height: 8)
+              ],
+            );
+          },
+        );
+      }),
+      panelRight: blocBuilder<CuisinesBloc, T>(onSuccess: (result) {
+        return CuisineDetailsCard(
+          cuisine: _cuisines[_selected],
+        );
+      }),
     );
   }
 }

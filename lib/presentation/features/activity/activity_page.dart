@@ -6,7 +6,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../core/utils/app_utils.dart';
 import '../../../core/utils/maps_utils.dart';
-import '../../../di/dependency_injection.dart';
 import '../../../domain/model/activitiy.dart';
 import '../../components/layout_blueprint.dart';
 import '../../components/response_item_card.dart';
@@ -31,57 +30,54 @@ class _ActivityPageState extends State<ActivityPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => sl<ActivitiesBloc>(),
-      child: LayoutBlueprint(
-        cameraPosition: const CameraPosition(
-          target: LatLng(
-            12.0,
-            412.2,
-          ),
-          zoom: 7,
+    return LayoutBlueprint(
+      cameraPosition: const CameraPosition(
+        target: LatLng(
+          12.0,
+          412.2,
         ),
-        controller: _controller,
-        panelLeft: ActivityInputCard(
-          onContinueClick: () {
-            BlocProvider.of<ActivitiesBloc>(context).add(const GetActivities({}));
-          },
-        ),
-        panelDividedLeft: blocBuilder<ActivitiesBloc, T>(onSuccess: (result) {
-          setState(() {
-            _activities = result;
-          });
-
-          return ListView.builder(
-            padding: EdgeInsets.zero,
-            itemCount: _activities.length,
-            itemBuilder: (context, index) {
-              return Column(
-                children: [
-                  ResponseItemCard(
-                    title: _activities[index].name,
-                    description: _activities[index].description,
-                    label: _activities[index].duration,
-                    selected: _selected == index,
-                    onTap: () {
-                      setState(() {
-                        _selected = index;
-                      });
-                      moveToPlace(_controller, const LatLng(21, 214));
-                    },
-                  ),
-                  if (index < _activities.length - 1) const SizedBox(height: 8)
-                ],
-              );
-            },
-          );
-        }),
-        panelRight: blocBuilder<ActivitiesBloc, T>(onSuccess: (result) {
-          return ActivityDetailsCard(
-            activity: _activities[_selected],
-          );
-        }),
+        zoom: 7,
       ),
+      controller: _controller,
+      panelLeft: ActivityInputCard(
+        onContinueClick: () {
+          BlocProvider.of<ActivitiesBloc>(context).add(const GetActivities({}));
+        },
+      ),
+      panelDividedLeft: blocBuilder<ActivitiesBloc, T>(onSuccess: (result) {
+        setState(() {
+          _activities = result;
+        });
+
+        return ListView.builder(
+          padding: EdgeInsets.zero,
+          itemCount: _activities.length,
+          itemBuilder: (context, index) {
+            return Column(
+              children: [
+                ResponseItemCard(
+                  title: _activities[index].name,
+                  description: _activities[index].description,
+                  label: _activities[index].duration,
+                  selected: _selected == index,
+                  onTap: () {
+                    setState(() {
+                      _selected = index;
+                    });
+                    moveToPlace(_controller, const LatLng(21, 214));
+                  },
+                ),
+                if (index < _activities.length - 1) const SizedBox(height: 8)
+              ],
+            );
+          },
+        );
+      }),
+      panelRight: blocBuilder<ActivitiesBloc, T>(onSuccess: (result) {
+        return ActivityDetailsCard(
+          activity: _activities[_selected],
+        );
+      }),
     );
   }
 }

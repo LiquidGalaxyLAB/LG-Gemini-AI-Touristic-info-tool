@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../core/utils/app_utils.dart';
-import '../../../di/dependency_injection.dart';
 import '../../../domain/model/budget_plan.dart';
 import '../../components/layout_blueprint.dart';
 import 'bloc/budget_plan_bloc.dart';
@@ -37,60 +36,57 @@ class _BudgetPageState extends State<BudgetPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => sl<BudgetPlanBloc>(),
-      child: LayoutBlueprint(
-        cameraPosition: const CameraPosition(target: LatLng(12.0, 412.2), zoom: 7),
-        controller: _controller,
-        panelLeft: BudgetInputCard(
-          onContinueClick: () {
-            BlocProvider.of<BudgetPlanBloc>(context).add(const GetBudgetPlan({}));
-          },
-        ),
-        panelDividedLeft: blocBuilder<BudgetPlanBloc, T>(onSuccess: (result) {
-          setState(() {
-            _budgetPlan = result;
-          });
-
-          return MainResponseCard(
-            budgetPlan: _budgetPlan,
-            controller: _controller,
-            onTap: (value) {
-              setState(() {
-                _selectedDetails = value;
-              });
-            },
-            onPlaceTap: (value) {
-              setState(() {
-                _selectedPlace = value;
-              });
-            },
-            onRouteTap: (value) {
-              setState(() {
-                _selectedRoute = value;
-              });
-            },
-            onExpenseTap: (value) {
-              setState(() {
-                _selectedExpense = value;
-              });
-            },
-            onAccommodationTap: (value) {
-              setState(() {
-                _selectedAccommodation = value;
-              });
-            },
-            selectedPlace: _selectedPlace,
-            selectedRoute: _selectedRoute,
-            selectedExpense: _selectedExpense,
-            selectedDetails: _selectedDetails,
-            selectedAccommodation: _selectedAccommodation,
-          );
-        }),
-        panelRight: blocBuilder<BudgetPlanBloc, T>(onSuccess: (result) {
-          return _buildPanelRight();
-        }),
+    return LayoutBlueprint(
+      cameraPosition: const CameraPosition(target: LatLng(12.0, 412.2), zoom: 7),
+      controller: _controller,
+      panelLeft: BudgetInputCard(
+        onContinueClick: () {
+          BlocProvider.of<BudgetPlanBloc>(context).add(const GetBudgetPlan({}));
+        },
       ),
+      panelDividedLeft: blocBuilder<BudgetPlanBloc, T>(onSuccess: (result) {
+        setState(() {
+          _budgetPlan = result;
+        });
+
+        return MainResponseCard(
+          budgetPlan: _budgetPlan,
+          controller: _controller,
+          onTap: (value) {
+            setState(() {
+              _selectedDetails = value;
+            });
+          },
+          onPlaceTap: (value) {
+            setState(() {
+              _selectedPlace = value;
+            });
+          },
+          onRouteTap: (value) {
+            setState(() {
+              _selectedRoute = value;
+            });
+          },
+          onExpenseTap: (value) {
+            setState(() {
+              _selectedExpense = value;
+            });
+          },
+          onAccommodationTap: (value) {
+            setState(() {
+              _selectedAccommodation = value;
+            });
+          },
+          selectedPlace: _selectedPlace,
+          selectedRoute: _selectedRoute,
+          selectedExpense: _selectedExpense,
+          selectedDetails: _selectedDetails,
+          selectedAccommodation: _selectedAccommodation,
+        );
+      }),
+      panelRight: blocBuilder<BudgetPlanBloc, T>(onSuccess: (result) {
+        return _buildPanelRight();
+      }),
     );
   }
 

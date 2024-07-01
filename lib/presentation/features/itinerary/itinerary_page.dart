@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../core/utils/app_utils.dart';
-import '../../../di/dependency_injection.dart';
 import '../../../domain/model/itinerary.dart';
 import '../../components/layout_blueprint.dart';
 import 'bloc/itinerary_bloc.dart';
@@ -34,60 +33,57 @@ class _ItineraryPageState extends State<ItineraryPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => sl<ItineraryBloc>(),
-      child: LayoutBlueprint(
-        cameraPosition: _itinerary.places.isNotEmpty
-            ? CameraPosition(
-                target: LatLng(
-                  _itinerary.places[_selectedPlace].latitude,
-                  _itinerary.places[_selectedPlace].longitude,
-                ),
-                zoom: 7,
-              )
-            : null,
-        controller: _controller,
-        panelLeft: ItineraryInputCard(
-          onContinueClick: () {
-            BlocProvider.of<ItineraryBloc>(context).add(const GetItinerary({}));
-          },
-        ),
-        panelDividedLeft: blocBuilder<ItineraryBloc, T>(onSuccess: (result) {
-          setState(() {
-            _itinerary = result;
-          });
-
-          return MainResponseCard(
-            controller: _controller,
-            itinerary: _itinerary,
-            selectedPlace: _selectedPlace,
-            selectedRoute: _selectedRoute,
-            showRouteTable: _showRouteDetails,
-            onTap: (value) {
-              setState(() {
-                _showRouteDetails = value;
-              });
-            },
-            onPlaceTap: (value) {
-              setState(() {
-                _selectedPlace = value;
-              });
-            },
-            onRouteTap: (value) {
-              setState(() {
-                _selectedRoute = value;
-              });
-            },
-          );
-        }),
-        panelRight: blocBuilder<ItineraryBloc, T>(onSuccess: (result) {
-          if (_showRouteDetails) {
-            return RouteDetailsCard(route: _itinerary.travelRoute[_selectedRoute]);
-          } else {
-            return PlaceDescriptionCard(place: _itinerary.places[_selectedPlace]);
-          }
-        }),
+    return LayoutBlueprint(
+      cameraPosition: _itinerary.places.isNotEmpty
+          ? CameraPosition(
+              target: LatLng(
+                _itinerary.places[_selectedPlace].latitude,
+                _itinerary.places[_selectedPlace].longitude,
+              ),
+              zoom: 7,
+            )
+          : null,
+      controller: _controller,
+      panelLeft: ItineraryInputCard(
+        onContinueClick: () {
+          BlocProvider.of<ItineraryBloc>(context).add(const GetItinerary({}));
+        },
       ),
+      panelDividedLeft: blocBuilder<ItineraryBloc, T>(onSuccess: (result) {
+        setState(() {
+          _itinerary = result;
+        });
+
+        return MainResponseCard(
+          controller: _controller,
+          itinerary: _itinerary,
+          selectedPlace: _selectedPlace,
+          selectedRoute: _selectedRoute,
+          showRouteTable: _showRouteDetails,
+          onTap: (value) {
+            setState(() {
+              _showRouteDetails = value;
+            });
+          },
+          onPlaceTap: (value) {
+            setState(() {
+              _selectedPlace = value;
+            });
+          },
+          onRouteTap: (value) {
+            setState(() {
+              _selectedRoute = value;
+            });
+          },
+        );
+      }),
+      panelRight: blocBuilder<ItineraryBloc, T>(onSuccess: (result) {
+        if (_showRouteDetails) {
+          return RouteDetailsCard(route: _itinerary.travelRoute[_selectedRoute]);
+        } else {
+          return PlaceDescriptionCard(place: _itinerary.places[_selectedPlace]);
+        }
+      }),
     );
   }
 }

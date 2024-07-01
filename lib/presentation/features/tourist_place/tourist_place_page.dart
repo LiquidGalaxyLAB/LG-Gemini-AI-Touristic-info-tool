@@ -6,7 +6,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../core/utils/app_utils.dart';
 import '../../../core/utils/maps_utils.dart';
-import '../../../di/dependency_injection.dart';
 import '../../../domain/model/tourist_place.dart';
 import '../../components/layout_blueprint.dart';
 import '../../components/response_item_card.dart';
@@ -33,75 +32,71 @@ class _TouristPlacePageState extends State<TouristPlacePage> {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (_) => sl<TouristPlacesBloc>()),
-        BlocProvider(create: (_) => sl<FavouritesBloc>()),
-      ],
-      child: LayoutBlueprint(
-        cameraPosition: _touristPlaces.isNotEmpty ? CameraPosition(
-          target: LatLng(
-            _touristPlaces[_selected].latitude,
-            _touristPlaces[_selected].longitude,
-          ),
-          zoom: 7,
-        ) : null,
-        controller: _controller,
-        panelLeft: TouristPlaceInputCard(
-          onContinueClick: () {
-            BlocProvider.of<TouristPlacesBloc>(context).add(const GetTouristPlaces({}));
-          },
-        ),
-        panelDividedLeft: blocBuilder<TouristPlacesBloc, T>(
-          onSuccess: (result) {
-            setState(() {
-              _touristPlaces = result;
-            });
+    return LayoutBlueprint(
+      cameraPosition: _touristPlaces.isNotEmpty
+          ? CameraPosition(
+              target: LatLng(
+                _touristPlaces[_selected].latitude,
+                _touristPlaces[_selected].longitude,
+              ),
+              zoom: 7,
+            )
+          : null,
+      controller: _controller,
+      panelLeft: TouristPlaceInputCard(
+        onContinueClick: () {
+          BlocProvider.of<TouristPlacesBloc>(context).add(const GetTouristPlaces({}));
+        },
+      ),
+      panelDividedLeft: blocBuilder<TouristPlacesBloc, T>(
+        onSuccess: (result) {
+          setState(() {
+            _touristPlaces = result;
+          });
 
-            return ListView.builder(
-              padding: EdgeInsets.zero,
-              itemCount: _touristPlaces.length,
-              itemBuilder: (context, index) {
-                return Column(
-                  children: [
-                    ResponseItemCard(
-                      title: _touristPlaces[index].name,
-                      description: _touristPlaces[index].specialty,
-                      label: "(${_touristPlaces[index].latitude}, ${_touristPlaces[index].longitude})",
-                      selected: _selected == index,
-                      onTap: () {
-                        setState(() {
-                          _selected = index;
-                        });
-                        moveToPlace(
-                          _controller,
-                          LatLng(
-                            _touristPlaces[_selected].longitude,
-                            _touristPlaces[_selected].latitude,
-                          ),
-                        );
-                      },
-                    ),
-                    if (index < _touristPlaces.length - 1) const SizedBox(height: 8)
-                  ],
-                );
-              },
-            );
-          },
-        ),
-        panelRight: blocBuilder<TouristPlacesBloc, T>(
-          onSuccess: (result) {
-            return TouristPlaceDetailsCard(
-              touristPlace: result[_selected],
-              liked: false,
-              onIconClick: () {
-                BlocProvider.of<FavouritesBloc>(context).add(
-                  AddFavourite(result[_selected]),
-                );
-              },
-            );
-          },
-        ),
+          return ListView.builder(
+            padding: EdgeInsets.zero,
+            itemCount: _touristPlaces.length,
+            itemBuilder: (context, index) {
+              return Column(
+                children: [
+                  ResponseItemCard(
+                    title: _touristPlaces[index].name,
+                    description: _touristPlaces[index].specialty,
+                    label: "(${_touristPlaces[index].latitude}, ${_touristPlaces[index].longitude})",
+                    selected: _selected == index,
+                    onTap: () {
+                      setState(() {
+                        _selected = index;
+                      });
+                      moveToPlace(
+                        _controller,
+                        LatLng(
+                          _touristPlaces[_selected].longitude,
+                          _touristPlaces[_selected].latitude,
+                        ),
+                      );
+                    },
+                  ),
+                  if (index < _touristPlaces.length - 1) const SizedBox(height: 8)
+                ],
+              );
+            },
+          );
+        },
+      ),
+      panelRight: blocBuilder<TouristPlacesBloc, T>(
+        onSuccess: (result) {
+          return TouristPlaceDetailsCard(
+            touristPlace: result[_selected],
+            liked: false,
+            onIconClick: () {
+              BlocProvider.of<FavouritesBloc>(context).add(
+                AddFavourite(result[_selected]),
+              );
+            },
+          );
+        },
       ),
     );
   }
