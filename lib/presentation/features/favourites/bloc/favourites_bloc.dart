@@ -42,7 +42,7 @@ class FavouritesBloc extends Bloc<FavouritesEvent, AppState<List<TouristPlace>>>
     emit(const AppLoading());
     final result = await _addFavouriteUseCase();
     if (result) {
-      final favourites = await _getFavouritesUseCase();
+      final favourites = await _getFavouritesUseCase(params: event.touristPlace);
       emit(AppSuccess(favourites));
     } else {
       emit(AppFailure(Exception("onAddFavourite Failed")));
@@ -56,7 +56,7 @@ class FavouritesBloc extends Bloc<FavouritesEvent, AppState<List<TouristPlace>>>
     emit(const AppLoading());
     final result = await _removeFavouriteUseCase();
     if (result) {
-      final favourites = await _getFavouritesUseCase();
+      final favourites = await _getFavouritesUseCase(params: event.touristPlace);
       emit(AppSuccess(favourites));
     } else {
       emit(AppFailure(Exception("onRemoveFavourite Failed")));

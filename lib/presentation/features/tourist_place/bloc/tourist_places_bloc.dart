@@ -21,7 +21,7 @@ class TouristPlacesBloc
     Emitter<AppState<List<TouristPlace>>> emit,
   ) async {
     emit(const AppLoading());
-    final dataState = await _getTouristPlacesUseCase();
+    final dataState = await _getTouristPlacesUseCase(params: event.params);
     if (dataState is DataSuccess) {
       emit(AppSuccess(dataState.data!));
     } else {

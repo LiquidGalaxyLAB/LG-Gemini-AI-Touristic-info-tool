@@ -19,7 +19,7 @@ class ChatBloc extends Bloc<ChatEvent, AppState<String>> {
     Emitter<AppState<String>> emit,
   ) async {
     emit(const AppLoading());
-    final dataState = await _getChatReplyUseCase();
+    final dataState = await _getChatReplyUseCase(params: event.params);
     if (dataState is DataSuccess && dataState.data!.isNotEmpty) {
       emit(AppSuccess(dataState.data!));
     } else {

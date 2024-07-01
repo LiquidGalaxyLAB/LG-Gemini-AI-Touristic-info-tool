@@ -20,7 +20,7 @@ class CuisinesBloc extends Bloc<CuisinesEvent, AppState<List<Cuisine>>> {
     Emitter<AppState<List<Cuisine>>> emit,
   ) async {
     emit(const AppLoading());
-    final dataState = await _getCuisinesUseCase();
+    final dataState = await _getCuisinesUseCase(params: event.params);
     if (dataState is DataSuccess && dataState.data!.isNotEmpty) {
       emit(AppSuccess(dataState.data!));
     } else {

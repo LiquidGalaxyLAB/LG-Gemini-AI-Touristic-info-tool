@@ -21,7 +21,7 @@ class RecommendationsBloc
     Emitter<AppState<List<Recommendation>>> emit,
   ) async {
     emit(const AppLoading());
-    final dataState = await _getRecommendationsUseCase();
+    final dataState = await _getRecommendationsUseCase(params: event.params);
     if (dataState is DataSuccess) {
       emit(AppSuccess(dataState.data!));
     } else {

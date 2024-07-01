@@ -20,7 +20,7 @@ class ActivitiesBloc extends Bloc<ActivitiesEvent, AppState<List<Activity>>> {
     Emitter<AppState<List<Activity>>> emit,
   ) async {
     emit(const AppLoading());
-    final dataState = await _getActivitiesUseCase();
+    final dataState = await _getActivitiesUseCase(params: event.params);
     if (dataState is DataSuccess && dataState.data!.isNotEmpty) {
       emit(AppSuccess(dataState.data!));
     } else {
