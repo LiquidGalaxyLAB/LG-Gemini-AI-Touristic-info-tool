@@ -1,5 +1,6 @@
 import 'package:touristic/core/exception/invalid_response.dart';
 
+import '../exception/unhandled_exception.dart';
 import 'data_state.dart';
 
 Future<DataState<U>> handleResponse<T, U>({
@@ -28,5 +29,11 @@ Future<DataState<U>> handleResponse<T, U>({
     }
   } on InvalidResponseException catch (e) {
     return DataFailure(e);
+  } catch (e) {
+    return const DataFailure(
+      UnhandledException(
+        message: "Something went wrong",
+      ),
+    );
   }
 }
