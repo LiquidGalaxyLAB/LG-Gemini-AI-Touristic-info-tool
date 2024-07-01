@@ -39,13 +39,13 @@ class _TouristPlacePageState extends State<TouristPlacePage> {
         BlocProvider(create: (_) => sl<FavouritesBloc>()),
       ],
       child: LayoutBlueprint(
-        cameraPosition: CameraPosition(
+        cameraPosition: _touristPlaces.isNotEmpty ? CameraPosition(
           target: LatLng(
             _touristPlaces[_selected].latitude,
             _touristPlaces[_selected].longitude,
           ),
           zoom: 7,
-        ),
+        ) : null,
         controller: _controller,
         panelLeft: TouristPlaceInputCard(
           onContinueClick: () {
@@ -91,10 +91,6 @@ class _TouristPlacePageState extends State<TouristPlacePage> {
         ),
         panelRight: blocBuilder<TouristPlacesBloc, T>(
           onSuccess: (result) {
-            setState(() {
-              _touristPlaces = result;
-            });
-
             return TouristPlaceDetailsCard(
               touristPlace: result[_selected],
               liked: false,
