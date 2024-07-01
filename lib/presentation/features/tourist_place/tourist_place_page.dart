@@ -99,5 +99,5 @@ class _TouristPlacePageState extends State<TouristPlacePage> {
         },
       ),
     );
-  }
+    }
 }

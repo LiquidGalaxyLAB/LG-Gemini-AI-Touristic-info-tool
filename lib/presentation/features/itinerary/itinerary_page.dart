@@ -29,16 +29,16 @@ class _ItineraryPageState extends State<ItineraryPage> {
   bool _showRouteDetails = true;
   int _selectedPlace = 0;
   int _selectedRoute = 0;
-  late Itinerary _itinerary;
+  Itinerary? _itinerary;
 
   @override
   Widget build(BuildContext context) {
     return LayoutBlueprint(
-      cameraPosition: _itinerary.places.isNotEmpty
+      cameraPosition: _itinerary != null
           ? CameraPosition(
               target: LatLng(
-                _itinerary.places[_selectedPlace].latitude,
-                _itinerary.places[_selectedPlace].longitude,
+                _itinerary!.places[_selectedPlace].latitude,
+                _itinerary!.places[_selectedPlace].longitude,
               ),
               zoom: 7,
             )
@@ -56,7 +56,7 @@ class _ItineraryPageState extends State<ItineraryPage> {
 
         return MainResponseCard(
           controller: _controller,
-          itinerary: _itinerary,
+          itinerary: _itinerary!,
           selectedPlace: _selectedPlace,
           selectedRoute: _selectedRoute,
           showRouteTable: _showRouteDetails,
@@ -79,9 +79,9 @@ class _ItineraryPageState extends State<ItineraryPage> {
       }),
       panelRight: blocBuilder<ItineraryBloc, T>(onSuccess: (result) {
         if (_showRouteDetails) {
-          return RouteDetailsCard(route: _itinerary.travelRoute[_selectedRoute]);
+          return RouteDetailsCard(route: _itinerary!.travelRoute[_selectedRoute]);
         } else {
-          return PlaceDescriptionCard(place: _itinerary.places[_selectedPlace]);
+          return PlaceDescriptionCard(place: _itinerary!.places[_selectedPlace]);
         }
       }),
     );
