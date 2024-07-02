@@ -7,8 +7,7 @@
         android:normalScreens="false"
         android:largeScreens="true"
         android:xlargeScreens="true"
-        android:requiresSmallestWidthDp="600"
-        android:largestWidthLimitDp="840" />
+        android:requiresSmallestWidthDp="600" />
 
     <application
         android:label="touristic"

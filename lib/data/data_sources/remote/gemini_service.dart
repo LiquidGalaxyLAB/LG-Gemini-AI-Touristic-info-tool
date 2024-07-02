@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:touristic/domain/model/chat_item.dart';
 
@@ -16,6 +17,7 @@ class GeminiService {
   const GeminiService(this.model);
 
   Future<TouristPlacesResponse?> getTouristPlaces(Map<String, dynamic> params) async {
+    debugPrint("$params");
     final response = await model.generateContent([Content.text("text")]);
     if (response.text != null) {
       final json = jsonDecode(response.text!);
@@ -26,6 +28,7 @@ class GeminiService {
   }
 
   Future<ItineraryResponse?> getItinerary(Map<String, dynamic> params) async {
+    debugPrint("$params");
     final response = await model.generateContent([Content.text("text")]);
     if (response.text != null) {
       final json = jsonDecode(response.text!);
@@ -36,6 +39,7 @@ class GeminiService {
   }
 
   Future<LocalCuisinesResponse?> getLocalCuisine(Map<String, dynamic> params) async {
+    debugPrint("$params");
     final response = await model.generateContent([Content.text("text")]);
     if (response.text != null) {
       final json = jsonDecode(response.text!);
@@ -46,6 +50,7 @@ class GeminiService {
   }
 
   Future<ActivitiesResponse?> getActivities(Map<String, dynamic> params) async {
+    debugPrint("$params");
     final response = await model.generateContent([Content.text("text")]);
     if (response.text != null) {
       final json = jsonDecode(response.text!);
@@ -56,6 +61,7 @@ class GeminiService {
   }
 
   Future<BudgetPlanResponse?> getBudgetPlan(Map<String, dynamic> params) async {
+    debugPrint("$params");
     final response = await model.generateContent([Content.text("text")]);
     if (response.text != null) {
       final json = jsonDecode(response.text!);
@@ -66,6 +72,7 @@ class GeminiService {
   }
 
   Future<RecommendationsResponse?> getRecommendations(Map<String, dynamic> params) async {
+    debugPrint("$params");
     final response = await model.generateContent([Content.text("text")]);
     if (response.text != null) {
       final json = jsonDecode(response.text!);
@@ -76,6 +83,7 @@ class GeminiService {
   }
 
   Future<String?> getChatReply(List<ChatItem> params) async {
+    debugPrint("$params");
     final response = await model.generateContent([Content.text("text")]);
     return response.text;
   }
