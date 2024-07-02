@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:touristic/presentation/components/input_submit_button.dart';
-import 'package:touristic/presentation/components/user_choice_card.dart';
-import 'package:touristic/presentation/components/user_input_field.dart';
+
+import '../../../components/input_submit_button.dart';
+import '../../../components/user_choice_card.dart';
+import '../../../components/user_input_field.dart';
 
 class RecommendationInputCard extends StatefulWidget {
-  final Function _onContinueClick;
+  final Function(Map<String, dynamic>) _onContinueClick;
 
   const RecommendationInputCard({
     super.key,
-    required Function onContinueClick,
+    required Function(Map<String, dynamic>) onContinueClick,
   }) : _onContinueClick = onContinueClick;
 
   @override
@@ -60,7 +61,9 @@ class _RecommendationInputCardState extends State<RecommendationInputCard> {
           ),
         ),
         const SizedBox(height: spacing / 2),
-        InputSubmitButton(onContinueClick: widget._onContinueClick),
+        InputSubmitButton(onContinueClick: () {
+          widget._onContinueClick({});
+        }),
       ],
     );
   }

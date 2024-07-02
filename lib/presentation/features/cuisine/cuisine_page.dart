@@ -40,8 +40,8 @@ class _CuisinePageState extends State<CuisinePage> {
       ),
       controller: _controller,
       panelLeft: CuisineInputCard(
-        onContinueClick: () {
-          BlocProvider.of<CuisinesBloc>(context).add(const GetCuisines({}));
+        onContinueClick: (params) {
+          BlocProvider.of<CuisinesBloc>(context).add(GetCuisines(params));
         },
       ),
       panelDividedLeft: blocBuilder<CuisinesBloc, T>(onSuccess: (result) {

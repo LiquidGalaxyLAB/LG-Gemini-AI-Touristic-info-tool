@@ -7,13 +7,13 @@ import '../../../components/item_title_description.dart';
 class FavouriteDetailsCard extends StatefulWidget {
   final TouristPlace _touristPlace;
   final bool _liked;
-  final Function _onIconClick;
+  final Function(bool) _onIconClick;
 
   const FavouriteDetailsCard({
     super.key,
     required TouristPlace touristPlace,
     required bool liked,
-    required Function onIconClick,
+    required Function(bool) onIconClick,
   })  : _onIconClick = onIconClick,
         _liked = liked,
         _touristPlace = touristPlace;
@@ -52,10 +52,10 @@ class _FavouriteDetailsCardState extends State<FavouriteDetailsCard> {
               ),
               IconButton(
                 onPressed: () {
-                  widget._onIconClick();
                   setState(() {
                     isLiked = !isLiked;
                   });
+                  widget._onIconClick(isLiked);
                 },
                 icon: Icon(
                   isLiked

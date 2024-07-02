@@ -5,11 +5,11 @@ import '../../../components/user_choice_card.dart';
 import '../../../components/user_input_field.dart';
 
 class CuisineInputCard extends StatefulWidget {
-  final Function _onContinueClick;
+  final Function(Map<String, dynamic>) _onContinueClick;
 
   const CuisineInputCard({
     super.key,
-    required Function onContinueClick,
+    required Function(Map<String, dynamic>) onContinueClick,
   }) : _onContinueClick = onContinueClick;
 
   @override
@@ -27,15 +27,7 @@ class _CuisineInputCardState extends State<CuisineInputCard> {
     "Non-Vegetarian",
   ];
 
-  final List<String> _restrictions = [
-    "None",
-    "Vegan",
-    "Gluten-Free",
-    "Dairy-Free",
-    "Nut-Free",
-    "Halal",
-    "Kosher"
-  ];
+  final List<String> _restrictions = ["None", "Vegan", "Gluten-Free", "Dairy-Free", "Nut-Free", "Halal", "Kosher"];
 
   @override
   Widget build(BuildContext context) {
@@ -59,15 +51,15 @@ class _CuisineInputCardState extends State<CuisineInputCard> {
                   choices: _preferences,
                 ),
                 const SizedBox(height: _spacing),
-                UserChoiceCard(
-                    title: "Please select any dietary restrictions, If any?",
-                    choices: _restrictions),
+                UserChoiceCard(title: "Please select any dietary restrictions, If any?", choices: _restrictions),
               ],
             ),
           ),
         ),
         const SizedBox(height: _spacing / 2),
-        InputSubmitButton(onContinueClick: widget._onContinueClick),
+        InputSubmitButton(onContinueClick: () {
+          widget._onContinueClick({});
+        }),
       ],
     );
   }

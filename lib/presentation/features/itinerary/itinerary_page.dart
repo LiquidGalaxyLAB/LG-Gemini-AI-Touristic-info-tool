@@ -45,8 +45,8 @@ class _ItineraryPageState extends State<ItineraryPage> {
           : null,
       controller: _controller,
       panelLeft: ItineraryInputCard(
-        onContinueClick: () {
-          BlocProvider.of<ItineraryBloc>(context).add(const GetItinerary({}));
+        onContinueClick: (params) {
+          BlocProvider.of<ItineraryBloc>(context).add(GetItinerary(params));
         },
       ),
       panelDividedLeft: blocBuilder<ItineraryBloc, T>(onSuccess: (result) {

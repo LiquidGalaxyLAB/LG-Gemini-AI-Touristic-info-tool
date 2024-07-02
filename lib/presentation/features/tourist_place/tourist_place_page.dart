@@ -44,8 +44,8 @@ class _TouristPlacePageState extends State<TouristPlacePage> {
           : null,
       controller: _controller,
       panelLeft: TouristPlaceInputCard(
-        onContinueClick: () {
-          BlocProvider.of<TouristPlacesBloc>(context).add(const GetTouristPlaces({}));
+        onContinueClick: (params) {
+          BlocProvider.of<TouristPlacesBloc>(context).add(GetTouristPlaces(params));
         },
       ),
       panelDividedLeft: blocBuilder<TouristPlacesBloc, T>(
@@ -90,10 +90,16 @@ class _TouristPlacePageState extends State<TouristPlacePage> {
           return TouristPlaceDetailsCard(
             touristPlace: result[_selected],
             liked: false,
-            onIconClick: () {
-              BlocProvider.of<FavouritesBloc>(context).add(
-                AddFavourite(result[_selected]),
-              );
+            onIconClick: (isLiked) {
+              if (isLiked) {
+                BlocProvider.of<FavouritesBloc>(context).add(
+                  AddFavourite(result[_selected]),
+                );
+              } else {
+                BlocProvider.of<FavouritesBloc>(context).add(
+                  RemoveFavourite(result[_selected]),
+                );
+              }
             },
           );
         },

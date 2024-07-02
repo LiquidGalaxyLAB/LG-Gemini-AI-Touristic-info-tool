@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../core/utils/app_utils.dart';
@@ -9,6 +10,7 @@ import '../../../domain/model/tourist_place.dart';
 import '../../components/layout_blueprint.dart';
 import '../../components/response_item_card.dart';
 import 'bloc/favourites_bloc.dart';
+import 'bloc/favourites_event.dart';
 import 'panels/favourite_details_card.dart';
 
 typedef T = List<TouristPlace>;
@@ -73,13 +75,25 @@ class _FavouritesPageState extends State<FavouritesPage> {
           },
         );
       }),
-      panelRight: blocBuilder<FavouritesBloc, T>(onSuccess: (result) {
-        return FavouriteDetailsCard(
-          touristPlace: _touristPlaces[_selected],
-          liked: true,
-          onIconClick: () {},
-        );
-      }),
+      panelRight: blocBuilder<FavouritesBloc, T>(
+        onSuccess: (result) {
+          return FavouriteDetailsCard(
+            touristPlace: result[_selected],
+            liked: true,
+            onIconClick: (isLiked) {
+              if (isLiked) {
+                BlocProvider.of<FavouritesBloc>(context).add(
+                  AddFavourite(result[_selected]),
+                );
+              } else {
+                BlocProvider.of<FavouritesBloc>(context).add(
+                  RemoveFavourite(result[_selected]),
+                );
+              }
+            },
+          );
+        },
+      ),
     );
   }
 }

@@ -5,11 +5,11 @@ import '../../../components/user_choice_card.dart';
 import '../../../components/user_input_field.dart';
 
 class ItineraryInputCard extends StatefulWidget {
-  final Function _onContinueClick;
+  final Function(Map<String, dynamic>) _onContinueClick;
 
   const ItineraryInputCard({
     super.key,
-    required Function onContinueClick,
+    required Function(Map<String, dynamic>) onContinueClick,
   }) : _onContinueClick = onContinueClick;
 
   @override
@@ -26,12 +26,7 @@ class _ItineraryInputCardState extends State<ItineraryInputCard> {
     "\$3000",
     "\$5000+",
   ];
-  final List<String> _duration = [
-    "1-3 days",
-    "4-7 days",
-    "8-14 days",
-    "15+ days"
-  ];
+  final List<String> _duration = ["1-3 days", "4-7 days", "8-14 days", "15+ days"];
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +59,9 @@ class _ItineraryInputCardState extends State<ItineraryInputCard> {
           ),
         ),
         const SizedBox(height: _spacing / 2),
-        InputSubmitButton(onContinueClick: widget._onContinueClick),
+        InputSubmitButton(onContinueClick: () {
+          widget._onContinueClick({});
+        }),
       ],
     );
   }

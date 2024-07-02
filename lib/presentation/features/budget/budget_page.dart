@@ -40,8 +40,8 @@ class _BudgetPageState extends State<BudgetPage> {
       cameraPosition: const CameraPosition(target: LatLng(12.0, 412.2), zoom: 7),
       controller: _controller,
       panelLeft: BudgetInputCard(
-        onContinueClick: () {
-          BlocProvider.of<BudgetPlanBloc>(context).add(const GetBudgetPlan({}));
+        onContinueClick: (params) {
+          BlocProvider.of<BudgetPlanBloc>(context).add(GetBudgetPlan(params));
         },
       ),
       panelDividedLeft: blocBuilder<BudgetPlanBloc, T>(onSuccess: (result) {

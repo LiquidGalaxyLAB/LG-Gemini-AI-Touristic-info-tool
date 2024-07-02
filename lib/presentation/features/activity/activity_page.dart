@@ -40,8 +40,8 @@ class _ActivityPageState extends State<ActivityPage> {
       ),
       controller: _controller,
       panelLeft: ActivityInputCard(
-        onContinueClick: () {
-          BlocProvider.of<ActivitiesBloc>(context).add(const GetActivities({}));
+        onContinueClick: (params) {
+          BlocProvider.of<ActivitiesBloc>(context).add(GetActivities(params));
         },
       ),
       panelDividedLeft: blocBuilder<ActivitiesBloc, T>(onSuccess: (result) {

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import '../../../components/input_item_card.dart';
 
+import '../../../components/input_item_card.dart';
 import '../../../components/input_submit_button.dart';
 import '../../../components/user_choice_card.dart';
 
 class BudgetInputCard extends StatefulWidget {
-  final Function _onContinueClick;
+  final Function(Map<String, dynamic>) _onContinueClick;
 
   const BudgetInputCard({
     super.key,
-    required Function onContinueClick,
+    required Function(Map<String, dynamic>) onContinueClick,
   }) : _onContinueClick = onContinueClick;
 
   @override
@@ -26,13 +26,9 @@ class _BudgetInputCardState extends State<BudgetInputCard> {
     "\$3000",
     "\$5000+",
   ];
-  final List<String> _duration = [
-    "1-3 days", "4-7 days", "8-14 days", "15+ days"
-  ];
+  final List<String> _duration = ["1-3 days", "4-7 days", "8-14 days", "15+ days"];
 
-  final List<String> _travellers = [
-    "Solo", "Couple", "3-5", "6-10", "10+"
-  ];
+  final List<String> _travellers = ["Solo", "Couple", "3-5", "6-10", "10+"];
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +41,7 @@ class _BudgetInputCardState extends State<BudgetInputCard> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const InputItemCard(
-                    title: "What are the places you are planing to visit?",
+                  title: "What are the places you are planing to visit?",
                 ),
                 const SizedBox(height: _spacing),
                 UserChoiceCard(
@@ -67,7 +63,9 @@ class _BudgetInputCardState extends State<BudgetInputCard> {
           ),
         ),
         const SizedBox(height: _spacing / 2),
-        InputSubmitButton(onContinueClick: widget._onContinueClick),
+        InputSubmitButton(onContinueClick: () {
+          widget._onContinueClick({});
+        }),
       ],
     );
   }

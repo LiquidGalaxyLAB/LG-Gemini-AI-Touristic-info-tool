@@ -4,14 +4,14 @@ import 'package:touristic/config/theme/app_theme.dart';
 class InputCard extends StatefulWidget {
   final Function _onAttachClick;
   final Function _onAudioClick;
-  final Function _onSendClick;
+  final Function(String) _onSendClick;
   final TextEditingController _controller;
 
   const InputCard({
     super.key,
     required Function onAttachClick,
     required Function onAudioClick,
-    required Function onSendClick,
+    required Function(String) onSendClick,
     required TextEditingController controller,
   })  : _controller = controller,
         _onSendClick = onSendClick,
@@ -110,7 +110,7 @@ class _InputCardState extends State<InputCard> {
           ),
           IconButton(
             onPressed: () {
-              widget._onSendClick();
+              widget._onSendClick(widget._controller.text);
             },
             icon: Icon(
               Icons.send_rounded,

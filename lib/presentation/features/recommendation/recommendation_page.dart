@@ -40,8 +40,8 @@ class _RecommendationPageState extends State<RecommendationPage> {
       ),
       controller: _controller,
       panelLeft: RecommendationInputCard(
-        onContinueClick: () {
-          BlocProvider.of<RecommendationsBloc>(context).add(const GetRecommendations({}));
+        onContinueClick: (params) {
+          BlocProvider.of<RecommendationsBloc>(context).add(GetRecommendations(params));
         },
       ),
       panelDividedLeft: blocBuilder<RecommendationsBloc, T>(onSuccess: (result) {

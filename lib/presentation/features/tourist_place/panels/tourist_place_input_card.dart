@@ -5,11 +5,11 @@ import '../../../components/user_choice_card.dart';
 import '../../../components/user_input_field.dart';
 
 class TouristPlaceInputCard extends StatefulWidget {
-  final Function _onContinueClick;
+  final Function(Map<String, dynamic>) _onContinueClick;
 
   const TouristPlaceInputCard({
     super.key,
-    required Function onContinueClick,
+    required Function(Map<String, dynamic>) onContinueClick,
   }) : _onContinueClick = onContinueClick;
 
   @override
@@ -74,7 +74,9 @@ class _TouristPlaceInputCardState extends State<TouristPlaceInputCard> {
           ),
         ),
         const SizedBox(height: _spacing / 2),
-        InputSubmitButton(onContinueClick: widget._onContinueClick),
+        InputSubmitButton(onContinueClick: () {
+          widget._onContinueClick({});
+        }),
       ],
     );
   }
