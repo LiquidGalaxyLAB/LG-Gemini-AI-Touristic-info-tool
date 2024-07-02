@@ -19,6 +19,24 @@ class ControlPanel extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         LGButton(
+          label: "Show/Hide logo",
+          icon: Icons.slideshow_rounded,
+          onPressed: () {
+            LGService.instance?.setRefresh();
+          },
+          enabled: _connected,
+        ),
+        const SizedBox(height: spacing),
+        LGButton(
+          label: "Clear kmls",
+          icon: Icons.clean_hands_rounded,
+          onPressed: () {
+            LGService.instance?.setRefresh();
+          },
+          enabled: _connected,
+        ),
+        const SizedBox(height: spacing),
+        LGButton(
           label: "Set slaves refresh",
           icon: Icons.av_timer_rounded,
           onPressed: () {

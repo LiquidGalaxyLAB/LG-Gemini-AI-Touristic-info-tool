@@ -108,13 +108,17 @@ class _InputFieldState extends State<InputField> {
                   ),
                 )
               : null,
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(color: AppTheme.gray.shade700),
+          ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
             borderSide: BorderSide(color: AppTheme.gray.shade700),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
-            borderSide: BorderSide(color: AppTheme.color.shade700, width: 1.3),
+            borderSide: BorderSide(color: AppTheme.color.shade700, width: 1.2),
           ),
           floatingLabelStyle: TextStyle(
             color: AppTheme.gray.shade400,

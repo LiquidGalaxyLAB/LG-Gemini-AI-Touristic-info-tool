@@ -108,7 +108,7 @@ class _SettingsPageState extends State<SettingsPage> with SingleTickerProviderSt
           Icon(
             iconData,
             size: 16,
-            color: selected ? AppTheme.color.shade200 : AppTheme.gray.shade400,
+            color: selected ? AppTheme.color.shade100 : AppTheme.gray.shade400,
           ),
           const SizedBox(width: 8),
           Text(
@@ -117,7 +117,7 @@ class _SettingsPageState extends State<SettingsPage> with SingleTickerProviderSt
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w600,
-              color: selected ? AppTheme.color.shade200 : AppTheme.gray.shade400,
+              color: selected ? AppTheme.color.shade100 : AppTheme.gray.shade400,
             ),
           ),
         ],
