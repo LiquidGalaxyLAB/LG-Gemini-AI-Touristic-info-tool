@@ -42,6 +42,16 @@ class _TouristPlaceInputCardState extends State<TouristPlaceInputCard> {
     "Plains",
   ];
 
+  late String _selectedBudget;
+  late String _selectedInterests;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedBudget = _budget[0];
+    _selectedInterests = _interests[0];
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -62,13 +72,18 @@ class _TouristPlaceInputCardState extends State<TouristPlaceInputCard> {
                 UserChoiceCard(
                   choices: _budget,
                   title: "What's your budget in USD(\$)?",
+                  onSelectionChange: (values) {
+                    _selectedBudget = _budget[values[0]];
+                  },
                 ),
                 const SizedBox(height: _spacing),
                 UserChoiceCard(
                   choices: _interests,
-                  onSelectionChange: (List<int> values) {},
                   title: "What environment interests you most?",
                   singleSelection: false,
+                  onSelectionChange: (List<int> values) {
+                    _selectedInterests = values.map((element) => _interests[element]).toList().join(", ");
+                  },
                 ),
               ],
             ),
@@ -79,7 +94,11 @@ class _TouristPlaceInputCardState extends State<TouristPlaceInputCard> {
           if (_destinationController.text.isEmpty) {
             showInvalidInputDialog(context);
           } else {
-            widget._onContinueClick({});
+            widget._onContinueClick({
+              "destination": _destinationController.text,
+              "budget": _selectedBudget,
+              "interests": _selectedInterests,
+            });
           }
         }),
       ],

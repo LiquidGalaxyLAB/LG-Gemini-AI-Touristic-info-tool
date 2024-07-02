@@ -30,6 +30,16 @@ class _CuisineInputCardState extends State<CuisineInputCard> {
 
   final List<String> _restrictions = ["None", "Vegan", "Gluten-Free", "Dairy-Free", "Nut-Free", "Halal", "Kosher"];
 
+  late String _selectedPreference;
+  late String _selectedRestriction;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedPreference = _preferences[0];
+    _selectedRestriction = _restrictions[0];
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -50,9 +60,18 @@ class _CuisineInputCardState extends State<CuisineInputCard> {
                 UserChoiceCard(
                   title: "What's your preferred diet?",
                   choices: _preferences,
+                  onSelectionChange: (values) {
+                    _selectedPreference = _preferences[values[0]];
+                  },
                 ),
                 const SizedBox(height: _spacing),
-                UserChoiceCard(title: "Please select any dietary restrictions, If any?", choices: _restrictions),
+                UserChoiceCard(
+                  title: "Please select any dietary restrictions, If any?",
+                  choices: _restrictions,
+                  onSelectionChange: (values) {
+                    _selectedRestriction = _restrictions[values[0]];
+                  },
+                ),
               ],
             ),
           ),
@@ -62,7 +81,11 @@ class _CuisineInputCardState extends State<CuisineInputCard> {
           if (_destinationController.text.isEmpty) {
             showInvalidInputDialog(context);
           } else {
-            widget._onContinueClick({});
+            widget._onContinueClick({
+              "destination": _destinationController.text,
+              "preference": _selectedPreference,
+              "dietary-restriction": _selectedRestriction,
+            });
           }
         }),
       ],

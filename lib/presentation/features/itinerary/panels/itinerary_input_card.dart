@@ -29,6 +29,16 @@ class _ItineraryInputCardState extends State<ItineraryInputCard> {
   ];
   final List<String> _duration = ["1-3 days", "4-7 days", "8-14 days", "15+ days"];
 
+  late String _selectedBudget;
+  late String _selectedDuration;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedBudget = _budget[0];
+    _selectedDuration = _duration[0];
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -49,11 +59,17 @@ class _ItineraryInputCardState extends State<ItineraryInputCard> {
                 UserChoiceCard(
                   choices: _budget,
                   title: "What's your budget in USD(\$)?",
+                  onSelectionChange: (values) {
+                    _selectedBudget = _budget[values[0]];
+                  },
                 ),
                 const SizedBox(height: _spacing),
                 UserChoiceCard(
                   choices: _duration,
                   title: "How long you are planning to tour?",
+                  onSelectionChange: (values) {
+                    _selectedDuration = _duration[values[0]];
+                  },
                 ),
               ],
             ),
@@ -64,7 +80,11 @@ class _ItineraryInputCardState extends State<ItineraryInputCard> {
           if (_destinationController.text.isEmpty) {
             showInvalidInputDialog(context);
           } else {
-            widget._onContinueClick({});
+            widget._onContinueClick({
+              "destination": _destinationController.text,
+              "budget": _selectedBudget,
+              "duration": _selectedDuration,
+            });
           }
         }),
       ],

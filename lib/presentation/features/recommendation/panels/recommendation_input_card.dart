@@ -35,6 +35,14 @@ class _RecommendationInputCardState extends State<RecommendationInputCard> {
     "Food and Culinary",
   ];
 
+  late String _selectedTravelStyle;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedTravelStyle = _style[0];
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -54,8 +62,11 @@ class _RecommendationInputCardState extends State<RecommendationInputCard> {
                 const SizedBox(height: spacing),
                 UserChoiceCard(
                   choices: _style,
-                  onSelectionChange: (List<int> values) {},
                   title: "What is your travel style?",
+                  singleSelection: false,
+                  onSelectionChange: (values) {
+                    _selectedTravelStyle = values.map((element) => _selectedTravelStyle[element]).toList().join(", ");
+                  },
                 ),
               ],
             ),
@@ -66,7 +77,10 @@ class _RecommendationInputCardState extends State<RecommendationInputCard> {
           if (_destinationController.text.isEmpty) {
             showInvalidInputDialog(context);
           } else {
-            widget._onContinueClick({});
+            widget._onContinueClick({
+              "destination": _destinationController.text,
+              "travel_style": _selectedTravelStyle,
+            });
           }
         }),
       ],

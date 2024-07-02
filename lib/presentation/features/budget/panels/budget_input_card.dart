@@ -33,6 +33,18 @@ class _BudgetInputCardState extends State<BudgetInputCard> {
 
   List<String> _choices = [];
 
+  late String _selectedBudget;
+  late String _selectedDuration;
+  late String _selectedCompanions;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedBudget = _budget[0];
+    _selectedDuration = _duration[0];
+    _selectedCompanions = _travellers[0];
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -53,16 +65,25 @@ class _BudgetInputCardState extends State<BudgetInputCard> {
                 UserChoiceCard(
                   choices: _budget,
                   title: "What's your budget in USD(\$)?",
+                  onSelectionChange: (values) {
+                    _selectedBudget = _budget[values[0]];
+                  },
                 ),
                 const SizedBox(height: _spacing),
                 UserChoiceCard(
                   choices: _duration,
                   title: "How long you are planning to tour?",
+                  onSelectionChange: (values) {
+                    _selectedDuration = _duration[values[0]];
+                  },
                 ),
                 const SizedBox(height: _spacing),
                 UserChoiceCard(
                   choices: _travellers,
                   title: "How many people are travelling with you?",
+                  onSelectionChange: (values) {
+                    _selectedCompanions = _travellers[values[0]];
+                  },
                 ),
               ],
             ),
@@ -73,8 +94,12 @@ class _BudgetInputCardState extends State<BudgetInputCard> {
           if (_choices.isEmpty) {
             showInvalidInputDialog(context);
           } else {
-            widget._onContinueClick({});
-          }
+            widget._onContinueClick({
+              "itinerary": _choices.join(", "),
+              "budget": _selectedBudget,
+              "duration": _selectedDuration,
+              "companions": _selectedCompanions,
+            });          }
         }),
       ],
     );
