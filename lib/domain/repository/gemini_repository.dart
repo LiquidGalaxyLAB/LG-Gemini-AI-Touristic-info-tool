@@ -5,6 +5,7 @@ import '../../domain/model/cuisine.dart';
 import '../../domain/model/itinerary.dart';
 import '../../domain/model/recommendation.dart';
 import '../../domain/model/tourist_place.dart';
+import '../model/chat_item.dart';
 
 abstract class GeminiRepository {
   Future<DataState<List<TouristPlace>>> getTouristPlaces(
@@ -32,7 +33,7 @@ abstract class GeminiRepository {
   );
 
   Future<DataState<String>> getChatReply(
-    Map<String, dynamic> params,
+      List<ChatItem> params,
   );
 
   Future<bool> addFavourite(

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:google_generative_ai/google_generative_ai.dart';
+import 'package:touristic/domain/model/chat_item.dart';
 
 import '../../model/response/activities_response.dart';
 import '../../model/response/budget_plan_response.dart';
@@ -14,7 +15,7 @@ class GeminiService {
 
   const GeminiService(this.model);
 
-  Future<TouristPlacesResponse?> getTouristPlaces() async {
+  Future<TouristPlacesResponse?> getTouristPlaces(Map<String, dynamic> params) async {
     final response = await model.generateContent([Content.text("text")]);
     if (response.text != null) {
       final json = jsonDecode(response.text!);
@@ -24,7 +25,7 @@ class GeminiService {
     }
   }
 
-  Future<ItineraryResponse?> getItinerary() async {
+  Future<ItineraryResponse?> getItinerary(Map<String, dynamic> params) async {
     final response = await model.generateContent([Content.text("text")]);
     if (response.text != null) {
       final json = jsonDecode(response.text!);
@@ -34,7 +35,7 @@ class GeminiService {
     }
   }
 
-  Future<LocalCuisinesResponse?> getLocalCuisine() async {
+  Future<LocalCuisinesResponse?> getLocalCuisine(Map<String, dynamic> params) async {
     final response = await model.generateContent([Content.text("text")]);
     if (response.text != null) {
       final json = jsonDecode(response.text!);
@@ -44,7 +45,7 @@ class GeminiService {
     }
   }
 
-  Future<ActivitiesResponse?> getActivities() async {
+  Future<ActivitiesResponse?> getActivities(Map<String, dynamic> params) async {
     final response = await model.generateContent([Content.text("text")]);
     if (response.text != null) {
       final json = jsonDecode(response.text!);
@@ -54,7 +55,7 @@ class GeminiService {
     }
   }
 
-  Future<BudgetPlanResponse?> getBudgetPlan() async {
+  Future<BudgetPlanResponse?> getBudgetPlan(Map<String, dynamic> params) async {
     final response = await model.generateContent([Content.text("text")]);
     if (response.text != null) {
       final json = jsonDecode(response.text!);
@@ -64,7 +65,7 @@ class GeminiService {
     }
   }
 
-  Future<RecommendationsResponse?> getRecommendations() async {
+  Future<RecommendationsResponse?> getRecommendations(Map<String, dynamic> params) async {
     final response = await model.generateContent([Content.text("text")]);
     if (response.text != null) {
       final json = jsonDecode(response.text!);
@@ -74,7 +75,7 @@ class GeminiService {
     }
   }
 
-  Future<String?> getChatReply() async {
+  Future<String?> getChatReply(List<ChatItem> params) async {
     final response = await model.generateContent([Content.text("text")]);
     return response.text;
   }

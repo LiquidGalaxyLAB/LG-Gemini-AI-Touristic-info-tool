@@ -2,6 +2,7 @@ import '../../core/resources/data_state.dart';
 import '../../core/resources/response_handler.dart';
 import '../../domain/model/activitiy.dart';
 import '../../domain/model/budget_plan.dart';
+import '../../domain/model/chat_item.dart';
 import '../../domain/model/cuisine.dart';
 import '../../domain/model/itinerary.dart';
 import '../../domain/model/recommendation.dart';
@@ -24,7 +25,7 @@ class GeminiRepositoryImpl implements GeminiRepository {
   ) {
     return handleResponse(
       execute: () {
-        return _geminiService.getBudgetPlan();
+        return _geminiService.getBudgetPlan(params);
       },
       mapper: responseToBudgetPlan,
     );
@@ -36,7 +37,7 @@ class GeminiRepositoryImpl implements GeminiRepository {
   ) {
     return handleResponse(
       execute: () {
-        return _geminiService.getItinerary();
+        return _geminiService.getItinerary(params);
       },
       mapper: responseToItinerary,
     );
@@ -48,7 +49,7 @@ class GeminiRepositoryImpl implements GeminiRepository {
   ) {
     return handleResponse(
       execute: () {
-        return _geminiService.getLocalCuisine();
+        return _geminiService.getLocalCuisine(params);
       },
       mapper: responseToCuisines,
     );
@@ -60,7 +61,7 @@ class GeminiRepositoryImpl implements GeminiRepository {
   ) {
     return handleResponse(
       execute: () {
-        return _geminiService.getRecommendations();
+        return _geminiService.getRecommendations(params);
       },
       mapper: responseToRecommendations,
     );
@@ -72,7 +73,7 @@ class GeminiRepositoryImpl implements GeminiRepository {
   ) {
     return handleResponse(
       execute: () {
-        return _geminiService.getActivities();
+        return _geminiService.getActivities(params);
       },
       mapper: responseToActivities,
     );
@@ -84,7 +85,7 @@ class GeminiRepositoryImpl implements GeminiRepository {
   ) {
     return handleResponse(
       execute: () {
-        return _geminiService.getTouristPlaces();
+        return _geminiService.getTouristPlaces(params);
       },
       mapper: responseToTouristPlaces,
     );
@@ -92,11 +93,11 @@ class GeminiRepositoryImpl implements GeminiRepository {
 
   @override
   Future<DataState<String>> getChatReply(
-    Map<String, dynamic> params,
+    List<ChatItem> params,
   ) {
     return handleResponse(
       execute: () {
-        return _geminiService.getChatReply();
+        return _geminiService.getChatReply(params);
       },
       mapper: (p0) {
         return p0;

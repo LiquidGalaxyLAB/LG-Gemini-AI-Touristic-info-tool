@@ -1,7 +1,9 @@
 import 'package:equatable/equatable.dart';
 
+import '../../../../domain/model/chat_item.dart';
+
 abstract class ChatEvent extends Equatable {
-  final Map<String, dynamic>? params;
+  final List<ChatItem>? params;
 
   const ChatEvent({this.params});
 
@@ -10,5 +12,5 @@ abstract class ChatEvent extends Equatable {
 }
 
 class GetChatReply extends ChatEvent {
-  const GetChatReply(Map<String, dynamic> params): super(params: params);
+  const GetChatReply(List<ChatItem> params) : super(params: params);
 }

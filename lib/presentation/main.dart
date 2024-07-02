@@ -5,6 +5,7 @@ import '../config/theme/app_theme.dart';
 import '../di/dependency_injection.dart';
 import 'features/activity/bloc/activities_bloc.dart';
 import 'features/budget/bloc/budget_plan_bloc.dart';
+import 'features/chat/bloc/chat_bloc.dart';
 import 'features/cuisine/bloc/cuisines_bloc.dart';
 import 'features/favourites/bloc/favourites_bloc.dart';
 import 'features/itinerary/bloc/itinerary_bloc.dart';
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider(create: (_) => sl<ChatBloc>()),
         BlocProvider(create: (_) => sl<TouristPlacesBloc>()),
         BlocProvider(create: (_) => sl<BudgetPlanBloc>()),
         BlocProvider(create: (_) => sl<ActivitiesBloc>()),
