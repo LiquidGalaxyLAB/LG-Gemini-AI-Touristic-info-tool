@@ -43,12 +43,13 @@ class _ChatPageState extends State<ChatPage> {
                 borderRadius: BorderRadius.circular(10.0),
                 color: AppTheme.gray.shade800,
               ),
-              child: blocBuilder<ChatBloc, String>(onSuccess: (data) {
-                setState(() {
-                  _chats.add(ChatItem(isMe: false, message: data));
-                });
-
-                return ListView.builder(
+              child: chatBlocBuilder<ChatBloc, String>(
+                onSuccess: (message) {
+                  setState(() {
+                    _chats.add(ChatItem(isMe: false, message: message));
+                  });
+                },
+                content: ListView.builder(
                   padding: EdgeInsets.zero,
                   shrinkWrap: true,
                   itemCount: _chats.length,
@@ -63,8 +64,8 @@ class _ChatPageState extends State<ChatPage> {
                       ],
                     );
                   },
-                );
-              }),
+                ),
+              ),
             ),
           ),
           const SizedBox(height: 12.0),

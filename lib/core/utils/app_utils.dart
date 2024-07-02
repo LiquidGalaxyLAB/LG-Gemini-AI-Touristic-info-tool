@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -28,6 +29,20 @@ Widget blocBuilder<B extends Bloc<dynamic, AppState<S>>, S>({
       } else {
         return const NoDataCard();
       }
+    },
+  );
+}
+
+Widget chatBlocBuilder<B extends Bloc<dynamic, AppState<String>>, String>({
+  required Function(String) onSuccess,
+  required Widget content,
+}) {
+  return BlocBuilder<B, AppState<String>>(
+    builder: (context, state) {
+      if (state is AppSuccess && state.data != null) {
+        onSuccess(state.data as String);
+      }
+      return content;
     },
   );
 }

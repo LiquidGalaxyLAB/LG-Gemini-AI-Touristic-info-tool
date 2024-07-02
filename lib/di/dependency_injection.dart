@@ -16,15 +16,16 @@ import '../../domain/usecases/get_local_cuisine_usecase.dart';
 import '../../domain/usecases/get_recommendations_usecase.dart';
 import '../../domain/usecases/get_tourist_places_usecase.dart';
 import '../../domain/usecases/remove_favourite_usecase.dart';
+import '../core/constants/constants.dart';
+import '../domain/usecases/get_chat_reply_usecase.dart';
 import '../presentation/features/activity/bloc/activities_bloc.dart';
 import '../presentation/features/budget/bloc/budget_plan_bloc.dart';
+import '../presentation/features/chat/bloc/chat_bloc.dart';
 import '../presentation/features/cuisine/bloc/cuisines_bloc.dart';
+import '../presentation/features/favourites/bloc/favourites_bloc.dart';
 import '../presentation/features/itinerary/bloc/itinerary_bloc.dart';
 import '../presentation/features/recommendation/bloc/recommendations_bloc.dart';
 import '../presentation/features/tourist_place/bloc/tourist_places_bloc.dart';
-import '../core/constants/constants.dart';
-import '../presentation/features/chat/bloc/chat_bloc.dart';
-import '../presentation/features/favourites/bloc/favourites_bloc.dart';
 
 final GetIt sl = GetIt.instance;
 
@@ -39,14 +40,14 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<GeminiService>(GeminiService(sl()));
 
   // Database
-  final AppDatabase database =
-      await $FloorAppDatabase.databaseBuilder(appDatabase).build();
+  final AppDatabase database = await $FloorAppDatabase.databaseBuilder(appDatabase).build();
   sl.registerSingleton<TouristPlacesDao>(database.touristPlacesDao);
 
   // Repositories
   sl.registerSingleton<GeminiRepository>(GeminiRepositoryImpl(sl(), sl()));
 
   // UseCases
+  sl.registerSingleton(GetChatReplyUseCase(sl()));
   sl.registerSingleton(GetActivitiesUseCase(sl()));
   sl.registerSingleton(GetBudgetPlanUseCase(sl()));
   sl.registerSingleton(GetItineraryUseCase(sl()));
@@ -60,8 +61,7 @@ Future<void> initializeDependencies() async {
 
   // Blocs
   sl.registerFactory<ChatBloc>(() => ChatBloc(sl()));
-  sl.registerFactory<FavouritesBloc>(
-      () => FavouritesBloc(sl(), sl(), sl(), sl()));
+  sl.registerFactory<FavouritesBloc>(() => FavouritesBloc(sl(), sl(), sl(), sl()));
   sl.registerFactory<ActivitiesBloc>(() => ActivitiesBloc(sl()));
   sl.registerFactory<ItineraryBloc>(() => ItineraryBloc(sl()));
   sl.registerFactory<BudgetPlanBloc>(() => BudgetPlanBloc(sl()));
