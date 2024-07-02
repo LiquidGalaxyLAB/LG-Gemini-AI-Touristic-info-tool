@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/utils/app_utils.dart';
 import '../../../components/input_submit_button.dart';
 import '../../../components/user_choice_card.dart';
 import '../../../components/user_input_field.dart';
@@ -19,7 +20,7 @@ class RecommendationInputCard extends StatefulWidget {
 class _RecommendationInputCardState extends State<RecommendationInputCard> {
   static const double spacing = 12.0;
 
-  final destinationController = TextEditingController();
+  final _destinationController = TextEditingController();
 
   final List<String> _style = [
     "Adventure",
@@ -45,7 +46,7 @@ class _RecommendationInputCardState extends State<RecommendationInputCard> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 UserInputField(
-                  controller: destinationController,
+                  controller: _destinationController,
                   inputType: TextInputType.text,
                   hint: "Agra, India",
                   title: "What's your target destination?",
@@ -62,7 +63,11 @@ class _RecommendationInputCardState extends State<RecommendationInputCard> {
         ),
         const SizedBox(height: spacing / 2),
         InputSubmitButton(onContinueClick: () {
-          widget._onContinueClick({});
+          if (_destinationController.text.isEmpty) {
+            showInvalidInputDialog(context);
+          } else {
+            widget._onContinueClick({});
+          }
         }),
       ],
     );

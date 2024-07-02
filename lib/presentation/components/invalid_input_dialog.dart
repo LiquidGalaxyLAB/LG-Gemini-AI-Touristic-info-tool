@@ -22,12 +22,15 @@ class _InvalidInputDialogState extends State<InvalidInputDialog> {
           color: AppTheme.gray.shade400,
         ),
       ),
-      content: Text(
-        "Please provide all inputs inorder to get response.",
-        style: TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.w500,
-          color: AppTheme.gray.shade300,
+      content: SizedBox(
+        width: 350,
+        child: Text(
+          "Please provide all inputs inorder to get response.",
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w500,
+            color: AppTheme.gray.shade300,
+          ),
         ),
       ),
       actions: [

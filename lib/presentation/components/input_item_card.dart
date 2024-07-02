@@ -5,12 +5,12 @@ import 'input_dialog.dart';
 
 class InputItemCard extends StatefulWidget {
   final String title;
-  final Function(List<String>)? onChoicesChanged;
+  final Function(List<String>) onChoicesChanged;
 
   const InputItemCard({
     super.key,
     required this.title,
-    this.onChoicesChanged,
+    required this.onChoicesChanged,
   });
 
   @override
@@ -130,6 +130,6 @@ class _InputItemCardState extends State<InputItemCard> {
   }
 
   void _notifyChoicesChanged() {
-    widget.onChoicesChanged?.call(_choices);
+    widget.onChoicesChanged.call(_choices);
   }
 }

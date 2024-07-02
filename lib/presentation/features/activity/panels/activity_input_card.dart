@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/utils/app_utils.dart';
 import '../../../components/input_submit_button.dart';
 import '../../../components/user_choice_card.dart';
 import '../../../components/user_input_field.dart';
@@ -61,7 +62,11 @@ class _ActivityInputCardState extends State<ActivityInputCard> {
         ),
         const SizedBox(height: _spacing / 2),
         InputSubmitButton(onContinueClick: () {
-          widget._onContinueClick({});
+          if (_destinationController.text.isEmpty) {
+            showInvalidInputDialog(context);
+          } else {
+            widget._onContinueClick({});
+          }
         }),
       ],
     );

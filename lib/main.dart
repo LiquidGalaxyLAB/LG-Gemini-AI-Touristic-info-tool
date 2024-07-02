@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../config/theme/app_theme.dart';
-import '../di/dependency_injection.dart';
-import 'features/activity/bloc/activities_bloc.dart';
-import 'features/budget/bloc/budget_plan_bloc.dart';
-import 'features/chat/bloc/chat_bloc.dart';
-import 'features/cuisine/bloc/cuisines_bloc.dart';
-import 'features/favourites/bloc/favourites_bloc.dart';
-import 'features/itinerary/bloc/itinerary_bloc.dart';
-import 'features/recommendation/bloc/recommendations_bloc.dart';
-import 'features/tourist_place/bloc/tourist_places_bloc.dart';
-import 'main_wrapper.dart';
-import 'splash_screen.dart';
+import 'config/theme/app_theme.dart';
+import 'di/dependency_injection.dart';
+import 'presentation/features/activity/bloc/activities_bloc.dart';
+import 'presentation/features/budget/bloc/budget_plan_bloc.dart';
+import 'presentation/features/chat/bloc/chat_bloc.dart';
+import 'presentation/features/cuisine/bloc/cuisines_bloc.dart';
+import 'presentation/features/favourites/bloc/favourites_bloc.dart';
+import 'presentation/features/itinerary/bloc/itinerary_bloc.dart';
+import 'presentation/features/recommendation/bloc/recommendations_bloc.dart';
+import 'presentation/features/tourist_place/bloc/tourist_places_bloc.dart';
+import 'presentation/main_wrapper.dart';
+import 'presentation/splash_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

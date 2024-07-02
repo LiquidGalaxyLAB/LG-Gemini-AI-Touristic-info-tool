@@ -30,9 +30,7 @@ class _InputCardState extends State<InputCard> {
     super.initState();
     widget._controller.addListener(() {
       setState(() {
-        color = widget._controller.text.isEmpty
-            ? AppTheme.color.shade800
-            : AppTheme.color.shade600;
+        color = widget._controller.text.isEmpty ? AppTheme.color.shade800 : AppTheme.color.shade600;
       });
     });
   }
@@ -110,7 +108,10 @@ class _InputCardState extends State<InputCard> {
           ),
           IconButton(
             onPressed: () {
-              widget._onSendClick(widget._controller.text);
+              String text = widget._controller.text;
+              if (text.isNotEmpty) {
+                widget._onSendClick(text);
+              }
             },
             icon: Icon(
               Icons.send_rounded,

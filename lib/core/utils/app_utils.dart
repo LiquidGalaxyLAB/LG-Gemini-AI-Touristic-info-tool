@@ -1,9 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../presentation/components/data_loading_card.dart';
+import '../../presentation/components/invalid_input_dialog.dart';
 import '../../presentation/components/no_data_card.dart';
 import '../resources/app_state.dart';
 
@@ -43,6 +43,15 @@ Widget chatBlocBuilder<B extends Bloc<dynamic, AppState<String>>, String>({
         onSuccess(state.data as String);
       }
       return content;
+    },
+  );
+}
+
+Future<void> showInvalidInputDialog(BuildContext context) async {
+  await showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return const InvalidInputDialog();
     },
   );
 }

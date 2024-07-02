@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/utils/app_utils.dart';
 import '../../../components/input_item_card.dart';
 import '../../../components/input_submit_button.dart';
 import '../../../components/user_choice_card.dart';
@@ -30,6 +31,8 @@ class _BudgetInputCardState extends State<BudgetInputCard> {
 
   final List<String> _travellers = ["Solo", "Couple", "3-5", "6-10", "10+"];
 
+  List<String> _choices = [];
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -40,8 +43,11 @@ class _BudgetInputCardState extends State<BudgetInputCard> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const InputItemCard(
+                InputItemCard(
                   title: "What are the places you are planing to visit?",
+                  onChoicesChanged: (choices) {
+                    _choices = choices;
+                  },
                 ),
                 const SizedBox(height: _spacing),
                 UserChoiceCard(
@@ -64,7 +70,11 @@ class _BudgetInputCardState extends State<BudgetInputCard> {
         ),
         const SizedBox(height: _spacing / 2),
         InputSubmitButton(onContinueClick: () {
-          widget._onContinueClick({});
+          if (_choices.isEmpty) {
+            showInvalidInputDialog(context);
+          } else {
+            widget._onContinueClick({});
+          }
         }),
       ],
     );
