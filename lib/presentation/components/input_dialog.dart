@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../config/theme/app_theme.dart';
+import 'outlined_input_field.dart';
 
 class InputDialog extends StatefulWidget {
   final Function _onClick;
@@ -12,8 +13,10 @@ class InputDialog extends StatefulWidget {
     super.key,
     required Function onClick,
     required String title,
-    required String hint, required TextInputType textInputType,
-  })  : _textInputType = textInputType, _hint = hint,
+    required String hint,
+    required TextInputType textInputType,
+  })  : _textInputType = textInputType,
+        _hint = hint,
         _title = title,
         _onClick = onClick;
 
@@ -36,35 +39,10 @@ class _InputDialogState extends State<InputDialog> {
           color: AppTheme.gray.shade400,
         ),
       ),
-      content: TextField(
+      content: OutlinedInputField(
+        hint: widget._hint,
         controller: _textEditingController,
-        keyboardType: widget._textInputType,
-        style: TextStyle(
-          color: AppTheme.gray.shade400,
-          fontWeight: FontWeight.w400,
-          fontSize: 14,
-        ),
-        decoration: InputDecoration(
-          hintText: widget._hint,
-          contentPadding: const EdgeInsets.symmetric(horizontal: 12.0),
-          hintStyle: TextStyle(
-            color: AppTheme.gray.shade700,
-            fontWeight: FontWeight.w400,
-            fontSize: 14,
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: BorderSide(color: AppTheme.gray.shade800, width: 1),
-          ),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: BorderSide(color: AppTheme.gray.shade800, width: 1),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: BorderSide(color: AppTheme.color.shade700, width: 1),
-          ),
-        ),
+        type: widget._textInputType,
       ),
       actions: [
         TextButton(

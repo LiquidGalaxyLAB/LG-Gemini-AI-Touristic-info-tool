@@ -6,13 +6,13 @@ class UserChoiceCard extends StatefulWidget {
   final String _title;
   final List<String> _choices;
   final bool _singleSelection;
-  final Function(List<int>)? _onSelectionChange;
+  final Function(List<int>) _onSelectionChange;
 
   const UserChoiceCard({
     super.key,
     required List<String> choices,
     required String title,
-    Function(List<int>)? onSelectionChange,
+    required Function(List<int>) onSelectionChange,
     bool singleSelection = true,
   })  : _title = title,
         _onSelectionChange = onSelectionChange,
@@ -80,8 +80,8 @@ class _UserChoiceCardState extends State<UserChoiceCard> {
                       _selections.remove(index);
                     }
                   }
+                  widget._onSelectionChange(_selections);
                 });
-                widget._onSelectionChange??(_selections);
               },
               elevation: 0,
             );

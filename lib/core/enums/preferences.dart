@@ -1,5 +1,5 @@
 enum GeneralPreferences {
-  connectionMethod, mapsTheme, mapsStyle, appTheme
+  apiKey, connectionMethod, mapsTheme, mapsStyle, appTheme
 }
 
 enum ConnectionPreferences {

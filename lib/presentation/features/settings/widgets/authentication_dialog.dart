@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../config/theme/app_theme.dart';
+import '../../../components/outlined_input_field.dart';
 
 class AuthenticationDialog extends StatefulWidget {
   final Function(String, String) _onClick;
@@ -33,16 +34,16 @@ class _AuthenticationDialogState extends State<AuthenticationDialog> {
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          _buildInputWidget(
-            "username",
-            TextInputType.text,
-            _userController,
+          OutlinedInputField(
+            hint: "username",
+            type: TextInputType.text,
+            controller: _userController,
           ),
           const SizedBox(height: 12.0),
-          _buildInputWidget(
-            "username",
-            TextInputType.visiblePassword,
-            _passwordController,
+          OutlinedInputField(
+            hint: "username",
+            type: TextInputType.visiblePassword,
+            controller: _passwordController,
           ),
         ],
       ),
@@ -84,44 +85,6 @@ class _AuthenticationDialogState extends State<AuthenticationDialog> {
           ),
         ),
       ],
-    );
-  }
-
-  Widget _buildInputWidget(
-    String hint,
-    TextInputType type,
-    TextEditingController controller,
-  ) {
-    return TextField(
-      controller: controller,
-      keyboardType: type,
-      obscureText: type == TextInputType.visiblePassword,
-      style: TextStyle(
-        color: AppTheme.gray.shade400,
-        fontWeight: FontWeight.w400,
-        fontSize: 14,
-      ),
-      decoration: InputDecoration(
-        hintText: hint,
-        contentPadding: const EdgeInsets.symmetric(horizontal: 12.0),
-        hintStyle: TextStyle(
-          color: AppTheme.gray.shade700,
-          fontWeight: FontWeight.w400,
-          fontSize: 14,
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: AppTheme.gray.shade800, width: 1),
-        ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: AppTheme.gray.shade800, width: 1),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: AppTheme.color.shade700, width: 1),
-        ),
-      ),
     );
   }
 }
