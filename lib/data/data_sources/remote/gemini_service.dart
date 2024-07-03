@@ -1,9 +1,10 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
-import 'package:touristic/domain/model/chat_item.dart';
 
+import '../../../core/enums/app_feature.dart';
+import '../../../core/utils/prompt_generator.dart';
+import '../../../domain/model/chat_item.dart';
 import '../../model/response/activities_response.dart';
 import '../../model/response/budget_plan_response.dart';
 import '../../model/response/itinerary_response.dart';
@@ -17,74 +18,79 @@ class GeminiService {
   const GeminiService(this.model);
 
   Future<TouristPlacesResponse?> getTouristPlaces(Map<String, dynamic> params) async {
-    debugPrint("$params");
-    final response = await model.generateContent([Content.text("text")]);
-    if (response.text != null) {
-      final json = jsonDecode(response.text!);
-      return TouristPlacesResponse.fromJson(json);
-    } else {
-      return null;
+    String? prompt = PromptGenerator.generate(params, AppFeature.touristPlace);
+    if (prompt != null) {
+      final response = await model.generateContent([Content.text(prompt)]);
+      if (response.text != null) {
+        final json = jsonDecode(response.text!);
+        return TouristPlacesResponse.fromJson(json);
+      }
     }
+    return null;
   }
 
   Future<ItineraryResponse?> getItinerary(Map<String, dynamic> params) async {
-    debugPrint("$params");
-    final response = await model.generateContent([Content.text("text")]);
-    if (response.text != null) {
-      final json = jsonDecode(response.text!);
-      return ItineraryResponse.fromJson(json);
-    } else {
-      return null;
+    String? prompt = PromptGenerator.generate(params, AppFeature.itinerary);
+    if (prompt != null) {
+      final response = await model.generateContent([Content.text(prompt)]);
+      if (response.text != null) {
+        final json = jsonDecode(response.text!);
+        return ItineraryResponse.fromJson(json);
+      }
     }
+    return null;
   }
 
   Future<LocalCuisinesResponse?> getLocalCuisine(Map<String, dynamic> params) async {
-    debugPrint("$params");
-    final response = await model.generateContent([Content.text("text")]);
-    if (response.text != null) {
-      final json = jsonDecode(response.text!);
-      return LocalCuisinesResponse.fromJson(json);
-    } else {
-      return null;
+    String? prompt = PromptGenerator.generate(params, AppFeature.localCuisine);
+    if (prompt != null) {
+      final response = await model.generateContent([Content.text(prompt)]);
+      if (response.text != null) {
+        final json = jsonDecode(response.text!);
+        return LocalCuisinesResponse.fromJson(json);
+      }
     }
+    return null;
   }
 
   Future<ActivitiesResponse?> getActivities(Map<String, dynamic> params) async {
-    debugPrint("$params");
-    final response = await model.generateContent([Content.text("text")]);
-    if (response.text != null) {
-      final json = jsonDecode(response.text!);
-      return ActivitiesResponse.fromJson(json);
-    } else {
-      return null;
+    String? prompt = PromptGenerator.generate(params, AppFeature.activities);
+    if (prompt != null) {
+      final response = await model.generateContent([Content.text(prompt)]);
+      if (response.text != null) {
+        final json = jsonDecode(response.text!);
+        return ActivitiesResponse.fromJson(json);
+      }
     }
+    return null;
   }
 
   Future<BudgetPlanResponse?> getBudgetPlan(Map<String, dynamic> params) async {
-    debugPrint("$params");
-    final response = await model.generateContent([Content.text("text")]);
-    if (response.text != null) {
-      final json = jsonDecode(response.text!);
-      return BudgetPlanResponse.fromJson(json);
-    } else {
-      return null;
+    String? prompt = PromptGenerator.generate(params, AppFeature.budgetPlan);
+    if (prompt != null) {
+      final response = await model.generateContent([Content.text(prompt)]);
+      if (response.text != null) {
+        final json = jsonDecode(response.text!);
+        return BudgetPlanResponse.fromJson(json);
+      }
     }
+    return null;
   }
 
   Future<RecommendationsResponse?> getRecommendations(Map<String, dynamic> params) async {
-    debugPrint("$params");
-    final response = await model.generateContent([Content.text("text")]);
-    if (response.text != null) {
-      final json = jsonDecode(response.text!);
-      return RecommendationsResponse.fromJson(json);
-    } else {
-      return null;
+    String? prompt = PromptGenerator.generate(params, AppFeature.recommendation);
+    if (prompt != null) {
+      final response = await model.generateContent([Content.text(prompt)]);
+      if (response.text != null) {
+        final json = jsonDecode(response.text!);
+        return RecommendationsResponse.fromJson(json);
+      }
     }
+    return null;
   }
 
   Future<String?> getChatReply(List<ChatItem> params) async {
-    debugPrint("$params");
-    final response = await model.generateContent([Content.text("text")]);
+    final response = await model.generateContent([Content.text("prompt")]);
     return response.text;
   }
 }
