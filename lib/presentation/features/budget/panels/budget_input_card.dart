@@ -95,11 +95,20 @@ class _BudgetInputCardState extends State<BudgetInputCard> {
             showInvalidInputDialog(context);
           } else {
             widget._onContinueClick({
-              "itinerary": _choices.join(", "),
+              "itinerary": _choices
+                  .map((ele) => ele
+                      .replaceAll(',', ' ')
+                      .replaceAll(
+                        "  ",
+                        " ",
+                      )
+                      .trim())
+                  .join(", "),
               "budget": _selectedBudget,
               "duration": _selectedDuration,
               "companions": _selectedCompanions,
-            });          }
+            });
+          }
         }),
       ],
     );
