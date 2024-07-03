@@ -25,6 +25,12 @@ Widget blocBuilder<B extends Bloc<dynamic, AppState<S>>, S>({
       } else if (state is AppLoading) {
         return const DataLoadingCard();
       } else if (state is AppFailure) {
+        // showInvalidInputDialog(
+        //   context,
+        //   title: "Something went wrong",
+        //   description:
+        //   "Unexpected error occurred, make sure you have provided correct Gemini API key in the settings.",
+        // );
         return const NoDataCard();
       } else {
         return const NoDataCard();
@@ -47,11 +53,18 @@ Widget chatBlocBuilder<B extends Bloc<dynamic, AppState<String>>, String>({
   );
 }
 
-Future<void> showInvalidInputDialog(BuildContext context) async {
+Future<void> showInvalidInputDialog(
+  BuildContext context, {
+  String title = "Invalid Input!",
+  String description = "Please provide all inputs inorder to get response.",
+}) async {
   await showDialog(
     context: context,
     builder: (BuildContext context) {
-      return const InvalidInputDialog();
+      return InvalidInputDialog(
+        title: title,
+        description: description,
+      );
     },
   );
 }

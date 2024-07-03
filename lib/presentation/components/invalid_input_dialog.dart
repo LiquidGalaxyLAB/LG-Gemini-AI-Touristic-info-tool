@@ -3,7 +3,15 @@ import 'package:flutter/material.dart';
 import '../../config/theme/app_theme.dart';
 
 class InvalidInputDialog extends StatefulWidget {
-  const InvalidInputDialog({super.key});
+  final String _title;
+  final String _description;
+
+  const InvalidInputDialog({
+    super.key,
+    required String title,
+    required String description,
+  })  : _title = title,
+        _description = description;
 
   @override
   State<InvalidInputDialog> createState() => _InvalidInputDialogState();
@@ -15,7 +23,7 @@ class _InvalidInputDialogState extends State<InvalidInputDialog> {
     return AlertDialog(
       backgroundColor: AppTheme.gray.shade900,
       title: Text(
-        "Invalid Input!",
+        widget._title,
         style: TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.w500,
@@ -25,7 +33,7 @@ class _InvalidInputDialogState extends State<InvalidInputDialog> {
       content: SizedBox(
         width: 350,
         child: Text(
-          "Please provide all inputs inorder to get response.",
+          widget._description,
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w500,

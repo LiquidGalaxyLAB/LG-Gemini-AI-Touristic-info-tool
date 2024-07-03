@@ -35,11 +35,6 @@ class _GeneralSettingsPageState extends State<GeneralSettingsPage> {
   void initState() {
     super.initState();
     _loadPreferences();
-    _controller.addListener((){
-      if (_controller.text.length > 15 && _controller.text.length < 150) {
-        PreferencesUtils().updateValue(GeneralPreferences.apiKey.name, _controller.text);
-      }
-    });
   }
 
   @override
@@ -54,6 +49,11 @@ class _GeneralSettingsPageState extends State<GeneralSettingsPage> {
     _selectedMapsStyle = await PreferencesUtils().getValue<int>(GeneralPreferences.mapsStyle.name) ?? 3;
     _selectedMapsTheme = await PreferencesUtils().getValue<int>(GeneralPreferences.mapsTheme.name) ?? 0;
     _controller = TextEditingController(text: await PreferencesUtils().getValue<String>(GeneralPreferences.apiKey.name));
+    _controller.addListener((){
+      if (_controller.text.length > 15 && _controller.text.length < 150) {
+        PreferencesUtils().updateValue(GeneralPreferences.apiKey.name, _controller.text);
+      }
+    });
     setState(() {});
   }
 
