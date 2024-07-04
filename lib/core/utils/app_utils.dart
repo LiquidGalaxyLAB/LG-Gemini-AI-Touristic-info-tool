@@ -25,12 +25,14 @@ Widget blocBuilder<B extends Bloc<dynamic, AppState<S>>, S>({
       } else if (state is AppLoading) {
         return const DataLoadingCard();
       } else if (state is AppFailure) {
-        // showInvalidInputDialog(
-        //   context,
-        //   title: "Something went wrong",
-        //   description:
-        //   "Unexpected error occurred, make sure you have provided correct Gemini API key in the settings.",
-        // );
+        Future.delayed(Duration.zero, () {
+          showInvalidInputDialog(
+            context,
+            title: "Something went wrong",
+            description:
+            "Unexpected error occurred, make sure you have provided correct Gemini API key in the settings.",
+          );
+        });
         return const NoDataCard();
       } else {
         return const NoDataCard();

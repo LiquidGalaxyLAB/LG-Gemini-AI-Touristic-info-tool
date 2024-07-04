@@ -44,7 +44,9 @@ class _InvalidInputDialogState extends State<InvalidInputDialog> {
       actions: [
         FilledButton(
           onPressed: () {
-            Navigator.of(context).pop();
+            Future.delayed(Duration.zero, () {
+              Navigator.of(context).pop();
+            });
           },
           style: FilledButton.styleFrom(
             shape: RoundedRectangleBorder(
