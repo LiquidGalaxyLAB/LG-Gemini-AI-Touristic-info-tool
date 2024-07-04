@@ -22,7 +22,7 @@ class ControlPanel extends StatelessWidget {
           label: "Show/Hide logo",
           icon: Icons.slideshow_rounded,
           onPressed: () {
-            LGService.instance?.setRefresh();
+            LGService().setRefresh();
           },
           enabled: _connected,
         ),
@@ -31,7 +31,7 @@ class ControlPanel extends StatelessWidget {
           label: "Clear kmls",
           icon: Icons.clean_hands_rounded,
           onPressed: () {
-            LGService.instance?.setRefresh();
+            LGService().setRefresh();
           },
           enabled: _connected,
         ),
@@ -40,7 +40,7 @@ class ControlPanel extends StatelessWidget {
           label: "Set slaves refresh",
           icon: Icons.av_timer_rounded,
           onPressed: () {
-            LGService.instance?.setRefresh();
+            LGService().setRefresh();
           },
           enabled: _connected,
         ),
@@ -49,7 +49,7 @@ class ControlPanel extends StatelessWidget {
           label: "Reset slaves refresh",
           icon: Icons.timer_off_outlined,
           onPressed: () {
-            LGService.instance?.resetRefresh();
+            LGService().resetRefresh();
           },
           enabled: _connected,
         ),
@@ -58,7 +58,7 @@ class ControlPanel extends StatelessWidget {
           label: "Relaunch",
           icon: Icons.reset_tv_rounded,
           onPressed: () {
-            LGService.instance?.rebootLG();
+            LGService().rebootLG();
           },
           enabled: _connected,
         ),
@@ -67,7 +67,7 @@ class ControlPanel extends StatelessWidget {
           label: "Reboot",
           icon: Icons.restart_alt_rounded,
           onPressed: () {
-            LGService.instance?.rebootLG();
+            LGService().rebootLG();
           },
           enabled: _connected,
         ),
@@ -76,7 +76,7 @@ class ControlPanel extends StatelessWidget {
           label: "Power off",
           icon: Icons.power_settings_new_rounded,
           onPressed: () {
-            LGService.instance?.shutdownLG();
+            LGService().shutdownLG();
           },
           enabled: _connected,
         ),

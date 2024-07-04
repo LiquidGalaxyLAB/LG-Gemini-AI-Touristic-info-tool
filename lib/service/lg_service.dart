@@ -1,57 +1,41 @@
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:ssh2/ssh2.dart';
-import 'package:touristic/core/utils/kml_utils.dart';
+
+import '../core/utils/kml_utils.dart';
 
 class LGService {
+  static final LGService _instance = LGService._internal();
   late SSHClient _client;
-  static LGService? instance;
-  String _host;
-  String _username;
-  String _password;
-  int _port;
-  int _slaves;
+  late String _username;
+  late String _password;
+  late int _slaves;
 
-  factory LGService({
+  factory LGService() {
+    return _instance;
+  }
+
+  LGService._internal();
+
+  void init({
     required String host,
     required int port,
     required String username,
     required String password,
     required int slaves,
   }) {
-    if (instance == null ||
-        instance!._host != host ||
-        instance!._username != username ||
-        instance!._port != port ||
-        instance!._password != password ||
-        instance!._slaves != slaves) {
-      instance = LGService._internal(
-        host: host,
-        port: port,
-        username: username,
-        password: password,
-        slaves: slaves,
-      );
-    }
-    return instance!;
-  }
-
-  LGService._internal({
-    required String host,
-    required int port,
-    required String username,
-    required String password,
-    required int slaves,
-  })  : _host = host,
-        _port = port,
-        _username = username,
-        _password = password,
-        _slaves = slaves {
+    _username = username;
+    _password = password;
+    _slaves = slaves;
     _client = SSHClient(
-        host: host, port: port, username: username, passwordOrKey: password);
+      host: host,
+      port: port,
+      username: username,
+      passwordOrKey: password,
+    );
   }
 
-  static Future<bool> isConnected() {
-    return instance?._client.isConnected() ?? Future(() => false);
+  Future<bool> isConnected() {
+    return _client.isConnected();
   }
 
   Future<bool> connect() async {
@@ -81,7 +65,7 @@ class LGService {
     }
   }
 
-  Future<bool> flyTo(CameraPosition cameraPosition) async{
+  Future<bool> flyTo(CameraPosition cameraPosition) async {
     try {
       return _execute("echo 'flytoview=${KmlUtils.lookAt(cameraPosition)}' > /tmp/query.txt");
     } catch (error) {
@@ -160,9 +144,7 @@ class LGService {
             echo $_password | sudo -S service \\\${SERVICE} restart
           fi
           " && sshpass -p $_password ssh -x -t lg@lg$i "\$RELAUNCH_CMD\"""";
-        res = res &&
-            await _execute(
-                '"/home/$_username/bin/lg-relaunch" > /home/$_username/log.txt');
+        res = res && await _execute('"/home/$_username/bin/lg-relaunch" > /home/$_username/log.txt');
         res = res && await _execute(cmd);
       }
       return res;
@@ -175,9 +157,7 @@ class LGService {
     try {
       bool res = true;
       for (var i = 1; i <= _slaves; i++) {
-        res = res &&
-            await _execute(
-                'sshpass -p $_password ssh -t lg$i "echo $_password | sudo -S reboot');
+        res = res && await _execute('sshpass -p $_password ssh -t lg$i "echo $_password | sudo -S reboot');
       }
       return res;
     } catch (error) {
@@ -189,9 +169,7 @@ class LGService {
     try {
       bool res = true;
       for (var i = 1; i <= _slaves; i++) {
-        res = res &&
-            await _execute(
-                'sshpass -p $_password ssh -t lg$i "echo $_password | sudo -S poweroff"');
+        res = res && await _execute('sshpass -p $_password ssh -t lg$i "echo $_password | sudo -S poweroff"');
       }
       return res;
     } catch (error) {

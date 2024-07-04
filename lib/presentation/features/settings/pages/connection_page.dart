@@ -44,7 +44,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
   }
 
   void _isConnected() async {
-    final connected = await LGService.isConnected();
+    final connected = await LGService().isConnected();
     setState(() {
       _connected = connected;
     });
@@ -72,7 +72,14 @@ class _ConnectionPageState extends State<ConnectionPage> {
               ipController: ipController,
               portController: portController,
               slavesController: slavesController,
-              onPressed: _connectToLiquidGalaxy,
+              onPressed: () {
+                if (_connected) {
+                  _connectToLiquidGalaxy();
+                } else {
+                  LGService().disconnect();
+                  _isConnected();
+                }
+              },
               connected: _connected,
             ),
           ),
@@ -96,7 +103,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
       return;
     }
 
-    final lgService = LGService(
+    LGService().init(
       host: ipController.text,
       port: int.parse(portController.text),
       username: userController.text,
@@ -104,7 +111,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
       slaves: int.parse(slavesController.text),
     );
 
-    final result = await lgService.connect();
+    final result = await LGService().connect();
     if (result) {
       _isConnected();
       showSnackBar("successful");

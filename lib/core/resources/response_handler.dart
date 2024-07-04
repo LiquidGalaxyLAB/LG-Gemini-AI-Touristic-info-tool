@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:touristic/core/exception/invalid_response.dart';
 
 import '../exception/unhandled_exception.dart';
@@ -28,8 +30,10 @@ Future<DataState<U>> handleResponse<T, U>({
       ));
     }
   } on InvalidResponseException catch (e) {
+    log('Stack trace:\n$e');
     return DataFailure(e);
   } catch (e) {
+    log('Stack trace:\n$e');
     return const DataFailure(
       UnhandledException(
         message: "Something went wrong",
