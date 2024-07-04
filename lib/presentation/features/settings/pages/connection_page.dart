@@ -74,10 +74,10 @@ class _ConnectionPageState extends State<ConnectionPage> {
               slavesController: slavesController,
               onPressed: () {
                 if (_connected) {
-                  _connectToLiquidGalaxy();
-                } else {
                   LGService().disconnect();
                   _isConnected();
+                } else {
+                  _connectToLiquidGalaxy();
                 }
               },
               connected: _connected,
