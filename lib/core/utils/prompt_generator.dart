@@ -102,6 +102,22 @@ json format for 1 Place JSON object:
   "highlights": String[],
   "description": "String",
 }
+
+example response:
+{
+  "name": "String",
+  "startingPoint": "String",
+  "travelRoute": [
+    json object1 for travelRoute,
+    json object2 for travelRoute,
+    json object3 for travelRoute,
+  ],
+  "places": [
+    json object1 for place,
+    json object2 for place,
+    json object3 for place,
+  ]
+}
 """;
 
 const String _promptRecommendations =
@@ -112,7 +128,7 @@ json format for 1 recommendation JSON object:
   "description": String (max 60 words),
   "highlights": String[],
   "duration": "String",
-  "cost": "String"
+  "cost": "String" (in USD)
 }
 
 example response:
@@ -131,8 +147,8 @@ json format for 1 activity JSON object:
   "description": String (max 60 words),
   "procedure": String[],
   "precautions": String[],
-  "duration": "String",
-  "cost": "String"
+  "duration": "String", (in minutes)
+  "cost": "String" (in USD)
 }
 
 example response:
@@ -161,33 +177,60 @@ json format for 1 TravelRoute JSON object:
   "mode": "String",
   "from": "String",
   "to": "String",
-  "duration": "String",
-  "cost": "String",
+  "duration": "String", (as per required)
+  "cost": "String", (in USD)
   "description": "String",
 }
 
 json format for 1 Place JSON object:
 {
   "name": "String"
-  "entranceFee": "String"
-  "guidedTourFee": "String"
-  "averageMealCost": "String"
+  "entranceFee": "String" (in USD)
+  "guidedTourFee": "String" (in USD)
+  "averageMealCost": "String" (in USD)
 }
 
 json format for 1 AdditionalExpense JSON object:
 {
   "name": "String"
   "description": "String"
-  "estimatedCost": "String"
+  "estimatedCost": "String" (in USD)
 }
 
 json format for 1 Accommodation JSON object:
 {
   "name": "String"
   "description": "String"
-  "costPerNight": "String"
-  "duration": "String"
-  "totalCost": "String"
+  "costPerNight": "String" (in USD)
+  "duration": "String" (as per required)
+  "totalCost": "String" (in USD)
+}
+
+example response:
+{
+  "name": "String",
+  "startingPoint": "String",
+  "totalCost": "String",
+  "travelRoute": [
+    json object1 for travelRoute,
+    json object2 for travelRoute,
+    json object3 for travelRoute,
+  ],
+  "places": [
+    json object1 for place,
+    json object2 for place,
+    json object3 for place,
+  ],
+  "accommodation": [
+    json object1 for accommodation,
+    json object2 for accommodation,
+    json object3 for accommodation,
+  ],
+  "additionalExpenses": [
+    json object1 for additionalExpense,
+    json object2 for additionalExpense,
+    json object3 for additionalExpense,
+  ]
 }
 """;
 
@@ -197,7 +240,7 @@ json format for 1 local cuisine JSON object:
 {
   "name": "String",
   "description": String (max 60 words),
-  "duration": "String",
+  "duration": "String" (in minutes),
   "origin": "String" (max 60 words),
   "aliases": String[],
   "ingredients": String[],
