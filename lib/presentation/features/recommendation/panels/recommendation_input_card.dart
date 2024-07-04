@@ -65,7 +65,7 @@ class _RecommendationInputCardState extends State<RecommendationInputCard> {
                   title: "What is your travel style?",
                   singleSelection: false,
                   onSelectionChange: (values) {
-                    _selectedTravelStyle = values.map((element) => _selectedTravelStyle[element]).toList().join(", ");
+                    _selectedTravelStyle = values.map((element) => _style[element]).toList().join(", ");
                   },
                 ),
               ],

@@ -5,7 +5,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../core/utils/app_utils.dart';
+import '../../../core/utils/maps_utils.dart';
 import '../../../domain/model/budget_plan.dart';
+import '../../../service/location_service.dart';
 import '../../components/layout_blueprint.dart';
 import 'bloc/budget_plan_bloc.dart';
 import 'bloc/budget_plan_event.dart';
@@ -55,15 +57,23 @@ class _BudgetPageState extends State<BudgetPage> {
               _selectedDetails = value;
             });
           },
-          onPlaceTap: (value) {
+          onPlaceTap: (value) async {
             setState(() {
               _selectedPlace = value;
             });
+            final latLng = await LocationService().getLatLngFromLocation(_budgetPlan.places[value].name);
+            if (latLng != null) {
+              moveToPlace(_controller, latLng);
+            }
           },
-          onRouteTap: (value) {
+          onRouteTap: (value) async {
             setState(() {
               _selectedRoute = value;
             });
+            final latLng = await LocationService().getLatLngFromLocation(_budgetPlan.travelRoute[value].from);
+            if (latLng != null) {
+              moveToPlace(_controller, latLng);
+            }
           },
           onExpenseTap: (value) {
             setState(() {

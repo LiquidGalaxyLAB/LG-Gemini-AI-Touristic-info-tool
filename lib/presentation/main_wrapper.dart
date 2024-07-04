@@ -38,7 +38,7 @@ class _MainWrapperState extends State<MainWrapper> {
     String port = (await preferencesUtils.getValue(ConnectionPreferences.port.name)) ?? "0";
     String screens = (await preferencesUtils.getValue(ConnectionPreferences.screens.name)) ?? "0";
 
-    final lgService = LGService(
+    LGService().init(
       host: ip,
       port: int.parse(port),
       username: username,
@@ -46,7 +46,7 @@ class _MainWrapperState extends State<MainWrapper> {
       slaves: int.parse(screens),
     );
 
-    final result = await lgService.connect();
+    final result = await LGService().connect();
     if (result) {
       _showSnackbar();
     }

@@ -7,6 +7,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../../core/utils/app_utils.dart';
 import '../../../core/utils/maps_utils.dart';
 import '../../../domain/model/cuisine.dart';
+import '../../../service/location_service.dart';
 import '../../components/layout_blueprint.dart';
 import '../../components/response_item_card.dart';
 import 'bloc/cuisines_bloc.dart';
@@ -40,8 +41,12 @@ class _CuisinePageState extends State<CuisinePage> {
       ),
       controller: _controller,
       panelLeft: CuisineInputCard(
-        onContinueClick: (params) {
+        onContinueClick: (params) async {
           BlocProvider.of<CuisinesBloc>(context).add(GetCuisines(params));
+          final latLng = await LocationService().getLatLngFromLocation(params["destination"]);
+          if (latLng != null) {
+            moveToPlace(_controller, latLng);
+          }
         },
       ),
       panelDividedLeft: blocBuilder<CuisinesBloc, T>(onSuccess: (result) {

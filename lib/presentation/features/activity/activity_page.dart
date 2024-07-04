@@ -7,6 +7,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../../core/utils/app_utils.dart';
 import '../../../core/utils/maps_utils.dart';
 import '../../../domain/model/activitiy.dart';
+import '../../../service/location_service.dart';
 import '../../components/layout_blueprint.dart';
 import '../../components/response_item_card.dart';
 import 'bloc/activities_bloc.dart';
@@ -40,8 +41,12 @@ class _ActivityPageState extends State<ActivityPage> {
       ),
       controller: _controller,
       panelLeft: ActivityInputCard(
-        onContinueClick: (params) {
+        onContinueClick: (params) async {
           BlocProvider.of<ActivitiesBloc>(context).add(GetActivities(params));
+          final latLng = await LocationService().getLatLngFromLocation(params["destination"]);
+          if (latLng != null) {
+            moveToPlace(_controller, latLng);
+          }
         },
       ),
       panelDividedLeft: blocBuilder<ActivitiesBloc, T>(onSuccess: (result) {

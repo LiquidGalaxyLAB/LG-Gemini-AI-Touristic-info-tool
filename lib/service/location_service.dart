@@ -1,20 +1,26 @@
 import 'dart:developer';
 
 import 'package:geocoding/geocoding.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class LocationService {
-  LocationService._internal();
-
   static final LocationService instance = LocationService._internal();
 
-  Future<Map<String, double>?> getLatLngFromLocation(String address) async {
+  LocationService._internal();
+
+  factory LocationService() {
+    return instance;
+  }
+
+
+  Future<LatLng?> getLatLngFromLocation(String address) async {
     try {
       List<Location> locations = await locationFromAddress(address);
       if (locations.isNotEmpty) {
-        return {
-          'latitude': locations.first.latitude,
-          'longitude': locations.first.longitude,
-        };
+        return LatLng(
+          locations.first.latitude,
+          locations.first.longitude,
+        );
       } else {
         return null;
       }
@@ -24,7 +30,6 @@ class LocationService {
     }
   }
 
-  // Method to get location address from latitude and longitude
   Future<String?> getLocationFromLatLng(double latitude, double longitude) async {
     try {
       List<Placemark> placemarks = await placemarkFromCoordinates(latitude, longitude);

@@ -7,6 +7,7 @@ import "package:google_maps_flutter/google_maps_flutter.dart";
 import '../../../core/utils/app_utils.dart';
 import '../../../core/utils/maps_utils.dart';
 import '../../../domain/model/recommendation.dart';
+import '../../../service/location_service.dart';
 import '../../components/layout_blueprint.dart';
 import '../../components/response_item_card.dart';
 import 'bloc/recommendations_bloc.dart';
@@ -40,13 +41,16 @@ class _RecommendationPageState extends State<RecommendationPage> {
       ),
       controller: _controller,
       panelLeft: RecommendationInputCard(
-        onContinueClick: (params) {
+        onContinueClick: (params) async {
           BlocProvider.of<RecommendationsBloc>(context).add(GetRecommendations(params));
+          final latLng = await LocationService().getLatLngFromLocation(params["destination"]);
+          if (latLng != null) {
+            moveToPlace(_controller, latLng);
+          }
         },
       ),
       panelDividedLeft: blocBuilder<RecommendationsBloc, T>(onSuccess: (result) {
         _recommendations = result;
-        moveToPlace(_controller, const LatLng(21, 214));
 
         return ListView.builder(
           padding: EdgeInsets.zero,
