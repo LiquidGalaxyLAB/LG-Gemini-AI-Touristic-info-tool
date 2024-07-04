@@ -50,9 +50,7 @@ class _ItineraryPageState extends State<ItineraryPage> {
         },
       ),
       panelDividedLeft: blocBuilder<ItineraryBloc, T>(onSuccess: (result) {
-        setState(() {
-          _itinerary = result;
-        });
+        _itinerary = result;
 
         return MainResponseCard(
           controller: _controller,

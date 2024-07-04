@@ -45,9 +45,7 @@ class _BudgetPageState extends State<BudgetPage> {
         },
       ),
       panelDividedLeft: blocBuilder<BudgetPlanBloc, T>(onSuccess: (result) {
-        setState(() {
-          _budgetPlan = result;
-        });
+        _budgetPlan = result;
 
         return MainResponseCard(
           budgetPlan: _budgetPlan,

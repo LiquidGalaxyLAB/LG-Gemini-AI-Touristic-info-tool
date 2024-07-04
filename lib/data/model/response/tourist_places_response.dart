@@ -10,10 +10,10 @@ class TouristPlacesResponse extends Equatable {
   @override
   List<Object?> get props => [touristPlaces];
 
-  factory TouristPlacesResponse.fromJson(Map<String, dynamic> json) {
+  factory TouristPlacesResponse.fromJson(List<dynamic> json) {
     return TouristPlacesResponse(
-      touristPlaces: (json['touristPlaces'] as List<dynamic>?)
-          ?.map((item) => TouristPlaceResponse.fromJson(item as Map<String, dynamic>))
+      touristPlaces: json
+          .map((item) => TouristPlaceResponse.fromJson(item as Map<String, dynamic>))
           .toList(),
     );
   }

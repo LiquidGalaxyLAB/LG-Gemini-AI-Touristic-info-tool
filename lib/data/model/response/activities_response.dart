@@ -10,12 +10,9 @@ class ActivitiesResponse extends Equatable {
   @override
   List<Object?> get props => [activities];
 
-  factory ActivitiesResponse.fromJson(Map<String, dynamic> json) {
+  factory ActivitiesResponse.fromJson(List<dynamic> json) {
     return ActivitiesResponse(
-      activities: (json['activities'] as List<dynamic>?)
-          ?.map(
-              (item) => ActivityResponse.fromJson(item as Map<String, dynamic>))
-          .toList(),
+      activities: json.map((item) => ActivityResponse.fromJson(item as Map<String, dynamic>)).toList(),
     );
   }
 }
@@ -51,12 +48,8 @@ class ActivityResponse extends Equatable {
     return ActivityResponse(
       name: json['name'] as String?,
       description: json['description'] as String?,
-      procedure: (json['procedure'] as List<dynamic>?)
-          ?.map((item) => item as String)
-          .toList(),
-      precautions: (json['precautions'] as List<dynamic>?)
-          ?.map((item) => item as String)
-          .toList(),
+      procedure: (json['procedure'] as List<dynamic>?)?.map((item) => item as String).toList(),
+      precautions: (json['precautions'] as List<dynamic>?)?.map((item) => item as String).toList(),
       duration: json['duration'] as String?,
       cost: json['cost'] as String?,
     );

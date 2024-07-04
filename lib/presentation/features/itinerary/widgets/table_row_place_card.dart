@@ -46,10 +46,10 @@ class TableRowPlaceCard extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Flexible(flex: 6, child: Text("Name", style: headerStyle)),
+                Flexible(flex: 4, child: Text("Name", style: headerStyle)),
                 const SizedBox(width: 12),
                 Flexible(
-                  flex: 4,
+                  flex: 5,
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text("Location", style: headerStyle),
@@ -79,9 +79,9 @@ class TableRowPlaceCard extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Flexible(flex: 6, child: _buildTableCell(_place.name, _selected)),
+                Flexible(flex: 4, child: _buildTableCell(_place.name, _selected)),
                 const SizedBox(width: 12),
-                Flexible(flex: 4, child: _buildTableCell(_place.location, _selected)),
+                Flexible(flex: 5, child: _buildTableCell(_place.location, _selected)),
               ],
             ),
           ),

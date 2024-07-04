@@ -28,6 +28,12 @@ class _FavouritesPageState extends State<FavouritesPage> {
   final Completer<GoogleMapController> _controller = Completer<GoogleMapController>();
 
   @override
+  void initState() {
+    super.initState();
+    BlocProvider.of<FavouritesBloc>(context).add(const GetFavourites());
+  }
+
+  @override
   Widget build(BuildContext context) {
     return LayoutBlueprint(
       cameraPosition: _touristPlaces.isNotEmpty
@@ -41,9 +47,7 @@ class _FavouritesPageState extends State<FavouritesPage> {
           : null,
       controller: _controller,
       panelLeft: blocBuilder<FavouritesBloc, T>(onSuccess: (result) {
-        setState(() {
-          _touristPlaces = result;
-        });
+        _touristPlaces = result;
 
         return ListView.builder(
           padding: EdgeInsets.zero,
@@ -77,7 +81,7 @@ class _FavouritesPageState extends State<FavouritesPage> {
       }),
       panelRight: blocBuilder<FavouritesBloc, T>(
         onSuccess: (result) {
-          return FavouriteDetailsCard(
+          return result.isNotEmpty ? FavouriteDetailsCard(
             touristPlace: result[_selected],
             liked: true,
             onIconClick: (isLiked) {
@@ -86,12 +90,16 @@ class _FavouritesPageState extends State<FavouritesPage> {
                   AddFavourite(result[_selected]),
                 );
               } else {
+                _touristPlaces.removeAt(_selected);
+                if (_touristPlaces.isNotEmpty) {
+                  _selected = 0;
+                }
                 BlocProvider.of<FavouritesBloc>(context).add(
                   RemoveFavourite(result[_selected]),
                 );
               }
             },
-          );
+          ): Container();
         },
       ),
     );

@@ -58,16 +58,23 @@ json format for 1 tourist place JSON object:
     "name": "String",
     "latitude": Double,
     "longitude": Double,
-    "history": "String (min 60 words)",
-    "significance": "String (min 60 words)",
+    "history": "String (max 60 words)",
+    "significance": "String (max 60 words)",
     "cuisine": "String",
     "specialty": "String",
     "location": "String"
 }
+
+example response:
+[
+  json object1 for tourist place,
+  json object2 for tourist place,
+  json object3 for tourist place,
+]
 """;
 
 const String _promptItinerary =
-    """You are a Travel Guide, Given the inputs of destination {{destination}}, budget {{budget}} (in USD), and duration {{duration}} (in days), generate a JSON response containing a itinerary according to the user inputs. The itinerary should include its name, starting point, list of minimum 3 places, and list of travel route accordingly to total places. Each place includes name, location, latitude, longitude, description, and list of highlights of that place. Each travel route should contain mode of transportation, starting point, end point, duration in minutes, list of highlights, and description. Ensure the response is in JSON format and does not include any extra text.
+    """You are a Travel Guide, Given the inputs of destination {{destination}}, budget {{budget}} (in USD), and duration {{duration}} (in days), generate a JSON response containing a itinerary according to the user inputs. The itinerary should include its name, starting point, list of places according to the duration, and list of travel route accordingly to total places. Each place includes name, location, latitude, longitude, description, and list of highlights of that place. Each travel route should contain mode of transportation, starting point, end point, duration in minutes, list of highlights, and description. Ensure the response is in JSON format and does not include any extra text.
 json format for 1 activity JSON object:
 {
   "name": "String",
@@ -90,8 +97,8 @@ json format for 1 Place JSON object:
 {
   "name": "String",
   "location": "String",
-  "latitude": "String",
-  "longitude": "String",
+  "latitude": Double,
+  "longitude": Double,
   "highlights": String[],
   "description": "String",
 }
@@ -102,11 +109,18 @@ const String _promptRecommendations =
 json format for 1 recommendation JSON object:
 {
   "name": "String",
-  "description": String (min 60 words),
+  "description": String (max 60 words),
   "highlights": String[],
   "duration": "String",
   "cost": "String"
 }
+
+example response:
+[
+  json object1 for recommendation,
+  json object2 for recommendation,
+  json object3 for recommendation,
+]
 """;
 
 const String _promptActivities =
@@ -114,12 +128,19 @@ const String _promptActivities =
 json format for 1 activity JSON object:
 {
   "name": "String",
-  "description": String (min 60 words),
+  "description": String (max 60 words),
   "procedure": String[],
   "precautions": String[],
   "duration": "String",
   "cost": "String"
 }
+
+example response:
+[
+  json object1 for activity,
+  json object2 for activity,
+  json object3 for activity,
+]
 """;
 
 const String _promptBudgetPlan =
@@ -175,11 +196,18 @@ const String _promptLocalCuisine =
 json format for 1 local cuisine JSON object:
 {
   "name": "String",
-  "description": String (min 60 words),
+  "description": String (max 60 words),
   "duration": "String",
-  "origin": "String" (min 60 words),
+  "origin": "String" (max 60 words),
   "aliases": String[],
   "ingredients": String[],
   "recipe": String[],
 }
+
+example response:
+[
+  json object1 for local cuisines,
+  json object2 for local cuisines,
+  json object3 for local cuisines,
+]
 """;

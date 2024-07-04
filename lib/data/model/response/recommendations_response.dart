@@ -10,10 +10,10 @@ class RecommendationsResponse extends Equatable {
   @override
   List<Object?> get props => [recommendations];
 
-  factory RecommendationsResponse.fromJson(Map<String, dynamic> json) {
+  factory RecommendationsResponse.fromJson(List<dynamic> json) {
     return RecommendationsResponse(
-      recommendations: (json['recommendations'] as List<dynamic>?)
-          ?.map((item) => RecommendationResponse.fromJson(item as Map<String, dynamic>))
+      recommendations: json
+          .map((item) => RecommendationResponse.fromJson(item as Map<String, dynamic>))
           .toList(),
     );
   }

@@ -45,10 +45,8 @@ class _CuisinePageState extends State<CuisinePage> {
         },
       ),
       panelDividedLeft: blocBuilder<CuisinesBloc, T>(onSuccess: (result) {
-        setState(() {
-          _cuisines = result;
-        });
-
+        _cuisines = result;
+        moveToPlace(_controller, const LatLng(21, 214));
         return ListView.builder(
           padding: EdgeInsets.zero,
           itemCount: _cuisines.length,
@@ -64,7 +62,6 @@ class _CuisinePageState extends State<CuisinePage> {
                     setState(() {
                       _selected = index;
                     });
-                    moveToPlace(_controller, const LatLng(21, 214));
                   },
                 ),
                 if (index < _cuisines.length - 1) const SizedBox(height: 8)

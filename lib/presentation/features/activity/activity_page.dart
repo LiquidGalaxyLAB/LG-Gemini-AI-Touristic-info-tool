@@ -45,10 +45,8 @@ class _ActivityPageState extends State<ActivityPage> {
         },
       ),
       panelDividedLeft: blocBuilder<ActivitiesBloc, T>(onSuccess: (result) {
-        setState(() {
-          _activities = result;
-        });
-
+        _activities = result;
+        moveToPlace(_controller, const LatLng(21, 214));
         return ListView.builder(
           padding: EdgeInsets.zero,
           itemCount: _activities.length,
@@ -64,7 +62,6 @@ class _ActivityPageState extends State<ActivityPage> {
                     setState(() {
                       _selected = index;
                     });
-                    moveToPlace(_controller, const LatLng(21, 214));
                   },
                 ),
                 if (index < _activities.length - 1) const SizedBox(height: 8)

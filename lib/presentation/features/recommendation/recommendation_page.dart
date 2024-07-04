@@ -45,9 +45,8 @@ class _RecommendationPageState extends State<RecommendationPage> {
         },
       ),
       panelDividedLeft: blocBuilder<RecommendationsBloc, T>(onSuccess: (result) {
-        setState(() {
-          _recommendations = result;
-        });
+        _recommendations = result;
+        moveToPlace(_controller, const LatLng(21, 214));
 
         return ListView.builder(
           padding: EdgeInsets.zero,
@@ -64,7 +63,6 @@ class _RecommendationPageState extends State<RecommendationPage> {
                     setState(() {
                       _selected = index;
                     });
-                    moveToPlace(_controller, const LatLng(21, 214));
                   },
                 ),
                 if (index < _recommendations.length - 1) const SizedBox(height: 8)

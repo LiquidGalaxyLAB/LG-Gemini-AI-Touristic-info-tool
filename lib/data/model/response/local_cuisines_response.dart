@@ -10,10 +10,10 @@ class LocalCuisinesResponse extends Equatable {
   @override
   List<Object?> get props => [cuisines];
 
-  factory LocalCuisinesResponse.fromJson(Map<String, dynamic> json) {
+  factory LocalCuisinesResponse.fromJson(List<dynamic> json) {
     return LocalCuisinesResponse(
-      cuisines: (json['cuisines'] as List<dynamic>?)
-          ?.map((item) => CuisineResponse.fromJson(item as Map<String, dynamic>))
+      cuisines: json
+          .map((item) => CuisineResponse.fromJson(item as Map<String, dynamic>))
           .toList(),
     );
   }

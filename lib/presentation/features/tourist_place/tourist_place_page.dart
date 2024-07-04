@@ -30,6 +30,8 @@ class _TouristPlacePageState extends State<TouristPlacePage> {
   List<TouristPlace> _touristPlaces = [];
   final Completer<GoogleMapController> _controller = Completer<GoogleMapController>();
 
+  final List<int> _liked = [];
+
   @override
   Widget build(BuildContext context) {
     return LayoutBlueprint(
@@ -50,9 +52,7 @@ class _TouristPlacePageState extends State<TouristPlacePage> {
       ),
       panelDividedLeft: blocBuilder<TouristPlacesBloc, T>(
         onSuccess: (result) {
-          setState(() {
-            _touristPlaces = result;
-          });
+          _touristPlaces = result;
 
           return ListView.builder(
             padding: EdgeInsets.zero,
@@ -72,8 +72,8 @@ class _TouristPlacePageState extends State<TouristPlacePage> {
                       moveToPlace(
                         _controller,
                         LatLng(
-                          _touristPlaces[_selected].longitude,
                           _touristPlaces[_selected].latitude,
+                          _touristPlaces[_selected].longitude,
                         ),
                       );
                     },
@@ -89,13 +89,15 @@ class _TouristPlacePageState extends State<TouristPlacePage> {
         onSuccess: (result) {
           return TouristPlaceDetailsCard(
             touristPlace: result[_selected],
-            liked: false,
+            liked: _liked.contains(_selected),
             onIconClick: (isLiked) {
               if (isLiked) {
+                _liked.add(_selected);
                 BlocProvider.of<FavouritesBloc>(context).add(
                   AddFavourite(result[_selected]),
                 );
               } else {
+                _liked.remove(_selected);
                 BlocProvider.of<FavouritesBloc>(context).add(
                   RemoveFavourite(result[_selected]),
                 );

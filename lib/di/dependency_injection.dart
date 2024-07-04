@@ -1,5 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
+import 'package:touristic/core/enums/preferences.dart';
+import 'package:touristic/core/utils/preferences_utils.dart';
 
 import '../../data/data_sources/local/app_database.dart';
 import '../../data/data_sources/local/tourist_places_dao.dart';
@@ -34,7 +36,7 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<GenerativeModel>(
     GenerativeModel(
       model: geminiFlashLatest,
-      apiKey: geminiApiKey,
+      apiKey: await PreferencesUtils().getValue<String>(GeneralPreferences.apiKey.name) ?? "",
     ),
   );
   sl.registerSingleton<GeminiService>(GeminiService(sl()));
