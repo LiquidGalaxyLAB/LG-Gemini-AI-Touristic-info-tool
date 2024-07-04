@@ -49,7 +49,7 @@ class PromptGenerator {
 }
 
 const String _promptChat =
-    """You are a Travel Guide, Given an input chat message, your mission is to generate a fitting chat reply. This process involves understanding the context, tone, and intent of the original message and responding appropriately.""";
+    """You are a Travel Guide, Given an query or conversation message, You have to provide reply to that query or conversation in context of travel only and keep the replies simple, concise and easy to understand. This process involves understanding the context, tone, and intent of the original message and responding appropriately.""";
 
 const String _promptTouristPlace =
     """You are a Travel Guide, Given the inputs of destination {{destination}}, budget {{budget}} (in USD), and interests {{interests}} (in days), generate a JSON response containing a list of 5-10 tourist places based on the user input and interests. Each place should include its name, latitude, longitude, history, significance, cuisine, specialty, and location. The history and significance should each be at least 60 words long. Ensure the response is in JSON format and does not include any extra text.

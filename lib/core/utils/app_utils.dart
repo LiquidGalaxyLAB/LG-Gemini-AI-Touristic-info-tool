@@ -49,6 +49,15 @@ Widget chatBlocBuilder<B extends Bloc<dynamic, AppState<String>>, String>({
     builder: (context, state) {
       if (state is AppSuccess && state.data != null) {
         onSuccess(state.data as String);
+      } else if (state is AppFailure) {
+        Future.delayed(Duration.zero, () {
+          showInvalidInputDialog(
+            context,
+            title: "Something went wrong",
+            description:
+            "Unexpected error occurred, make sure you have provided correct Gemini API key in the settings.",
+          );
+        });
       }
       return content;
     },

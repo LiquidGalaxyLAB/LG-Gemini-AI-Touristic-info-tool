@@ -1,11 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:touristic/presentation/components/outlined_input_field.dart';
 
 import '../../../../config/theme/app_theme.dart';
 import '../../../../core/constants/constants.dart';
 import '../../../../core/enums/preferences.dart';
 import '../../../../core/utils/preferences_utils.dart';
+import '../../../../di/dependency_injection.dart';
+import '../../../components/outlined_input_field.dart';
 import '../widgets/color_card.dart';
 import '../widgets/connection_type_card.dart';
 import '../widgets/image_card.dart';
@@ -48,10 +49,12 @@ class _GeneralSettingsPageState extends State<GeneralSettingsPage> {
     _selectedAppTheme = await PreferencesUtils().getValue<int>(GeneralPreferences.appTheme.name) ?? 3;
     _selectedMapsStyle = await PreferencesUtils().getValue<int>(GeneralPreferences.mapsStyle.name) ?? 3;
     _selectedMapsTheme = await PreferencesUtils().getValue<int>(GeneralPreferences.mapsTheme.name) ?? 0;
-    _controller = TextEditingController(text: await PreferencesUtils().getValue<String>(GeneralPreferences.apiKey.name));
-    _controller.addListener((){
+    _controller =
+        TextEditingController(text: await PreferencesUtils().getValue<String>(GeneralPreferences.apiKey.name));
+    _controller.addListener(() {
       if (_controller.text.length > 15 && _controller.text.length < 150) {
         PreferencesUtils().updateValue(GeneralPreferences.apiKey.name, _controller.text);
+        reinitializeGeminiService();
       }
     });
     setState(() {});

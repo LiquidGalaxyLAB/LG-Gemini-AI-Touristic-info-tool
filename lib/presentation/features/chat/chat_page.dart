@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:touristic/presentation/features/chat/bloc/chat_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../config/theme/app_theme.dart';
 import '../../../core/utils/app_utils.dart';
 import '../../../domain/model/chat_item.dart';
+import 'bloc/chat_bloc.dart';
+import 'bloc/chat_event.dart';
 import 'widgets/chat_bubble.dart';
 import 'widgets/input_card.dart';
 
@@ -20,8 +22,11 @@ class _ChatPageState extends State<ChatPage> {
   final List<ChatItem> _chats = [];
 
   void _onSendClick(String message) {
+    _controller.clear();
     setState(() {
       _chats.add(ChatItem(isMe: true, message: message));
+      _chats.add(const ChatItem(isMe: false, message: "Typing..."));
+      BlocProvider.of<ChatBloc>(context).add(GetChatReply(_chats));
     });
   }
 
@@ -45,9 +50,8 @@ class _ChatPageState extends State<ChatPage> {
               ),
               child: chatBlocBuilder<ChatBloc, String>(
                 onSuccess: (message) {
-                  setState(() {
-                    _chats.add(ChatItem(isMe: false, message: message));
-                  });
+                  // _chats.removeLast();
+                  _chats.add(ChatItem(isMe: false, message: message));
                 },
                 content: ListView.builder(
                   padding: EdgeInsets.zero,

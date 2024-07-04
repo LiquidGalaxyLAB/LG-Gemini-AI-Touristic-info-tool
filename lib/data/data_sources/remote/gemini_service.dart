@@ -98,7 +98,19 @@ class GeminiService {
   }
 
   Future<String?> getChatReply(List<ChatItem> params) async {
-    final response = await model.generateContent([Content.text("prompt")]);
+    final question = params.removeLast();
+    final history = params.map((item) {
+      return Content(item.isMe ? "user" : "model", [TextPart(item.message)]);
+    }).toList();
+
+    final chatSession = model.startChat(history: history);
+    final response = await chatSession.sendMessage(
+      Content(
+        "user",
+        [TextPart(question.message)],
+      ),
+    );
+    log("${response.text}");
     return response.text;
   }
 }

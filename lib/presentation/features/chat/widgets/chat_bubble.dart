@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:touristic/config/theme/app_theme.dart';
 
 class ChatBubble extends StatelessWidget {
@@ -22,8 +23,7 @@ class ChatBubble extends StatelessWidget {
     return Align(
       alignment: _isMe ? Alignment.centerRight : Alignment.centerLeft,
       child: Container(
-        constraints: const BoxConstraints(maxWidth: 550),
-        padding: const EdgeInsets.all(12.0),
+        constraints: const BoxConstraints(maxWidth: 550, maxHeight: 250),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(_isMe ? 10.0 : 0.0),
@@ -33,12 +33,31 @@ class ChatBubble extends StatelessWidget {
           ),
           color: _isMe ? AppTheme.color.shade700 : AppTheme.gray.shade900,
         ),
-        child: Text(
-          _message,
-          style: TextStyle(
-            color: _isMe ? AppTheme.gray.shade300 : AppTheme.gray.shade400,
-            fontSize: 16,
-            fontWeight: FontWeight.w500
+        child: Markdown(
+          shrinkWrap: true,
+          data: _message,
+          styleSheet: MarkdownStyleSheet(
+            pPadding: EdgeInsets.zero,
+            h1: TextStyle(
+              color: _isMe ? AppTheme.gray.shade300 : AppTheme.gray.shade400,
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
+            ),
+            p: TextStyle(
+              color: _isMe ? AppTheme.gray.shade300 : AppTheme.gray.shade400,
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
+            ),
+            h2: TextStyle(
+              color: _isMe ? AppTheme.gray.shade300 : AppTheme.gray.shade400,
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
+            ),
+            a: TextStyle(
+              color: _isMe ? AppTheme.gray.shade300 : AppTheme.gray.shade400,
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
+            ),
           ),
         ),
       ),

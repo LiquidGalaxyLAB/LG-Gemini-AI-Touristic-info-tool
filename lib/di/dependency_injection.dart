@@ -71,3 +71,14 @@ Future<void> initializeDependencies() async {
   sl.registerFactory<RecommendationsBloc>(() => RecommendationsBloc(sl()));
   sl.registerFactory<TouristPlacesBloc>(() => TouristPlacesBloc(sl()));
 }
+
+void reinitializeGeminiService() async {
+  sl.unregister<GenerativeModel>();
+
+  sl.registerSingleton<GenerativeModel>(
+    GenerativeModel(
+      model: geminiFlashLatest,
+      apiKey: await PreferencesUtils().getValue<String>(GeneralPreferences.apiKey.name) ?? "",
+    ),
+  );
+}
