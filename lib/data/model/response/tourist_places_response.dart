@@ -56,8 +56,8 @@ class TouristPlaceResponse extends Equatable {
     return TouristPlaceResponse(
       name: json['name'] as String?,
       location: json['location'] as String?,
-      latitude: (json['latitude'] as num?)?.toDouble(),
-      longitude: (json['longitude'] as num?)?.toDouble(),
+      latitude: json['latitude'] as double?,
+      longitude: json['longitude'] as double?,
       history: json['history'] as String?,
       significance: json['significance'] as String?,
       cuisine: json['cuisine'] as String?,

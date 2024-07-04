@@ -107,8 +107,8 @@ class PlaceResponse extends Equatable {
     return PlaceResponse(
       name: json['name'] as String?,
       location: json['location'] as String?,
-      latitude: (json['latitude'] as num?)?.toDouble(),
-      longitude: (json['longitude'] as num?)?.toDouble(),
+      latitude: json['latitude'] as double?,
+      longitude: json['longitude'] as double?,
       description: json['description'] as String?,
       highlights: (json['highlights'] as List<dynamic>?)
           ?.map((item) => item as String)

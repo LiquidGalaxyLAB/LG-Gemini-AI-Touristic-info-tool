@@ -18,32 +18,28 @@ class ItemTitleDescription extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Flexible(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            _title,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w500,
-              color: AppTheme.gray.shade400,
-            ),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          _title,
+          style: TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.w500,
+            color: AppTheme.gray.shade400,
           ),
-          Text(
-            _description,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w400,
-              color: AppTheme.gray.shade300,
-            ),
+        ),
+        Text(
+          _description,
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w400,
+            color: AppTheme.gray.shade300,
           ),
-          if (_spacing != false) const SizedBox(height: 12)
-        ],
-      ),
+        ),
+        if (_spacing != false) const SizedBox(height: 12)
+      ],
     );
   }
 }
