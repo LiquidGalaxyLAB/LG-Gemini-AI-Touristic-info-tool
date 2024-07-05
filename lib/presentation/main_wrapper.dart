@@ -39,6 +39,9 @@ class _MainWrapperState extends State<MainWrapper> {
     String screens = (await preferencesUtils.getValue(ConnectionPreferences.screens.name)) ?? "0";
 
     LGService().init(
+      onError: (data) {
+        _showSnackbar(data);
+      },
       host: ip,
       port: int.parse(port),
       username: username,
@@ -48,14 +51,14 @@ class _MainWrapperState extends State<MainWrapper> {
 
     final result = await LGService().connect();
     if (result) {
-      _showSnackbar();
+      _showSnackbar("Connected Automatically");
     }
   }
 
-  void _showSnackbar() {
+  void _showSnackbar(String message) {
     final snackBar = SnackBar(
       content: Text(
-        "Connected Automatically",
+        message,
         style: TextStyle(
           color: AppTheme.gray.shade300,
           fontSize: 16,

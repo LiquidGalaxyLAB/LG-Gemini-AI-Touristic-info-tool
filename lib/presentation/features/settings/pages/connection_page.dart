@@ -36,11 +36,21 @@ class _ConnectionPageState extends State<ConnectionPage> {
 
   void _loadPreferences() async {
     final PreferencesUtils preferencesUtils = PreferencesUtils();
-    userController = TextEditingController(text: await preferencesUtils.getValue(ConnectionPreferences.username.name));
-    passController = TextEditingController(text: await preferencesUtils.getValue(ConnectionPreferences.password.name));
-    ipController = TextEditingController(text: await preferencesUtils.getValue(ConnectionPreferences.ip.name));
-    portController = TextEditingController(text: await preferencesUtils.getValue(ConnectionPreferences.port.name));
-    slavesController = TextEditingController(text: await preferencesUtils.getValue(ConnectionPreferences.screens.name));
+    // userController = TextEditingController(text: await preferencesUtils.getValue(ConnectionPreferences.username.name));
+    // passController = TextEditingController(text: await preferencesUtils.getValue(ConnectionPreferences.password.name));
+    // ipController = TextEditingController(text: await preferencesUtils.getValue(ConnectionPreferences.ip.name));
+    // portController = TextEditingController(text: await preferencesUtils.getValue(ConnectionPreferences.port.name));
+    // slavesController = TextEditingController(text: await preferencesUtils.getValue(ConnectionPreferences.screens.name));
+    LGService().init(
+      onError: (data) {
+        showSnackBar(data);
+      },
+      host: ipController.text,
+      port: int.parse(portController.text),
+      username: userController.text,
+      password: passController.text,
+      slaves: int.parse(slavesController.text),
+    );
   }
 
   void _isConnected() async {
@@ -104,6 +114,9 @@ class _ConnectionPageState extends State<ConnectionPage> {
     }
 
     LGService().init(
+      onError: (data) {
+        showSnackBar(data);
+      },
       host: ipController.text,
       port: int.parse(portController.text),
       username: userController.text,

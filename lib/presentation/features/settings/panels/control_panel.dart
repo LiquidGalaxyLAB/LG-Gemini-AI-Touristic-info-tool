@@ -22,7 +22,7 @@ class ControlPanel extends StatelessWidget {
           label: "Show/Hide logo",
           icon: Icons.slideshow_rounded,
           onPressed: () {
-            LGService().setRefresh();
+            LGService().showLogo();
           },
           enabled: _connected,
         ),
@@ -31,7 +31,7 @@ class ControlPanel extends StatelessWidget {
           label: "Clear kmls",
           icon: Icons.clean_hands_rounded,
           onPressed: () {
-            LGService().setRefresh();
+            LGService().cleanKml();
           },
           enabled: _connected,
         ),
@@ -58,7 +58,7 @@ class ControlPanel extends StatelessWidget {
           label: "Relaunch",
           icon: Icons.reset_tv_rounded,
           onPressed: () {
-            LGService().rebootLG();
+            LGService().relaunchLG();
           },
           enabled: _connected,
         ),

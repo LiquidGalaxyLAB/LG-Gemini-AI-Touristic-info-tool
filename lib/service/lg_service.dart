@@ -9,6 +9,7 @@ class LGService {
   late String _username;
   late String _password;
   late int _slaves;
+  late Function(String) _onError;
 
   factory LGService() {
     return _instance;
@@ -22,10 +23,12 @@ class LGService {
     required String username,
     required String password,
     required int slaves,
+    required Function(String) onError,
   }) {
     _username = username;
     _password = password;
     _slaves = slaves;
+    _onError = onError;
     _client = SSHClient(
       host: host,
       port: port,
@@ -34,8 +37,12 @@ class LGService {
     );
   }
 
-  Future<bool> isConnected() {
-    return _client.isConnected();
+  Future<bool> isConnected() async {
+    try {
+      return await _client.isConnected();
+    } catch (e) {
+      return false;
+    }
   }
 
   Future<bool> connect() async {
@@ -47,89 +54,87 @@ class LGService {
     }
   }
 
-  Future<bool> disconnect() async {
+  Future<void> disconnect() async {
     try {
       await _client.disconnect();
-      return true;
     } catch (e) {
-      return false;
+      _onError('Error disconnecting: $e');
     }
   }
 
-  Future<bool> _execute(String query) async {
+  Future<void> _execute(String query) async {
     try {
       await _client.execute(query);
-      return true;
     } catch (e) {
-      return false;
+      _onError('Error executing query: $e');
     }
   }
 
-  Future<bool> flyTo(CameraPosition cameraPosition) async {
+  Future<void> flyTo(CameraPosition cameraPosition) async {
     try {
-      return _execute("echo 'flytoview=${KmlUtils.lookAt(cameraPosition)}' > /tmp/query.txt");
-    } catch (error) {
-      return false;
+      await _execute("echo 'flytoview=${KmlUtils.lookAt(cameraPosition)}' > /tmp/query.txt");
+    } catch (e) {
+      _onError('Error flying to position: $e');
     }
   }
 
-  Future<bool> cleanKml() async {
+  Future<void> showLogo() async {
     try {
-      bool res = true;
       for (var i = 2; i <= _slaves; i++) {
-        res = res && await _execute("echo '' > /var/www/html/kml/slave_$i.kml");
+        await _execute("echo '' > /var/www/html/kml/slave_$i.kml");
       }
-      res = res && await _execute('echo "" > /tmp/query.txt');
-      res = res && await _execute("echo '' > /var/www/html/kmls.txt");
-      return res;
-    } catch (error) {
-      return false;
+      await _execute('echo "" > /tmp/query.txt');
+      await _execute("echo '' > /var/www/html/kmls.txt");
+    } catch (e) {
+      _onError('Error cleaning KML: $e');
     }
   }
 
-  Future<bool> setRefresh() async {
+  Future<void> cleanKml() async {
     try {
-      bool res = true;
+      for (var i = 2; i <= _slaves; i++) {
+        await _execute("echo '' > /var/www/html/kml/slave_$i.kml");
+      }
+      await _execute('echo "" > /tmp/query.txt');
+      await _execute("echo '' > /var/www/html/kmls.txt");
+    } catch (e) {
+      _onError('Error cleaning KML: $e');
+    }
+  }
+
+  Future<void> setRefresh() async {
+    try {
       for (var i = 2; i <= _slaves; i++) {
         String search = '<href>##LG_PHPIFACE##kml\\/slave_$i.kml<\\/href>';
         String replace =
             '<href>##LG_PHPIFACE##kml\\/slave_$i.kml<\\/href><refreshMode>onInterval<\\/refreshMode><refreshInterval>2<\\/refreshInterval>';
 
-        res = res &&
-            await _execute(
-                'sshpass -p $_password ssh -t lg$i \'echo $_password | sudo -S sed -i "s/$replace/$search/" ~/earth/kml/slave/myplaces.kml\'');
-        res = res &&
-            await _execute(
-                'sshpass -p $_password ssh -t lg$i \'echo $_password | sudo -S sed -i "s/$search/$replace/" ~/earth/kml/slave/myplaces.kml\'');
+        await _execute(
+            'sshpass -p $_password ssh -t lg$i \'echo $_password | sudo -S sed -i "s/$replace/$search/" ~/earth/kml/slave/myplaces.kml\'');
+        await _execute(
+            'sshpass -p $_password ssh -t lg$i \'echo $_password | sudo -S sed -i "s/$search/$replace/" ~/earth/kml/slave/myplaces.kml\'');
       }
-      return res;
-    } catch (error) {
-      return false;
+    } catch (e) {
+      _onError('Error setting refresh: $e');
     }
   }
 
-  Future<bool> resetRefresh() async {
+  Future<void> resetRefresh() async {
     try {
-      bool res = true;
       for (var i = 2; i <= _slaves; i++) {
-        String search =
-            '<href>##LG_PHPIFACE##kml\\/slave_$i.kml<\\/href><refreshMode>onInterval<\\/refreshMode><refreshInterval>2<\\/refreshInterval>';
+        String search = '<href>##LG_PHPIFACE##kml\\/slave_$i.kml<\\/href><refreshMode>onInterval<\\/refreshMode><refreshInterval>2<\\/refreshInterval>';
         String replace = '<href>##LG_PHPIFACE##kml\\/slave_$i.kml<\\/href>';
-
-        res = res &&
-            await _execute(
-                'sshpass -p $_password ssh -t lg$i \'echo $_password | sudo -S sed -i "s/$search/$replace/" ~/earth/kml/slave/myplaces.kml\'');
+        await _execute(
+            'sshpass -p $_password ssh -t lg$i \'echo $_password | sudo -S sed -i "s/$search/$replace/" ~/earth/kml/slave/myplaces.kml\'');
       }
-      return res;
-    } catch (error) {
-      return false;
+    } catch (e) {
+      _onError('Error resetting refresh: $e');
     }
   }
 
-  Future<bool> relaunchLG() async {
+  Future<void> relaunchLG() async {
     try {
-      bool res = true;
-      for (var i = 1; i <= _slaves; i++) {
+      for (var i = _slaves; i >= _slaves; i++) {
         String cmd = """RELAUNCH_CMD="\\
           if [ -f /etc/init/lxdm.conf ]; then
             export SERVICE=lxdm
@@ -144,36 +149,31 @@ class LGService {
             echo $_password | sudo -S service \\\${SERVICE} restart
           fi
           " && sshpass -p $_password ssh -x -t lg@lg$i "\$RELAUNCH_CMD\"""";
-        res = res && await _execute('"/home/$_username/bin/lg-relaunch" > /home/$_username/log.txt');
-        res = res && await _execute(cmd);
+        await _execute('"/home/$_username/bin/lg-relaunch" > /home/$_username/log.txt');
+        await _execute(cmd);
       }
-      return res;
-    } catch (error) {
-      return false;
+    } catch (e) {
+      _onError('Error relaunching LG: $e');
     }
   }
 
-  Future<bool> rebootLG() async {
+  Future<void> rebootLG() async {
     try {
-      bool res = true;
-      for (var i = 1; i <= _slaves; i++) {
-        res = res && await _execute('sshpass -p $_password ssh -t lg$i "echo $_password | sudo -S reboot');
+      for (var i = _slaves; i >= 1; i--) {
+        await _execute('sshpass -p $_password ssh -t lg$i "echo $_password | sudo -S reboot"');
       }
-      return res;
-    } catch (error) {
-      return false;
+    } catch (e) {
+      _onError('Error rebooting LG: $e');
     }
   }
 
-  Future<bool> shutdownLG() async {
+  Future<void> shutdownLG() async {
     try {
-      bool res = true;
-      for (var i = 1; i <= _slaves; i++) {
-        res = res && await _execute('sshpass -p $_password ssh -t lg$i "echo $_password | sudo -S poweroff"');
+      for (var i = _slaves; i >= 1; i--) {
+        await _execute('sshpass -p $_password ssh -t lg$i "echo $_password | sudo -S poweroff"');
       }
-      return res;
-    } catch (error) {
-      return false;
+    } catch (e) {
+      _onError('Error shutting down LG: $e');
     }
   }
 }
