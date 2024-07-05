@@ -45,10 +45,10 @@ class TableRowRouteCard extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Expanded(flex: 25, child: Text("From", style: headerStyle)),
-                Expanded(flex: 25, child: Text("To", style: headerStyle)),
-                Expanded(flex: 25, child: Text("Mode", style: headerStyle)),
-                Expanded(flex: 25, child: Text("Cost", style: headerStyle)),
+                Expanded(flex: 30, child: Text("From", style: headerStyle)),
+                Expanded(flex: 30, child: Text("To", style: headerStyle)),
+                Expanded(flex: 20, child: Text("Mode", style: headerStyle)),
+                Expanded(flex: 20, child: Text("Cost", style: headerStyle)),
               ],
             ),
           ),
@@ -73,10 +73,10 @@ class TableRowRouteCard extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                _buildTableCell(_route.from, _selected),
-                _buildTableCell(_route.to, _selected),
-                _buildTableCell(_route.mode, _selected),
-                _buildTableCell(_route.cost, _selected),
+                Expanded(flex: 30, child: _buildTableCell(_route.from, _selected)),
+                Expanded(flex: 30, child: _buildTableCell(_route.to, _selected)),
+                Expanded(flex: 20, child: _buildTableCell(_route.mode, _selected)),
+                Expanded(flex: 20, child: _buildTableCell(_route.cost, _selected)),
               ],
             ),
           ),
@@ -92,17 +92,14 @@ class TableRowRouteCard extends StatelessWidget {
       color: selected ? AppTheme.gray.shade300 : AppTheme.gray.shade400,
     );
 
-    return Expanded(
-      flex: 25,
-      child: Align(
-        alignment: Alignment.centerLeft,
-        child: Text(
-          label,
-          maxLines: 1,
-          textAlign: TextAlign.start,
-          overflow: TextOverflow.ellipsis,
-          style: style,
-        ),
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Text(
+        label,
+        maxLines: 1,
+        textAlign: TextAlign.start,
+        overflow: TextOverflow.ellipsis,
+        style: style,
       ),
     );
   }

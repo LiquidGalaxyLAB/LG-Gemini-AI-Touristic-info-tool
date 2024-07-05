@@ -45,10 +45,10 @@ class TableRowRouteCard extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                SizedBox(width: 90, child: Text("From", style: headerStyle)),
-                SizedBox(width: 90, child: Text("To", style: headerStyle)),
-                SizedBox(width: 90, child: Text("Mode", style: headerStyle)),
-                SizedBox(width: 90, child: Text("Duration", style: headerStyle)),
+                Expanded(flex: 3, child: Text("From", style: headerStyle)),
+                Expanded(flex: 3, child: Text("To", style: headerStyle)),
+                Expanded(flex: 2, child: Text("Mode", style: headerStyle)),
+                Expanded(flex: 2, child: Text("Duration", style: headerStyle)),
               ],
             ),
           ),
@@ -73,10 +73,10 @@ class TableRowRouteCard extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                _buildTableCell(_route.from, _selected),
-                _buildTableCell(_route.to, _selected),
-                _buildTableCell(_route.mode, _selected),
-                _buildTableCell(_route.duration, _selected),
+                Expanded(flex: 3, child: _buildTableCell(_route.from, _selected)),
+                Expanded(flex: 3, child: _buildTableCell(_route.to, _selected)),
+                Expanded(flex: 2, child: _buildTableCell(_route.mode, _selected)),
+                Expanded(flex: 2, child: _buildTableCell(_route.duration, _selected)),
               ],
             ),
           ),
@@ -92,15 +92,12 @@ class TableRowRouteCard extends StatelessWidget {
       color: selected ? AppTheme.gray.shade300 : AppTheme.gray.shade400,
     );
 
-    return SizedBox(
-      width: 90,
-      child: Text(
-        label,
-        maxLines: 1,
-        textAlign: TextAlign.start,
-        overflow: TextOverflow.ellipsis,
-        style: style,
-      ),
+    return Text(
+      label,
+      maxLines: 1,
+      textAlign: TextAlign.start,
+      overflow: TextOverflow.ellipsis,
+      style: style,
     );
   }
 }

@@ -46,7 +46,7 @@ class TableRowAccommodationCard extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Expanded(flex: 3, child: Text("Name", style: headerStyle)),
+                Expanded(flex: 4, child: Text("Name", style: headerStyle)),
                 const SizedBox(width: 12),
                 Expanded(
                   flex: 2,

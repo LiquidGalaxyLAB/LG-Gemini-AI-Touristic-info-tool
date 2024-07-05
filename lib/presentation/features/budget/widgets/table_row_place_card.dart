@@ -46,7 +46,7 @@ class TableRowPlaceCard extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Expanded(flex: 3, child: Text("Name", style: headerStyle)),
+                Expanded(flex: 4, child: Text("Name", style: headerStyle)),
                 const SizedBox(width: 12),
                 Expanded(
                   flex: 2,
@@ -95,7 +95,7 @@ class TableRowPlaceCard extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Expanded(flex: 3, child: _buildTableCell(_place.name, _selected)),
+                Expanded(flex: 4, child: _buildTableCell(_place.name, _selected)),
                 const SizedBox(width: 12),
                 Expanded(flex: 2, child: _buildTableCell(_place.entranceFee, _selected)),
                 const SizedBox(width: 12),

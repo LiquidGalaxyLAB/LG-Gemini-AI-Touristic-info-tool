@@ -89,7 +89,7 @@ budget.BudgetPlan responseToBudgetPlan(
                   name: e.name ?? "",
                   description: e.description ?? "",
                   costPerNight: e.costPerNight ?? "",
-                  duration: e.description ?? "",
+                  duration: e.duration ?? "",
                   totalCost: e.totalCost ?? "",
                 ))
             .toList() ??
