@@ -5,11 +5,26 @@ import '../core/utils/kml_utils.dart';
 
 class LGService {
   static final LGService _instance = LGService._internal();
+
   late SSHClient _client;
   late String _username;
   late String _password;
   late int _slaves;
   late Function(String) _onError;
+
+  int get _leftScreen {
+    if (_slaves == 1) {
+      return 1;
+    }
+    return (_slaves / 2).floor() + 2;
+  }
+
+  int get _rightScreen {
+    if (_slaves == 1) {
+      return 1;
+    }
+    return (_slaves / 2).floor() + 1;
+  }
 
   factory LGService() {
     return _instance;
@@ -63,10 +78,9 @@ class LGService {
   }
 
   Future<void> _execute(String query) async {
-    try {
-      await _client.execute(query);
-    } catch (e) {
-      _onError('Error executing query');
+    String? response = await _client.execute(query);
+    if (response == null) {
+      return Future.error("Null response");
     }
   }
 
@@ -78,13 +92,31 @@ class LGService {
     }
   }
 
+  Future<void> startOrbit(context) async {
+    try {
+      await _execute('echo "playtour=TouristicOrbit" > /tmp/query.txt');
+    } catch (error) {
+      _onError('Error starting orbit');
+    }
+  }
+
+  Future<void> stopOrbit(context) async {
+    try {
+      await _execute('echo "exittour=true" > /tmp/query.txt');
+    } catch (error) {
+      _onError('Error stopping orbit');
+    }
+  }
+
   Future<void> showLogo() async {
     try {
-      for (var i = 2; i <= _slaves; i++) {
-        await _execute("echo '' > /var/www/html/kml/slave_$i.kml");
-      }
-      await _execute('echo "" > /tmp/query.txt');
-      await _execute("echo '' > /var/www/html/kmls.txt");
+    } catch (e) {
+      _onError('Error cleaning KML');
+    }
+  }
+
+  Future<void> hideLogo() async {
+    try {
     } catch (e) {
       _onError('Error cleaning KML');
     }
@@ -106,13 +138,10 @@ class LGService {
     try {
       for (var i = 2; i <= _slaves; i++) {
         String search = '<href>##LG_PHPIFACE##kml\\/slave_$i.kml<\\/href>';
-        String replace =
-            '<href>##LG_PHPIFACE##kml\\/slave_$i.kml<\\/href><refreshMode>onInterval<\\/refreshMode><refreshInterval>2<\\/refreshInterval>';
+        String replace = '<href>##LG_PHPIFACE##kml\\/slave_$i.kml<\\/href><refreshMode>onInterval<\\/refreshMode><refreshInterval>2<\\/refreshInterval>';
 
-        await _execute(
-            'sshpass -p $_password ssh -t lg$i \'echo $_password | sudo -S sed -i "s/$replace/$search/" ~/earth/kml/slave/myplaces.kml\'');
-        await _execute(
-            'sshpass -p $_password ssh -t lg$i \'echo $_password | sudo -S sed -i "s/$search/$replace/" ~/earth/kml/slave/myplaces.kml\'');
+        await _execute('sshpass -p $_password ssh -t lg$i \'echo $_password | sudo -S sed -i "s/$replace/$search/" ~/earth/kml/slave/myplaces.kml\'');
+        await _execute('sshpass -p $_password ssh -t lg$i \'echo $_password | sudo -S sed -i "s/$search/$replace/" ~/earth/kml/slave/myplaces.kml\'');
       }
     } catch (e) {
       _onError('Error setting refresh');

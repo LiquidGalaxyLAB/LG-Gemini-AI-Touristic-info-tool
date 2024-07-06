@@ -128,7 +128,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
     final result = await LGService().connect();
     if (result) {
       _isConnected();
-      showSnackBar("successful");
+      showSnackBar("Connection successful");
       final PreferencesUtils preferencesUtils = PreferencesUtils();
       preferencesUtils.updateValue(ConnectionPreferences.username.name, _userController.text);
       preferencesUtils.updateValue(ConnectionPreferences.password.name, _passController.text);
@@ -137,7 +137,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
       preferencesUtils.updateValue(ConnectionPreferences.screens.name, _slavesController.text);
     } else {
       _isConnected();
-      showSnackBar("failed");
+      showSnackBar("Connection failed");
     }
   }
 

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:touristic/core/utils/preferences_utils.dart';
 
 import '../../../../service/lg_service.dart';
 import '../widgets/lg_button.dart';
 
-class ControlPanel extends StatelessWidget {
+class ControlPanel extends StatefulWidget {
   final bool _connected;
   static const double spacing = 12.0;
 
@@ -13,56 +14,82 @@ class ControlPanel extends StatelessWidget {
   }) : _connected = connected;
 
   @override
+  State<ControlPanel> createState() => _ControlPanelState();
+}
+
+class _ControlPanelState extends State<ControlPanel> {
+  bool _showLogo = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadPreferences();
+  }
+
+  Future<void> _loadPreferences() async {
+    _showLogo = (await PreferencesUtils().getValue<bool>("show_logo")) ?? true;
+    setState(() {});
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         LGButton(
-          label: "Show/Hide logo",
+          label: _showLogo ? "Hide logo" : "Show logo",
           icon: Icons.slideshow_rounded,
           onPressed: () {
-            LGService().showLogo();
+            if (_showLogo) {
+              LGService().hideLogo();
+            } else {
+              LGService().showLogo();
+            }
+            setState(() {
+              _showLogo = !_showLogo;
+            });
+            PreferencesUtils().updateValue("show_logo", _showLogo);
           },
-          enabled: _connected,
+          enabled: widget._connected,
         ),
-        const SizedBox(height: spacing),
+        const SizedBox(height: ControlPanel.spacing),
         LGButton(
           label: "Clear kmls",
           icon: Icons.clean_hands_rounded,
           onPressed: () {
             LGService().cleanKml();
           },
-          enabled: _connected,
+          enabled: widget._connected,
         ),
-        const SizedBox(height: spacing),
+        const SizedBox(height: ControlPanel.spacing),
         LGButton(
           label: "Set slaves refresh",
           icon: Icons.av_timer_rounded,
           onPressed: () {
             LGService().setRefresh();
           },
-          enabled: _connected,
+          enabled: widget._connected,
         ),
-        const SizedBox(height: spacing),
+        const SizedBox(height: ControlPanel.spacing),
         LGButton(
           label: "Reset slaves refresh",
           icon: Icons.timer_off_outlined,
           onPressed: () {
             LGService().resetRefresh();
           },
-          enabled: _connected,
+          enabled: widget._connected,
         ),
-        const SizedBox(height: spacing),
+        const SizedBox(height: ControlPanel.spacing),
         LGButton(
           label: "Relaunch",
           icon: Icons.reset_tv_rounded,
           onPressed: () {
             LGService().relaunchLG();
           },
-          enabled: _connected,
+          enabled: widget._connected,
         ),
-        const SizedBox(height: spacing),
+        const SizedBox(height: ControlPanel.spacing),
         LGButton(
           label: "Reboot",
           icon: Icons.restart_alt_rounded,
@@ -72,16 +99,16 @@ class ControlPanel extends StatelessWidget {
               LGService().connect();
             });
           },
-          enabled: _connected,
+          enabled: widget._connected,
         ),
-        const SizedBox(height: spacing),
+        const SizedBox(height: ControlPanel.spacing),
         LGButton(
           label: "Power off",
           icon: Icons.power_settings_new_rounded,
           onPressed: () {
             LGService().shutdownLG();
           },
-          enabled: _connected,
+          enabled: widget._connected,
         ),
       ],
     );
