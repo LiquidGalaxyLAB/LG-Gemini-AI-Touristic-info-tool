@@ -32,7 +32,11 @@ class FavouritesBloc extends Bloc<FavouritesEvent, AppState<List<TouristPlace>>>
   ) async {
     emit(const AppLoading());
     final result = await _getFavouritesUseCase();
-    emit(AppSuccess(result));
+    if (result.isEmpty) {
+      emit(const AppEmpty());
+    } else {
+      emit(AppSuccess(result));
+    }
   }
 
   void onAddFavourite(

@@ -19,11 +19,11 @@ class ConnectionPage extends StatefulWidget {
 
 class _ConnectionPageState extends State<ConnectionPage> {
   static const double spacing = 12.0;
-  TextEditingController userController = TextEditingController();
-  TextEditingController passController = TextEditingController();
-  TextEditingController ipController = TextEditingController();
-  TextEditingController portController = TextEditingController();
-  TextEditingController slavesController = TextEditingController();
+  final TextEditingController _userController = TextEditingController(text: '');
+  final TextEditingController _passController = TextEditingController(text: '');
+  final TextEditingController _ipController = TextEditingController(text: '');
+  final TextEditingController _portController = TextEditingController(text: '');
+  final TextEditingController _slavesController = TextEditingController(text: '');
 
   bool _connected = false;
 
@@ -36,20 +36,21 @@ class _ConnectionPageState extends State<ConnectionPage> {
 
   void _loadPreferences() async {
     final PreferencesUtils preferencesUtils = PreferencesUtils();
-    // userController = TextEditingController(text: await preferencesUtils.getValue(ConnectionPreferences.username.name));
-    // passController = TextEditingController(text: await preferencesUtils.getValue(ConnectionPreferences.password.name));
-    // ipController = TextEditingController(text: await preferencesUtils.getValue(ConnectionPreferences.ip.name));
-    // portController = TextEditingController(text: await preferencesUtils.getValue(ConnectionPreferences.port.name));
-    // slavesController = TextEditingController(text: await preferencesUtils.getValue(ConnectionPreferences.screens.name));
+    _userController.text = await preferencesUtils.getValue<String>(ConnectionPreferences.username.name) ?? "";
+    _passController.text = await preferencesUtils.getValue<String>(ConnectionPreferences.password.name) ?? "";
+    _ipController.text = await preferencesUtils.getValue<String>(ConnectionPreferences.ip.name) ?? "";
+    _portController.text = await preferencesUtils.getValue<String>(ConnectionPreferences.port.name) ?? "";
+    _slavesController.text = await preferencesUtils.getValue<String>(ConnectionPreferences.screens.name) ?? "";
+
     LGService().init(
       onError: (data) {
         showSnackBar(data);
       },
-      host: ipController.text,
-      port: int.parse(portController.text),
-      username: userController.text,
-      password: passController.text,
-      slaves: int.parse(slavesController.text),
+      host: _ipController.text,
+      port: int.parse(_portController.text),
+      username: _userController.text,
+      password: _passController.text,
+      slaves: int.parse(_slavesController.text),
     );
   }
 
@@ -77,11 +78,11 @@ class _ConnectionPageState extends State<ConnectionPage> {
           ),
           Expanded(
             child: InputPanel(
-              userController: userController,
-              passController: passController,
-              ipController: ipController,
-              portController: portController,
-              slavesController: slavesController,
+              userController: _userController,
+              passController: _passController,
+              ipController: _ipController,
+              portController: _portController,
+              slavesController: _slavesController,
               onPressed: () {
                 if (_connected) {
                   LGService().disconnect();
@@ -99,12 +100,12 @@ class _ConnectionPageState extends State<ConnectionPage> {
   }
 
   bool _isValidData() {
-    return ipController.text.isNotEmpty &&
-        portController.text.isNotEmpty &&
-        userController.text.isNotEmpty &&
-        passController.text.isNotEmpty &&
-        slavesController.text.isNotEmpty &&
-        int.parse(slavesController.text) > 0;
+    return _ipController.text.isNotEmpty &&
+        _portController.text.isNotEmpty &&
+        _userController.text.isNotEmpty &&
+        _passController.text.isNotEmpty &&
+        _slavesController.text.isNotEmpty &&
+        int.parse(_slavesController.text) > 0;
   }
 
   Future<void> _connectToLiquidGalaxy() async {
@@ -117,11 +118,11 @@ class _ConnectionPageState extends State<ConnectionPage> {
       onError: (data) {
         showSnackBar(data);
       },
-      host: ipController.text,
-      port: int.parse(portController.text),
-      username: userController.text,
-      password: passController.text,
-      slaves: int.parse(slavesController.text),
+      host: _ipController.text,
+      port: int.parse(_portController.text),
+      username: _userController.text,
+      password: _passController.text,
+      slaves: int.parse(_slavesController.text),
     );
 
     final result = await LGService().connect();
@@ -129,11 +130,11 @@ class _ConnectionPageState extends State<ConnectionPage> {
       _isConnected();
       showSnackBar("successful");
       final PreferencesUtils preferencesUtils = PreferencesUtils();
-      preferencesUtils.updateValue(ConnectionPreferences.username.name, userController.text);
-      preferencesUtils.updateValue(ConnectionPreferences.password.name, passController.text);
-      preferencesUtils.updateValue(ConnectionPreferences.ip.name, ipController.text);
-      preferencesUtils.updateValue(ConnectionPreferences.port.name, portController.text);
-      preferencesUtils.updateValue(ConnectionPreferences.screens.name, slavesController.text);
+      preferencesUtils.updateValue(ConnectionPreferences.username.name, _userController.text);
+      preferencesUtils.updateValue(ConnectionPreferences.password.name, _passController.text);
+      preferencesUtils.updateValue(ConnectionPreferences.ip.name, _ipController.text);
+      preferencesUtils.updateValue(ConnectionPreferences.port.name, _portController.text);
+      preferencesUtils.updateValue(ConnectionPreferences.screens.name, _slavesController.text);
     } else {
       _isConnected();
       showSnackBar("failed");

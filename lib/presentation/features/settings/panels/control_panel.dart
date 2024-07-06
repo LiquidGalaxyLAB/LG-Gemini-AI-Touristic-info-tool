@@ -68,6 +68,9 @@ class ControlPanel extends StatelessWidget {
           icon: Icons.restart_alt_rounded,
           onPressed: () {
             LGService().rebootLG();
+            Future.delayed(const Duration(seconds: 10), () {
+              LGService().connect();
+            });
           },
           enabled: _connected,
         ),

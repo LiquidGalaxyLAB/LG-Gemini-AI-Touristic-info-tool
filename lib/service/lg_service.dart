@@ -58,7 +58,7 @@ class LGService {
     try {
       await _client.disconnect();
     } catch (e) {
-      _onError('Error disconnecting: $e');
+      _onError('Error disconnecting');
     }
   }
 
@@ -66,7 +66,7 @@ class LGService {
     try {
       await _client.execute(query);
     } catch (e) {
-      _onError('Error executing query: $e');
+      _onError('Error executing query');
     }
   }
 
@@ -74,7 +74,7 @@ class LGService {
     try {
       await _execute("echo 'flytoview=${KmlUtils.lookAt(cameraPosition)}' > /tmp/query.txt");
     } catch (e) {
-      _onError('Error flying to position: $e');
+      _onError('Error flying to position');
     }
   }
 
@@ -86,7 +86,7 @@ class LGService {
       await _execute('echo "" > /tmp/query.txt');
       await _execute("echo '' > /var/www/html/kmls.txt");
     } catch (e) {
-      _onError('Error cleaning KML: $e');
+      _onError('Error cleaning KML');
     }
   }
 
@@ -98,7 +98,7 @@ class LGService {
       await _execute('echo "" > /tmp/query.txt');
       await _execute("echo '' > /var/www/html/kmls.txt");
     } catch (e) {
-      _onError('Error cleaning KML: $e');
+      _onError('Error cleaning KML');
     }
   }
 
@@ -115,7 +115,7 @@ class LGService {
             'sshpass -p $_password ssh -t lg$i \'echo $_password | sudo -S sed -i "s/$search/$replace/" ~/earth/kml/slave/myplaces.kml\'');
       }
     } catch (e) {
-      _onError('Error setting refresh: $e');
+      _onError('Error setting refresh');
     }
   }
 
@@ -128,7 +128,7 @@ class LGService {
             'sshpass -p $_password ssh -t lg$i \'echo $_password | sudo -S sed -i "s/$search/$replace/" ~/earth/kml/slave/myplaces.kml\'');
       }
     } catch (e) {
-      _onError('Error resetting refresh: $e');
+      _onError('Error resetting refresh');
     }
   }
 
@@ -153,7 +153,7 @@ class LGService {
         await _execute(cmd);
       }
     } catch (e) {
-      _onError('Error relaunching LG: $e');
+      _onError('Error relaunching LG');
     }
   }
 
@@ -163,7 +163,7 @@ class LGService {
         await _execute('sshpass -p $_password ssh -t lg$i "echo $_password | sudo -S reboot"');
       }
     } catch (e) {
-      _onError('Error rebooting LG: $e');
+      _onError('Error rebooting LG');
     }
   }
 
@@ -173,7 +173,7 @@ class LGService {
         await _execute('sshpass -p $_password ssh -t lg$i "echo $_password | sudo -S poweroff"');
       }
     } catch (e) {
-      _onError('Error shutting down LG: $e');
+      _onError('Error shutting down LG');
     }
   }
 }

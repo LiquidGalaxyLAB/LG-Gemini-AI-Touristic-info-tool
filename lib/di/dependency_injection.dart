@@ -1,7 +1,5 @@
 import 'package:get_it/get_it.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
-import 'package:touristic/core/enums/preferences.dart';
-import 'package:touristic/core/utils/preferences_utils.dart';
 
 import '../../data/data_sources/local/app_database.dart';
 import '../../data/data_sources/local/tourist_places_dao.dart';
@@ -19,6 +17,8 @@ import '../../domain/usecases/get_recommendations_usecase.dart';
 import '../../domain/usecases/get_tourist_places_usecase.dart';
 import '../../domain/usecases/remove_favourite_usecase.dart';
 import '../core/constants/constants.dart';
+import '../core/enums/preferences.dart';
+import '../core/utils/preferences_utils.dart';
 import '../domain/usecases/get_chat_reply_usecase.dart';
 import '../presentation/features/activity/bloc/activities_bloc.dart';
 import '../presentation/features/budget/bloc/budget_plan_bloc.dart';
@@ -72,13 +72,13 @@ Future<void> initializeDependencies() async {
   sl.registerFactory<TouristPlacesBloc>(() => TouristPlacesBloc(sl()));
 }
 
-void reinitializeGeminiService() async {
+void updateGeminiService(String apiKey) async {
   sl.unregister<GenerativeModel>();
+  sl.registerLazySingleton<GenerativeModel>(() => GenerativeModel(
+        model: geminiFlashLatest,
+        apiKey: apiKey,
+      ));
 
-  sl.registerSingleton<GenerativeModel>(
-    GenerativeModel(
-      model: geminiFlashLatest,
-      apiKey: await PreferencesUtils().getValue<String>(GeneralPreferences.apiKey.name) ?? "",
-    ),
-  );
+  sl.unregister<GeminiService>();
+  sl.registerLazySingleton<GeminiService>(() => GeminiService(sl()));
 }

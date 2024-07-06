@@ -48,11 +48,11 @@ const Map<String, MapType> mapsStylesMap = {
 
 const Map<String, String> mapsThemesMap = {
   "assets/maps/theme/none.png": mapsThemeNone,
-  "assets/maps/theme/blue.png": mapsThemeBlue,
-  "assets/maps/theme/pink.png": mapsThemePink,
-  "assets/maps/theme/indigo.png": mapsThemeIndigo,
   "assets/maps/theme/red.png": mapsThemeRed,
-  "assets/maps/theme/green.png": mapsThemeGreen,
-  "assets/maps/theme/purple.png": mapsThemePurple,
   "assets/maps/theme/yellow.png": mapsThemeYellow,
+  "assets/maps/theme/green.png": mapsThemeGreen,
+  "assets/maps/theme/blue.png": mapsThemeBlue,
+  "assets/maps/theme/indigo.png": mapsThemeIndigo,
+  "assets/maps/theme/purple.png": mapsThemePurple,
+  "assets/maps/theme/pink.png": mapsThemePink,
 };

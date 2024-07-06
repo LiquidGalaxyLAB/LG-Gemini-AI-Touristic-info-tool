@@ -54,7 +54,7 @@ class _GeneralSettingsPageState extends State<GeneralSettingsPage> {
     _controller.addListener(() {
       if (_controller.text.length > 15 && _controller.text.length < 150) {
         PreferencesUtils().updateValue(GeneralPreferences.apiKey.name, _controller.text);
-        reinitializeGeminiService();
+        updateGeminiService(_controller.text);
       }
     });
     setState(() {});
