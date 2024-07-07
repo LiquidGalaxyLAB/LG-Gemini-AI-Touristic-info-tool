@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:ssh2/ssh2.dart';
 
@@ -65,6 +67,8 @@ class LGService {
       await _client.connect();
       return true;
     } catch (e) {
+      _onError('Error connecting');
+      log('Error connecting: $e');
       return false;
     }
   }
@@ -74,6 +78,7 @@ class LGService {
       await _client.disconnect();
     } catch (e) {
       _onError('Error disconnecting');
+      log('Error disconnecting: $e');
     }
   }
 
@@ -82,43 +87,48 @@ class LGService {
     if (response == null) {
       return Future.error("Null response");
     }
+    log(response);
   }
 
   Future<void> flyTo(CameraPosition cameraPosition) async {
     try {
       await _execute("echo 'flytoview=${KmlUtils.lookAt(cameraPosition)}' > /tmp/query.txt");
     } catch (e) {
-      _onError('Error flying to position');
+      log('Error flying to $cameraPosition: $e');
     }
   }
 
   Future<void> startOrbit(context) async {
     try {
       await _execute('echo "playtour=TouristicOrbit" > /tmp/query.txt');
-    } catch (error) {
+    } catch (e) {
       _onError('Error starting orbit');
+      log('Error starting orbit: $e');
     }
   }
 
   Future<void> stopOrbit(context) async {
     try {
       await _execute('echo "exittour=true" > /tmp/query.txt');
-    } catch (error) {
+    } catch (e) {
       _onError('Error stopping orbit');
+      log('Error stopping orbit: $e');
     }
   }
 
   Future<void> showLogo() async {
     try {
     } catch (e) {
-      _onError('Error cleaning KML');
+      _onError('Error showing logo');
+      log('Error showing logo: $e');
     }
   }
 
   Future<void> hideLogo() async {
     try {
     } catch (e) {
-      _onError('Error cleaning KML');
+      _onError('Error hiding logo');
+      log('Error hiding logo: $e');
     }
   }
 
@@ -131,6 +141,7 @@ class LGService {
       await _execute("echo '' > /var/www/html/kmls.txt");
     } catch (e) {
       _onError('Error cleaning KML');
+      log('Error cleaning KML: $e');
     }
   }
 
@@ -145,6 +156,7 @@ class LGService {
       }
     } catch (e) {
       _onError('Error setting refresh');
+      log('Error setting refresh: $e');
     }
   }
 
@@ -158,6 +170,7 @@ class LGService {
       }
     } catch (e) {
       _onError('Error resetting refresh');
+      log('Error resetting refresh: $e');
     }
   }
 
@@ -183,6 +196,7 @@ class LGService {
       }
     } catch (e) {
       _onError('Error relaunching LG');
+      log('Error relaunching LG: $e');
     }
   }
 
@@ -193,6 +207,7 @@ class LGService {
       }
     } catch (e) {
       _onError('Error rebooting LG');
+      log('Error rebooting LG: $e');
     }
   }
 
@@ -203,6 +218,7 @@ class LGService {
       }
     } catch (e) {
       _onError('Error shutting down LG');
+      log('Error shutting down LG: $e');
     }
   }
 }

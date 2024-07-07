@@ -32,6 +32,8 @@ import '../presentation/features/tourist_place/bloc/tourist_places_bloc.dart';
 final GetIt sl = GetIt.instance;
 
 Future<void> initializeDependencies() async {
+  sl.allowReassignment = true;
+
   // Network
   sl.registerSingleton<GenerativeModel>(
     GenerativeModel(
