@@ -90,16 +90,16 @@ class _TouristPlacePageState extends State<TouristPlacePage> {
           return TouristPlaceDetailsCard(
             touristPlace: result[_selected],
             liked: _liked.contains(_selected),
-            onIconClick: (isLiked) {
+            onIconClick: (place, isLiked) {
               if (isLiked) {
                 _liked.add(_selected);
                 BlocProvider.of<FavouritesBloc>(context).add(
-                  AddFavourite(result[_selected]),
+                  AddFavourite(place),
                 );
               } else {
                 _liked.remove(_selected);
                 BlocProvider.of<FavouritesBloc>(context).add(
-                  RemoveFavourite(result[_selected]),
+                  RemoveFavourite(place),
                 );
               }
             },

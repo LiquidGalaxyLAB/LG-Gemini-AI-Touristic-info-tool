@@ -5,7 +5,6 @@ import '../../../../config/theme/app_theme.dart';
 import '../../../../core/constants/constants.dart';
 import '../../../../core/enums/preferences.dart';
 import '../../../../core/utils/preferences_utils.dart';
-import '../../../../di/dependency_injection.dart';
 import '../../../components/outlined_input_field.dart';
 import '../widgets/color_card.dart';
 import '../widgets/connection_type_card.dart';
@@ -54,7 +53,6 @@ class _GeneralSettingsPageState extends State<GeneralSettingsPage> {
     _controller.addListener(() {
       if (_controller.text.length > 15 && _controller.text.length < 150) {
         PreferencesUtils().updateValue(GeneralPreferences.apiKey.name, _controller.text);
-        updateGeminiService(_controller.text);
       }
     });
     setState(() {});

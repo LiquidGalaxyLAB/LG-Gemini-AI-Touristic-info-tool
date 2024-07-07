@@ -1,5 +1,4 @@
 import 'package:get_it/get_it.dart';
-import 'package:google_generative_ai/google_generative_ai.dart';
 
 import '../../data/data_sources/local/app_database.dart';
 import '../../data/data_sources/local/tourist_places_dao.dart';
@@ -17,8 +16,6 @@ import '../../domain/usecases/get_recommendations_usecase.dart';
 import '../../domain/usecases/get_tourist_places_usecase.dart';
 import '../../domain/usecases/remove_favourite_usecase.dart';
 import '../core/constants/constants.dart';
-import '../core/enums/preferences.dart';
-import '../core/utils/preferences_utils.dart';
 import '../domain/usecases/get_chat_reply_usecase.dart';
 import '../presentation/features/activity/bloc/activities_bloc.dart';
 import '../presentation/features/budget/bloc/budget_plan_bloc.dart';
@@ -32,36 +29,28 @@ import '../presentation/features/tourist_place/bloc/tourist_places_bloc.dart';
 final GetIt sl = GetIt.instance;
 
 Future<void> initializeDependencies() async {
-  sl.allowReassignment = true;
-
   // Network
-  sl.registerSingleton<GenerativeModel>(
-    GenerativeModel(
-      model: geminiFlashLatest,
-      apiKey: await PreferencesUtils().getValue<String>(GeneralPreferences.apiKey.name) ?? "",
-    ),
-  );
-  sl.registerSingleton<GeminiService>(GeminiService(sl()));
+  sl.registerFactory<GeminiService>(() => GeminiService());
 
   // Database
   final AppDatabase database = await $FloorAppDatabase.databaseBuilder(appDatabase).build();
-  sl.registerSingleton<TouristPlacesDao>(database.touristPlacesDao);
+  sl.registerFactory<TouristPlacesDao>(() => database.touristPlacesDao);
 
   // Repositories
-  sl.registerSingleton<GeminiRepository>(GeminiRepositoryImpl(sl(), sl()));
+  sl.registerFactory<GeminiRepository>(() => GeminiRepositoryImpl(sl(), sl()));
 
   // UseCases
-  sl.registerSingleton(GetChatReplyUseCase(sl()));
-  sl.registerSingleton(GetActivitiesUseCase(sl()));
-  sl.registerSingleton(GetBudgetPlanUseCase(sl()));
-  sl.registerSingleton(GetItineraryUseCase(sl()));
-  sl.registerSingleton(GetLocalCuisineUseCase(sl()));
-  sl.registerSingleton(GetRecommendationsUseCase(sl()));
-  sl.registerSingleton(GetTouristPlacesUseCase(sl()));
-  sl.registerSingleton(AddFavouriteUseCase(sl()));
-  sl.registerSingleton(RemoveFavouriteUseCase(sl()));
-  sl.registerSingleton(GetFavouritesUseCase(sl()));
-  sl.registerSingleton(ClearFavouritesUseCase(sl()));
+  sl.registerFactory<GetChatReplyUseCase>(() => GetChatReplyUseCase(sl()));
+  sl.registerFactory<GetActivitiesUseCase>(() => GetActivitiesUseCase(sl()));
+  sl.registerFactory<GetBudgetPlanUseCase>(() => GetBudgetPlanUseCase(sl()));
+  sl.registerFactory<GetItineraryUseCase>(() => GetItineraryUseCase(sl()));
+  sl.registerFactory<GetLocalCuisineUseCase>(() => GetLocalCuisineUseCase(sl()));
+  sl.registerFactory<GetRecommendationsUseCase>(() => GetRecommendationsUseCase(sl()));
+  sl.registerFactory<GetTouristPlacesUseCase>(() => GetTouristPlacesUseCase(sl()));
+  sl.registerFactory<AddFavouriteUseCase>(() => AddFavouriteUseCase(sl()));
+  sl.registerFactory<RemoveFavouriteUseCase>(() => RemoveFavouriteUseCase(sl()));
+  sl.registerFactory<GetFavouritesUseCase>(() => GetFavouritesUseCase(sl()));
+  sl.registerFactory<ClearFavouritesUseCase>(() => ClearFavouritesUseCase(sl()));
 
   // Blocs
   sl.registerFactory<ChatBloc>(() => ChatBloc(sl()));
@@ -72,15 +61,4 @@ Future<void> initializeDependencies() async {
   sl.registerFactory<CuisinesBloc>(() => CuisinesBloc(sl()));
   sl.registerFactory<RecommendationsBloc>(() => RecommendationsBloc(sl()));
   sl.registerFactory<TouristPlacesBloc>(() => TouristPlacesBloc(sl()));
-}
-
-void updateGeminiService(String apiKey) async {
-  sl.unregister<GenerativeModel>();
-  sl.registerLazySingleton<GenerativeModel>(() => GenerativeModel(
-        model: geminiFlashLatest,
-        apiKey: apiKey,
-      ));
-
-  sl.unregister<GeminiService>();
-  sl.registerLazySingleton<GeminiService>(() => GeminiService(sl()));
 }

@@ -3,7 +3,10 @@ import 'dart:developer';
 
 import 'package:google_generative_ai/google_generative_ai.dart';
 
+import '../../../core/constants/constants.dart';
 import '../../../core/enums/app_feature.dart';
+import '../../../core/enums/preferences.dart';
+import '../../../core/utils/preferences_utils.dart';
 import '../../../core/utils/prompt_generator.dart';
 import '../../../domain/model/chat_item.dart';
 import '../../model/response/activities_response.dart';
@@ -13,11 +16,19 @@ import '../../model/response/local_cuisines_response.dart';
 import '../../model/response/recommendations_response.dart';
 import '../../model/response/tourist_places_response.dart';
 
-// AIzaSyAah3_xUiVoKb54ZxPN4iIM47m2R8k7zbA
 class GeminiService {
-  final GenerativeModel model;
+  late final GenerativeModel model;
 
-  const GeminiService(this.model);
+  GeminiService() {
+    _init();
+  }
+
+  void _init() async {
+    model = GenerativeModel(
+        model: geminiFlashLatest,
+        apiKey: await PreferencesUtils().getValue<String>(GeneralPreferences.apiKey.name) ?? "",
+    );
+  }
 
   Future<TouristPlacesResponse?> getTouristPlaces(Map<String, dynamic> params) async {
     String? prompt = PromptGenerator.generate(params, AppFeature.touristPlace);

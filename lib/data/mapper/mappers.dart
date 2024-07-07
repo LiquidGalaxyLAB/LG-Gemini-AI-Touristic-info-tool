@@ -17,6 +17,7 @@ TouristPlaceRequest touristPlaceToRequest(
 ) {
   return TouristPlaceRequest(
     name: touristPlace.name,
+    location: touristPlace.location,
     latitude: touristPlace.latitude,
     longitude: touristPlace.longitude,
     history: touristPlace.history,
@@ -44,9 +45,9 @@ List<TouristPlace>? responseToTouristPlaces(
 }
 
 List<TouristPlace> requestToTouristPlaces(
-  List<TouristPlaceRequest> response,
+  List<TouristPlaceRequest> request,
 ) {
-  return response
+  return request
       .map((place) => TouristPlace(
             name: place.name ?? "",
             latitude: place.latitude ?? 0,

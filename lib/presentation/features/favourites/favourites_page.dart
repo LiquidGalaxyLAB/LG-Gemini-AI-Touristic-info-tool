@@ -84,19 +84,19 @@ class _FavouritesPageState extends State<FavouritesPage> {
           return result.isNotEmpty ? FavouriteDetailsCard(
             touristPlace: result[_selected],
             liked: true,
-            onIconClick: (isLiked) {
+            onIconClick: (place, isLiked) {
               if (isLiked) {
                 BlocProvider.of<FavouritesBloc>(context).add(
-                  AddFavourite(result[_selected]),
+                  AddFavourite(place),
                 );
               } else {
-                _touristPlaces.removeAt(_selected);
                 if (_touristPlaces.isNotEmpty) {
                   _selected = 0;
+                  _touristPlaces.removeAt(_selected);
+                  BlocProvider.of<FavouritesBloc>(context).add(
+                    RemoveFavourite(place),
+                  );
                 }
-                BlocProvider.of<FavouritesBloc>(context).add(
-                  RemoveFavourite(result[_selected]),
-                );
               }
             },
           ): Container();
