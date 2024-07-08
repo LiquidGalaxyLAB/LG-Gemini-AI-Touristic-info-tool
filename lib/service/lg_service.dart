@@ -65,6 +65,7 @@ class LGService {
   Future<bool> connect() async {
     try {
       await _client.connect();
+      showLogo();
       return true;
     } catch (e) {
       _onError('Error connecting');
@@ -73,16 +74,17 @@ class LGService {
     }
   }
 
-  Future<void> disconnect() async {
+  disconnect() async {
     try {
       await _client.disconnect();
+      cleanKml();
     } catch (e) {
       _onError('Error disconnecting');
       log('Error disconnecting: $e');
     }
   }
 
-  Future<void> _execute(String query) async {
+  _execute(String query) async {
     String? response = await _client.execute(query);
     if (response == null) {
       return Future.error("Null response");
@@ -90,7 +92,7 @@ class LGService {
     log(response);
   }
 
-  Future<void> flyTo(CameraPosition cameraPosition) async {
+  flyTo(CameraPosition cameraPosition) async {
     try {
       await _execute("echo 'flytoview=${KmlUtils.lookAt(cameraPosition)}' > /tmp/query.txt");
     } catch (e) {
@@ -98,7 +100,7 @@ class LGService {
     }
   }
 
-  Future<void> startOrbit(context) async {
+  startOrbit() async {
     try {
       await _execute('echo "playtour=TouristicOrbit" > /tmp/query.txt');
     } catch (e) {
@@ -107,7 +109,7 @@ class LGService {
     }
   }
 
-  Future<void> stopOrbit(context) async {
+  stopOrbit() async {
     try {
       await _execute('echo "exittour=true" > /tmp/query.txt');
     } catch (e) {
@@ -116,23 +118,57 @@ class LGService {
     }
   }
 
-  Future<void> showLogo() async {
+  showLogo() async {
     try {
+      _execute("chmod 777 /var/www/html/kml/$_leftScreen.kml; echo '${KmlUtils.createLogos()}' > /var/www/html/kml/$_leftScreen.kml");
     } catch (e) {
       _onError('Error showing logo');
       log('Error showing logo: $e');
     }
   }
 
-  Future<void> hideLogo() async {
+  hideLogo() async {
     try {
+      _cleanSlave(_leftScreen);
     } catch (e) {
       _onError('Error hiding logo');
       log('Error hiding logo: $e');
     }
   }
 
-  Future<void> cleanKml() async {
+  showBalloon(String kml) async {
+    try {
+      _execute("chmod 777 /var/www/html/kml/$_rightScreen.kml; echo '$kml}' > /var/www/html/kml/$_rightScreen.kml");
+    } catch (e) {
+      _onError('Error showing logo');
+      log('Error showing logo: $e');
+    }
+  }
+
+  cleanBalloon() async {
+    try {
+      _cleanSlave(_rightScreen);
+    } catch (e) {
+      _onError('Error cleaning balloon');
+      log('Error cleaning balloon: $e');
+    }
+  }
+
+  _cleanSlave(int slaveNo) async {
+    _execute("chmod 777 /var/www/html/kml/$slaveNo.kml; echo '' > /var/www/html/kml/slave_$slaveNo.kml");
+  }
+
+  sendKml(String kml) async {
+    try {
+      _execute("echo '$kml' > /var/www/html/touristicIA.kml");
+      _execute('echo "http://lg1:81/touristicIA.kml" >> /var/www/html/kmls.txt');
+    } catch (e) {
+      _onError('Error sending kml');
+      log('Error sending kml: $e');
+    }
+  }
+
+  cleanKml() async {
     try {
       for (var i = 2; i <= _slaves; i++) {
         await _execute("echo '' > /var/www/html/kml/slave_$i.kml");
@@ -145,7 +181,7 @@ class LGService {
     }
   }
 
-  Future<void> setRefresh() async {
+  setRefresh() async {
     try {
       for (var i = 2; i <= _slaves; i++) {
         String search = '<href>##LG_PHPIFACE##kml\\/slave_$i.kml<\\/href>';
@@ -160,7 +196,7 @@ class LGService {
     }
   }
 
-  Future<void> resetRefresh() async {
+  resetRefresh() async {
     try {
       for (var i = 2; i <= _slaves; i++) {
         String search = '<href>##LG_PHPIFACE##kml\\/slave_$i.kml<\\/href><refreshMode>onInterval<\\/refreshMode><refreshInterval>2<\\/refreshInterval>';
@@ -174,7 +210,7 @@ class LGService {
     }
   }
 
-  Future<void> relaunchLG() async {
+  relaunchLG() async {
     try {
       for (var i = _slaves; i >= _slaves; i++) {
         String cmd = """RELAUNCH_CMD="\\
@@ -200,7 +236,7 @@ class LGService {
     }
   }
 
-  Future<void> rebootLG() async {
+  rebootLG() async {
     try {
       for (var i = _slaves; i >= 1; i--) {
         await _execute('sshpass -p $_password ssh -t lg$i "echo $_password | sudo -S reboot"');
@@ -211,7 +247,7 @@ class LGService {
     }
   }
 
-  Future<void> shutdownLG() async {
+  shutdownLG() async {
     try {
       for (var i = _slaves; i >= 1; i--) {
         await _execute('sshpass -p $_password ssh -t lg$i "echo $_password | sudo -S poweroff"');

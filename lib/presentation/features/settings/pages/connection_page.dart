@@ -135,6 +135,9 @@ class _ConnectionPageState extends State<ConnectionPage> {
       preferencesUtils.updateValue(ConnectionPreferences.ip.name, _ipController.text);
       preferencesUtils.updateValue(ConnectionPreferences.port.name, _portController.text);
       preferencesUtils.updateValue(ConnectionPreferences.screens.name, _slavesController.text);
+
+      LGService().cleanKml();
+      LGService().showLogo();
     } else {
       _isConnected();
       showSnackBar("Connection failed");

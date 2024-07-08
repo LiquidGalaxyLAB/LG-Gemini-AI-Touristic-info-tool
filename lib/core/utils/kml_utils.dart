@@ -50,4 +50,26 @@ class KmlUtils {
       </gx:Tour>
     </kml>""";
   }
+
+  static String createLogos() {
+    return """<?xml version="1.0" encoding="UTF-8"?>
+    <kml xmlns="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:gx="http://www.google.com/kml/ext/2.2">
+      <Document>
+        <name>LG Motion</name>
+        <Folder>
+          <name>Logo</name>
+          <ScreenOverlay>
+            <name>Logo</name>
+            <Icon>
+              <href>https://github.com/LiquidGalaxyLAB/LG-Gemini-AI-Touristic-info-tool/blob/ca564c4b945c22518203a03974b1b0011d125cb6/assets/images/app_logo.png</href>
+            </Icon>
+            <overlayXY x="0" y="1" xunits="fraction" yunits="fraction"/>
+            <screenXY x="0.02" y="0.95" xunits="fraction" yunits="fraction"/>
+            <rotationXY x="0" y="0" xunits="fraction" yunits="fraction"/>
+            <size x="0.3" y="0.3" xunits="fraction" yunits="fraction"/>
+          </ScreenOverlay>
+        </Folder>
+      </Document>
+    </kml>""";
+  }
 }
