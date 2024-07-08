@@ -5,8 +5,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../core/utils/app_utils.dart';
+import '../../../core/utils/balloon_utils.dart';
 import '../../../core/utils/maps_utils.dart';
 import '../../../domain/model/activitiy.dart';
+import '../../../service/lg_service.dart';
 import '../../../service/location_service.dart';
 import '../../components/layout_blueprint.dart';
 import '../../components/response_item_card.dart';
@@ -76,6 +78,7 @@ class _ActivityPageState extends State<ActivityPage> {
         );
       }),
       panelRight: blocBuilder<ActivitiesBloc, T>(onSuccess: (result) {
+        LGService().showBalloon(BalloonUtils().createBalloonForActivity(result[_selected]));
         return ActivityDetailsCard(
           activity: _activities[_selected],
         );

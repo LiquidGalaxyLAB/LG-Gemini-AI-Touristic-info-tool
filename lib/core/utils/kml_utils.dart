@@ -61,7 +61,7 @@ class KmlUtils {
           <ScreenOverlay>
             <name>Logo</name>
             <Icon>
-              <href>https://github.com/LiquidGalaxyLAB/LG-Gemini-AI-Touristic-info-tool/blob/ca564c4b945c22518203a03974b1b0011d125cb6/assets/images/app_logo.png</href>
+              <href>https://github.com/LiquidGalaxyLAB/LG-Gemini-AI-Touristic-info-tool/blob/911c9b8c40c454a6ef255d78a5c9ad5c2293d692/assets/images/img_lg_slave.png</href>
             </Icon>
             <overlayXY x="0" y="1" xunits="fraction" yunits="fraction"/>
             <screenXY x="0.02" y="0.95" xunits="fraction" yunits="fraction"/>

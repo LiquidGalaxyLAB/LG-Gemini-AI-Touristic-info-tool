@@ -5,8 +5,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../core/utils/app_utils.dart';
+import '../../../core/utils/balloon_utils.dart';
 import '../../../core/utils/maps_utils.dart';
 import '../../../domain/model/budget_plan.dart';
+import '../../../service/lg_service.dart';
 import '../../../service/location_service.dart';
 import '../../components/layout_blueprint.dart';
 import 'bloc/budget_plan_bloc.dart';
@@ -48,7 +50,7 @@ class _BudgetPageState extends State<BudgetPage> {
       ),
       panelDividedLeft: blocBuilder<BudgetPlanBloc, T>(onSuccess: (result) {
         _budgetPlan = result;
-
+        LGService().showBalloon(BalloonUtils().createBalloonForBudgetPlan(result));
         return MainResponseCard(
           budgetPlan: _budgetPlan,
           controller: _controller,

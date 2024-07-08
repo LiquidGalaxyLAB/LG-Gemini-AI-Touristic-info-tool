@@ -5,8 +5,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../core/utils/app_utils.dart';
+import '../../../core/utils/balloon_utils.dart';
 import '../../../core/utils/maps_utils.dart';
 import '../../../domain/model/tourist_place.dart';
+import '../../../service/lg_service.dart';
 import '../../components/layout_blueprint.dart';
 import '../../components/response_item_card.dart';
 import '../favourites/bloc/favourites_bloc.dart';
@@ -59,7 +61,6 @@ class _TouristPlacePageState extends State<TouristPlacePage> {
       panelDividedLeft: blocBuilder<TouristPlacesBloc, T>(
         onSuccess: (result) {
           _touristPlaces = result;
-
           return ListView.builder(
             padding: EdgeInsets.zero,
             itemCount: _touristPlaces.length,
@@ -93,6 +94,7 @@ class _TouristPlacePageState extends State<TouristPlacePage> {
       ),
       panelRight: blocBuilder<TouristPlacesBloc, T>(
         onSuccess: (result) {
+          LGService().showBalloon(BalloonUtils().createBalloonForTouristPlace(result[_selected]));
           return TouristPlaceDetailsCard(
             touristPlace: result[_selected],
             liked: _liked.contains(_selected),

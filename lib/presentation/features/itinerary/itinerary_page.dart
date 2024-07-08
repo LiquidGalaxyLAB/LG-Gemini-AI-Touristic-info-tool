@@ -5,7 +5,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../core/utils/app_utils.dart';
+import '../../../core/utils/balloon_utils.dart';
 import '../../../domain/model/itinerary.dart';
+import '../../../service/lg_service.dart';
 import '../../components/layout_blueprint.dart';
 import 'bloc/itinerary_bloc.dart';
 import 'bloc/itinerary_event.dart';
@@ -51,7 +53,7 @@ class _ItineraryPageState extends State<ItineraryPage> {
       ),
       panelDividedLeft: blocBuilder<ItineraryBloc, T>(onSuccess: (result) {
         _itinerary = result;
-
+        LGService().showBalloon(BalloonUtils().createBalloonForItinerary(result));
         return MainResponseCard(
           controller: _controller,
           itinerary: _itinerary!,

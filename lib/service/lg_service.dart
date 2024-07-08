@@ -65,194 +65,125 @@ class LGService {
   Future<bool> connect() async {
     try {
       String? response = await _client.connect();
-      log(response ?? "Not Connected");
-      return true;
+      return response != null;
     } catch (e) {
       _onError('Error connecting');
-      log('Error connecting: $e');
       return false;
     }
   }
 
   disconnect() async {
     try {
-      log(await _client.disconnect());
+      await _client.disconnect();
     } catch (e) {
       _onError('Error disconnecting');
-      log('Error disconnecting: $e');
     }
   }
 
-  _execute(String query) async {
-    String? response = (await _client.execute(query));
-    if (response == null) {
-      return Future.error("Null response");
-    }
-    log(response);
-  }
-
-  flyTo(CameraPosition cameraPosition) async {
+  Future<void> _execute(String query) async {
     try {
-      log(await _execute("echo 'flytoview=${KmlUtils.lookAt(cameraPosition)}' > /tmp/query.txt"));
-    } catch (e) {
-      log('Error flying to $cameraPosition: $e');
-    }
-  }
-
-  startOrbit() async {
-    try {
-      log(await _execute('echo "playtour=TouristicOrbit" > /tmp/query.txt'));
-    } catch (e) {
-      _onError('Error starting orbit');
-      log('Error starting orbit: $e');
-    }
-  }
-
-  stopOrbit() async {
-    try {
-      log(await _execute('echo "exittour=true" > /tmp/query.txt'));
-    } catch (e) {
-      _onError('Error stopping orbit');
-      log('Error stopping orbit: $e');
-    }
-  }
-
-  showLogo() async {
-    try {
-      log(await _execute("chmod 777 /var/www/html/kml/$_leftScreen.kml; echo '${KmlUtils.createLogos()}' > /var/www/html/kml/$_leftScreen.kml"));
-    } catch (e) {
-      _onError('Error showing logo');
-      log('Error showing logo: $e');
-    }
-  }
-
-  hideLogo() async {
-    try {
-      log(await _cleanSlave(_leftScreen));
-    } catch (e) {
-      _onError('Error hiding logo');
-      log('Error hiding logo: $e');
-    }
-  }
-
-  showBalloon(String kml) async {
-    try {
-      log(await _execute("chmod 777 /var/www/html/kml/$_rightScreen.kml; echo '$kml}' > /var/www/html/kml/$_rightScreen.kml"));
-    } catch (e) {
-      _onError('Error showing logo');
-      log('Error showing logo: $e');
-    }
-  }
-
-  cleanBalloon() async {
-    try {
-      log(await _cleanSlave(_rightScreen));
-    } catch (e) {
-      _onError('Error cleaning balloon');
-      log('Error cleaning balloon: $e');
-    }
-  }
-
-  _cleanSlave(int slaveNo) async {
-    log(await _execute("chmod 777 /var/www/html/kml/$slaveNo.kml; echo '' > /var/www/html/kml/slave_$slaveNo.kml"));
-  }
-
-  sendKml(String kml) async {
-    try {
-      log(await _execute("echo '$kml' > /var/www/html/touristicIA.kml"));
-      log(await _execute('echo "http://lg1:81/touristicIA.kml" >> /var/www/html/kmls.txt'));
-    } catch (e) {
-      _onError('Error sending kml');
-      log('Error sending kml: $e');
-    }
-  }
-
-  cleanKml() async {
-    try {
-      for (var i = 2; i <= _slaves; i++) {
-        log(await _execute("echo '' > /var/www/html/kml/slave_$i.kml"));
-      }
-      log(await _execute('echo "" > /tmp/query.txt'));
-      log(await _execute("echo '' > /var/www/html/kmls.txt"));
-    } catch (e) {
-      _onError('Error cleaning KML');
-      log('Error cleaning KML: $e');
-    }
-  }
-
-  setRefresh() async {
-    try {
-      for (var i = 2; i <= _slaves; i++) {
-        String search = '<href>##LG_PHPIFACE##kml\\/slave_$i.kml<\\/href>';
-        String replace = '<href>##LG_PHPIFACE##kml\\/slave_$i.kml<\\/href><refreshMode>onInterval<\\/refreshMode><refreshInterval>2<\\/refreshInterval>';
-
-        log(await _execute('sshpass -p $_password ssh -t lg$i \'echo $_password | sudo -S sed -i "s/$replace/$search/" ~/earth/kml/slave/myplaces.kml\''));
-        log(await _execute('sshpass -p $_password ssh -t lg$i \'echo $_password | sudo -S sed -i "s/$search/$replace/" ~/earth/kml/slave/myplaces.kml\''));
+      String? response = await _client.execute(query);
+      if (response != null) {
+        log(response);
+      } else {
+        throw Exception('Null response');
       }
     } catch (e) {
-      _onError('Error setting refresh');
-      log('Error setting refresh: $e');
+      if (await isConnected()) {
+        _onError('Error executing command');
+      }
     }
   }
 
-  resetRefresh() async {
-    try {
-      for (var i = 2; i <= _slaves; i++) {
-        String search = '<href>##LG_PHPIFACE##kml\\/slave_$i.kml<\\/href><refreshMode>onInterval<\\/refreshMode><refreshInterval>2<\\/refreshInterval>';
-        String replace = '<href>##LG_PHPIFACE##kml\\/slave_$i.kml<\\/href>';
-        log(await _execute('sshpass -p $_password ssh -t lg$i \'echo $_password | sudo -S sed -i "s/$search/$replace/" ~/earth/kml/slave/myplaces.kml\''));
-      }
-    } catch (e) {
-      _onError('Error resetting refresh');
-      log('Error resetting refresh: $e');
+  Future<void> flyTo(CameraPosition cameraPosition) async {
+    await _execute("echo 'flytoview=${KmlUtils.lookAt(cameraPosition)}' > /tmp/query.txt");
+  }
+
+  Future<void> startOrbit() async {
+    await _execute('echo "playtour=TouristicOrbit" > /tmp/query.txt');
+  }
+
+  Future<void> stopOrbit() async {
+    await _execute('echo "exittour=true" > /tmp/query.txt');
+  }
+
+  Future<void> showLogo() async {
+    await _execute("chmod 777 /var/www/html/kml/$_leftScreen.kml; echo '${KmlUtils.createLogos()}' > /var/www/html/kml/$_leftScreen.kml");
+  }
+
+  Future<void> hideLogo() async {
+    await _execute("chmod 777 /var/www/html/kml/$_leftScreen.kml; echo '' > /var/www/html/kml/$_leftScreen.kml");
+  }
+
+  Future<void> showBalloon(String kml) async {
+    await cleanKml();
+    await _execute("chmod 777 /var/www/html/kml/$_rightScreen.kml; echo '$kml}' > /var/www/html/kml/$_rightScreen.kml");
+  }
+
+  Future<void> cleanBalloon() async {
+    await _execute("chmod 777 /var/www/html/kml/$_rightScreen.kml; echo '' > /var/www/html/kml/$_rightScreen.kml");
+  }
+
+  Future<void> sendKml(String kml) async {
+    await _execute("echo '$kml' > /var/www/html/touristicIA.kml");
+    await _execute('echo "http://lg1:81/touristicIA.kml" >> /var/www/html/kmls.txt');
+  }
+
+  Future<void> cleanKml() async {
+    for (var i = 2; i <= _slaves; i++) {
+      await _execute("echo '' > /var/www/html/kml/slave_$i.kml");
+    }
+    await _execute('echo "" > /tmp/query.txt');
+    await _execute("echo '' > /var/www/html/kmls.txt");
+  }
+
+  Future<void> setRefresh() async {
+    for (var i = 2; i <= _slaves; i++) {
+      String search = '<href>##LG_PHPIFACE##kml\\/slave_$i.kml<\\/href>';
+      String replace = '<href>##LG_PHPIFACE##kml\\/slave_$i.kml<\\/href><refreshMode>onInterval<\\/refreshMode><refreshInterval>2<\\/refreshInterval>';
+      await _execute('sshpass -p $_password ssh -t lg$i \'echo $_password | sudo -S sed -i "s/$replace/$search/" ~/earth/kml/slave/myplaces.kml\'');
+      await _execute('sshpass -p $_password ssh -t lg$i \'echo $_password | sudo -S sed -i "s/$search/$replace/" ~/earth/kml/slave/myplaces.kml\'');
     }
   }
 
-  relaunchLG() async {
-    try {
-      for (var i = _slaves; i >= _slaves; i++) {
-        String cmd = """RELAUNCH_CMD="\\
-          if [ -f /etc/init/lxdm.conf ]; then
-            export SERVICE=lxdm
-          elif [ -f /etc/init/lightdm.conf ]; then
-            export SERVICE=lightdm
-          else
-            exit 1
-          fi
-          if  [[ \\\$(service \\\$SERVICE status) =~ 'stop' ]]; then
-            echo $_password | sudo -S service \\\${SERVICE} start
-          else
-            echo $_password | sudo -S service \\\${SERVICE} restart
-          fi
-          " && sshpass -p $_password ssh -x -t lg@lg$i "\$RELAUNCH_CMD\"""";
-        log(await _execute('"/home/$_username/bin/lg-relaunch" > /home/$_username/log.txt'));
-        log(await _execute(cmd));
-      }
-    } catch (e) {
-      _onError('Error relaunching LG');
-      log('Error relaunching LG: $e');
+  Future<void> resetRefresh() async {
+    for (var i = 2; i <= _slaves; i++) {
+      String search = '<href>##LG_PHPIFACE##kml\\/slave_$i.kml<\\/href><refreshMode>onInterval<\\/refreshMode><refreshInterval>2<\\/refreshInterval>';
+      String replace = '<href>##LG_PHPIFACE##kml\\/slave_$i.kml<\\/href>';
+      await _execute('sshpass -p $_password ssh -t lg$i \'echo $_password | sudo -S sed -i "s/$search/$replace/" ~/earth/kml/slave/myplaces.kml\'');
     }
   }
 
-  rebootLG() async {
-    try {
-      for (var i = _slaves; i >= 1; i--) {
-        log(await _execute('sshpass -p $_password ssh -t lg$i "echo $_password | sudo -S reboot"'));
-      }
-    } catch (e) {
-      _onError('Error rebooting LG');
-      log('Error rebooting LG: $e');
+  Future<void> relaunchLG() async {
+    for (var i = _slaves; i >= 1; i--) {
+      String cmd = """RELAUNCH_CMD="\\
+        if [ -f /etc/init/lxdm.conf ]; then
+          export SERVICE=lxdm
+        elif [ -f /etc/init/lightdm.conf ]; then
+          export SERVICE=lightdm
+        else
+          exit 1
+        fi
+        if  [[ \\\$(service \\\$SERVICE status) =~ 'stop' ]]; then
+          echo $_password | sudo -S service \\\${SERVICE} start
+        else
+          echo $_password | sudo -S service \\\${SERVICE} restart
+        fi
+        " && sshpass -p $_password ssh -x -t lg@lg$i "\$RELAUNCH_CMD\"""";
+      await _execute('"/home/$_username/bin/lg-relaunch" > /home/$_username/log.txt');
+      await _execute(cmd);
     }
   }
 
-  shutdownLG() async {
-    try {
-      for (var i = _slaves; i >= 1; i--) {
-        log(await _execute('sshpass -p $_password ssh -t lg$i "echo $_password | sudo -S poweroff"'));
-      }
-    } catch (e) {
-      _onError('Error shutting down LG');
-      log('Error shutting down LG: $e');
+  Future<void> rebootLG() async {
+    for (var i = _slaves; i >= 1; i--) {
+      await _execute('sshpass -p $_password ssh -t lg$i "echo $_password | sudo -S reboot"');
+    }
+  }
+
+  Future<void> shutdownLG() async {
+    for (var i = _slaves; i >= 1; i--) {
+      await _execute('sshpass -p $_password ssh -t lg$i "echo $_password | sudo -S poweroff"');
     }
   }
 }

@@ -5,8 +5,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../core/utils/app_utils.dart';
+import '../../../core/utils/balloon_utils.dart';
 import '../../../core/utils/maps_utils.dart';
 import '../../../domain/model/tourist_place.dart';
+import '../../../service/lg_service.dart';
 import '../../components/layout_blueprint.dart';
 import '../../components/response_item_card.dart';
 import 'bloc/favourites_bloc.dart';
@@ -81,6 +83,7 @@ class _FavouritesPageState extends State<FavouritesPage> {
       }),
       panelRight: blocBuilder<FavouritesBloc, T>(
         onSuccess: (result) {
+          LGService().showBalloon(BalloonUtils().createBalloonForTouristPlace(result[_selected]));
           return result.isNotEmpty ? FavouriteDetailsCard(
             touristPlace: result[_selected],
             liked: true,
