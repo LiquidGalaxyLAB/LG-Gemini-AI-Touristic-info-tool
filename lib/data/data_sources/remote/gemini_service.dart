@@ -14,7 +14,9 @@ import '../../model/response/recommendations_response.dart';
 import '../../model/response/tourist_places_response.dart';
 
 class GeminiService {
-  late final GenerativeModel model;
+  final GenerativeModel model;
+
+  const GeminiService(this.model);
 
   Future<TouristPlacesResponse?> getTouristPlaces(Map<String, dynamic> params) async {
     String? prompt = PromptGenerator.generate(params, AppFeature.touristPlace);

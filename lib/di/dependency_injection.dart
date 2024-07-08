@@ -37,7 +37,7 @@ Future<void> initializeDependencies() async {
     model: geminiFlashLatest,
     apiKey: await PreferencesUtils().getValue<String>(GeneralPreferences.apiKey.name) ?? "",
   ));
-  sl.registerSingleton<GeminiService>(GeminiService());
+  sl.registerSingleton<GeminiService>(GeminiService(sl()));
 
   // Database
   final AppDatabase database = await $FloorAppDatabase.databaseBuilder(appDatabase).build();
