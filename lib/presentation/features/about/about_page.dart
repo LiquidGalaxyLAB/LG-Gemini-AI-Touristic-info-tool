@@ -179,17 +179,17 @@ class _AboutPageState extends State<AboutPage> {
         SocialButton(
           tooltip: authorEmail,
           iconData: Icons.mail_rounded,
-          url: authorEmail,
+          url: "mailto:$authorEmail",
         ),
         SocialButton(
           tooltip: authorGitHub,
           iconData: widget.github,
-          url: authorGitHub,
+          url: "https://www.github.com/$authorGitHub",
         ),
         SocialButton(
           tooltip: authorLinkedIn,
           iconData: widget.linkedin,
-          url: authorLinkedIn,
+          url: "https://www.linkedin.com/$authorLinkedIn",
         ),
       ],
     );
@@ -210,32 +210,32 @@ class _AboutPageState extends State<AboutPage> {
         SocialButton(
           tooltip: "@$orgInstagram",
           iconData: widget.instagram,
-          url: orgInstagram,
+          url: "https://www.instagram.com/$orgInstagram",
         ),
         SocialButton(
           tooltip: "@$orgTwitter",
           iconData: widget.twitter,
-          url: orgTwitter,
+          url: "https://www.x.com/$orgTwitter",
         ),
         SocialButton(
           tooltip: orgGitHub,
           iconData: widget.github,
-          url: orgGitHub,
+          url: "https://www.github.com/$orgGitHub",
         ),
         SocialButton(
           tooltip: "company/$orgLinkedIn",
           iconData: widget.linkedin,
-          url: orgLinkedIn,
+          url: "https://www.linkedin.com/company/$orgLinkedIn",
         ),
         SocialButton(
           tooltip: orgWebsite,
           iconData: Icons.language_rounded,
-          url: orgWebsite,
+          url: "https://$orgWebsite",
         ),
         SocialButton(
           tooltip: orgMail,
           iconData: Icons.mail_rounded,
-          url: orgMail,
+          url: "mailto:$orgMail",
         ),
       ],
     );

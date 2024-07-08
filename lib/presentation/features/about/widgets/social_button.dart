@@ -34,7 +34,7 @@ class SocialButton extends StatelessWidget {
   }
 
   void _openLink(String url) async {
-    if (!await launchUrl(Uri.parse(url), mode: LaunchMode.inAppBrowserView)) {
+    if (!await launchUrl(Uri.parse(url), mode: LaunchMode.inAppWebView)) {
       throw Exception('Could not launch $url');
     }
   }

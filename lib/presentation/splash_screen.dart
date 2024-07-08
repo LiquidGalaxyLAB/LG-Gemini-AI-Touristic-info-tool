@@ -1,11 +1,10 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:touristic/config/theme/app_theme.dart';
-import 'package:touristic/presentation/main_wrapper.dart';
+
+import '../config/theme/app_theme.dart';
 
 class SplashScreen extends StatefulWidget {
   static const route = "/splash";
+
   const SplashScreen({super.key});
 
   @override
@@ -20,22 +19,27 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void _navigateToHome() {
-    Future.delayed(Duration(milliseconds: 0), () {
-    Navigator.of(context).pushReplacementNamed("/");
+    Future.delayed(const Duration(milliseconds: 3000), () {
+      Navigator.of(context).pushReplacementNamed("/");
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppTheme.gray.shade900,
-      body: Center(
-        child: Text(
-          'Splash Screen',
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.cyanAccent),
-        ),
+    return Container(
+      color: AppTheme.gray.shade900,
+      padding: EdgeInsets.only(
+        top: 16.0 + MediaQuery.of(context).viewPadding.top,
+        bottom: 16.0,
+        left: 16.0,
+        right: 16.0,
+      ),
+      child: Image.asset(
+        "assets/images/img_splash.png",
+        width: double.infinity,
+        height: double.infinity,
+        fit: BoxFit.fitHeight,
       ),
     );
-
   }
 }

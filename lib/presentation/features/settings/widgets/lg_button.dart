@@ -3,28 +3,34 @@ import 'package:flutter/material.dart';
 import '../../../../config/theme/app_theme.dart';
 
 class LGButton extends StatelessWidget {
-  final String label;
-  final IconData icon;
-  final Function() onPressed;
-  final bool enabled;
+  final String _label;
+  final IconData _icon;
+  final Function() _onPressed;
+  final bool _enabled;
+  final bool _styleSmall;
 
   const LGButton({
-    required this.label,
-    required this.icon,
-    required this.onPressed,
-    required this.enabled,
+    required String label,
+    required IconData icon,
+    required dynamic Function() onPressed,
+    required bool enabled,
+    bool styleSmall = false,
     super.key,
-  });
+  })  : _styleSmall = styleSmall,
+        _enabled = enabled,
+        _onPressed = onPressed,
+        _icon = icon,
+        _label = label;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 350,
+      width: _styleSmall ? 170 : 350,
       height: 55,
       child: FilledButton(
         onPressed: () {
-          if (enabled) {
-            onPressed();
+          if (_enabled) {
+            _onPressed();
           }
         },
         style: FilledButton.styleFrom(
@@ -37,7 +43,7 @@ class LGButton extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              label,
+              _label,
               style: TextStyle(
                 color: AppTheme.gray.shade300,
                 fontWeight: FontWeight.bold,
@@ -45,7 +51,7 @@ class LGButton extends StatelessWidget {
               ),
             ),
             Icon(
-              icon,
+              _icon,
               color: AppTheme.gray.shade300,
             ),
           ],

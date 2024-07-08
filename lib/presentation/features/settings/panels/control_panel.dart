@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:touristic/core/utils/preferences_utils.dart';
 
 import '../../../../service/lg_service.dart';
 import '../widgets/lg_button.dart';
@@ -18,18 +17,6 @@ class ControlPanel extends StatefulWidget {
 }
 
 class _ControlPanelState extends State<ControlPanel> {
-  bool _showLogo = true;
-
-  @override
-  void initState() {
-    super.initState();
-    _loadPreferences();
-  }
-
-  Future<void> _loadPreferences() async {
-    _showLogo = (await PreferencesUtils().getValue<bool>("show_logo")) ?? true;
-    setState(() {});
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,21 +24,31 @@ class _ControlPanelState extends State<ControlPanel> {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        LGButton(
-          label: _showLogo ? "Hide logo" : "Show logo",
-          icon: Icons.slideshow_rounded,
-          onPressed: () {
-            if (_showLogo) {
-              LGService().hideLogo();
-            } else {
-              LGService().showLogo();
-            }
-            setState(() {
-              _showLogo = !_showLogo;
-            });
-            PreferencesUtils().updateValue("show_logo", _showLogo);
-          },
-          enabled: widget._connected,
+        SizedBox(
+          width: 350,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              LGButton(
+                label: "Show logo",
+                icon: Icons.slideshow_rounded,
+                onPressed: () {
+                  LGService().showLogo();
+                },
+                enabled: widget._connected,
+                styleSmall: true,
+              ),
+              LGButton(
+                label: "Hide logo",
+                icon: Icons.cancel_presentation_rounded,
+                onPressed: () {
+                  LGService().hideLogo();
+                },
+                enabled: widget._connected,
+                styleSmall: true,
+              ),
+            ],
+          ),
         ),
         const SizedBox(height: ControlPanel.spacing),
         LGButton(

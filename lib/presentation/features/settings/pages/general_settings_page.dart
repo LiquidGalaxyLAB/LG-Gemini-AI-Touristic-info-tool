@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../config/theme/app_theme.dart';
@@ -53,6 +52,20 @@ class _GeneralSettingsPageState extends State<GeneralSettingsPage> {
     _controller.addListener(() {
       if (_controller.text.length > 15 && _controller.text.length < 150) {
         PreferencesUtils().updateValue(GeneralPreferences.apiKey.name, _controller.text);
+        final snackBar = SnackBar(
+          content: Text(
+            'Please relaunch the application to apply the new settings.',
+            style: TextStyle(
+              color: AppTheme.gray.shade300,
+              fontSize: 16,
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+          duration: const Duration(seconds: 3),
+          backgroundColor: AppTheme.gray.shade800,
+        );
+
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
       }
     });
     setState(() {});

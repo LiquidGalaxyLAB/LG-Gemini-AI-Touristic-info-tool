@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:google_generative_ai/google_generative_ai.dart';
 
 import '../../data/data_sources/local/app_database.dart';
 import '../../data/data_sources/local/tourist_places_dao.dart';
@@ -16,6 +17,8 @@ import '../../domain/usecases/get_recommendations_usecase.dart';
 import '../../domain/usecases/get_tourist_places_usecase.dart';
 import '../../domain/usecases/remove_favourite_usecase.dart';
 import '../core/constants/constants.dart';
+import '../core/enums/preferences.dart';
+import '../core/utils/preferences_utils.dart';
 import '../domain/usecases/get_chat_reply_usecase.dart';
 import '../presentation/features/activity/bloc/activities_bloc.dart';
 import '../presentation/features/budget/bloc/budget_plan_bloc.dart';
@@ -30,27 +33,31 @@ final GetIt sl = GetIt.instance;
 
 Future<void> initializeDependencies() async {
   // Network
-  sl.registerFactory<GeminiService>(() => GeminiService());
+  sl.registerSingleton<GenerativeModel>(GenerativeModel(
+    model: geminiFlashLatest,
+    apiKey: await PreferencesUtils().getValue<String>(GeneralPreferences.apiKey.name) ?? "",
+  ));
+  sl.registerSingleton<GeminiService>(GeminiService());
 
   // Database
   final AppDatabase database = await $FloorAppDatabase.databaseBuilder(appDatabase).build();
-  sl.registerFactory<TouristPlacesDao>(() => database.touristPlacesDao);
+  sl.registerSingleton<TouristPlacesDao>(database.touristPlacesDao);
 
   // Repositories
-  sl.registerFactory<GeminiRepository>(() => GeminiRepositoryImpl(sl(), sl()));
+  sl.registerSingleton<GeminiRepository>(GeminiRepositoryImpl(sl(), sl()));
 
   // UseCases
-  sl.registerFactory<GetChatReplyUseCase>(() => GetChatReplyUseCase(sl()));
-  sl.registerFactory<GetActivitiesUseCase>(() => GetActivitiesUseCase(sl()));
-  sl.registerFactory<GetBudgetPlanUseCase>(() => GetBudgetPlanUseCase(sl()));
-  sl.registerFactory<GetItineraryUseCase>(() => GetItineraryUseCase(sl()));
-  sl.registerFactory<GetLocalCuisineUseCase>(() => GetLocalCuisineUseCase(sl()));
-  sl.registerFactory<GetRecommendationsUseCase>(() => GetRecommendationsUseCase(sl()));
-  sl.registerFactory<GetTouristPlacesUseCase>(() => GetTouristPlacesUseCase(sl()));
-  sl.registerFactory<AddFavouriteUseCase>(() => AddFavouriteUseCase(sl()));
-  sl.registerFactory<RemoveFavouriteUseCase>(() => RemoveFavouriteUseCase(sl()));
-  sl.registerFactory<GetFavouritesUseCase>(() => GetFavouritesUseCase(sl()));
-  sl.registerFactory<ClearFavouritesUseCase>(() => ClearFavouritesUseCase(sl()));
+  sl.registerSingleton<GetChatReplyUseCase>(GetChatReplyUseCase(sl()));
+  sl.registerSingleton<GetActivitiesUseCase>(GetActivitiesUseCase(sl()));
+  sl.registerSingleton<GetBudgetPlanUseCase>(GetBudgetPlanUseCase(sl()));
+  sl.registerSingleton<GetItineraryUseCase>(GetItineraryUseCase(sl()));
+  sl.registerSingleton<GetLocalCuisineUseCase>(GetLocalCuisineUseCase(sl()));
+  sl.registerSingleton<GetRecommendationsUseCase>(GetRecommendationsUseCase(sl()));
+  sl.registerSingleton<GetTouristPlacesUseCase>(GetTouristPlacesUseCase(sl()));
+  sl.registerSingleton<AddFavouriteUseCase>(AddFavouriteUseCase(sl()));
+  sl.registerSingleton<RemoveFavouriteUseCase>(RemoveFavouriteUseCase(sl()));
+  sl.registerSingleton<GetFavouritesUseCase>(GetFavouritesUseCase(sl()));
+  sl.registerSingleton<ClearFavouritesUseCase>(ClearFavouritesUseCase(sl()));
 
   // Blocs
   sl.registerFactory<ChatBloc>(() => ChatBloc(sl()));
