@@ -69,13 +69,15 @@ Future<void> showInvalidInputDialog(
   String title = "Invalid Input!",
   String description = "Please provide all inputs inorder to get response.",
 }) async {
-  await showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return InvalidInputDialog(
-        title: title,
-        description: description,
-      );
-    },
-  );
+  if (context.mounted) {
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return InvalidInputDialog(
+          title: title,
+          description: description,
+        );
+      },
+    );
+  }
 }

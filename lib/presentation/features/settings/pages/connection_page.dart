@@ -44,7 +44,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
 
     LGService().init(
       onError: (data) {
-        showSnackBar(data);
+        _showSnackBar(data);
       },
       host: _ipController.text,
       port: int.parse(_portController.text),
@@ -110,13 +110,13 @@ class _ConnectionPageState extends State<ConnectionPage> {
 
   Future<void> _connectToLiquidGalaxy() async {
     if (!_isValidData()) {
-      showSnackBar("empty data");
+      _showSnackBar("empty data");
       return;
     }
 
     LGService().init(
       onError: (data) {
-        showSnackBar(data);
+        _showSnackBar(data);
       },
       host: _ipController.text,
       port: int.parse(_portController.text),
@@ -128,23 +128,20 @@ class _ConnectionPageState extends State<ConnectionPage> {
     final result = await LGService().connect();
     if (result) {
       _isConnected();
-      showSnackBar("Connection successful");
+      _showSnackBar("Connection successful");
       final PreferencesUtils preferencesUtils = PreferencesUtils();
       preferencesUtils.updateValue(ConnectionPreferences.username.name, _userController.text);
       preferencesUtils.updateValue(ConnectionPreferences.password.name, _passController.text);
       preferencesUtils.updateValue(ConnectionPreferences.ip.name, _ipController.text);
       preferencesUtils.updateValue(ConnectionPreferences.port.name, _portController.text);
       preferencesUtils.updateValue(ConnectionPreferences.screens.name, _slavesController.text);
-
-      LGService().cleanKml();
-      LGService().showLogo();
     } else {
       _isConnected();
-      showSnackBar("Connection failed");
+      _showSnackBar("Connection failed");
     }
   }
 
-  void showSnackBar(String msg) {
+  void _showSnackBar(String msg) {
     final snackBar = SnackBar(
       content: Text(
         msg,
@@ -158,6 +155,8 @@ class _ConnectionPageState extends State<ConnectionPage> {
       backgroundColor: AppTheme.gray.shade800,
     );
 
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
   }
 }

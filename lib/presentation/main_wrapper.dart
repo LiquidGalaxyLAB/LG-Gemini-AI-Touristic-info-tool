@@ -69,7 +69,9 @@ class _MainWrapperState extends State<MainWrapper> {
       backgroundColor: AppTheme.gray.shade800,
     );
 
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
   }
 
   @override
