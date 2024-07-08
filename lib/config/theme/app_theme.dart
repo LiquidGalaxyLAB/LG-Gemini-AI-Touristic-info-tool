@@ -8,7 +8,6 @@ import '../../core/utils/preferences_utils.dart';
 import 'color/app_color.dart';
 import 'color/impl/gray_color.dart';
 import 'maps_theme.dart';
-import 'style/card_theme.dart';
 
 class AppTheme {
   static const String notoFont = "Noto";
@@ -39,7 +38,6 @@ class AppTheme {
         seedColor: AppTheme.color.shade700,
         surface: AppTheme.gray.shade900,
       ),
-      cardTheme: appCardTheme,
     );
   }
 }
