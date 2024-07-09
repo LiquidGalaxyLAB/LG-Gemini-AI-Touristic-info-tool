@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:touristic/core/enums/preferences.dart';
-import 'package:touristic/core/utils/preferences_utils.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../../config/theme/app_theme.dart';
+import '../../../../core/enums/preferences.dart';
+import '../../../../core/utils/preferences_utils.dart';
 import '../../../../service/lg_service.dart';
 import '../panels/input_panel.dart';
 import '../panels/status_panel.dart';
@@ -129,6 +130,9 @@ class _ConnectionPageState extends State<ConnectionPage> {
     if (result) {
       _isConnected();
       _showSnackBar("Connection successful");
+
+      LGService().flyTo(const CameraPosition(target: LatLng(22.99899294474381, 78.7274369224906), zoom: 3));
+
       final PreferencesUtils preferencesUtils = PreferencesUtils();
       preferencesUtils.updateValue(ConnectionPreferences.username.name, _userController.text);
       preferencesUtils.updateValue(ConnectionPreferences.password.name, _passController.text);

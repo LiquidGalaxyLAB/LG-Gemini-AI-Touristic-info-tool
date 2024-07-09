@@ -8,15 +8,7 @@ class KmlUtils {
     double? zoom,
   }) {
     zoom ??= 156543.03392 * cos(cameraPosition.target.latitude * pi / 180) / pow(2.0, cameraPosition.zoom.toDouble()) * 1000;
-    return """
-    <LookAt>
-      <longitude>${cameraPosition.target.longitude}</longitude>
-      <latitude>${cameraPosition.target.latitude}</latitude>
-      <range>$zoom</range>
-      <tilt>${cameraPosition.tilt}</tilt>
-      <heading>${cameraPosition.bearing}</heading>
-      <gx:altitudeMode>relativeToGround</gx:altitudeMode>
-    </LookAt>""";
+    return """<LookAt><longitude>${cameraPosition.target.longitude}</longitude><latitude>${cameraPosition.target.latitude}</latitude><range>$zoom</range><tilt>${cameraPosition.tilt}</tilt><heading>${cameraPosition.bearing}</heading><gx:altitudeMode>relativeToGround</gx:altitudeMode></LookAt>""";
   }
 
   static String orbitAround(CameraPosition cameraPosition) {

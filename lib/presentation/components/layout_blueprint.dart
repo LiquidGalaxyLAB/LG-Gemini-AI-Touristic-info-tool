@@ -77,8 +77,7 @@ class LayoutBlueprint extends StatelessWidget {
                   child: MapsCard(
                     cameraPosition: _cameraPosition ??
                         const CameraPosition(
-                          target: LatLng(8.2458, 77.12),
-                          zoom: 7,
+                            target: LatLng(22.99899294474381, 78.7274369224906), zoom: 3,
                         ),
                     controller: _controller,
                   ),

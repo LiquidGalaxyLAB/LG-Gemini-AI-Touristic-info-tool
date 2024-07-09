@@ -108,20 +108,20 @@ class LGService {
   }
 
   Future<void> showLogo() async {
-    await _execute("chmod 777 /var/www/html/kml/$_leftScreen.kml; echo '${KmlUtils.createLogos()}' > /var/www/html/kml/$_leftScreen.kml");
+    await _execute("chmod 777 /var/www/html/kml/slave$_leftScreen.kml; echo '${KmlUtils.createLogos()}' > /var/www/html/kml/slave$_leftScreen.kml");
   }
 
   Future<void> hideLogo() async {
-    await _execute("chmod 777 /var/www/html/kml/$_leftScreen.kml; echo '' > /var/www/html/kml/$_leftScreen.kml");
+    await _execute("chmod 777 /var/www/html/kml/slave$_leftScreen.kml; echo '' > /var/www/html/kml/slave$_leftScreen.kml");
   }
 
   Future<void> showBalloon(String kml) async {
     await cleanKml();
-    await _execute("chmod 777 /var/www/html/kml/$_rightScreen.kml; echo '$kml}' > /var/www/html/kml/$_rightScreen.kml");
+    await _execute("chmod 777 /var/www/html/kml/slave$_rightScreen.kml; echo '$kml}' > /var/www/html/kml/slave$_rightScreen.kml");
   }
 
   Future<void> cleanBalloon() async {
-    await _execute("chmod 777 /var/www/html/kml/$_rightScreen.kml; echo '' > /var/www/html/kml/$_rightScreen.kml");
+    await _execute("chmod 777 /var/www/html/kml/slave$_rightScreen.kml; echo '' > /var/www/html/kml/slave$_rightScreen.kml");
   }
 
   Future<void> sendKml(String kml) async {
