@@ -43,11 +43,13 @@ class KmlUtils {
     </kml>""";
   }
 
+  // https://raw.githubusercontent.com/SidharthMudgil/lg-motion/088da4274f147ba56bfc90f0f9b44f62dbf35c87/logo.png
+  // https://github.com/LiquidGalaxyLAB/LG-Gemini-AI-Touristic-info-tool/blob/911c9b8c40c454a6ef255d78a5c9ad5c2293d692/assets/images/img_lg_slave.png
   static String createLogos() {
     return """<?xml version="1.0" encoding="UTF-8"?>
     <kml xmlns="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:gx="http://www.google.com/kml/ext/2.2">
       <Document>
-        <name>LG Motion</name>
+        <name>LG Touristic</name>
         <Folder>
           <name>Logo</name>
           <ScreenOverlay>

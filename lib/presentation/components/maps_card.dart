@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -35,7 +34,6 @@ class MapsCardState extends State<MapsCard> {
           widget._controller.complete(controller);
         },
         onCameraMove: (cameraPosition) {
-          log("$cameraPosition");
           LGService().flyTo(cameraPosition);
         },
       ),

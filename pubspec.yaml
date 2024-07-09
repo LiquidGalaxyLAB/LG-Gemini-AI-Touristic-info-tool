@@ -2,7 +2,7 @@ name: touristic
 description: "A new Flutter project."
 publish_to: 'none'
 
-version: 1.0.1+2
+version: 1.0.2+3
 
 environment:
   sdk: '>=3.2.6 <4.0.0'
@@ -46,7 +46,13 @@ dev_dependencies:
 
   flutter_lints: ^4.0.0
   floor_generator: ^1.5.0
+  flutter_launcher_icons: "^0.13.1"
   build_runner: ^2.4.9
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  image_path: "assets/images/app_logo.png"
+  min_sdk_android: 26
 
 flutter:
   uses-material-design: true
