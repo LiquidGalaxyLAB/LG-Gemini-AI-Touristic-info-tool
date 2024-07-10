@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:touristic/service/speech_to_text_service.dart';
 
 import '../../../config/theme/app_theme.dart';
 import '../../../core/utils/app_utils.dart';
@@ -23,14 +24,31 @@ class _ChatPageState extends State<ChatPage> {
   final List<ChatItem> _chats = [];
   String _message = "";
 
+  late SpeechToTextService _speechService;
+
+  @override
+  void initState() {
+    super.initState();
+    _speechService = SpeechToTextService(
+      onResult: (String text) {
+        setState(() {
+          _controller.text = text;
+        });
+      },
+    );
+  }
+
   void _onSendClick(String message) {
     _controller.clear();
+    _speechService.stopListening();
     _message = message;
     _chats.add(ChatItem(isMe: true, message: _message));
     BlocProvider.of<ChatBloc>(context).add(GetChatReply(_chats));
   }
 
-  void _onAudioClick() {}
+  void _onAudioClick() {
+    _speechService.startListening();
+  }
 
   void _onAttachClick() {}
 

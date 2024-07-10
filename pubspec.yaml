@@ -22,10 +22,7 @@ dependencies:
   get_it: ^7.7.0
 
   # bloc
-  flutter_bloc: ^8.1.5
-
-  # helpers
-  equatable: ^2.0.5
+  flutter_bloc: ^8.1.6
 
   # ssh connection
   ssh2: ^2.2.3
@@ -34,10 +31,17 @@ dependencies:
   google_maps_flutter: ^2.7.0
 
   # widgets
-  url_launcher: ^6.3.0
   flutter_svg: ^2.0.10+1
-  package_info_plus: ^8.0.0
+  avatar_glow: ^3.0.1
+
+  # helpers
+  equatable: ^2.0.5
+  url_launcher: ^6.3.0
   flutter_markdown: ^0.7.3
+  package_info_plus: ^8.0.0
+
+  # servics
+  speech_to_text: ^6.6.0
   geocoding: ^3.0.0
 
 dev_dependencies:
@@ -46,7 +50,7 @@ dev_dependencies:
 
   flutter_lints: ^4.0.0
   floor_generator: ^1.5.0
-  flutter_launcher_icons: "^0.13.1"
+  flutter_launcher_icons: ^0.13.1
   build_runner: ^2.4.9
 
 flutter_launcher_icons:
