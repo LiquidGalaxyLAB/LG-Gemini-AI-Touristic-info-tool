@@ -23,7 +23,8 @@ class ChatBubble extends StatelessWidget {
     return Align(
       alignment: _isMe ? Alignment.centerRight : Alignment.centerLeft,
       child: Container(
-        constraints: const BoxConstraints(maxWidth: 550, maxHeight: 250),
+        constraints: const BoxConstraints(maxWidth: 650),
+        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(_isMe ? 10.0 : 0.0),
@@ -33,7 +34,7 @@ class ChatBubble extends StatelessWidget {
           ),
           color: _isMe ? AppTheme.color.shade700 : AppTheme.gray.shade900,
         ),
-        child: Markdown(
+        child: MarkdownBody(
           shrinkWrap: true,
           data: _message,
           styleSheet: MarkdownStyleSheet(

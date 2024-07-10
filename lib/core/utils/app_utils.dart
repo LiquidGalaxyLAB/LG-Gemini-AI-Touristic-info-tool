@@ -42,13 +42,17 @@ Widget blocBuilder<B extends Bloc<dynamic, AppState<S>>, S>({
 }
 
 Widget chatBlocBuilder<B extends Bloc<dynamic, AppState<String>>, String>({
-  required Function(String) onSuccess,
-  required Widget content,
+  required Widget Function(String) onSuccess,
+  required Widget Function() onLoading,
+  required Widget Function() onError,
+  required Widget Function() onEmpty,
 }) {
   return BlocBuilder<B, AppState<String>>(
     builder: (context, state) {
       if (state is AppSuccess && state.data != null) {
-        onSuccess(state.data as String);
+        return onSuccess(state.data as String);
+      } else if (state is AppLoading) {
+        return onLoading();
       } else if (state is AppFailure) {
         Future.delayed(Duration.zero, () {
           showInvalidInputDialog(
@@ -58,8 +62,10 @@ Widget chatBlocBuilder<B extends Bloc<dynamic, AppState<String>>, String>({
             "Unexpected error occurred, make sure you have provided correct Gemini API key in the settings.",
           );
         });
+        return onError();
+      } else {
+        return onEmpty();
       }
-      return content;
     },
   );
 }

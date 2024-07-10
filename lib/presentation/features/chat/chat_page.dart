@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../config/theme/app_theme.dart';
 import '../../../core/utils/app_utils.dart';
 import '../../../domain/model/chat_item.dart';
+import '../../components/no_data_card.dart';
 import 'bloc/chat_bloc.dart';
 import 'bloc/chat_event.dart';
 import 'widgets/chat_bubble.dart';
@@ -20,14 +21,13 @@ class _ChatPageState extends State<ChatPage> {
   final TextEditingController _controller = TextEditingController();
 
   final List<ChatItem> _chats = [];
+  String _message = "";
 
   void _onSendClick(String message) {
     _controller.clear();
-    setState(() {
-      _chats.add(ChatItem(isMe: true, message: message));
-      _chats.add(const ChatItem(isMe: false, message: "Typing..."));
-      BlocProvider.of<ChatBloc>(context).add(GetChatReply(_chats));
-    });
+    _message = message;
+    _chats.add(ChatItem(isMe: true, message: _message));
+    BlocProvider.of<ChatBloc>(context).add(GetChatReply(_chats));
   }
 
   void _onAudioClick() {}
@@ -48,28 +48,27 @@ class _ChatPageState extends State<ChatPage> {
                 borderRadius: BorderRadius.circular(10.0),
                 color: AppTheme.gray.shade800,
               ),
-              child: chatBlocBuilder<ChatBloc, String>(
-                onSuccess: (message) {
-                  // _chats.removeLast();
-                  _chats.add(ChatItem(isMe: false, message: message));
-                },
-                content: ListView.builder(
-                  padding: EdgeInsets.zero,
-                  shrinkWrap: true,
-                  itemCount: _chats.length,
-                  itemBuilder: (context, index) {
-                    return Column(
-                      children: [
-                        ChatBubble(
-                          isMe: _chats[index].isMe,
-                          message: _chats[index].message,
-                        ),
-                        if (index < _chats.length - 1) const SizedBox(height: 24.0)
-                      ],
-                    );
-                  },
-                ),
-              ),
+              child: chatBlocBuilder<ChatBloc, String>(onSuccess: (message) {
+                if (_chats.isNotEmpty) {
+                  _chats.removeLast();
+                }
+                _chats.add(ChatItem(isMe: false, message: message));
+                return _buildList();
+              }, onLoading: () {
+                _chats.add(ChatItem(isMe: true, message: _message));
+                _chats.add(const ChatItem(isMe: false, message: "Typing..."));
+                return _buildList();
+              }, onError: () {
+                if (_chats.isNotEmpty) {
+                  _chats.removeLast();
+                }
+                return _buildList();
+              }, onEmpty: () {
+                return const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [NoDataCard()],
+                );
+              }),
             ),
           ),
           const SizedBox(height: 12.0),
@@ -81,6 +80,25 @@ class _ChatPageState extends State<ChatPage> {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildList() {
+    return ListView.builder(
+      padding: EdgeInsets.zero,
+      shrinkWrap: true,
+      itemCount: _chats.length,
+      itemBuilder: (context, index) {
+        return Column(
+          children: [
+            ChatBubble(
+              isMe: _chats[index].isMe,
+              message: _chats[index].message,
+            ),
+            if (index < _chats.length - 1) const SizedBox(height: 24.0)
+          ],
+        );
+      },
     );
   }
 }
