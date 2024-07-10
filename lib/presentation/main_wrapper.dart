@@ -35,23 +35,29 @@ class _MainWrapperState extends State<MainWrapper> {
     String username = (await preferencesUtils.getValue(ConnectionPreferences.username.name)) ?? "";
     String password = (await preferencesUtils.getValue(ConnectionPreferences.password.name)) ?? "";
     String ip = (await preferencesUtils.getValue(ConnectionPreferences.ip.name)) ?? "";
-    String port = (await preferencesUtils.getValue(ConnectionPreferences.port.name)) ?? "0";
-    String screens = (await preferencesUtils.getValue(ConnectionPreferences.screens.name)) ?? "0";
+    String port = (await preferencesUtils.getValue(ConnectionPreferences.port.name)) ?? "";
+    String screens = (await preferencesUtils.getValue(ConnectionPreferences.screens.name)) ?? "";
 
-    LGService().init(
-      onError: (data) {
-        _showSnackbar(data);
-      },
-      host: ip,
-      port: int.parse(port),
-      username: username,
-      password: password,
-      slaves: int.parse(screens),
-    );
+    if (username.isNotEmpty &&
+        password.isNotEmpty &&
+        ip.isNotEmpty &&
+        port.isNotEmpty &&
+        screens.isNotEmpty) {
+      LGService().init(
+        onError: (data) {
+          _showSnackbar(data);
+        },
+        host: ip,
+        port: int.parse(port),
+        username: username,
+        password: password,
+        slaves: int.parse(screens),
+      );
 
-    final result = await LGService().connect();
-    if (result) {
-      _showSnackbar("Connected Automatically");
+      final result = await LGService().connect();
+      if (result) {
+        _showSnackbar("Connected Automatically");
+      }
     }
   }
 

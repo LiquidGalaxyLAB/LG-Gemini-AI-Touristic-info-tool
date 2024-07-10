@@ -24,8 +24,6 @@ class _SideBarState extends State<SideBar> {
 
   @override
   Widget build(BuildContext context) {
-    final mediaQuery = MediaQuery.of(context);
-
     return Container(
       color: AppTheme.gray.shade1000,
       padding: const EdgeInsets.all(8.0),
@@ -63,7 +61,7 @@ class _SideBarState extends State<SideBar> {
         expanded: _expanded,
         onTap: () {
           if (i != _selected.index) {
-            Navigator.pushNamed(
+            Navigator.pushReplacementNamed(
               widget._navigatorKey.currentContext!,
               AppRoutes.routeMap[i]!,
             );
