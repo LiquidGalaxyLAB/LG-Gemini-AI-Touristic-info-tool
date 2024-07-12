@@ -16,6 +16,7 @@ class LocationService {
   Future<LatLng?> getLatLngFromLocation(String address) async {
     try {
       List<Location> locations = await locationFromAddress(address);
+      log('$locations');
       if (locations.isNotEmpty) {
         return LatLng(
           locations.first.latitude,

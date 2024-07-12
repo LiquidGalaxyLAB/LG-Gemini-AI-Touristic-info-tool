@@ -35,12 +35,6 @@ class _TouristPlacePageState extends State<TouristPlacePage> {
   final List<int> _liked = [];
 
   @override
-  void dispose() {
-    super.dispose();
-    BlocProvider.of<TouristPlacesBloc>(context).close();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return LayoutBlueprint(
       cameraPosition: _touristPlaces.isNotEmpty

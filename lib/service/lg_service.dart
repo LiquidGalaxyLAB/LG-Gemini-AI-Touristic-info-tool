@@ -15,17 +15,11 @@ class LGService {
   late Function(String) _onError;
 
   int get _leftScreen {
-    if (_slaves == 1) {
-      return 1;
-    }
-    return (_slaves / 2).floor() + 2;
+    return _slaves ~/ 2 + 2;
   }
 
   int get _rightScreen {
-    if (_slaves == 1) {
-      return 1;
-    }
-    return (_slaves / 2).floor() + 1;
+    return _slaves ~/ 2 + 1;
   }
 
   factory LGService() {
@@ -83,10 +77,10 @@ class LGService {
   Future<void> _execute(String query) async {
     try {
       String? response = await _client.execute(query);
-      if (response != null) {
+      if (response != null && response.isNotEmpty) {
         log(response);
       } else {
-        throw Exception('Null response');
+        log('Null response');
       }
     } catch (e) {
       if (await isConnected()) {
@@ -108,7 +102,7 @@ class LGService {
   }
 
   Future<void> showLogo() async {
-    await _execute("chmod 777 /var/www/html/kml/slave_$_leftScreen.kml; echo ${KmlUtils.createLogos()} > /var/www/html/kml/slave_$_leftScreen.kml");
+    await _execute("chmod 777 /var/www/html/kml/slave_$_leftScreen.kml; echo '${KmlUtils.createLogos()}' > /var/www/html/kml/slave_$_leftScreen.kml");
   }
 
   Future<void> hideLogo() async {

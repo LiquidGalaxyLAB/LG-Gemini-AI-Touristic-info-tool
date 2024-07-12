@@ -46,22 +46,26 @@ class KmlUtils {
   // https://raw.githubusercontent.com/SidharthMudgil/lg-motion/088da4274f147ba56bfc90f0f9b44f62dbf35c87/logo.png
   // https://github.com/LiquidGalaxyLAB/LG-Gemini-AI-Touristic-info-tool/blob/911c9b8c40c454a6ef255d78a5c9ad5c2293d692/assets/images/img_lg_slave.png
   static String createLogos() {
-    return  '''<?xml version="1.0" encoding="UTF-8"?>
-<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
-    <Document id ="logo">
-         <name>Smart City Dashboard</name>
-             <Folder>
-                  <name>Splash Screen</name>
-                  <ScreenOverlay>
-                      <name>Logo</name>
-                      <Icon><href>https://github.com/LiquidGalaxyLAB/LG-Gemini-AI-Touristic-info-tool/blob/911c9b8c40c454a6ef255d78a5c9ad5c2293d692/assets/images/img_lg_slave.png</href> </Icon>
-                      <overlayXY x="0" y="1" xunits="fraction" yunits="fraction"/>
-                      <screenXY x="0.025" y="0.95" xunits="fraction" yunits="fraction"/>
-                      <rotationXY x="0" y="0" xunits="fraction" yunits="fraction"/>
-                      <size x="300" y="0.300" xunits="pixels" yunits="pixels"/>
-                  </ScreenOverlay>
-             </Folder>
-    </Document>
-</kml>''';
+    return """<?xml version="1.0" encoding="UTF-8"?>
+    <kml xmlns="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:gx="http://www.google.com/kml/ext/2.2">
+      <Document>
+        <name>LG Touristic</name>
+        <Folder>
+          <name>Logo</name>
+          <ScreenOverlay>
+            <name>Logo</name>
+              <Icon>
+                <href>
+                  https://raw.githubusercontent.com/SidharthMudgil/lg-motion/088da4274f147ba56bfc90f0f9b44f62dbf35c87/logo.png
+                </href>
+              </Icon>
+            <overlayXY x="0" y="1" xunits="fraction" yunits="fraction"/>
+            <screenXY x="0.025" y="0.95" xunits="fraction" yunits="fraction"/>
+            <rotationXY x="0" y="0" xunits="fraction" yunits="fraction"/>
+            <size x="300" y="${300 * 2864 / 3000}" xunits="pixels" yunits="pixels"/>
+          </ScreenOverlay>
+        </Folder>
+      </Document>
+    </kml>""";
   }
 }
