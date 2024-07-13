@@ -54,10 +54,10 @@ class _MainWrapperState extends State<MainWrapper> {
         slaves: int.parse(screens),
       );
 
-      // final result = await LGService().connect();
-      // if (result) {
-      //   _showSnackbar("Connected Automatically");
-      // }
+      final result = await LGService().connect();
+      if (result) {
+        _showSnackbar("Connected Automatically");
+      }
     }
   }
 

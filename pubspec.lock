@@ -960,10 +960,9 @@ packages:
   ssh2:
     dependency: "direct main"
     description:
-      name: ssh2
-      sha256: ef00a87a03248cf7cd375322c26ad7465520041cdd0e5cb6d2cd356d57fb59ff
-      url: "https://pub.dev"
-    source: hosted
+      path: "C:\\Users\\smudg\\OneDrive\\Desktop\\flutter_ssh2-master"
+      relative: false
+    source: path
     version: "2.2.3"
   stack_trace:
     dependency: transitive

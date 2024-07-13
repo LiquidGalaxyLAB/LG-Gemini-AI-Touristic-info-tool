@@ -7,6 +7,8 @@ import '../../presentation/components/invalid_input_dialog.dart';
 import '../../presentation/components/no_data_card.dart';
 import '../resources/app_state.dart';
 
+var _showDialog = true;
+
 void setPreferredOrientations(BuildContext context) {
   SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft, DeviceOrientation.landscapeRight]);
 }
@@ -25,16 +27,19 @@ Widget blocBuilder<B extends Bloc<dynamic, AppState<S>>, S>({
       } else if (state is AppLoading) {
         return const DataLoadingCard();
       } else if (state is AppFailure) {
-        Future.delayed(Duration.zero, () {
-          showInvalidInputDialog(
-            context,
-            title: "Something went wrong",
-            description:
-            "Unexpected error occurred, make sure you have provided correct Gemini API key in the settings.",
-          );
-        });
+        if (_showDialog) {
+          Future.delayed(Duration.zero, () {
+            showInvalidInputDialog(
+              context,
+              title: "Something went wrong",
+              description: "Unexpected error occurred, make sure you have provided correct Gemini API key in the settings. If issue still persists try different prompt.",
+            );
+          });
+          _showDialog = false;
+        }
         return const NoDataCard();
       } else {
+        _showDialog = true;
         return const NoDataCard();
       }
     },
@@ -58,8 +63,7 @@ Widget chatBlocBuilder<B extends Bloc<dynamic, AppState<String>>, String>({
           showInvalidInputDialog(
             context,
             title: "Something went wrong",
-            description:
-            "Unexpected error occurred, make sure you have provided correct Gemini API key in the settings.",
+            description: "Unexpected error occurred, make sure you have provided correct Gemini API key in the settings. If issue still persists try different prompt.",
           );
         });
         return onError();

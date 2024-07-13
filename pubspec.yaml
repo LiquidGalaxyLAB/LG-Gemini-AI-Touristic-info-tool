@@ -25,7 +25,9 @@ dependencies:
   flutter_bloc: ^8.1.6
 
   # ssh connection
-  ssh2: ^2.2.3
+#  ssh2: ^2.2.3
+  ssh2:
+    path: C:\Users\smudg\OneDrive\Desktop\flutter_ssh2-master
 
   # google maps
   google_maps_flutter: ^2.7.0
