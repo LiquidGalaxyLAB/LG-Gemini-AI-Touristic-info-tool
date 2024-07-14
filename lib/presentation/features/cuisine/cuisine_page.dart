@@ -9,7 +9,6 @@ import '../../../core/utils/balloon_utils.dart';
 import '../../../core/utils/maps_utils.dart';
 import '../../../domain/model/cuisine.dart';
 import '../../../service/lg_service.dart';
-import '../../../service/location_service.dart';
 import '../../components/layout_blueprint.dart';
 import '../../components/response_item_card.dart';
 import 'bloc/cuisines_bloc.dart';
@@ -34,17 +33,19 @@ class _CuisinePageState extends State<CuisinePage> {
   @override
   Widget build(BuildContext context) {
     return LayoutBlueprint(
-      cameraPosition: const CameraPosition(
-        target: LatLng(22.99899294474381, 78.7274369224906), zoom: 3,
-      ),
+      cameraPosition: _cuisines.isNotEmpty
+          ? CameraPosition(
+              target: LatLng(
+                _cuisines[_selected].latitude,
+                _cuisines[_selected].longitude,
+              ),
+              zoom: 7,
+            )
+          : null,
       controller: _controller,
       panelLeft: CuisineInputCard(
         onContinueClick: (params) async {
           BlocProvider.of<CuisinesBloc>(context).add(GetCuisines(params));
-          final latLng = await LocationService().getLatLngFromLocation(params["destination"]);
-          if (latLng != null) {
-            moveToPlace(_controller, latLng);
-          }
         },
       ),
       panelDividedLeft: blocBuilder<CuisinesBloc, T>(onSuccess: (result) {

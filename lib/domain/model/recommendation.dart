@@ -6,6 +6,8 @@ class Recommendation extends Equatable {
   final String cost;
   final String duration;
   final List<String> highlights;
+  final double latitude;
+  final double longitude;
 
   const Recommendation({
     required this.name,
@@ -13,6 +15,8 @@ class Recommendation extends Equatable {
     required this.cost,
     required this.duration,
     required this.highlights,
+    required this.latitude,
+    required this.longitude,
   });
 
   @override
@@ -22,5 +26,7 @@ class Recommendation extends Equatable {
         cost,
         duration,
         highlights,
+        latitude,
+        longitude,
       ];
 }

@@ -8,6 +8,8 @@ class Cuisine extends Equatable {
   final String duration;
   final List<String> ingredients;
   final List<String> recipe;
+  final double latitude;
+  final double longitude;
 
   const Cuisine({
     required this.name,
@@ -17,6 +19,8 @@ class Cuisine extends Equatable {
     required this.duration,
     required this.ingredients,
     required this.recipe,
+    required this.latitude,
+    required this.longitude,
   });
 
   @override
@@ -28,5 +32,7 @@ class Cuisine extends Equatable {
         duration,
         ingredients,
         recipe,
+        latitude,
+        longitude,
       ];
 }

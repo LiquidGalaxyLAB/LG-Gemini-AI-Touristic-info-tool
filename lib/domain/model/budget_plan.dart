@@ -61,12 +61,16 @@ class Place extends Equatable {
   final String entranceFee;
   final String guidedTourFee;
   final String averageMealCost;
+  final double latitude;
+  final double longitude;
 
   const Place({
     required this.name,
     required this.entranceFee,
     required this.guidedTourFee,
     required this.averageMealCost,
+    required this.latitude,
+    required this.longitude,
   });
 
   @override
@@ -75,6 +79,8 @@ class Place extends Equatable {
         entranceFee,
         guidedTourFee,
         averageMealCost,
+        latitude,
+        longitude,
       ];
 }
 

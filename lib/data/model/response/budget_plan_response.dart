@@ -91,12 +91,16 @@ class PlaceResponse extends Equatable {
   final String? entranceFee;
   final String? guidedTourFee;
   final String? averageMealCost;
+  final double? latitude;
+  final double? longitude;
 
   const PlaceResponse({
     this.name,
     this.entranceFee,
     this.guidedTourFee,
     this.averageMealCost,
+    this.latitude,
+    this.longitude,
   });
 
   @override
@@ -105,6 +109,8 @@ class PlaceResponse extends Equatable {
     entranceFee,
     guidedTourFee,
     averageMealCost,
+    latitude,
+    longitude,
   ];
 
   factory PlaceResponse.fromJson(Map<String, dynamic> json) {
@@ -113,6 +119,8 @@ class PlaceResponse extends Equatable {
       entranceFee: json['entranceFee'] as String?,
       guidedTourFee: json['guidedTourFee'] as String?,
       averageMealCost: json['averageMealCost'] as String?,
+      latitude: json['latitude'] as double?,
+      longitude: json['longitude'] as double?,
     );
   }
 }

@@ -25,6 +25,8 @@ class RecommendationResponse extends Equatable {
   final String? cost;
   final String? duration;
   final List<String>? highlights;
+  final double? latitude;
+  final double? longitude;
 
   const RecommendationResponse({
     this.name,
@@ -32,6 +34,8 @@ class RecommendationResponse extends Equatable {
     this.cost,
     this.duration,
     this.highlights,
+    this.latitude,
+    this.longitude,
   });
 
   @override
@@ -41,6 +45,8 @@ class RecommendationResponse extends Equatable {
     cost,
     duration,
     highlights,
+    latitude,
+    longitude,
   ];
 
   factory RecommendationResponse.fromJson(Map<String, dynamic> json) {
@@ -50,6 +56,8 @@ class RecommendationResponse extends Equatable {
       cost: json['cost'] as String?,
       duration: json['duration'] as String?,
       highlights: (json['highlights'] as List<dynamic>?)?.map((item) => item as String).toList(),
+      latitude: json['latitude'] as double?,
+      longitude: json['longitude'] as double?,
     );
   }
 }

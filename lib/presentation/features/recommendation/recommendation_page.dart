@@ -6,10 +6,8 @@ import "package:google_maps_flutter/google_maps_flutter.dart";
 
 import '../../../core/utils/app_utils.dart';
 import '../../../core/utils/balloon_utils.dart';
-import '../../../core/utils/maps_utils.dart';
 import '../../../domain/model/recommendation.dart';
 import '../../../service/lg_service.dart';
-import '../../../service/location_service.dart';
 import '../../components/layout_blueprint.dart';
 import '../../components/response_item_card.dart';
 import 'bloc/recommendations_bloc.dart';
@@ -34,17 +32,19 @@ class _RecommendationPageState extends State<RecommendationPage> {
   @override
   Widget build(BuildContext context) {
     return LayoutBlueprint(
-      cameraPosition: const CameraPosition(
-        target: LatLng(22.99899294474381, 78.7274369224906), zoom: 3,
-      ),
+      cameraPosition: _recommendations.isNotEmpty
+          ? CameraPosition(
+              target: LatLng(
+                _recommendations[_selected].latitude,
+                _recommendations[_selected].longitude,
+              ),
+              zoom: 7,
+            )
+          : null,
       controller: _controller,
       panelLeft: RecommendationInputCard(
         onContinueClick: (params) async {
           BlocProvider.of<RecommendationsBloc>(context).add(GetRecommendations(params));
-          final latLng = await LocationService().getLatLngFromLocation(params["destination"]);
-          if (latLng != null) {
-            moveToPlace(_controller, latLng);
-          }
         },
       ),
       panelDividedLeft: blocBuilder<RecommendationsBloc, T>(onSuccess: (result) {

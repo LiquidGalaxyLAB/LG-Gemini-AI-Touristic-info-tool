@@ -9,7 +9,6 @@ import '../../../core/utils/balloon_utils.dart';
 import '../../../core/utils/maps_utils.dart';
 import '../../../domain/model/activitiy.dart';
 import '../../../service/lg_service.dart';
-import '../../../service/location_service.dart';
 import '../../components/layout_blueprint.dart';
 import '../../components/response_item_card.dart';
 import 'bloc/activities_bloc.dart';
@@ -34,17 +33,18 @@ class _ActivityPageState extends State<ActivityPage> {
   @override
   Widget build(BuildContext context) {
     return LayoutBlueprint(
-      cameraPosition: const CameraPosition(
-        target: LatLng(22.99899294474381, 78.7274369224906), zoom: 3,
-      ),
+      cameraPosition: _activities.isNotEmpty
+          ? CameraPosition(
+        target: LatLng(
+          _activities[_selected].latitude,
+          _activities[_selected].longitude,
+        ),
+        zoom: 7,
+      ) : null,
       controller: _controller,
       panelLeft: ActivityInputCard(
         onContinueClick: (params) async {
           BlocProvider.of<ActivitiesBloc>(context).add(GetActivities(params));
-          final latLng = await LocationService().getLatLngFromLocation(params["destination"]);
-          if (latLng != null) {
-            moveToPlace(_controller, latLng);
-          }
         },
       ),
       panelDividedLeft: blocBuilder<ActivitiesBloc, T>(onSuccess: (result) {

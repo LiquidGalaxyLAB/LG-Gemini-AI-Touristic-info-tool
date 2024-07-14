@@ -82,6 +82,8 @@ budget.BudgetPlan responseToBudgetPlan(
                   entranceFee: e.entranceFee ?? "",
                   guidedTourFee: e.guidedTourFee ?? "",
                   averageMealCost: e.averageMealCost ?? "",
+                  latitude: e.latitude ?? 0,
+                  longitude: e.longitude ?? 0,
                 ))
             .toList() ??
         [],
@@ -120,6 +122,8 @@ List<Cuisine>? responseToCuisines(
             duration: cuisine.duration ?? "",
             ingredients: cuisine.ingredients ?? [],
             recipe: cuisine.recipe ?? [],
+            latitude: cuisine.latitude ?? 0,
+            longitude: cuisine.longitude ?? 0,
           ))
       .toList();
 }
@@ -134,6 +138,8 @@ List<Recommendation>? responseToRecommendations(
             cost: recommendation.cost ?? "",
             duration: recommendation.duration ?? "",
             highlights: recommendation.highlights ?? [],
+            latitude: recommendation.latitude ?? 0,
+            longitude: recommendation.longitude ?? 0,
           ))
       .toList();
 }
@@ -149,6 +155,8 @@ List<Activity>? responseToActivities(
             precautions: activity.precautions ?? [],
             duration: activity.duration ?? "",
             cost: activity.cost ?? "",
+            latitude: activity.latitude ?? 0,
+            longitude: activity.longitude ?? 0,
           ))
       .toList();
 }

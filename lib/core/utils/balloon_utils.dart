@@ -19,13 +19,13 @@ class BalloonUtils {
             <h3>Starting Point:</h3>
             <p>${budgetPlan.startingPoint}</p>
             <h3>Travel Route:</h3>
-            <p>${budgetPlan.travelRoute.map((route) => 'Mode: ${route.mode}, From: ${route.from}, To: ${route.to}, Cost: ${route.cost}, Duration: ${route.duration}').join('<br>')}</p>
+            <p>${budgetPlan.travelRoute.map((route) => 'Mode: ${route.mode}, From: ${route.from}, To: ${route.to}, Cost: ${route.cost}, Duration: ${route.duration}').join('<br/>')}</p>
             <h3>Places:</h3>
-            <p>${budgetPlan.places.map((place) => 'Name: ${place.name}, Entrance Fee: ${place.entranceFee}, Guided Tour Fee: ${place.guidedTourFee}, Average Meal Cost: ${place.averageMealCost}').join('<br>')}</p>
+            <p>${budgetPlan.places.map((place) => 'Name: ${place.name}, Entrance Fee: ${place.entranceFee}, Guided Tour Fee: ${place.guidedTourFee}, Average Meal Cost: ${place.averageMealCost}').join('<br/>')}</p>
             <h3>Accommodation:</h3>
-            <p>${budgetPlan.accommodation.map((acc) => 'Name: ${acc.name}, Description: ${acc.description}, Cost Per Night: ${acc.costPerNight}, Duration: ${acc.duration}, Total Cost: ${acc.totalCost}').join('<br>')}</p>
+            <p>${budgetPlan.accommodation.map((acc) => 'Name: ${acc.name}, Description: ${acc.description}, Cost Per Night: ${acc.costPerNight}, Duration: ${acc.duration}, Total Cost: ${acc.totalCost}').join('<br/>')}</p>
             <h3>Additional Expenses:</h3>
-            <p>${budgetPlan.additionalExpenses.map((exp) => 'Name: ${exp.name}, Description: ${exp.description}, Estimated Cost: ${exp.estimatedCost}').join('<br>')}</p>
+            <p>${budgetPlan.additionalExpenses.map((exp) => 'Name: ${exp.name}, Description: ${exp.description}, Estimated Cost: ${exp.estimatedCost}').join('<br/>')}</p>
             <h3>Total Cost:</h3>
             <p>${budgetPlan.totalCost}</p>
           </text>
@@ -65,7 +65,7 @@ class BalloonUtils {
             <h3>Duration:</h3>
             <p>${route.duration}</p>
             <h3>Highlights:</h3>
-            <p>${route.highlights.join('<br>')}</p>
+            <p>${route.highlights.join('<br/>')}</p>
           ]]>
         </description>
         <LineString>
@@ -94,7 +94,7 @@ class BalloonUtils {
             <h3>Description:</h3>
             <p>${place.description}</p>
             <h3>Highlights:</h3>
-            <p>${place.highlights.join('<br>')}</p>
+            <p>${place.highlights.join('<br/>')}</p>
           ]]>
         </description>
         <Point>
@@ -197,9 +197,9 @@ class BalloonUtils {
             <h3>Duration:</h3>
             <p>${cuisine.duration}</p>
             <h3>Ingredients:</h3>
-            <p>${cuisine.ingredients.join('<br>')}</p>
+            <p>${cuisine.ingredients.join('<br/>')}</p>
             <h3>Recipe:</h3>
-            <p>${cuisine.recipe.join('<br>')}</p>
+            <p>${cuisine.recipe.join('<br/>')}</p>
           </text>
           <bgColor>ff15151a</bgColor>
         </BalloonStyle>
@@ -230,7 +230,7 @@ class BalloonUtils {
             <h3>Duration:</h3>
             <p>${recommendation.duration}</p>
             <h3>Highlights:</h3>
-            <p>${recommendation.highlights.join('<br>')}</p>
+            <p>${recommendation.highlights.join('<br/>')}</p>
           </text>
           <bgColor>ff15151a</bgColor>
         </BalloonStyle>
@@ -257,9 +257,9 @@ class BalloonUtils {
             <h3>Description:</h3>
             <p>${activity.description}</p>
             <h3>Procedure:</h3>
-            <p>${activity.procedure.join('<br>')}</p>
+            <p>${activity.procedure.join('<br/>')}</p>
             <h3>Precautions:</h3>
-            <p>${activity.precautions.join('<br>')}</p>
+            <p>${activity.precautions.join('<br/>')}</p>
             <h3>Duration:</h3>
             <p>${activity.duration}</p>
             <h3>Cost:</h3>

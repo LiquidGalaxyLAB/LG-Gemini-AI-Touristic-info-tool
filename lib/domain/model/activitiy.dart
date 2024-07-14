@@ -7,6 +7,8 @@ class Activity extends Equatable {
   final List<String> precautions;
   final String duration;
   final String cost;
+  final double latitude;
+  final double longitude;
 
   const Activity({
     required this.name,
@@ -15,6 +17,8 @@ class Activity extends Equatable {
     required this.precautions,
     required this.duration,
     required this.cost,
+    required this.latitude,
+    required this.longitude,
   });
 
   @override
@@ -25,5 +29,7 @@ class Activity extends Equatable {
         precautions,
         duration,
         cost,
+        latitude,
+        longitude,
       ];
 }
