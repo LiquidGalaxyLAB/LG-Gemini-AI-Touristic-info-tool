@@ -7,7 +7,7 @@ import '../../presentation/components/invalid_input_dialog.dart';
 import '../../presentation/components/no_data_card.dart';
 import '../resources/app_state.dart';
 
-var _showDialog = true;
+var showErrorDialog = true;
 
 void setPreferredOrientations(BuildContext context) {
   SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft, DeviceOrientation.landscapeRight]);
@@ -27,7 +27,7 @@ Widget blocBuilder<B extends Bloc<dynamic, AppState<S>>, S>({
       } else if (state is AppLoading) {
         return const DataLoadingCard();
       } else if (state is AppFailure) {
-        if (_showDialog) {
+        if (showErrorDialog) {
           Future.delayed(Duration.zero, () {
             showInvalidInputDialog(
               context,
@@ -35,11 +35,11 @@ Widget blocBuilder<B extends Bloc<dynamic, AppState<S>>, S>({
               description: "Unexpected error occurred, make sure you have provided correct Gemini API key in the settings. If issue still persists try different prompt.",
             );
           });
-          _showDialog = false;
+          showErrorDialog = false;
         }
         return const NoDataCard();
       } else {
-        _showDialog = true;
+        showErrorDialog = true;
         return const NoDataCard();
       }
     },

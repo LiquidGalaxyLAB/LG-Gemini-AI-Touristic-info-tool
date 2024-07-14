@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -48,12 +49,14 @@ class _ItineraryPageState extends State<ItineraryPage> {
       controller: _controller,
       panelLeft: ItineraryInputCard(
         onContinueClick: (params) {
+          showErrorDialog = true;
           BlocProvider.of<ItineraryBloc>(context).add(GetItinerary(params));
         },
       ),
       panelDividedLeft: blocBuilder<ItineraryBloc, T>(onSuccess: (result) {
         _itinerary = result;
-        LGService().showBalloon(BalloonUtils().createBalloonForItinerary(result));
+        log(BalloonUtils().createBalloonForItinerary(result));
+        LGService().sendKml(BalloonUtils().createBalloonForItinerary(result));
         return MainResponseCard(
           controller: _controller,
           itinerary: _itinerary!,

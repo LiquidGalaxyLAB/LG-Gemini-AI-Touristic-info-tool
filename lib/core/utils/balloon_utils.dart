@@ -68,14 +68,6 @@ class BalloonUtils {
             <p>${route.highlights.join('<br/>')}</p>
           ]]>
         </description>
-        <LineString>
-          <extrude>1</extrude>
-          <tessellate>1</tessellate>
-          <coordinates>
-            ${itinerary.places.first.longitude},${itinerary.places.first.latitude},0
-            ${itinerary.places.last.longitude},${itinerary.places.last.latitude},0
-          </coordinates>
-        </LineString>
       </Placemark>
     ''';
     }).join('\n');
@@ -97,9 +89,14 @@ class BalloonUtils {
             <p>${place.highlights.join('<br/>')}</p>
           ]]>
         </description>
-        <Point>
-          <coordinates>${place.longitude},${place.latitude},0</coordinates>
-        </Point>
+        <LineString>
+          <extrude>1</extrude>
+          <tessellate>1</tessellate>
+          <coordinates>
+            ${place.longitude},${place.latitude},0
+            ${place.longitude},${place.latitude},0
+          </coordinates>
+        </LineString>
       </Placemark>
     ''';
     }).join('\n');
@@ -208,6 +205,9 @@ class BalloonUtils {
         <description></description>
         <styleUrl>#cuisine_style</styleUrl>
         <gx:balloonVisibility>1</gx:balloonVisibility>
+        <Point>
+          <coordinates>${cuisine.longitude},${cuisine.latitude},0</coordinates>
+        </Point>
       </Placemark>
     </Document>
     </kml>''';
@@ -239,6 +239,9 @@ class BalloonUtils {
         <description></description>
         <styleUrl>#recommendation_style</styleUrl>
         <gx:balloonVisibility>1</gx:balloonVisibility>
+        <Point>
+          <coordinates>${recommendation.longitude},${recommendation.latitude},0</coordinates>
+        </Point>
       </Placemark>
     </Document>
     </kml>''';
@@ -272,6 +275,9 @@ class BalloonUtils {
         <description></description>
         <styleUrl>#activity_style</styleUrl>
         <gx:balloonVisibility>1</gx:balloonVisibility>
+        <Point>
+          <coordinates>${activity.longitude},${activity.latitude},0</coordinates>
+        </Point>
       </Placemark>
     </Document>
    </kml>''';

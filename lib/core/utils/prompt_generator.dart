@@ -129,8 +129,8 @@ json format for 1 recommendation JSON object:
   "highlights": String[],
   "duration": "String",
   "cost": "String" (in USD)
-  "latitude": Double,
-  "longitude": Double,
+  "latitude": Double, [of the entered destination]
+  "longitude": Double, [of the entered destination]
 }
 
 example response:
@@ -151,8 +151,8 @@ json format for 1 activity JSON object:
   "precautions": String[],
   "duration": "String", (in minutes)
   "cost": "String", (in USD)
-  "latitude": Double,
-  "longitude": Double,
+  "latitude": Double, [of the entered destination]
+  "longitude": Double, [of the entered destination]
 }
 
 example response:
@@ -191,16 +191,16 @@ json format for 1 Place JSON object:
   "name": "String"
   "entranceFee": "String" (in USD)
   "guidedTourFee": "String" (in USD)
-  "averageMealCost": "String" (in USD)
+  "averageMealCost": "String", (in USD)
+  "latitude": Double,
+  "longitude": Double
 }
 
 json format for 1 AdditionalExpense JSON object:
 {
   "name": "String"
   "description": "String"
-  "estimatedCost": "String", (in USD)
-  "latitude": Double,
-  "longitude": Double,
+  "estimatedCost": "String" (in USD),
 }
 
 json format for 1 Accommodation JSON object:
@@ -251,8 +251,8 @@ json format for 1 local cuisine JSON object:
   "aliases": String[],
   "ingredients": String[],
   "recipe": String[],
-  "latitude": Double,
-  "longitude": Double,
+  "latitude": Double, [of the entered destination]
+  "longitude": Double, [of the entered destination]
 }
 
 example response:

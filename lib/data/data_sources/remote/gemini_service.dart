@@ -24,7 +24,7 @@ class GeminiService {
       final response = await model.generateContent([Content.text(prompt)]);
       log("${response.text}");
       if (response.text != null) {
-        final json = jsonDecode(response.text!);
+        final json = jsonDecode(response.text!.replaceAll("```json", '').replaceAll("```", "").trim());
         return TouristPlacesResponse.fromJson(json);
       }
     }
@@ -37,7 +37,7 @@ class GeminiService {
       final response = await model.generateContent([Content.text(prompt)]);
       log("${response.text}");
       if (response.text != null) {
-        final json = jsonDecode(response.text!);
+        final json = jsonDecode(response.text!.replaceAll("```json", '').replaceAll("```", "").trim());
         return ItineraryResponse.fromJson(json);
       }
     }
@@ -50,7 +50,7 @@ class GeminiService {
       final response = await model.generateContent([Content.text(prompt)]);
       log("${response.text}");
       if (response.text != null) {
-        final json = jsonDecode(response.text!);
+        final json = jsonDecode(response.text!.replaceAll("```json", '').replaceAll("```", "").trim());
         return LocalCuisinesResponse.fromJson(json);
       }
     }
@@ -63,7 +63,7 @@ class GeminiService {
       final response = await model.generateContent([Content.text(prompt)]);
       log("${response.text}");
       if (response.text != null) {
-        final json = jsonDecode(response.text!);
+        final json = jsonDecode(response.text!.replaceAll("```json", '').replaceAll("```", "").trim());
         return ActivitiesResponse.fromJson(json);
       }
     }
@@ -76,7 +76,7 @@ class GeminiService {
       final response = await model.generateContent([Content.text(prompt)]);
       log("${response.text}");
       if (response.text != null) {
-        final json = jsonDecode(response.text!);
+        final json = jsonDecode(response.text!.replaceAll("```json", '').replaceAll("```", "").trim());
         return BudgetPlanResponse.fromJson(json);
       }
     }
@@ -89,7 +89,7 @@ class GeminiService {
       final response = await model.generateContent([Content.text(prompt)]);
       log("${response.text}");
       if (response.text != null) {
-        final json = jsonDecode(response.text!);
+        final json = jsonDecode(response.text!.replaceAll("```json", '').replaceAll("```", "").trim());
         return RecommendationsResponse.fromJson(json);
       }
     }

@@ -45,6 +45,7 @@ class _BudgetPageState extends State<BudgetPage> {
       controller: _controller,
       panelLeft: BudgetInputCard(
         onContinueClick: (params) {
+          showErrorDialog = true;
           BlocProvider.of<BudgetPlanBloc>(context).add(GetBudgetPlan(params));
         },
       ),
@@ -63,10 +64,10 @@ class _BudgetPageState extends State<BudgetPage> {
             setState(() {
               _selectedPlace = value;
             });
-            final latLng = await LocationService().getLatLngFromLocation(_budgetPlan.places[value].name);
-            if (latLng != null) {
-              moveToPlace(_controller, latLng);
-            }
+            moveToPlace(
+              _controller,
+              LatLng(_budgetPlan.places[value].latitude, _budgetPlan.places[value].longitude),
+            );
           },
           onRouteTap: (value) async {
             setState(() {

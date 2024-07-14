@@ -49,6 +49,7 @@ class _TouristPlacePageState extends State<TouristPlacePage> {
       controller: _controller,
       panelLeft: TouristPlaceInputCard(
         onContinueClick: (params) {
+          showErrorDialog = true;
           BlocProvider.of<TouristPlacesBloc>(context).add(GetTouristPlaces(params));
         },
       ),

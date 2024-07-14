@@ -43,13 +43,13 @@ class _ActivityPageState extends State<ActivityPage> {
       ) : null,
       controller: _controller,
       panelLeft: ActivityInputCard(
-        onContinueClick: (params) async {
+        onContinueClick: (params) {
+          showErrorDialog = true;
           BlocProvider.of<ActivitiesBloc>(context).add(GetActivities(params));
         },
       ),
       panelDividedLeft: blocBuilder<ActivitiesBloc, T>(onSuccess: (result) {
         _activities = result;
-        moveToPlace(_controller, const LatLng(21, 214));
         return ListView.builder(
           padding: EdgeInsets.zero,
           itemCount: _activities.length,
@@ -65,6 +65,13 @@ class _ActivityPageState extends State<ActivityPage> {
                     setState(() {
                       _selected = index;
                     });
+                    moveToPlace(
+                      _controller,
+                      LatLng(
+                        _activities[_selected].latitude,
+                        _activities[_selected].longitude,
+                      ),
+                    );
                   },
                 ),
                 if (index < _activities.length - 1) const SizedBox(height: 8)

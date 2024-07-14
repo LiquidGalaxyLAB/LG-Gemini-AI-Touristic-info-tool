@@ -44,13 +44,13 @@ class _CuisinePageState extends State<CuisinePage> {
           : null,
       controller: _controller,
       panelLeft: CuisineInputCard(
-        onContinueClick: (params) async {
+        onContinueClick: (params) {
+          showErrorDialog = true;
           BlocProvider.of<CuisinesBloc>(context).add(GetCuisines(params));
         },
       ),
       panelDividedLeft: blocBuilder<CuisinesBloc, T>(onSuccess: (result) {
         _cuisines = result;
-        moveToPlace(_controller, const LatLng(21, 214));
         return ListView.builder(
           padding: EdgeInsets.zero,
           itemCount: _cuisines.length,
@@ -66,6 +66,13 @@ class _CuisinePageState extends State<CuisinePage> {
                     setState(() {
                       _selected = index;
                     });
+                    moveToPlace(
+                      _controller,
+                      LatLng(
+                        _cuisines[_selected].latitude,
+                        _cuisines[_selected].longitude,
+                      ),
+                    );
                   },
                 ),
                 if (index < _cuisines.length - 1) const SizedBox(height: 8)

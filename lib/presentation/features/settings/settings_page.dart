@@ -38,14 +38,15 @@ class _SettingsPageState extends State<SettingsPage> with SingleTickerProviderSt
           color: AppTheme.gray.shade800,
           child: TabBar(
             onTap: (value) {
-              if (value == 2) {
-                if (AppTheme.canAccessLGControls) {
-                  _tabController.index = value;
-                } else {
-                  _showAuthenticationDialog(value, _tabController.previousIndex);
-                  _tabController.index = _tabController.previousIndex;
-                }
-              }
+              _tabController.index = value;
+              // if (value == 2) {
+              //   if (AppTheme.canAccessLGControls) {
+              //     _tabController.index = value;
+              //   } else {
+              //     _showAuthenticationDialog(value, _tabController.previousIndex);
+              //     _tabController.index = _tabController.previousIndex;
+              //   }
+              // }
             },
             dividerHeight: 0,
             padding: EdgeInsets.zero,
