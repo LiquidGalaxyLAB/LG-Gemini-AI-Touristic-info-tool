@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:ssh2/ssh2.dart';
 
+import '../core/utils/balloon_utils.dart';
 import '../core/utils/kml_utils.dart';
 
 class LGService {
@@ -102,20 +103,24 @@ class LGService {
   }
 
   Future<void> showLogo() async {
-    await _execute("chmod 777 /var/www/html/kml/slave_$_leftScreen.kml; echo '${KmlUtils.createLogos()}' > /var/www/html/kml/slave_$_leftScreen.kml");
+    await _execute(
+        "chmod 777 /var/www/html/kml/slave_$_leftScreen.kml; echo '${KmlUtils.createLogos()}' > /var/www/html/kml/slave_$_leftScreen.kml");
   }
 
   Future<void> hideLogo() async {
-    await _execute("chmod 777 /var/www/html/kml/slave_$_leftScreen.kml; echo '' > /var/www/html/kml/slave_$_leftScreen.kml");
+    await _execute(
+        "chmod 777 /var/www/html/kml/slave_$_leftScreen.kml; echo '' > /var/www/html/kml/slave_$_leftScreen.kml");
   }
 
   Future<void> showBalloon(String kml) async {
     await cleanKml();
-    await _execute("chmod 777 /var/www/html/kml/slave_$_rightScreen.kml; echo '$kml' > /var/www/html/kml/slave_$_rightScreen.kml");
+    await _execute(
+        "chmod 777 /var/www/html/kml/slave_$_rightScreen.kml; echo '$kml' > /var/www/html/kml/slave_$_rightScreen.kml");
   }
 
   Future<void> cleanBalloon() async {
-    await _execute("chmod 777 /var/www/html/kml/slave_$_rightScreen.kml; echo '' > /var/www/html/kml/slave_$_rightScreen.kml");
+    await _execute(
+        "chmod 777 /var/www/html/kml/slave_$_rightScreen.kml; echo '${BalloonUtils().emptyBalloon()}' > /var/www/html/kml/slave_$_rightScreen.kml");
   }
 
   Future<void> sendKml(String kml) async {
@@ -134,17 +139,22 @@ class LGService {
   Future<void> setRefresh() async {
     for (var i = 2; i <= _slaves; i++) {
       String search = '<href>##LG_PHPIFACE##kml\\/slave_$i.kml<\\/href>';
-      String replace = '<href>##LG_PHPIFACE##kml\\/slave_$i.kml<\\/href><refreshMode>onInterval<\\/refreshMode><refreshInterval>2<\\/refreshInterval>';
-      await _execute('sshpass -p $_password ssh -t lg$i "echo $_password | sudo -S sed -i "s/$replace/$search/" ~/earth/kml/slave/myplaces.kml"');
-      await _execute('sshpass -p $_password ssh -t lg$i "echo $_password | sudo -S sed -i "s/$search/$replace/" ~/earth/kml/slave/myplaces.kml"');
+      String replace =
+          '<href>##LG_PHPIFACE##kml\\/slave_$i.kml<\\/href><refreshMode>onInterval<\\/refreshMode><refreshInterval>2<\\/refreshInterval>';
+      await _execute(
+          'sshpass -p $_password ssh -t lg$i "echo $_password | sudo -S sed -i "s/$replace/$search/" ~/earth/kml/slave/myplaces.kml"');
+      await _execute(
+          'sshpass -p $_password ssh -t lg$i "echo $_password | sudo -S sed -i "s/$search/$replace/" ~/earth/kml/slave/myplaces.kml"');
     }
   }
 
   Future<void> resetRefresh() async {
     for (var i = 2; i <= _slaves; i++) {
-      String search = '<href>##LG_PHPIFACE##kml\\/slave_$i.kml<\\/href><refreshMode>onInterval<\\/refreshMode><refreshInterval>2<\\/refreshInterval>';
+      String search =
+          '<href>##LG_PHPIFACE##kml\\/slave_$i.kml<\\/href><refreshMode>onInterval<\\/refreshMode><refreshInterval>2<\\/refreshInterval>';
       String replace = '<href>##LG_PHPIFACE##kml\\/slave_$i.kml<\\/href>';
-      await _execute('sshpass -p $_password ssh -t lg$i "echo $_password | sudo -S sed -i "s/$search/$replace/" ~/earth/kml/slave/myplaces.kml"');
+      await _execute(
+          'sshpass -p $_password ssh -t lg$i "echo $_password | sudo -S sed -i "s/$search/$replace/" ~/earth/kml/slave/myplaces.kml"');
     }
   }
 
