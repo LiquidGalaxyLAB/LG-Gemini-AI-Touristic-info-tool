@@ -61,7 +61,11 @@ class FavouritesBloc extends Bloc<FavouritesEvent, AppState<List<TouristPlace>>>
     final result = await _removeFavouriteUseCase(params: event.touristPlace);
     if (result) {
       final favourites = await _getFavouritesUseCase();
-      emit(AppSuccess(favourites));
+      if (favourites.isEmpty) {
+        emit(const AppEmpty());
+      }  else {
+        emit(AppSuccess(favourites));
+      }
     } else {
       emit(AppFailure(Exception("onRemoveFavourite Failed")));
     }

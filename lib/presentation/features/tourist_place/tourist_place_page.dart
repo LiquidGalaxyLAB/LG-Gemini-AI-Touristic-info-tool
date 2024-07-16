@@ -95,12 +95,16 @@ class _TouristPlacePageState extends State<TouristPlacePage> {
             liked: _liked.contains(_selected),
             onIconClick: (place, isLiked) {
               if (isLiked) {
-                _liked.add(_selected);
+                setState(() {
+                  _liked.add(_selected);
+                });
                 BlocProvider.of<FavouritesBloc>(context).add(
                   AddFavourite(place),
                 );
               } else {
-                _liked.remove(_selected);
+                setState(() {
+                  _liked.remove(_selected);
+                });
                 BlocProvider.of<FavouritesBloc>(context).add(
                   RemoveFavourite(place),
                 );

@@ -4,7 +4,7 @@ import '../../../../config/theme/app_theme.dart';
 import '../../../../domain/model/tourist_place.dart';
 import '../../../components/item_title_description.dart';
 
-class TouristPlaceDetailsCard extends StatefulWidget {
+class TouristPlaceDetailsCard extends StatelessWidget {
   final TouristPlace _touristPlace;
   final bool _liked;
   final Function(TouristPlace, bool) _onIconClick;
@@ -19,20 +19,6 @@ class TouristPlaceDetailsCard extends StatefulWidget {
         _touristPlace = touristPlace;
 
   @override
-  State<TouristPlaceDetailsCard> createState() =>
-      _TouristPlaceDetailsCardState();
-}
-
-class _TouristPlaceDetailsCardState extends State<TouristPlaceDetailsCard> {
-  late bool isLiked;
-
-  @override
-  void initState() {
-    super.initState();
-    isLiked = widget._liked;
-  }
-
-  @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
@@ -44,7 +30,7 @@ class _TouristPlaceDetailsCardState extends State<TouristPlaceDetailsCard> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                widget._touristPlace.name,
+                _touristPlace.name,
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.w600,
@@ -53,17 +39,14 @@ class _TouristPlaceDetailsCardState extends State<TouristPlaceDetailsCard> {
               ),
               IconButton(
                 onPressed: () {
-                  setState(() {
-                    isLiked = !isLiked;
-                  });
-                  widget._onIconClick(widget._touristPlace, isLiked);
+                  _onIconClick(_touristPlace, !_liked);
                 },
                 icon: Icon(
-                  isLiked
+                  _liked
                       ? Icons.favorite_rounded
                       : Icons.favorite_outline_rounded,
                   size: 24,
-                  color: isLiked
+                  color: _liked
                       ? AppTheme.color.shade600
                       : AppTheme.gray.shade400,
                 ),
@@ -73,28 +56,28 @@ class _TouristPlaceDetailsCardState extends State<TouristPlaceDetailsCard> {
           const SizedBox(height: 10),
           ItemTitleDescription(
             title: "Location",
-            description: widget._touristPlace.location,
+            description: _touristPlace.location,
           ),
           ItemTitleDescription(
             title: "Coordinates",
             description:
-                "${widget._touristPlace.latitude}, ${widget._touristPlace.longitude}",
+                "${_touristPlace.latitude}, ${_touristPlace.longitude}",
           ),
           ItemTitleDescription(
             title: "History",
-            description: widget._touristPlace.history,
+            description: _touristPlace.history,
           ),
           ItemTitleDescription(
             title: "Significance",
-            description: widget._touristPlace.significance,
+            description: _touristPlace.significance,
           ),
           ItemTitleDescription(
             title: "Cuisine",
-            description: widget._touristPlace.cuisine,
+            description: _touristPlace.cuisine,
           ),
           ItemTitleDescription(
             title: "Speciality",
-            description: widget._touristPlace.specialty,
+            description: _touristPlace.specialty,
             spacing: false,
           ),
         ],
