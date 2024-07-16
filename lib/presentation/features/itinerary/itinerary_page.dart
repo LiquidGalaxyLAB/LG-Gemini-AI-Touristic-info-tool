@@ -53,33 +53,40 @@ class _ItineraryPageState extends State<ItineraryPage> {
           BlocProvider.of<ItineraryBloc>(context).add(GetItinerary(params));
         },
       ),
-      panelDividedLeft: blocBuilder<ItineraryBloc, T>(onSuccess: (result) {
-        _itinerary = result;
-        log(BalloonUtils().createBalloonForItinerary(result));
-        LGService().sendKml(BalloonUtils().createBalloonForItinerary(result));
-        return MainResponseCard(
-          controller: _controller,
-          itinerary: _itinerary!,
-          selectedPlace: _selectedPlace,
-          selectedRoute: _selectedRoute,
-          showRouteTable: _showRouteDetails,
-          onTap: (value) {
-            setState(() {
-              _showRouteDetails = value;
-            });
-          },
-          onPlaceTap: (value) {
-            setState(() {
-              _selectedPlace = value;
-            });
-          },
-          onRouteTap: (value) {
-            setState(() {
-              _selectedRoute = value;
-            });
-          },
-        );
-      }),
+      panelDividedLeft: blocBuilder<ItineraryBloc, T>(
+        onLoading: () {
+          _showRouteDetails = true;
+          _selectedPlace = 0;
+          _selectedRoute = 0;
+        },
+        onSuccess: (result) {
+          _itinerary = result;
+          log(BalloonUtils().createBalloonForItinerary(result));
+          LGService().sendKml(BalloonUtils().createBalloonForItinerary(result));
+          return MainResponseCard(
+            controller: _controller,
+            itinerary: _itinerary!,
+            selectedPlace: _selectedPlace,
+            selectedRoute: _selectedRoute,
+            showRouteTable: _showRouteDetails,
+            onTap: (value) {
+              setState(() {
+                _showRouteDetails = value;
+              });
+            },
+            onPlaceTap: (value) {
+              setState(() {
+                _selectedPlace = value;
+              });
+            },
+            onRouteTap: (value) {
+              setState(() {
+                _selectedRoute = value;
+              });
+            },
+          );
+        },
+      ),
       panelRight: blocBuilder<ItineraryBloc, T>(onSuccess: (result) {
         if (_showRouteDetails) {
           return RouteDetailsCard(route: _itinerary!.travelRoute[_selectedRoute]);

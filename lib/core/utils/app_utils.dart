@@ -15,6 +15,7 @@ void setPreferredOrientations(BuildContext context) {
 
 Widget blocBuilder<B extends Bloc<dynamic, AppState<S>>, S>({
   required Widget Function(S) onSuccess,
+  Function()? onLoading,
 }) {
   return BlocBuilder<B, AppState<S>>(
     builder: (context, state) {
@@ -25,6 +26,7 @@ Widget blocBuilder<B extends Bloc<dynamic, AppState<S>>, S>({
           return const NoDataCard();
         }
       } else if (state is AppLoading) {
+        onLoading?.call();
         return const DataLoadingCard();
       } else if (state is AppFailure) {
         if (showErrorDialog) {

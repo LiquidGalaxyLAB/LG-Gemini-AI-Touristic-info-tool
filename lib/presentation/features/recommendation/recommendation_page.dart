@@ -49,39 +49,44 @@ class _RecommendationPageState extends State<RecommendationPage> {
           BlocProvider.of<RecommendationsBloc>(context).add(GetRecommendations(params));
         },
       ),
-      panelDividedLeft: blocBuilder<RecommendationsBloc, T>(onSuccess: (result) {
-        _recommendations = result;
+      panelDividedLeft: blocBuilder<RecommendationsBloc, T>(
+        onLoading: () {
+          _selected = 0;
+        },
+        onSuccess: (result) {
+          _recommendations = result;
 
-        return ListView.builder(
-          padding: EdgeInsets.zero,
-          itemCount: _recommendations.length,
-          itemBuilder: (context, index) {
-            return Column(
-              children: [
-                ResponseItemCard(
-                  title: _recommendations[index].name,
-                  description: _recommendations[index].description,
-                  label: _recommendations[index].duration,
-                  selected: _selected == index,
-                  onTap: () {
-                    setState(() {
-                      _selected = index;
-                    });
-                    moveToPlace(
-                      _controller,
-                      LatLng(
-                        _recommendations[_selected].latitude,
-                        _recommendations[_selected].longitude,
-                      ),
-                    );
-                  },
-                ),
-                if (index < _recommendations.length - 1) const SizedBox(height: 8)
-              ],
-            );
-          },
-        );
-      }),
+          return ListView.builder(
+            padding: EdgeInsets.zero,
+            itemCount: _recommendations.length,
+            itemBuilder: (context, index) {
+              return Column(
+                children: [
+                  ResponseItemCard(
+                    title: _recommendations[index].name,
+                    description: _recommendations[index].description,
+                    label: _recommendations[index].duration,
+                    selected: _selected == index,
+                    onTap: () {
+                      setState(() {
+                        _selected = index;
+                      });
+                      moveToPlace(
+                        _controller,
+                        LatLng(
+                          _recommendations[_selected].latitude,
+                          _recommendations[_selected].longitude,
+                        ),
+                      );
+                    },
+                  ),
+                  if (index < _recommendations.length - 1) const SizedBox(height: 8)
+                ],
+              );
+            },
+          );
+        },
+      ),
       panelRight: blocBuilder<RecommendationsBloc, T>(onSuccess: (result) {
         LGService().showBalloon(BalloonUtils().createBalloonForRecommendation(result[_selected]));
         return RecommendationDetailsCard(

@@ -54,6 +54,10 @@ class _TouristPlacePageState extends State<TouristPlacePage> {
         },
       ),
       panelDividedLeft: blocBuilder<TouristPlacesBloc, T>(
+        onLoading: () {
+          _liked.clear();
+          _selected = 0;
+        },
         onSuccess: (result) {
           _touristPlaces = result;
           return ListView.builder(

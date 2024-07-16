@@ -35,12 +35,13 @@ class _ActivityPageState extends State<ActivityPage> {
     return LayoutBlueprint(
       cameraPosition: _activities.isNotEmpty
           ? CameraPosition(
-        target: LatLng(
-          _activities[_selected].latitude,
-          _activities[_selected].longitude,
-        ),
-        zoom: 7,
-      ) : null,
+              target: LatLng(
+                _activities[_selected].latitude,
+                _activities[_selected].longitude,
+              ),
+              zoom: 7,
+            )
+          : null,
       controller: _controller,
       panelLeft: ActivityInputCard(
         onContinueClick: (params) {
@@ -48,38 +49,43 @@ class _ActivityPageState extends State<ActivityPage> {
           BlocProvider.of<ActivitiesBloc>(context).add(GetActivities(params));
         },
       ),
-      panelDividedLeft: blocBuilder<ActivitiesBloc, T>(onSuccess: (result) {
-        _activities = result;
-        return ListView.builder(
-          padding: EdgeInsets.zero,
-          itemCount: _activities.length,
-          itemBuilder: (context, index) {
-            return Column(
-              children: [
-                ResponseItemCard(
-                  title: _activities[index].name,
-                  description: _activities[index].description,
-                  label: _activities[index].duration,
-                  selected: _selected == index,
-                  onTap: () {
-                    setState(() {
-                      _selected = index;
-                    });
-                    moveToPlace(
-                      _controller,
-                      LatLng(
-                        _activities[_selected].latitude,
-                        _activities[_selected].longitude,
-                      ),
-                    );
-                  },
-                ),
-                if (index < _activities.length - 1) const SizedBox(height: 8)
-              ],
-            );
-          },
-        );
-      }),
+      panelDividedLeft: blocBuilder<ActivitiesBloc, T>(
+        onLoading: () {
+          _selected = 0;
+        },
+        onSuccess: (result) {
+          _activities = result;
+          return ListView.builder(
+            padding: EdgeInsets.zero,
+            itemCount: _activities.length,
+            itemBuilder: (context, index) {
+              return Column(
+                children: [
+                  ResponseItemCard(
+                    title: _activities[index].name,
+                    description: _activities[index].description,
+                    label: _activities[index].duration,
+                    selected: _selected == index,
+                    onTap: () {
+                      setState(() {
+                        _selected = index;
+                      });
+                      moveToPlace(
+                        _controller,
+                        LatLng(
+                          _activities[_selected].latitude,
+                          _activities[_selected].longitude,
+                        ),
+                      );
+                    },
+                  ),
+                  if (index < _activities.length - 1) const SizedBox(height: 8)
+                ],
+              );
+            },
+          );
+        },
+      ),
       panelRight: blocBuilder<ActivitiesBloc, T>(onSuccess: (result) {
         LGService().showBalloon(BalloonUtils().createBalloonForActivity(result[_selected]));
         return ActivityDetailsCard(

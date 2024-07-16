@@ -49,7 +49,13 @@ class _BudgetPageState extends State<BudgetPage> {
           BlocProvider.of<BudgetPlanBloc>(context).add(GetBudgetPlan(params));
         },
       ),
-      panelDividedLeft: blocBuilder<BudgetPlanBloc, T>(onSuccess: (result) {
+      panelDividedLeft: blocBuilder<BudgetPlanBloc, T>(onLoading: () {
+        _selectedPlace = 0;
+        _selectedRoute = 0;
+        _selectedExpense = 0;
+        _selectedAccommodation = 0;
+        _selectedDetails = 0;
+      }, onSuccess: (result) {
         _budgetPlan = result;
         LGService().showBalloon(BalloonUtils().createBalloonForBudgetPlan(result));
         return MainResponseCard(

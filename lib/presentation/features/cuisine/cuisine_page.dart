@@ -49,38 +49,43 @@ class _CuisinePageState extends State<CuisinePage> {
           BlocProvider.of<CuisinesBloc>(context).add(GetCuisines(params));
         },
       ),
-      panelDividedLeft: blocBuilder<CuisinesBloc, T>(onSuccess: (result) {
-        _cuisines = result;
-        return ListView.builder(
-          padding: EdgeInsets.zero,
-          itemCount: _cuisines.length,
-          itemBuilder: (context, index) {
-            return Column(
-              children: [
-                ResponseItemCard(
-                  title: _cuisines[index].name,
-                  description: _cuisines[index].description,
-                  label: _cuisines[index].duration,
-                  selected: _selected == index,
-                  onTap: () {
-                    setState(() {
-                      _selected = index;
-                    });
-                    moveToPlace(
-                      _controller,
-                      LatLng(
-                        _cuisines[_selected].latitude,
-                        _cuisines[_selected].longitude,
-                      ),
-                    );
-                  },
-                ),
-                if (index < _cuisines.length - 1) const SizedBox(height: 8)
-              ],
-            );
-          },
-        );
-      }),
+      panelDividedLeft: blocBuilder<CuisinesBloc, T>(
+        onLoading: () {
+          _selected = 0;
+        },
+        onSuccess: (result) {
+          _cuisines = result;
+          return ListView.builder(
+            padding: EdgeInsets.zero,
+            itemCount: _cuisines.length,
+            itemBuilder: (context, index) {
+              return Column(
+                children: [
+                  ResponseItemCard(
+                    title: _cuisines[index].name,
+                    description: _cuisines[index].description,
+                    label: _cuisines[index].duration,
+                    selected: _selected == index,
+                    onTap: () {
+                      setState(() {
+                        _selected = index;
+                      });
+                      moveToPlace(
+                        _controller,
+                        LatLng(
+                          _cuisines[_selected].latitude,
+                          _cuisines[_selected].longitude,
+                        ),
+                      );
+                    },
+                  ),
+                  if (index < _cuisines.length - 1) const SizedBox(height: 8)
+                ],
+              );
+            },
+          );
+        },
+      ),
       panelRight: blocBuilder<CuisinesBloc, T>(onSuccess: (result) {
         LGService().showBalloon(BalloonUtils().createBalloonForCuisine(result[_selected]));
         return CuisineDetailsCard(
