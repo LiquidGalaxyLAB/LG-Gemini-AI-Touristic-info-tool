@@ -122,7 +122,7 @@ class _AboutPageState extends State<AboutPage> {
             const SizedBox(height: AboutPage.spacing),
             _buildHeaderText("Credits"),
             const SizedBox(height: AboutPage.gap),
-            _buildDescriptionText("Special thanks to all contributors."),
+            _buildDescriptionText("Special thanks to all mentors."),
             const SizedBox(height: AboutPage.spacing),
             Text(
               _appVersion,
