@@ -44,7 +44,7 @@ class _SideBarState extends State<SideBar> {
             ),
           ),
           const SizedBox(height: 12.0),
-          _sideBarItems(),
+          Expanded(child: SingleChildScrollView(child: _sideBarItems())),
         ],
       ),
     );
@@ -76,13 +76,12 @@ class _SideBarState extends State<SideBar> {
       ));
     }
 
-    return SingleChildScrollView(
-        child: Column(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: items,
-    ));
+    );
   }
 
   Widget _buildSideBarItem({
@@ -106,15 +105,13 @@ class _SideBarState extends State<SideBar> {
             Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color:
-                    selected ? AppTheme.color.shade700 : AppTheme.gray.shade800,
+                color: selected ? AppTheme.color.shade700 : AppTheme.gray.shade800,
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Icon(
                 iconData,
                 size: 18,
-                color:
-                    selected ? AppTheme.gray.shade200 : AppTheme.gray.shade400,
+                color: selected ? AppTheme.gray.shade200 : AppTheme.gray.shade400,
               ),
             ),
             if (expanded)
@@ -125,9 +122,7 @@ class _SideBarState extends State<SideBar> {
               Text(
                 title,
                 style: TextStyle(
-                  color: selected
-                      ? AppTheme.gray.shade200
-                      : AppTheme.gray.shade400,
+                  color: selected ? AppTheme.gray.shade200 : AppTheme.gray.shade400,
                   fontWeight: FontWeight.w700,
                 ),
               )
