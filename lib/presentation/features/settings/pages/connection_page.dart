@@ -40,8 +40,8 @@ class _ConnectionPageState extends State<ConnectionPage> {
     _userController.text = await preferencesUtils.getValue<String>(ConnectionPreferences.username.name) ?? "";
     _passController.text = await preferencesUtils.getValue<String>(ConnectionPreferences.password.name) ?? "";
     _ipController.text = await preferencesUtils.getValue<String>(ConnectionPreferences.ip.name) ?? "";
-    _portController.text = await preferencesUtils.getValue<String>(ConnectionPreferences.port.name) ?? "";
-    _slavesController.text = await preferencesUtils.getValue<String>(ConnectionPreferences.screens.name) ?? "";
+    _portController.text = await preferencesUtils.getValue<String>(ConnectionPreferences.port.name) ?? "0";
+    _slavesController.text = await preferencesUtils.getValue<String>(ConnectionPreferences.screens.name) ?? "0";
 
     LGService().init(
       onError: (data) {
