@@ -7,6 +7,7 @@ class InputCard extends StatefulWidget {
   final Function _onAudioClick;
   final Function(String) _onSendClick;
   final TextEditingController _controller;
+  final bool _isListening;
 
   const InputCard({
     super.key,
@@ -14,10 +15,12 @@ class InputCard extends StatefulWidget {
     required Function onAudioClick,
     required Function(String) onSendClick,
     required TextEditingController controller,
+    required bool isListening,
   })  : _controller = controller,
         _onSendClick = onSendClick,
         _onAudioClick = onAudioClick,
-        _onAttachClick = onAttachClick;
+        _onAttachClick = onAttachClick,
+        _isListening = isListening;
 
   @override
   State<InputCard> createState() => _InputCardState();
@@ -103,7 +106,7 @@ class _InputCardState extends State<InputCard> {
             },
             icon: Icon(
               Icons.mic_rounded,
-              color: AppTheme.gray.shade400,
+              color: widget._isListening ? AppTheme.color.shade700 : AppTheme.gray.shade400,
               size: 24,
             ),
           ),

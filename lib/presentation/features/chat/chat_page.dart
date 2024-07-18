@@ -1,12 +1,10 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:touristic/service/speech_to_text_service.dart';
 
 import '../../../config/theme/app_theme.dart';
 import '../../../core/utils/app_utils.dart';
 import '../../../domain/model/chat_item.dart';
+import '../../../service/speech_to_text_service.dart';
 import '../../components/no_data_card.dart';
 import 'bloc/chat_bloc.dart';
 import 'bloc/chat_event.dart';
@@ -32,13 +30,15 @@ class _ChatPageState extends State<ChatPage> {
   @override
   void initState() {
     super.initState();
-    _speechService = SpeechToTextService(
-      onResult: (String text) {
-        setState(() {
-          _controller.text = text;
-        });
-      },
-    );
+    _speechService = SpeechToTextService(onResult: (String text) {
+      setState(() {
+        _controller.text = text;
+      });
+    }, onListening: (result) {
+      setState(() {
+        isListening = result;
+      });
+    });
   }
 
   void _onSendClick(String message) {
@@ -101,6 +101,7 @@ class _ChatPageState extends State<ChatPage> {
             onAttachClick: _onAttachClick,
             onAudioClick: _onAudioClick,
             onSendClick: _onSendClick,
+            isListening: isListening,
           ),
         ],
       ),
