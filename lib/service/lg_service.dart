@@ -80,12 +80,10 @@ class LGService {
       String? response = await _client.execute(query);
       if (response != null && response.isNotEmpty) {
         log(response);
-      } else {
-        log('Null response');
       }
     } catch (e) {
       if (await isConnected()) {
-        _onError('Error executing command');
+        _onError('Error executing command: $e');
       }
     }
   }
@@ -109,7 +107,7 @@ class LGService {
 
   Future<void> hideLogo() async {
     await _execute(
-        "chmod 777 /var/www/html/kml/slave_$_leftScreen.kml; echo '' > /var/www/html/kml/slave_$_leftScreen.kml");
+        "chmod 777 /var/www/html/kml/slave_$_leftScreen.kml; echo '${KmlUtils.emptyKml()}' > /var/www/html/kml/slave_$_leftScreen.kml");
   }
 
   Future<void> showBalloon(String kml) async {
@@ -124,16 +122,17 @@ class LGService {
   }
 
   Future<void> sendKml(String kml) async {
-    await _execute("echo '$kml' > /var/www/html/touristicIA.kml");
-    await _execute('echo "http://lg1:81/touristicIA.kml" >> /var/www/html/kmls.txt');
+    log(kml);
+    await _execute("echo '$kml' > /var/www/html/touristic.kml");
+    await _execute("echo '\nhttp://lg1:81/touristic.kml' > /var/www/html/kmls.txt");
   }
 
   Future<void> cleanKml() async {
     for (var i = 2; i <= _slaves; i++) {
-      await _execute("echo '' > /var/www/html/kml/slave_$i.kml");
+      await _execute("echo '${KmlUtils.emptyKml()}' > /var/www/html/kml/slave_$i.kml");
     }
     await _execute('echo "" > /tmp/query.txt');
-    await _execute("echo '' > /var/www/html/kmls.txt");
+    await _execute("echo '${KmlUtils.emptyKml()}' > /var/www/html/kmls.txt");
   }
 
   Future<void> setRefresh() async {

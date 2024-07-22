@@ -66,7 +66,6 @@ class _SideBarState extends State<SideBar> {
               widget._navigatorKey.currentContext!,
               AppRoutes.routeMap[i]!,
             );
-            LGService().cleanKml();
             LGService().cleanBalloon();
             setState(() {
               _selected = AppFeature.values[i];

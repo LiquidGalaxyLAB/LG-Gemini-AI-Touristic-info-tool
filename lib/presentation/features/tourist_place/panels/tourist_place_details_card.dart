@@ -29,26 +29,30 @@ class TouristPlaceDetailsCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                _touristPlace.name,
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.w600,
-                  color: AppTheme.gray.shade300,
+              Expanded(
+                child: Text(
+                  _touristPlace.name,
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.w600,
+                    color: AppTheme.gray.shade300,
+                  ),
                 ),
               ),
-              IconButton(
-                onPressed: () {
-                  _onIconClick(_touristPlace, !_liked);
-                },
-                icon: Icon(
-                  _liked
-                      ? Icons.favorite_rounded
-                      : Icons.favorite_outline_rounded,
-                  size: 24,
-                  color: _liked
-                      ? AppTheme.color.shade600
-                      : AppTheme.gray.shade400,
+              Flexible(
+                child: IconButton(
+                  onPressed: () {
+                    _onIconClick(_touristPlace, !_liked);
+                  },
+                  icon: Icon(
+                    _liked
+                        ? Icons.favorite_rounded
+                        : Icons.favorite_outline_rounded,
+                    size: 24,
+                    color: _liked
+                        ? AppTheme.color.shade600
+                        : AppTheme.gray.shade400,
+                  ),
                 ),
               ),
             ],
