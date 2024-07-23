@@ -122,7 +122,6 @@ class LGService {
   }
 
   Future<void> sendKml(String kml) async {
-    log(kml);
     await _execute("echo '$kml' > /var/www/html/touristic.kml");
     await _execute("echo '\nhttp://lg1:81/touristic.kml' > /var/www/html/kmls.txt");
   }

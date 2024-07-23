@@ -7,7 +7,8 @@ class KmlUtils {
     CameraPosition cameraPosition, {
     double? zoom,
   }) {
-    zoom ??= 156543.03392 * cos(cameraPosition.target.latitude * pi / 180) / pow(2.0, cameraPosition.zoom.toDouble()) * 1000;
+    zoom ??=
+        156543.03392 * cos(cameraPosition.target.latitude * pi / 180) / pow(2.0, cameraPosition.zoom.toDouble()) * 1000;
     return """<LookAt><longitude>${cameraPosition.target.longitude}</longitude><latitude>${cameraPosition.target.latitude}</latitude><range>$zoom</range><tilt>${cameraPosition.tilt}</tilt><heading>${cameraPosition.bearing}</heading><gx:altitudeMode>relativeToGround</gx:altitudeMode></LookAt>""";
   }
 
@@ -69,5 +70,85 @@ class KmlUtils {
       <Document>
       </Document>
     </kml>""";
+  }
+
+  static String createPolyline(
+      List<LatLng> coordinates,
+  ) {
+    return '''<?xml version="1.0" encoding="UTF-8"?>
+    <kml xmlns="http://www.opengis.net/kml/2.2">
+      <Document>
+        <name>TouristicIA</name>
+        <Placemark>
+          <name>TouristicIA</name>
+          <LineString>
+            <tessellate>1</tessellate>
+            <coordinates>
+                ${coordinates.map((e) => '${e.latitude},${e.longitude},0').join(' ')}
+            </coordinates>
+          </LineString>
+        </Placemark>
+      </Document>
+    </kml>''';
+  }
+
+  static String createKmlPolygon(
+    List<LatLng> coordinates,
+  ) {
+    return '''<?xml version="1.0" encoding="UTF-8"?>
+    <kml xmlns="http://www.opengis.net/kml/2.2">
+      <Document>
+        <name>TouristicIA</name>
+        <Placemark>
+          <name>TouristicIA</name>
+          <Polygon>
+            <outerBoundaryIs>
+              <LinearRing>
+                <coordinates>
+                  ${coordinates.map((e) => '${e.latitude},${e.longitude},0').join(' ')}
+                </coordinates>
+              </LinearRing>
+            </outerBoundaryIs>
+          </Polygon>
+        </Placemark>
+      </Document>
+    </kml>''';
+  }
+
+  static String createKmlCircle(
+    LatLng latLng,
+    double radius,
+  ) {
+    const int numPoints = 100;
+    const double earthRadius = 6371000; // meters
+
+    List<String> coordinates = [];
+    for (int i = 0; i <= numPoints; i++) {
+      double angle = 2 * pi * i / numPoints;
+      double latOffset = radius * cos(angle) / earthRadius;
+      double lonOffset = radius * sin(angle) / (earthRadius * cos(latLng.latitude * pi / 180));
+      double newLat = latLng.latitude + latOffset * (180 / pi);
+      double newLon = latLng.longitude + lonOffset * (180 / pi);
+      coordinates.add('$newLat,$newLon,0');
+    }
+
+    return '''<?xml version="1.0" encoding="UTF-8"?>
+    <kml xmlns="http://www.opengis.net/kml/2.2">
+      <Document>
+        <name>TouristicIA</name>
+        <Placemark>
+          <name>TouristicIA</name>
+          <Polygon>
+            <outerBoundaryIs>
+              <LinearRing>
+                <coordinates>
+                  ${coordinates.join(' ')}
+                </coordinates>
+              </LinearRing>
+            </outerBoundaryIs>
+          </Polygon>
+        </Placemark>
+      </Document>
+    </kml>''';
   }
 }

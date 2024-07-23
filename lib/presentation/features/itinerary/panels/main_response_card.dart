@@ -63,9 +63,11 @@ class _MainResponseCardState extends State<MainResponseCard> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              ItemTitleDescription(
-                title: "Name",
-                description: widget._itinerary.name,
+              Expanded(
+                child: ItemTitleDescription(
+                  title: "Name",
+                  description: widget._itinerary.name,
+                ),
               ),
               IconButton(
                 onPressed: () {

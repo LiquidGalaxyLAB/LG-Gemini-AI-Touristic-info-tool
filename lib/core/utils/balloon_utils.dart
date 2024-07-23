@@ -36,103 +36,42 @@ class BalloonUtils {
         <description></description>
         <styleUrl>#budget_plan_style</styleUrl>
         <gx:balloonVisibility>1</gx:balloonVisibility>
+        <Point>
+          <coordinates>${budgetPlan.places[0].latitude},${budgetPlan.places[0].longitude},0</coordinates>
+        </Point>
       </Placemark>
     </Document>
     </kml>''';
   }
 
   String createBalloonForItinerary(Itinerary itinerary) {
-    String startingPointKML = '''
-    <Placemark>
-      <name>Starting Point: ${itinerary.startingPoint}</name>
-      <styleUrl>#starting_point_style</styleUrl>
-      <Point>
-        <coordinates>${itinerary.places.first.longitude},${itinerary.places.first.latitude},0</coordinates>
-      </Point>
-    </Placemark>
-  ''';
-
-    // Generate KML for travel routes
-    String travelRoutesKML = itinerary.travelRoute.map((route) {
-      return '''
-      <Placemark>
-        <name>${route.mode} from ${route.from} to ${route.to}</name>
-        <styleUrl>#travel_route_style</styleUrl>
-        <description>
-          <![CDATA[
-            <h3>Description:</h3>
-            <p>${route.description}</p>
-            <h3>Duration:</h3>
-            <p>${route.duration}</p>
-            <h3>Highlights:</h3>
-            <p>${route.highlights.join('<br/>')}</p>
-          ]]>
-        </description>
-      </Placemark>
-    ''';
-    }).join('\n');
-
-    // Generate KML for places
-    String placesKML = itinerary.places.map((place) {
-      return '''
-      <Placemark>
-        <name>${place.name}</name>
-        <styleUrl>#place_style</styleUrl>
-        <description>
-          <![CDATA[
-            <h1>${place.name}</h1>
-            <h3>Location:</h3>
-            <p>${place.location}</p>
-            <h3>Description:</h3>
-            <p>${place.description}</p>
-            <h3>Highlights:</h3>
-            <p>${place.highlights.join('<br/>')}</p>
-          ]]>
-        </description>
-        <LineString>
-          <extrude>1</extrude>
-          <tessellate>1</tessellate>
-          <coordinates>
-            ${place.longitude},${place.latitude},0
-            ${place.longitude},${place.latitude},0
-          </coordinates>
-        </LineString>
-      </Placemark>
-    ''';
-    }).join('\n');
-
-    // Complete KML document
     return '''<?xml version="1.0" encoding="UTF-8"?>
     <kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
     <Document>
-      <name>${itinerary.name}</name>
-      <!-- Styles -->
-      <Style id="starting_point_style">
-        <IconStyle>
-          <Icon>
-            <href>http://maps.google.com/mapfiles/kml/paddle/blu-blank.png</href>
-          </Icon>
-        </IconStyle>
+      <name>Itinerary Data</name>
+      <Style id="itinerary_style">
+        <BalloonStyle>
+          <textColor>ffffffff</textColor>
+          <text>
+            <h1>${itinerary.name}</h1>
+            <h3>Starting Point:</h3>
+            <p>${itinerary.startingPoint}</p>
+            <h3>Travel Route:</h3>
+            <p>${itinerary.travelRoute.map((route) => 'Mode: ${route.mode}, From: ${route.from}, To: ${route.to}, Description: ${route.description}, Duration: ${route.duration}, Highlights: ${route.highlights.join(', ')}').join('<br/>')}</p>
+            <h3>Places:</h3>
+            <p>${itinerary.places.map((place) =>'Name: ${place.name}, Location: ${place.location}, Latitude: ${place.latitude}, Longitude: ${place.longitude}, Description: ${place.description}, Highlights: ${place.highlights.join(', ')}').join('<br/>')}</p>
+          </text>
+          <bgColor>ff15151a</bgColor>
+        </BalloonStyle>
       </Style>
-      <Style id="travel_route_style">
-        <LineStyle>
-          <color>ff0000ff</color>
-          <width>3</width>
-        </LineStyle>
-      </Style>
-      <Style id="place_style">
-        <IconStyle>
-          <Icon>
-            <href>http://maps.google.com/mapfiles/kml/paddle/red-circle.png</href>
-          </Icon>
-        </IconStyle>
-      </Style>
-      
-      <!-- Placemarks -->
-      $startingPointKML
-      $travelRoutesKML
-      $placesKML
-      
+      <Placemark>
+        <description></description>
+        <styleUrl>#itinerary_style</styleUrl>
+        <gx:balloonVisibility>1</gx:balloonVisibility>
+        <Point>
+          <coordinates>${itinerary.places[0].latitude},${itinerary.places[0].longitude},0</coordinates>
+        </Point>
+      </Placemark>
     </Document>
     </kml>''';
   }
