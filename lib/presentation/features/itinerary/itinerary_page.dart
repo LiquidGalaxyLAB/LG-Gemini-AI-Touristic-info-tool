@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:touristic/core/utils/kml_utils.dart';
 
 import '../../../core/utils/app_utils.dart';
 import '../../../core/utils/balloon_utils.dart';
@@ -61,6 +62,11 @@ class _ItineraryPageState extends State<ItineraryPage> {
         onSuccess: (result) {
           _itinerary = result;
           LGService().showBalloon(BalloonUtils().createBalloonForItinerary(result));
+          LGService().sendKml(
+            KmlUtils.createPolyline(
+              result.places.map((p) => LatLng(p.latitude, p.longitude)).toList(),
+            ),
+          );
           return MainResponseCard(
             controller: _controller,
             itinerary: _itinerary!,

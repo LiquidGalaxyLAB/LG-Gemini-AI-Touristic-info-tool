@@ -121,9 +121,13 @@ class LGService {
         "chmod 777 /var/www/html/kml/slave_$_rightScreen.kml; echo '${BalloonUtils().emptyBalloon()}' > /var/www/html/kml/slave_$_rightScreen.kml");
   }
 
-  Future<void> sendKml(String kml) async {
-    await _execute("echo '$kml' > /var/www/html/touristic.kml");
-    await _execute("echo '\nhttp://lg1:81/touristic.kml' > /var/www/html/kmls.txt");
+  Future<void> sendKml(
+    String kml, {
+    String file = "touristicIA",
+  }) async {
+    log(kml);
+    await _client.execute("echo '$kml' > /var/www/html/$file.kml");
+    await _client.execute('echo "http://lg1:81/$file.kml" > /var/www/html/kmls.txt');
   }
 
   Future<void> cleanKml() async {

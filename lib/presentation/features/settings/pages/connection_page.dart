@@ -111,7 +111,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
 
   Future<void> _connectToLiquidGalaxy() async {
     if (!_isValidData()) {
-      _showSnackBar("empty data");
+      _showSnackBar("Invalid input! Please provide correct values");
       return;
     }
 
