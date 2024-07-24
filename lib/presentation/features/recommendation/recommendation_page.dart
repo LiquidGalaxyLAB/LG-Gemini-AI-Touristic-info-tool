@@ -6,6 +6,7 @@ import "package:google_maps_flutter/google_maps_flutter.dart";
 
 import '../../../core/utils/app_utils.dart';
 import '../../../core/utils/balloon_utils.dart';
+import '../../../core/utils/kml_utils.dart';
 import '../../../core/utils/maps_utils.dart';
 import '../../../domain/model/recommendation.dart';
 import '../../../service/lg_service.dart';
@@ -78,6 +79,10 @@ class _RecommendationPageState extends State<RecommendationPage> {
                           _recommendations[_selected].longitude,
                         ),
                       );
+                      LGService().sendKml(KmlUtils.createCircle(LatLng(
+                        _recommendations[_selected].latitude,
+                        _recommendations[_selected].longitude,
+                      )));
                     },
                   ),
                   if (index < _recommendations.length - 1) const SizedBox(height: 8)

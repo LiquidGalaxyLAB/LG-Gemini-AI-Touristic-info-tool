@@ -140,12 +140,12 @@ class KmlUtils {
   }
 
   static String _createCircle(
-      LatLng latLng,
-      double radius, {
-        String lineColor = "ff0000ff",
-        String fillColor = "4c0000aa",
-        int lineThickness = 4,
-      }) {
+    LatLng latLng,
+    double radius, {
+    String lineColor = "ff0000ff",
+    String fillColor = "4c0000aa",
+    int lineThickness = 4,
+  }) {
     const int numPoints = 100;
     const double earthRadius = 6371000;
 
@@ -181,12 +181,12 @@ class KmlUtils {
     </Placemark>''';
   }
 
-  static String createCircleKml(
-    LatLng latLng,
-    double radius, {
+  static String createCircle(
+    LatLng latLng, {
+    double radius = 200,
     String lineColor = "ff0000ff",
     String fillColor = "4c0000aa",
-    int lineThickness = 2,
+    int lineThickness = 4,
   }) {
     const int numPoints = 100;
     const double earthRadius = 6371000;

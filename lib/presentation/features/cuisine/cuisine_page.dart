@@ -6,6 +6,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../core/utils/app_utils.dart';
 import '../../../core/utils/balloon_utils.dart';
+import '../../../core/utils/kml_utils.dart';
 import '../../../core/utils/maps_utils.dart';
 import '../../../domain/model/cuisine.dart';
 import '../../../service/lg_service.dart';
@@ -77,6 +78,10 @@ class _CuisinePageState extends State<CuisinePage> {
                           _cuisines[_selected].longitude,
                         ),
                       );
+                      LGService().sendKml(KmlUtils.createCircle(LatLng(
+                        _cuisines[_selected].latitude,
+                        _cuisines[_selected].longitude,
+                      )));
                     },
                   ),
                   if (index < _cuisines.length - 1) const SizedBox(height: 8)

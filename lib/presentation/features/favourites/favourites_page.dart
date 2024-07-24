@@ -6,6 +6,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../core/utils/app_utils.dart';
 import '../../../core/utils/balloon_utils.dart';
+import '../../../core/utils/kml_utils.dart';
 import '../../../core/utils/maps_utils.dart';
 import '../../../domain/model/tourist_place.dart';
 import '../../../service/lg_service.dart';
@@ -73,6 +74,10 @@ class _FavouritesPageState extends State<FavouritesPage> {
                         _touristPlaces[_selected].latitude,
                       ),
                     );
+                    LGService().sendKml(KmlUtils.createCircle(LatLng(
+                      _touristPlaces[_selected].latitude,
+                      _touristPlaces[_selected].latitude,
+                    )));
                   },
                 ),
                 if (index < _touristPlaces.length - 1) const SizedBox(height: 8)

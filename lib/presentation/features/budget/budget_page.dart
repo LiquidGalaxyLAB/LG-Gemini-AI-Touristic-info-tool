@@ -6,6 +6,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../core/utils/app_utils.dart';
 import '../../../core/utils/balloon_utils.dart';
+import '../../../core/utils/kml_utils.dart';
 import '../../../core/utils/maps_utils.dart';
 import '../../../domain/model/budget_plan.dart';
 import '../../../service/lg_service.dart';
@@ -58,6 +59,11 @@ class _BudgetPageState extends State<BudgetPage> {
       }, onSuccess: (result) {
         _budgetPlan = result;
         LGService().showBalloon(BalloonUtils().createBalloonForBudgetPlan(result));
+        LGService().sendKml(
+          KmlUtils.createPolyline(
+            result.places.map((p) => LatLng(p.latitude, p.longitude)).toList(),
+          ),
+        );
         return MainResponseCard(
           budgetPlan: _budgetPlan,
           controller: _controller,
