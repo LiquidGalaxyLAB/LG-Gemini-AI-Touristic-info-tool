@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:google_generative_ai/google_generative_ai.dart';
+import 'package:mime/mime.dart';
 
 import '../../../core/enums/app_feature.dart';
 import '../../../core/utils/prompt_generator.dart';
@@ -99,14 +101,28 @@ class GeminiService {
   Future<String?> getChatReply(List<ChatItem> params) async {
     final question = params.removeLast();
     final history = params.map((item) {
-      return Content(item.isMe ? "user" : "model", [TextPart(item.message)]);
+      return Content(item.isMe ? "user" : "model", [
+        TextPart(item.message),
+        if (item.image != null)
+          DataPart(
+            lookupMimeType(item.image!.name) ?? "",
+            File(item.image!.path).readAsBytesSync(),
+          ),
+      ]);
     }).toList();
 
-    final chatSession = model.startChat(history: history);
+    final ChatSession chatSession = model.startChat(history: history);
     final response = await chatSession.sendMessage(
       Content(
         "user",
-        [TextPart(question.message)],
+        [
+          if (question.image != null)
+            DataPart(
+              lookupMimeType(question.image!.name) ?? "",
+              File(question.image!.path).readAsBytesSync(),
+            ),
+          TextPart(question.message),
+        ],
       ),
     );
     log("${response.text}");

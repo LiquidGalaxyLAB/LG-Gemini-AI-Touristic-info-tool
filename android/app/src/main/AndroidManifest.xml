@@ -19,7 +19,7 @@
         android:requiresSmallestWidthDp="600" />
 
     <application
-        android:label="touristic"
+        android:label="Gemini AI Touristic Tool"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity

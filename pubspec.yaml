@@ -25,7 +25,6 @@ dependencies:
   flutter_bloc: ^8.1.6
 
   # ssh connection
-#  ssh2: ^2.2.3
   ssh2:
     path: C:\Users\smudg\OneDrive\Desktop\flutter_ssh2-master
 
@@ -41,6 +40,8 @@ dependencies:
   url_launcher: ^6.3.0
   flutter_markdown: ^0.7.3
   package_info_plus: ^8.0.0
+  mime: ^1.0.5
+  image_picker: ^1.1.2
 
   # servics
   speech_to_text: ^6.6.0

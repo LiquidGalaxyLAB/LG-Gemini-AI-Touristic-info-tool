@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../../config/theme/app_theme.dart';
 import '../../../core/utils/app_utils.dart';
@@ -25,11 +28,14 @@ class _ChatPageState extends State<ChatPage> {
   String _message = "";
 
   late SpeechToTextService _speechService;
+  late ImagePicker _imagePicker;
   bool isListening = false;
+  XFile? _image;
 
   @override
   void initState() {
     super.initState();
+    _imagePicker = ImagePicker();
     _speechService = SpeechToTextService(onResult: (String text) {
       setState(() {
         _controller.text = text;
@@ -44,7 +50,9 @@ class _ChatPageState extends State<ChatPage> {
   void _onSendClick(String message) {
     _controller.clear();
     _message = message;
-    _chats.add(ChatItem(isMe: true, message: _message));
+    _chats.add(ChatItem(isMe: true, message: _message, image: _image));
+    _image = null;
+    setState(() {});
     BlocProvider.of<ChatBloc>(context).add(GetChatReply(_chats));
   }
 
@@ -56,7 +64,10 @@ class _ChatPageState extends State<ChatPage> {
     }
   }
 
-  void _onAttachClick() {}
+  Future<void> _onAttachClick() async {
+    _image = await _imagePicker.pickImage(source: ImageSource.gallery);
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,27 +83,51 @@ class _ChatPageState extends State<ChatPage> {
                 borderRadius: BorderRadius.circular(10.0),
                 color: AppTheme.gray.shade800,
               ),
-              child: chatBlocBuilder<ChatBloc, String>(onSuccess: (message) {
-                if (_chats.isNotEmpty) {
-                  _chats.removeLast();
-                }
-                _chats.add(ChatItem(isMe: false, message: message));
-                return _buildList();
-              }, onLoading: () {
-                _chats.add(ChatItem(isMe: true, message: _message));
-                _chats.add(const ChatItem(isMe: false, message: "Typing..."));
-                return _buildList();
-              }, onError: () {
-                if (_chats.isNotEmpty) {
-                  _chats.removeLast();
-                }
-                return _buildList();
-              }, onEmpty: () {
-                return const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [NoDataCard()],
-                );
-              }),
+              child: Stack(
+                children: [
+                  chatBlocBuilder<ChatBloc, String>(onSuccess: (message) {
+                    if (_chats.isNotEmpty) {
+                      _chats.removeLast();
+                    }
+                    _chats.add(ChatItem(isMe: false, message: message));
+                    return _buildList();
+                  }, onLoading: () {
+                    _chats.add(ChatItem(isMe: true, message: _message, image: _image));
+                    _chats.add(const ChatItem(isMe: false, message: "Typing...", image: null));
+                    return _buildList();
+                  }, onError: () {
+                    if (_chats.isNotEmpty) {
+                      _chats.removeLast();
+                    }
+                    return _buildList();
+                  }, onEmpty: () {
+                    return const Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [NoDataCard()],
+                    );
+                  }),
+                  if (_image != null)
+                    Align(
+                      alignment: Alignment.bottomLeft,
+                      child: GestureDetector(
+                        onTap: () {
+                          _image = null;
+                          setState(() {});
+                        },
+                        child: Container(
+                          constraints: const BoxConstraints(maxHeight: 50, maxWidth: 70),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(12.0),
+                            child: Image.file(
+                              File(_image!.path),
+                              fit: BoxFit.fitHeight,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                ],
+              ),
             ),
           ),
           const SizedBox(height: 12.0),
@@ -119,6 +154,7 @@ class _ChatPageState extends State<ChatPage> {
             ChatBubble(
               isMe: _chats[index].isMe,
               message: _chats[index].message,
+              image: _chats[index].image,
             ),
             if (index < _chats.length - 1) const SizedBox(height: 24.0)
           ],
