@@ -23,13 +23,15 @@ class ChatPage extends StatefulWidget {
 
 class _ChatPageState extends State<ChatPage> {
   final TextEditingController _controller = TextEditingController();
-
+  final ScrollController _scrollController = ScrollController();
   final List<ChatItem> _chats = [];
-  String _message = "";
 
   late SpeechToTextService _speechService;
   late ImagePicker _imagePicker;
+
+  String _message = "";
   bool isListening = false;
+  bool _showImagePreview = false;
   XFile? _image;
 
   @override
@@ -51,9 +53,9 @@ class _ChatPageState extends State<ChatPage> {
     _controller.clear();
     _message = message;
     _chats.add(ChatItem(isMe: true, message: _message, image: _image));
-    _image = null;
-    setState(() {});
     BlocProvider.of<ChatBloc>(context).add(GetChatReply(_chats));
+    _showImagePreview = false;
+    setState(() {});
   }
 
   void _onAudioClick() {
@@ -66,7 +68,19 @@ class _ChatPageState extends State<ChatPage> {
 
   Future<void> _onAttachClick() async {
     _image = await _imagePicker.pickImage(source: ImageSource.gallery);
-    setState(() {});
+    if (_image != null) {
+      setState(() {
+        _showImagePreview = true;
+      });
+    }
+  }
+
+  _scrollToLast() {
+    _scrollController.animateTo(
+      _scrollController.position.maxScrollExtent,
+      duration: const Duration(milliseconds: 150),
+      curve: Curves.fastOutSlowIn,
+    );
   }
 
   @override
@@ -90,15 +104,19 @@ class _ChatPageState extends State<ChatPage> {
                       _chats.removeLast();
                     }
                     _chats.add(ChatItem(isMe: false, message: message));
+                    _image = null;
+                    _scrollToLast();
                     return _buildList();
                   }, onLoading: () {
                     _chats.add(ChatItem(isMe: true, message: _message, image: _image));
                     _chats.add(const ChatItem(isMe: false, message: "Typing...", image: null));
+                    _scrollToLast();
                     return _buildList();
                   }, onError: () {
                     if (_chats.isNotEmpty) {
                       _chats.removeLast();
                     }
+                    _scrollToLast();
                     return _buildList();
                   }, onEmpty: () {
                     return const Row(
@@ -106,7 +124,7 @@ class _ChatPageState extends State<ChatPage> {
                       children: [NoDataCard()],
                     );
                   }),
-                  if (_image != null)
+                  if (_showImagePreview && _image != null)
                     Align(
                       alignment: Alignment.bottomLeft,
                       child: GestureDetector(
@@ -145,6 +163,7 @@ class _ChatPageState extends State<ChatPage> {
 
   Widget _buildList() {
     return ListView.builder(
+      controller: _scrollController,
       padding: EdgeInsets.zero,
       shrinkWrap: true,
       itemCount: _chats.length,

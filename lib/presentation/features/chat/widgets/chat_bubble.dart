@@ -23,32 +23,36 @@ class ChatBubble extends StatelessWidget {
   Widget build(BuildContext context) {
     return Align(
       alignment: _isMe ? Alignment.centerRight : Alignment.centerLeft,
-      child: Container(
-        constraints: const BoxConstraints(maxWidth: 650),
-        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(_isMe ? 10.0 : 0.0),
-            topRight: const Radius.circular(10.0),
-            bottomLeft: const Radius.circular(10.0),
-            bottomRight: Radius.circular(_isMe ? 0.0 : 10.0),
-          ),
-          color: _isMe ? AppTheme.color.shade700 : AppTheme.gray.shade900,
-        ),
-        child: Column(
-          children: [
-            if (_image != null)
-              Container(
-                constraints: const BoxConstraints(maxHeight: 120, maxWidth: 150),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(12.0),
+      child: Column(
+        children: [
+          if (_image != null)
+            Container(
+              constraints: const BoxConstraints(maxHeight: 120, maxWidth: 150),
+              margin: const EdgeInsets.only(bottom: 12.0),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(12.0),
+                child: AspectRatio(
+                  aspectRatio: 9 / 16,
                   child: Image.file(
                     File(_image.path),
                     fit: BoxFit.fitHeight,
                   ),
                 ),
               ),
-            MarkdownBody(
+            ),
+          Container(
+            constraints: const BoxConstraints(maxWidth: 650),
+            padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(_isMe ? 10.0 : 0.0),
+                topRight: const Radius.circular(10.0),
+                bottomLeft: const Radius.circular(10.0),
+                bottomRight: Radius.circular(_isMe ? 0.0 : 10.0),
+              ),
+              color: _isMe ? AppTheme.color.shade700 : AppTheme.gray.shade900,
+            ),
+            child: MarkdownBody(
               shrinkWrap: true,
               data: _message,
               styleSheet: MarkdownStyleSheet(
@@ -75,8 +79,8 @@ class ChatBubble extends StatelessWidget {
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
