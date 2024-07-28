@@ -110,13 +110,11 @@ class _ChatPageState extends State<ChatPage> {
                   }, onLoading: () {
                     _chats.add(ChatItem(isMe: true, message: _message, image: _image));
                     _chats.add(const ChatItem(isMe: false, message: "Typing...", image: null));
-                    _scrollToLast();
                     return _buildList();
                   }, onError: () {
                     if (_chats.isNotEmpty) {
                       _chats.removeLast();
                     }
-                    _scrollToLast();
                     return _buildList();
                   }, onEmpty: () {
                     return const Row(
