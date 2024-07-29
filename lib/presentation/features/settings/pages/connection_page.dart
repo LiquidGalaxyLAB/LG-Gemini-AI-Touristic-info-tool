@@ -131,7 +131,16 @@ class _ConnectionPageState extends State<ConnectionPage> {
       _isConnected();
       _showSnackBar("Connection successful");
 
-      LGService().flyTo(const CameraPosition(target: LatLng(22.99899294474381, 78.7274369224906), zoom: 3));
+      await LGService().showLogo();
+      await LGService().flyTo(
+        const CameraPosition(
+          target: LatLng(
+            22.99899294474381,
+            78.7274369224906,
+          ),
+          zoom: 3,
+        ),
+      );
 
       final PreferencesUtils preferencesUtils = PreferencesUtils();
       preferencesUtils.updateValue(ConnectionPreferences.username.name, _userController.text);

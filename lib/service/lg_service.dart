@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:ssh2/ssh2.dart';
+import 'package:touristic/service/file_service.dart';
 
 import '../core/utils/balloon_utils.dart';
 import '../core/utils/kml_utils.dart';
@@ -16,11 +17,17 @@ class LGService {
   late Function(String) _onError;
 
   int get _leftScreen {
-    return _slaves ~/ 2 + 2;
+    if (_slaves == 1) {
+      return 1;
+    }
+    return (_slaves / 2).floor() + 2;
   }
 
   int get _rightScreen {
-    return _slaves ~/ 2 + 1;
+    if (_slaves == 1) {
+      return 1;
+    }
+    return (_slaves / 2).floor() + 1;
   }
 
   factory LGService() {
@@ -100,6 +107,22 @@ class LGService {
     await _execute('echo "exittour=true" > /tmp/query.txt');
   }
 
+  Future<void> sendTour(String tourName, String tourKml) async {
+    final fileName = '$tourName.kml';
+    final kmlFile = await FileService().createFile(fileName, tourKml);
+    await _upload(kmlFile.path);
+
+    await _execute('echo "\nhttp://lg1:81/$fileName" >> /var/www/html/kmls.txt');
+  }
+
+  Future<void> startTour(String tourName) async {
+    await _execute('echo "playtour=$tourName" > /tmp/query.txt');
+  }
+
+  Future<void> stopTour() async {
+    await _execute('echo "exittour=true" > /tmp/query.txt');
+  }
+
   Future<void> showLogo() async {
     await _execute(
         "chmod 777 /var/www/html/kml/slave_$_leftScreen.kml; echo '${KmlUtils.createLogos()}' > /var/www/html/kml/slave_$_leftScreen.kml");
@@ -121,13 +144,30 @@ class LGService {
         "chmod 777 /var/www/html/kml/slave_$_rightScreen.kml; echo '${BalloonUtils().emptyBalloon()}' > /var/www/html/kml/slave_$_rightScreen.kml");
   }
 
+  Future<void> _upload(String path) async {
+    String? result = await _client.connectSFTP();
+
+    if (result == 'sftp_connected') {
+      await _client.sftpUpload(
+        path: path,
+        toPath: '/var/www/html',
+        callback: (progress) {
+          log('Sent $progress');
+        },
+      );
+    }
+  }
+
   Future<void> sendKml(
     String kml, {
     String file = "touristicIA",
   }) async {
     log(kml);
-    await _client.execute("echo '$kml' > /var/www/html/$file.kml");
-    await _client.execute('echo "http://lg1:81/$file.kml" > /var/www/html/kmls.txt');
+    await cleanKml();
+    await showLogo();
+    final kmlFile = await FileService().createFile(file, kml);
+    await _upload(kmlFile.path);
+    await _client.execute('echo "http://lg1:81/$file" > /var/www/html/kmls.txt');
   }
 
   Future<void> cleanKml() async {
@@ -139,25 +179,46 @@ class LGService {
   }
 
   Future<void> setRefresh() async {
+    const search = '<href>##LG_PHPIFACE##kml\\/slave_{{slave}}.kml<\\/href>';
+    const replace =
+        '<href>##LG_PHPIFACE##kml\\/slave_{{slave}}.kml<\\/href><refreshMode>onInterval<\\/refreshMode><refreshInterval>2<\\/refreshInterval>';
+    final command = 'echo $_password | sudo -S sed -i "s/$search/$replace/" ~/earth/kml/slave/myplaces.kml';
+
+    final clear = 'echo $_password | sudo -S sed -i "s/$replace/$search/" ~/earth/kml/slave/myplaces.kml';
+
     for (var i = 2; i <= _slaves; i++) {
-      String search = '<href>##LG_PHPIFACE##kml\\/slave_$i.kml<\\/href>';
-      String replace =
-          '<href>##LG_PHPIFACE##kml\\/slave_$i.kml<\\/href><refreshMode>onInterval<\\/refreshMode><refreshInterval>2<\\/refreshInterval>';
-      await _execute(
-          'sshpass -p $_password ssh -t lg$i "echo $_password | sudo -S sed -i "s/$replace/$search/" ~/earth/kml/slave/myplaces.kml"');
-      await _execute(
-          'sshpass -p $_password ssh -t lg$i "echo $_password | sudo -S sed -i "s/$search/$replace/" ~/earth/kml/slave/myplaces.kml"');
+      final clearCmd = clear.replaceAll('{{slave}}', i.toString());
+      final cmd = command.replaceAll('{{slave}}', i.toString());
+      String query = 'sshpass -p $_password ssh -t lg$i \'{{cmd}}\'';
+
+      try {
+        await _client.execute(query.replaceAll('{{cmd}}', clearCmd));
+        await _client.execute(query.replaceAll('{{cmd}}', cmd));
+      } catch (e) {
+        log("$e");
+      }
     }
+    await rebootLG();
   }
 
   Future<void> resetRefresh() async {
+    const search =
+        '<href>##LG_PHPIFACE##kml\\/slave_{{slave}}.kml<\\/href><refreshMode>onInterval<\\/refreshMode><refreshInterval>2<\\/refreshInterval>';
+    const replace = '<href>##LG_PHPIFACE##kml\\/slave_{{slave}}.kml<\\/href>';
+
+    final clear = 'echo $_password | sudo -S sed -i "s/$search/$replace/" ~/earth/kml/slave/myplaces.kml';
+
     for (var i = 2; i <= _slaves; i++) {
-      String search =
-          '<href>##LG_PHPIFACE##kml\\/slave_$i.kml<\\/href><refreshMode>onInterval<\\/refreshMode><refreshInterval>2<\\/refreshInterval>';
-      String replace = '<href>##LG_PHPIFACE##kml\\/slave_$i.kml<\\/href>';
-      await _execute(
-          'sshpass -p $_password ssh -t lg$i "echo $_password | sudo -S sed -i "s/$search/$replace/" ~/earth/kml/slave/myplaces.kml"');
+      final cmd = clear.replaceAll('{{slave}}', i.toString());
+      String query = 'sshpass -p $_password ssh -t lg$i \'$cmd\'';
+
+      try {
+        await _client.execute(query);
+      } catch (e) {
+        log("$e");
+      }
     }
+    await rebootLG();
   }
 
   Future<void> relaunchLG() async {

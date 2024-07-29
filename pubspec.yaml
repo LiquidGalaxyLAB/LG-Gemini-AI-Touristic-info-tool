@@ -45,6 +45,7 @@ dependencies:
 
   # servics
   speech_to_text: ^6.6.0
+  path_provider: ^2.1.3
   geocoding: ^3.0.0
 
 dev_dependencies:
