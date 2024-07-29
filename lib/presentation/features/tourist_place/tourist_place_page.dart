@@ -72,21 +72,21 @@ class _TouristPlacePageState extends State<TouristPlacePage> {
                     description: _touristPlaces[index].specialty,
                     label: "(${_touristPlaces[index].latitude}, ${_touristPlaces[index].longitude})",
                     selected: _selected == index,
-                    onTap: () {
+                    onTap: () async {
                       setState(() {
                         _selected = index;
                       });
-                      moveToPlace(
+                      await LGService().sendKml(KmlUtils.createCircle(LatLng(
+                        _touristPlaces[_selected].latitude,
+                        _touristPlaces[_selected].longitude,
+                      )));
+                      await moveToPlace(
                         _controller,
                         LatLng(
                           _touristPlaces[_selected].latitude,
                           _touristPlaces[_selected].longitude,
                         ),
                       );
-                      LGService().sendKml(KmlUtils.createCircle(LatLng(
-                        _touristPlaces[_selected].latitude,
-                        _touristPlaces[_selected].longitude,
-                      )));
                     },
                   ),
                   if (index < _touristPlaces.length - 1) const SizedBox(height: 8)

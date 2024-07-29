@@ -67,21 +67,21 @@ class _CuisinePageState extends State<CuisinePage> {
                     description: _cuisines[index].description,
                     label: _cuisines[index].duration,
                     selected: _selected == index,
-                    onTap: () {
+                    onTap: () async {
                       setState(() {
                         _selected = index;
                       });
-                      moveToPlace(
+                      await LGService().sendKml(KmlUtils.createCircle(LatLng(
+                        _cuisines[_selected].latitude,
+                        _cuisines[_selected].longitude,
+                      )));
+                      await moveToPlace(
                         _controller,
                         LatLng(
                           _cuisines[_selected].latitude,
                           _cuisines[_selected].longitude,
                         ),
                       );
-                      LGService().sendKml(KmlUtils.createCircle(LatLng(
-                        _cuisines[_selected].latitude,
-                        _cuisines[_selected].longitude,
-                      )));
                     },
                   ),
                   if (index < _cuisines.length - 1) const SizedBox(height: 8)

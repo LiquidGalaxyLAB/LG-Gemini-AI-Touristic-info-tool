@@ -67,21 +67,21 @@ class _ActivityPageState extends State<ActivityPage> {
                     description: _activities[index].description,
                     label: _activities[index].duration,
                     selected: _selected == index,
-                    onTap: () {
+                    onTap: () async {
                       setState(() {
                         _selected = index;
                       });
-                      moveToPlace(
+                      await LGService().sendKml(KmlUtils.createCircle(LatLng(
+                        _activities[_selected].latitude,
+                        _activities[_selected].longitude,
+                      )));
+                      await moveToPlace(
                         _controller,
                         LatLng(
                           _activities[_selected].latitude,
                           _activities[_selected].longitude,
                         ),
                       );
-                      LGService().sendKml(KmlUtils.createCircle(LatLng(
-                        _activities[_selected].latitude,
-                        _activities[_selected].longitude,
-                      )));
                     },
                   ),
                   if (index < _activities.length - 1) const SizedBox(height: 8)

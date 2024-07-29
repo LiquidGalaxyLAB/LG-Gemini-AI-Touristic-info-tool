@@ -84,14 +84,21 @@ class LGService {
 
   Future<void> _execute(String query) async {
     try {
-      String? response = await _client.execute(query);
-      if (response != null && response.isNotEmpty) {
-        log(response);
+      String? response = "session_connected";
+      if (!await isConnected()) {
+        response = await _client.connect();
+        if (response != null && response.isNotEmpty) {
+          log(response);
+        }
+      }
+      if (response == "session_connected") {
+        String? result = await _client.execute(query);
+        if (result != null && result.isNotEmpty) {
+          log(result);
+        }
       }
     } catch (e) {
-      if (await isConnected()) {
-        _onError('Error executing command: $e');
-      }
+      log('Error executing command: $e');
     }
   }
 
@@ -146,7 +153,6 @@ class LGService {
 
   Future<void> _upload(String path) async {
     String? result = await _client.connectSFTP();
-
     if (result == 'sftp_connected') {
       await _client.sftpUpload(
         path: path,
@@ -156,6 +162,7 @@ class LGService {
         },
       );
     }
+    _client.disconnectSFTP();
   }
 
   Future<void> sendKml(
@@ -167,15 +174,15 @@ class LGService {
     await showLogo();
     final kmlFile = await FileService().createFile(file, kml);
     await _upload(kmlFile.path);
-    await _client.execute('echo "http://lg1:81/$file" > /var/www/html/kmls.txt');
+    await _execute('echo "http://lg1:81/$file" > /var/www/html/kmls.txt');
   }
 
   Future<void> cleanKml() async {
+    String query = 'echo "exittour=true" > /tmp/query.txt && > /var/www/html/kmls.txt';
     for (var i = 2; i <= _slaves; i++) {
-      await _execute("echo '${KmlUtils.emptyKml()}' > /var/www/html/kml/slave_$i.kml");
+      query += " && echo '${KmlUtils.emptyKml()}' > /var/www/html/kml/slave_$i.kml";
     }
-    await _execute('echo "" > /tmp/query.txt');
-    await _execute("echo '${KmlUtils.emptyKml()}' > /var/www/html/kmls.txt");
+    await _execute(query);
   }
 
   Future<void> setRefresh() async {
@@ -192,8 +199,8 @@ class LGService {
       String query = 'sshpass -p $_password ssh -t lg$i \'{{cmd}}\'';
 
       try {
-        await _client.execute(query.replaceAll('{{cmd}}', clearCmd));
-        await _client.execute(query.replaceAll('{{cmd}}', cmd));
+        await _execute(query.replaceAll('{{cmd}}', clearCmd));
+        await _execute(query.replaceAll('{{cmd}}', cmd));
       } catch (e) {
         log("$e");
       }

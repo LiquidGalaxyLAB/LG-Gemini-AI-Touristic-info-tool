@@ -68,21 +68,21 @@ class _RecommendationPageState extends State<RecommendationPage> {
                     description: _recommendations[index].description,
                     label: _recommendations[index].duration,
                     selected: _selected == index,
-                    onTap: () {
+                    onTap: () async {
                       setState(() {
                         _selected = index;
                       });
-                      moveToPlace(
-                        _controller,
-                        LatLng(
-                          _recommendations[_selected].latitude,
-                          _recommendations[_selected].longitude,
-                        ),
-                      );
-                      LGService().sendKml(KmlUtils.createCircle(LatLng(
+                      await LGService().sendKml(KmlUtils.createCircle(LatLng(
                         _recommendations[_selected].latitude,
                         _recommendations[_selected].longitude,
                       )));
+                      await moveToPlace(
+                      _controller,
+                      LatLng(
+                        _recommendations[_selected].latitude,
+                        _recommendations[_selected].longitude,
+                      ),
+                      );
                     },
                   ),
                   if (index < _recommendations.length - 1) const SizedBox(height: 8)

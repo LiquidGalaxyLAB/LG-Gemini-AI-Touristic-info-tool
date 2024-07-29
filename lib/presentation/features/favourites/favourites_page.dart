@@ -63,21 +63,21 @@ class _FavouritesPageState extends State<FavouritesPage> {
                   description: _touristPlaces[index].specialty,
                   label: "(${_touristPlaces[index].latitude}, ${_touristPlaces[index].longitude})",
                   selected: _selected == index,
-                  onTap: () {
+                  onTap: () async {
                     setState(() {
                       _selected = index;
                     });
-                    moveToPlace(
+                    await LGService().sendKml(KmlUtils.createCircle(LatLng(
+                      _touristPlaces[_selected].latitude,
+                      _touristPlaces[_selected].latitude,
+                    )));
+                    await moveToPlace(
                       _controller,
                       LatLng(
                         _touristPlaces[_selected].latitude,
                         _touristPlaces[_selected].latitude,
                       ),
                     );
-                    LGService().sendKml(KmlUtils.createCircle(LatLng(
-                      _touristPlaces[_selected].latitude,
-                      _touristPlaces[_selected].latitude,
-                    )));
                   },
                 ),
                 if (index < _touristPlaces.length - 1) const SizedBox(height: 8)
