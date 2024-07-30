@@ -14,6 +14,11 @@ class MapsCard extends StatefulWidget {
   final Set<Polyline> _polylines;
   final Set<Circle> _circles;
 
+  final bool _shouldShowTourButton;
+
+  final Function()? _onOrbitButtonTap;
+  final Function()? _onTourButtonTap;
+
   const MapsCard({
     super.key,
     required Completer<GoogleMapController> controller,
@@ -22,7 +27,12 @@ class MapsCard extends StatefulWidget {
     Set<Polygon> polygons = const {},
     Set<Polyline> polylines = const {},
     Set<Circle> circles = const {},
-  })  : _markers = markers,
+    bool shouldShowTourButton = false,
+    dynamic Function()? onOrbitButtonTap,
+    dynamic Function()? onTourButtonTap,
+  })  : _shouldShowTourButton = shouldShowTourButton, _onTourButtonTap = onTourButtonTap,
+        _onOrbitButtonTap = onOrbitButtonTap,
+        _markers = markers,
         _circles = circles,
         _polygons = polygons,
         _polylines = polylines,
@@ -43,23 +53,66 @@ class MapsCardState extends State<MapsCard> {
       ),
       child: ClipRRect(
         borderRadius: const BorderRadius.all(Radius.circular(10)),
-        child: GoogleMap(
-          markers: widget._markers,
-          polygons: widget._polygons,
-          polylines: widget._polylines,
-          circles: widget._circles,
-          zoomControlsEnabled: false,
-          zoomGesturesEnabled: true,
-          tiltGesturesEnabled: true,
-          mapType: AppTheme.mapStyle,
-          style: AppTheme.mapTheme,
-          initialCameraPosition: widget._cameraPosition,
-          onMapCreated: (GoogleMapController controller) {
-            widget._controller.complete(controller);
-          },
-          onCameraMove: (cameraPosition) {
-            LGService().flyTo(cameraPosition);
-          },
+        child: Stack(
+          children: [
+            GoogleMap(
+              markers: widget._markers,
+              polygons: widget._polygons,
+              polylines: widget._polylines,
+              circles: widget._circles,
+              zoomControlsEnabled: false,
+              zoomGesturesEnabled: true,
+              tiltGesturesEnabled: true,
+              mapType: AppTheme.mapStyle,
+              style: AppTheme.mapTheme,
+              initialCameraPosition: widget._cameraPosition,
+              onMapCreated: (GoogleMapController controller) {
+                widget._controller.complete(controller);
+              },
+              onCameraMove: (cameraPosition) {
+                LGService().flyTo(cameraPosition);
+              },
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Align(
+                alignment: Alignment.bottomRight,
+                child: Container(
+                  padding: const EdgeInsets.all(4.0),
+                  decoration: BoxDecoration(
+                    color: AppTheme.gray.shade900,
+                    borderRadius: const BorderRadius.all(Radius.circular(10)),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        GestureDetector(
+                          onTap: widget._onOrbitButtonTap,
+                          child: Icon(
+                            Icons.public_rounded,
+                            size: 24,
+                            color: AppTheme.color.shade500,
+                          ),
+                        ),
+                        if (widget._shouldShowTourButton) const SizedBox(height: 8.0),
+                        if (widget._shouldShowTourButton)
+                          GestureDetector(
+                            onTap: widget._onTourButtonTap,
+                            child: Icon(
+                              Icons.tour,
+                              size: 24,
+                              color: AppTheme.color.shade500,
+                            ),
+                          )
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
