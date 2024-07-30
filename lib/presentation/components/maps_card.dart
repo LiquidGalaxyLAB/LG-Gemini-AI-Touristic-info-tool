@@ -44,6 +44,9 @@ class MapsCard extends StatefulWidget {
 }
 
 class MapsCardState extends State<MapsCard> {
+  Color tourIconColor = AppTheme.color.shade600;
+  Color orbitIconColor = AppTheme.color.shade600;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -90,20 +93,40 @@ class MapsCardState extends State<MapsCard> {
                       children: [
                         GestureDetector(
                           onTap: widget._onOrbitButtonTap,
+                          onTapDown: (_) {
+                            setState(() {
+                              orbitIconColor = AppTheme.color.shade700;
+                            });
+                          },
+                          onTapUp: (_) {
+                            setState(() {
+                              orbitIconColor = AppTheme.color.shade600;
+                            });
+                          },
                           child: Icon(
                             Icons.public_rounded,
                             size: 24,
-                            color: AppTheme.color.shade500,
+                            color: orbitIconColor,
                           ),
                         ),
                         if (widget._shouldShowTourButton) const SizedBox(height: 8.0),
                         if (widget._shouldShowTourButton)
                           GestureDetector(
                             onTap: widget._onTourButtonTap,
+                            onTapDown: (_) {
+                              setState(() {
+                                tourIconColor = AppTheme.color.shade700;
+                              });
+                            },
+                            onTapUp: (_) {
+                              setState(() {
+                                tourIconColor = AppTheme.color.shade600;
+                              });
+                            },
                             child: Icon(
                               Icons.tour,
                               size: 24,
-                              color: AppTheme.color.shade500,
+                              color: tourIconColor,
                             ),
                           )
                       ],
