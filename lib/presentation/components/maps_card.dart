@@ -36,25 +36,31 @@ class MapsCard extends StatefulWidget {
 class MapsCardState extends State<MapsCard> {
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: const BorderRadius.all(Radius.circular(10)),
-      child: GoogleMap(
-        markers: widget._markers,
-        polygons: widget._polygons,
-        polylines: widget._polylines,
-        circles: widget._circles,
-        zoomControlsEnabled: false,
-        zoomGesturesEnabled: true,
-        tiltGesturesEnabled: true,
-        mapType: AppTheme.mapStyle,
-        style: AppTheme.mapTheme,
-        initialCameraPosition: widget._cameraPosition,
-        onMapCreated: (GoogleMapController controller) {
-          widget._controller.complete(controller);
-        },
-        onCameraMove: (cameraPosition) {
-          LGService().flyTo(cameraPosition);
-        },
+    return Container(
+      decoration: BoxDecoration(
+        color: AppTheme.gray.shade800,
+        borderRadius: const BorderRadius.all(Radius.circular(10)),
+      ),
+      child: ClipRRect(
+        borderRadius: const BorderRadius.all(Radius.circular(10)),
+        child: GoogleMap(
+          markers: widget._markers,
+          polygons: widget._polygons,
+          polylines: widget._polylines,
+          circles: widget._circles,
+          zoomControlsEnabled: false,
+          zoomGesturesEnabled: true,
+          tiltGesturesEnabled: true,
+          mapType: AppTheme.mapStyle,
+          style: AppTheme.mapTheme,
+          initialCameraPosition: widget._cameraPosition,
+          onMapCreated: (GoogleMapController controller) {
+            widget._controller.complete(controller);
+          },
+          onCameraMove: (cameraPosition) {
+            LGService().flyTo(cameraPosition);
+          },
+        ),
       ),
     );
   }
