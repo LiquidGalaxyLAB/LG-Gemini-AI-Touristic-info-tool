@@ -79,11 +79,14 @@ class _MainResponseCardState extends State<MainResponseCard> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              ItemTitleDescription(
-                title: "Name",
-                description: widget._budgetPlan.name,
+              Flexible(
+                child: ItemTitleDescription(
+                  title: "Name",
+                  description: widget._budgetPlan.name,
+                ),
               ),
               IconButton(
                 onPressed: () {

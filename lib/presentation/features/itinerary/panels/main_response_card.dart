@@ -62,8 +62,9 @@ class _MainResponseCardState extends State<MainResponseCard> {
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Expanded(
+              Flexible(
                 child: ItemTitleDescription(
                   title: "Name",
                   description: widget._itinerary.name,

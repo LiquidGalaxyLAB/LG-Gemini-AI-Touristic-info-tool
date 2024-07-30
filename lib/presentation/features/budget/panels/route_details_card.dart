@@ -20,8 +20,6 @@ class RouteDetailsCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
             "${_route.from} - ${_route.to}",
             style: TextStyle(
               fontSize: 24,
