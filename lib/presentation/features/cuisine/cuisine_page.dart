@@ -75,7 +75,7 @@ class _CuisinePageState extends State<CuisinePage> {
                         _cuisines[_selected].latitude,
                         _cuisines[_selected].longitude,
                       )));
-                      await moveToPlace(
+                      moveToPlace(
                         _controller,
                         LatLng(
                           _cuisines[_selected].latitude,

@@ -71,7 +71,7 @@ class _FavouritesPageState extends State<FavouritesPage> {
                       _touristPlaces[_selected].latitude,
                       _touristPlaces[_selected].latitude,
                     )));
-                    await moveToPlace(
+                    moveToPlace(
                       _controller,
                       LatLng(
                         _touristPlaces[_selected].latitude,

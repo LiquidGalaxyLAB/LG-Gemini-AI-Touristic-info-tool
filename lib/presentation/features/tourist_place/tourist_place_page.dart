@@ -80,7 +80,7 @@ class _TouristPlacePageState extends State<TouristPlacePage> {
                         _touristPlaces[_selected].latitude,
                         _touristPlaces[_selected].longitude,
                       )));
-                      await moveToPlace(
+                      moveToPlace(
                         _controller,
                         LatLng(
                           _touristPlaces[_selected].latitude,

@@ -57,7 +57,7 @@ class KmlUtils {
             <overlayXY x="0" y="1" xunits="fraction" yunits="fraction"/>
             <screenXY x="0.025" y="0.95" xunits="fraction" yunits="fraction"/>
             <rotationXY x="0" y="0" xunits="fraction" yunits="fraction"/>
-            <size x="370" y="${300 * 2864 / 3000}" xunits="pixels" yunits="pixels"/>
+            <size x="${370 * 1.5}" y="${(300 * 2864 / 3000) * 1.5}" xunits="pixels" yunits="pixels"/>
           </ScreenOverlay>
         </Folder>
       </Document>
