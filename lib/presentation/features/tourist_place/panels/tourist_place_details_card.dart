@@ -27,9 +27,9 @@ class TouristPlaceDetailsCard extends StatelessWidget {
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Expanded(
+              Flexible(
                 child: Text(
                   _touristPlace.name,
                   style: TextStyle(
@@ -39,20 +39,18 @@ class TouristPlaceDetailsCard extends StatelessWidget {
                   ),
                 ),
               ),
-              Flexible(
-                child: IconButton(
-                  onPressed: () {
-                    _onIconClick(_touristPlace, !_liked);
-                  },
-                  icon: Icon(
-                    _liked
-                        ? Icons.favorite_rounded
-                        : Icons.favorite_outline_rounded,
-                    size: 24,
-                    color: _liked
-                        ? AppTheme.color.shade600
-                        : AppTheme.gray.shade400,
-                  ),
+              IconButton(
+                onPressed: () {
+                  _onIconClick(_touristPlace, !_liked);
+                },
+                icon: Icon(
+                  _liked
+                      ? Icons.favorite_rounded
+                      : Icons.favorite_outline_rounded,
+                  size: 24,
+                  color: _liked
+                      ? AppTheme.color.shade600
+                      : AppTheme.gray.shade400,
                 ),
               ),
             ],

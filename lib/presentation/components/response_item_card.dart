@@ -43,16 +43,18 @@ class ResponseItemCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(
-                  _title,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                    color: _selected
-                        ? AppTheme.gray.shade200
-                        : AppTheme.gray.shade400,
+                Flexible(
+                  child: Text(
+                    _title,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                      color: _selected
+                          ? AppTheme.gray.shade200
+                          : AppTheme.gray.shade400,
+                    ),
                   ),
                 ),
                 if (_label != null)
