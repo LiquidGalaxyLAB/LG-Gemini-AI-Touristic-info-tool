@@ -40,14 +40,16 @@ class _FavouriteDetailsCardState extends State<FavouriteDetailsCard> {
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(
-                widget._touristPlace.name,
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.w600,
-                  color: AppTheme.gray.shade300,
+              Flexible(
+                child: Text(
+                  widget._touristPlace.name,
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.w600,
+                    color: AppTheme.gray.shade300,
+                  ),
                 ),
               ),
               IconButton(
