@@ -79,7 +79,7 @@ class _BudgetPageState extends State<BudgetPage> {
             await LGService().sendKml(KmlUtils.createCircle(
               LatLng(_budgetPlan.places[value].latitude, _budgetPlan.places[value].longitude),
             ));
-            moveToPlace(
+            await moveToPlace(
               _controller,
               LatLng(_budgetPlan.places[value].latitude, _budgetPlan.places[value].longitude),
             );
@@ -91,7 +91,7 @@ class _BudgetPageState extends State<BudgetPage> {
             final latLng = await LocationService().getLatLngFromLocation(_budgetPlan.travelRoute[value].from);
             if (latLng != null) {
               await LGService().sendKml(KmlUtils.createCircle(latLng));
-              moveToPlace(_controller, latLng);
+              await moveToPlace(_controller, latLng);
             }
           },
           onExpenseTap: (value) {

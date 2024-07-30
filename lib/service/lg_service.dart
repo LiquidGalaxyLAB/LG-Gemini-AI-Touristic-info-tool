@@ -141,7 +141,6 @@ class LGService {
   }
 
   Future<void> showBalloon(String kml) async {
-    await cleanKml();
     await _execute(
         "chmod 777 /var/www/html/kml/slave_$_rightScreen.kml; echo '$kml' > /var/www/html/kml/slave_$_rightScreen.kml");
   }
@@ -169,7 +168,9 @@ class LGService {
     String kml, {
     String file = "touristicIA",
   }) async {
-    log(kml);
+    if (!await isConnected()) {
+      return;
+    }
     await cleanKml();
     await showLogo();
     final kmlFile = await FileService().createFile(file, kml);

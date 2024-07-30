@@ -113,9 +113,9 @@ class _MainResponseCardState extends State<MainResponseCard> {
                         index: index,
                         totalPlaces: widget._itinerary.places.length,
                         onPlaceTap: (int tappedIndex) {
-                          setState(() {
+                          setState(() async {
                             widget._onPlaceTap(index);
-                            moveToPlace(
+                            await moveToPlace(
                                 widget._controller,
                                 LatLng(
                                   widget._itinerary.places[index].latitude,

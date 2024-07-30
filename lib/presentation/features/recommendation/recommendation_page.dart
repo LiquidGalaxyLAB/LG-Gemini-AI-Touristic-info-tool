@@ -76,7 +76,7 @@ class _RecommendationPageState extends State<RecommendationPage> {
                         _recommendations[_selected].latitude,
                         _recommendations[_selected].longitude,
                       )));
-                      moveToPlace(
+                      await moveToPlace(
                       _controller,
                       LatLng(
                         _recommendations[_selected].latitude,

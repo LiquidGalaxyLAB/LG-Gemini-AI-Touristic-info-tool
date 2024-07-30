@@ -176,11 +176,11 @@ class _MainResponseCardState extends State<MainResponseCard> {
               selected: widget._selectedExpense == index,
               index: index,
               totalExpenses: widget._budgetPlan.additionalExpenses.length,
-              onExpenseTap: (int tappedIndex) {
+              onExpenseTap: (int tappedIndex) async {
                 setState(() {
                   widget._onExpenseTap(index);
                 });
-                moveToPlace(widget._controller, const LatLng(123.32, 213.21));
+                await moveToPlace(widget._controller, const LatLng(123.32, 213.21));
               },
             );
           },

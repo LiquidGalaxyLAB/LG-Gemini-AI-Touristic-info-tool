@@ -30,10 +30,10 @@ Future<DataState<U>> handleResponse<T, U>({
       ));
     }
   } on InvalidResponseException catch (e) {
-    log('Stack trace:\n$e');
+    log('$e');
     return DataFailure(e);
   } catch (e) {
-    log('Stack trace:\n$e');
+    log('$e');
     return const DataFailure(
       UnhandledException(
         message: "Something went wrong",

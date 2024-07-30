@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:google_generative_ai/google_generative_ai.dart';
@@ -24,7 +23,6 @@ class GeminiService {
     String? prompt = PromptGenerator.generate(params, AppFeature.touristPlace);
     if (prompt != null) {
       final response = await model.generateContent([Content.text(prompt)]);
-      log("${response.text}");
       if (response.text != null) {
         final json = jsonDecode(response.text!.replaceAll("```json", '').replaceAll("```", "").trim());
         return TouristPlacesResponse.fromJson(json);
@@ -37,7 +35,6 @@ class GeminiService {
     String? prompt = PromptGenerator.generate(params, AppFeature.itinerary);
     if (prompt != null) {
       final response = await model.generateContent([Content.text(prompt)]);
-      log("${response.text}");
       if (response.text != null) {
         final json = jsonDecode(response.text!.replaceAll("```json", '').replaceAll("```", "").trim());
         return ItineraryResponse.fromJson(json);
@@ -50,7 +47,6 @@ class GeminiService {
     String? prompt = PromptGenerator.generate(params, AppFeature.localCuisine);
     if (prompt != null) {
       final response = await model.generateContent([Content.text(prompt)]);
-      log("${response.text}");
       if (response.text != null) {
         final json = jsonDecode(response.text!.replaceAll("```json", '').replaceAll("```", "").trim());
         return LocalCuisinesResponse.fromJson(json);
@@ -63,7 +59,6 @@ class GeminiService {
     String? prompt = PromptGenerator.generate(params, AppFeature.activities);
     if (prompt != null) {
       final response = await model.generateContent([Content.text(prompt)]);
-      log("${response.text}");
       if (response.text != null) {
         final json = jsonDecode(response.text!.replaceAll("```json", '').replaceAll("```", "").trim());
         return ActivitiesResponse.fromJson(json);
@@ -76,7 +71,6 @@ class GeminiService {
     String? prompt = PromptGenerator.generate(params, AppFeature.budgetPlan);
     if (prompt != null) {
       final response = await model.generateContent([Content.text(prompt)]);
-      log("${response.text}");
       if (response.text != null) {
         final json = jsonDecode(response.text!.replaceAll("```json", '').replaceAll("```", "").trim());
         return BudgetPlanResponse.fromJson(json);
@@ -89,7 +83,6 @@ class GeminiService {
     String? prompt = PromptGenerator.generate(params, AppFeature.recommendation);
     if (prompt != null) {
       final response = await model.generateContent([Content.text(prompt)]);
-      log("${response.text}");
       if (response.text != null) {
         final json = jsonDecode(response.text!.replaceAll("```json", '').replaceAll("```", "").trim());
         return RecommendationsResponse.fromJson(json);
@@ -125,7 +118,6 @@ class GeminiService {
         ],
       ),
     );
-    log("${response.text}");
     return response.text;
   }
 }

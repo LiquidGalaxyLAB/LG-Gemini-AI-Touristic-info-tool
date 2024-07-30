@@ -75,7 +75,7 @@ class _ActivityPageState extends State<ActivityPage> {
                         _activities[_selected].latitude,
                         _activities[_selected].longitude,
                       )));
-                      moveToPlace(
+                      await moveToPlace(
                         _controller,
                         LatLng(
                           _activities[_selected].latitude,

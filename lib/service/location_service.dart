@@ -16,7 +16,6 @@ class LocationService {
   Future<LatLng?> getLatLngFromLocation(String address) async {
     try {
       List<Location> locations = await locationFromAddress(address);
-      log('$locations');
       if (locations.isNotEmpty) {
         return LatLng(
           locations.first.latitude,
@@ -26,7 +25,7 @@ class LocationService {
         return null;
       }
     } catch (e) {
-      log('Stack trace:\n$e');
+      log('$e');
       return null;
     }
   }
@@ -41,7 +40,7 @@ class LocationService {
         return null;
       }
     } catch (e) {
-      log('Stack trace:\n$e');
+      log('$e');
       return null;
     }
   }
