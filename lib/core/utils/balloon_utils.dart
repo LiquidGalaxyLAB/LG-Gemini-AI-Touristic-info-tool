@@ -15,6 +15,7 @@ class BalloonUtils {
         <BalloonStyle>
           <textColor>ffffffff</textColor>
           <text>
+            <font size="+2">
             <h1>${budgetPlan.name}</h1>
             <h3>Starting Point:</h3>
             <p>${budgetPlan.startingPoint}</p>
@@ -28,6 +29,7 @@ class BalloonUtils {
             <p>${budgetPlan.additionalExpenses.map((exp) => 'Name: ${exp.name}, Description: ${exp.description}, Estimated Cost: ${exp.estimatedCost}').join('<br/>')}</p>
             <h3>Total Cost:</h3>
             <p>${budgetPlan.totalCost}</p>
+            </font>
           </text>
           <bgColor>ff15151a</bgColor>
         </BalloonStyle>
@@ -53,6 +55,7 @@ class BalloonUtils {
         <BalloonStyle>
           <textColor>ffffffff</textColor>
           <text>
+            <font size="+2">
             <h1>${itinerary.name}</h1>
             <h3>Starting Point:</h3>
             <p>${itinerary.startingPoint}</p>
@@ -60,6 +63,7 @@ class BalloonUtils {
             <p>${itinerary.travelRoute.map((route) => 'Mode: ${route.mode}, From: ${route.from}, To: ${route.to}, Description: ${route.description}, Duration: ${route.duration}, Highlights: ${route.highlights.join(', ')}').join('<br/>')}</p>
             <h3>Places:</h3>
             <p>${itinerary.places.map((place) =>'Name: ${place.name}, Location: ${place.location}, Latitude: ${place.latitude}, Longitude: ${place.longitude}, Description: ${place.description}, Highlights: ${place.highlights.join(', ')}').join('<br/>')}</p>
+            </font>
           </text>
           <bgColor>ff15151a</bgColor>
         </BalloonStyle>
@@ -85,6 +89,7 @@ class BalloonUtils {
         <BalloonStyle>
           <textColor>ffffffff</textColor>
           <text>
+            <font size="+2">
             <h1>${place.name}</h1>
             <h3>Location:</h3>
             <p>${place.location}</p>
@@ -98,6 +103,7 @@ class BalloonUtils {
             <p>${place.cuisine}</p>
             <h3>Specialty:</h3>
             <p>${place.specialty}</p>
+            </font>
           </text>
           <bgColor>ff15151a</bgColor>
         </BalloonStyle>
@@ -123,6 +129,7 @@ class BalloonUtils {
         <BalloonStyle>
           <textColor>ffffffff</textColor>
           <text>
+            <font size="+2">
             <h1>${cuisine.name}</h1>
             <h3>Aliases:</h3>
             <p>${cuisine.aliases.join(', ')}</p>
@@ -136,6 +143,7 @@ class BalloonUtils {
             <p>${cuisine.ingredients.join('<br/>')}</p>
             <h3>Recipe:</h3>
             <p>${cuisine.recipe.join('<br/>')}</p>
+            </font>
           </text>
           <bgColor>ff15151a</bgColor>
         </BalloonStyle>
@@ -161,6 +169,7 @@ class BalloonUtils {
         <BalloonStyle>
           <textColor>ffffffff</textColor>
           <text>
+            <font size="+2">
             <h1>${recommendation.name}</h1>
             <h3>Description:</h3>
             <p>${recommendation.description}</p>
@@ -170,6 +179,7 @@ class BalloonUtils {
             <p>${recommendation.duration}</p>
             <h3>Highlights:</h3>
             <p>${recommendation.highlights.join('<br/>')}</p>
+            </font>
           </text>
           <bgColor>ff15151a</bgColor>
         </BalloonStyle>
@@ -195,6 +205,7 @@ class BalloonUtils {
         <BalloonStyle>
           <textColor>ffffffff</textColor>
           <text>
+            <font size="+2">
             <h1>${activity.name}</h1>
             <h3>Description:</h3>
             <p>${activity.description}</p>
@@ -206,6 +217,7 @@ class BalloonUtils {
             <p>${activity.duration}</p>
             <h3>Cost:</h3>
             <p>${activity.cost}</p>
+            </font>
           </text>
           <bgColor>ff15151a</bgColor>
         </BalloonStyle>
@@ -230,7 +242,7 @@ class BalloonUtils {
        <Style id="blank">
          <BalloonStyle>
            <textColor>ffffffff</textColor>
-           <text></text>
+           <text><font size="+2"></font></text>
            <bgColor>ff15151a</bgColor>
          </BalloonStyle>
        </Style>

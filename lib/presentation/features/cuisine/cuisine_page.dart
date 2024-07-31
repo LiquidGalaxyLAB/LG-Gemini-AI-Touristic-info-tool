@@ -44,6 +44,18 @@ class _CuisinePageState extends State<CuisinePage> {
             )
           : null,
       controller: _controller,
+      onMapOrbitButtonTap: () async {
+        await LGService().sendTour(
+          "Orbit",
+          KmlUtils.orbitAround(
+            LatLng(
+              _cuisines[_selected].latitude,
+              _cuisines[_selected].longitude,
+            ),
+          ),
+        );
+        await LGService().startOrbit();
+      },
       panelLeft: CuisineInputCard(
         onContinueClick: (params) {
           showErrorDialog = true;

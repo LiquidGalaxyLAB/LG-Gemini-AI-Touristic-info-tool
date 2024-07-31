@@ -69,7 +69,7 @@ class LGService {
       String? response = await _client.connect();
       return response != null;
     } catch (e) {
-      _onError('Error connecting');
+      log('$e');
       return false;
     }
   }
@@ -107,7 +107,7 @@ class LGService {
   }
 
   Future<void> startOrbit() async {
-    await _execute('echo "playtour=TouristicOrbit" > /tmp/query.txt');
+    await _execute('echo "playtour=Orbit" > /tmp/query.txt');
   }
 
   Future<void> stopOrbit() async {
@@ -118,12 +118,11 @@ class LGService {
     final fileName = '$tourName.kml';
     final kmlFile = await FileService().createFile(fileName, tourKml);
     await _upload(kmlFile.path);
-
     await _execute('echo "\nhttp://lg1:81/$fileName" >> /var/www/html/kmls.txt');
   }
 
-  Future<void> startTour(String tourName) async {
-    await _execute('echo "playtour=$tourName" > /tmp/query.txt');
+  Future<void> startTour() async {
+    await _execute('echo "playtour=Tour" > /tmp/query.txt');
   }
 
   Future<void> stopTour() async {

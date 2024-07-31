@@ -1,17 +1,12 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../../config/theme/app_theme.dart';
-import '../../../../core/utils/maps_utils.dart';
 import '../../../../domain/model/itinerary.dart';
 import '../../../components/item_title_description.dart';
 import '../widgets/table_row_place_card.dart';
 import '../widgets/table_row_route_card.dart';
 
 class MainResponseCard extends StatefulWidget {
-  final Completer<GoogleMapController> _controller;
   final Itinerary _itinerary;
   final Function(bool) _onTap;
   final Function(int) _onRouteTap;
@@ -22,7 +17,6 @@ class MainResponseCard extends StatefulWidget {
 
   const MainResponseCard({
     super.key,
-    required Completer<GoogleMapController> controller,
     required dynamic Function(bool) onTap,
     required dynamic Function(int) onPlaceTap,
     required dynamic Function(int) onRouteTap,
@@ -30,8 +24,7 @@ class MainResponseCard extends StatefulWidget {
     required int selectedPlace,
     required int selectedRoute,
     required bool showRouteTable,
-  })  : _controller = controller,
-        _showRouteTable = showRouteTable,
+  })  : _showRouteTable = showRouteTable,
         _selectedRoute = selectedRoute,
         _selectedPlace = selectedPlace,
         _itinerary = itinerary,
@@ -113,14 +106,8 @@ class _MainResponseCardState extends State<MainResponseCard> {
                         index: index,
                         totalPlaces: widget._itinerary.places.length,
                         onPlaceTap: (int tappedIndex) {
-                          setState(() async {
+                          setState(() {
                             widget._onPlaceTap(index);
-                            await moveToPlace(
-                                widget._controller,
-                                LatLng(
-                                  widget._itinerary.places[index].latitude,
-                                  widget._itinerary.places[index].longitude,
-                                ));
                           });
                         },
                       );

@@ -37,13 +37,35 @@ class _BudgetPageState extends State<BudgetPage> {
   int _selectedExpense = 0;
   int _selectedAccommodation = 0;
   int _selectedDetails = 0;
-  late BudgetPlan _budgetPlan;
+  BudgetPlan? _budgetPlan;
+
+  LatLng? latLng;
 
   @override
   Widget build(BuildContext context) {
     return LayoutBlueprint(
       cameraPosition: const CameraPosition(target: LatLng(22.99899294474381, 78.7274369224906), zoom: 3),
       controller: _controller,
+      onMapOrbitButtonTap: () async {
+        if(_selectedDetails == 1) {
+          await LGService().sendTour(
+            "Orbit",
+            KmlUtils.orbitAround(
+              LatLng(
+                _budgetPlan!.places[_selectedPlace].latitude,
+                _budgetPlan!.places[_selectedPlace].longitude,
+              ),
+            ),
+          );
+          await LGService().startOrbit();
+        } else if (latLng != null) {
+          await LGService().sendTour(
+            "Orbit",
+            KmlUtils.orbitAround(latLng!),
+          );
+          await LGService().startOrbit();
+        }
+      },
       panelLeft: BudgetInputCard(
         onContinueClick: (params) {
           showErrorDialog = true;
@@ -65,8 +87,7 @@ class _BudgetPageState extends State<BudgetPage> {
           ),
         );
         return MainResponseCard(
-          budgetPlan: _budgetPlan,
-          controller: _controller,
+          budgetPlan: _budgetPlan!,
           onTap: (value) {
             setState(() {
               _selectedDetails = value;
@@ -77,21 +98,21 @@ class _BudgetPageState extends State<BudgetPage> {
               _selectedPlace = value;
             });
             await LGService().sendKml(KmlUtils.createCircle(
-              LatLng(_budgetPlan.places[value].latitude, _budgetPlan.places[value].longitude),
+              LatLng(_budgetPlan!.places[value].latitude, _budgetPlan!.places[value].longitude),
             ));
             await moveToPlace(
               _controller,
-              LatLng(_budgetPlan.places[value].latitude, _budgetPlan.places[value].longitude),
+              LatLng(_budgetPlan!.places[value].latitude, _budgetPlan!.places[value].longitude),
             );
           },
           onRouteTap: (value) async {
             setState(() {
               _selectedRoute = value;
             });
-            final latLng = await LocationService().getLatLngFromLocation(_budgetPlan.travelRoute[value].from);
+            latLng = await LocationService().getLatLngFromLocation(_budgetPlan!.travelRoute[value].from);
             if (latLng != null) {
-              await LGService().sendKml(KmlUtils.createCircle(latLng));
-              await moveToPlace(_controller, latLng);
+              await LGService().sendKml(KmlUtils.createCircle(latLng!));
+              await moveToPlace(_controller, latLng!);
             }
           },
           onExpenseTap: (value) {
@@ -121,19 +142,19 @@ class _BudgetPageState extends State<BudgetPage> {
     switch (_selectedDetails) {
       case 1:
         return PlaceDetailsCard(
-          place: _budgetPlan.places[_selectedPlace],
+          place: _budgetPlan!.places[_selectedPlace],
         );
       case 2:
         return AccommodationDetailsCard(
-          accommodation: _budgetPlan.accommodation[_selectedAccommodation],
+          accommodation: _budgetPlan!.accommodation[_selectedAccommodation],
         );
       case 3:
         return AdditionalExpensesDetailsCard(
-          additionalExpense: _budgetPlan.additionalExpenses[_selectedExpense],
+          additionalExpense: _budgetPlan!.additionalExpenses[_selectedExpense],
         );
       default:
         return RouteDetailsCard(
-          route: _budgetPlan.travelRoute[_selectedRoute],
+          route: _budgetPlan!.travelRoute[_selectedRoute],
         );
     }
   }

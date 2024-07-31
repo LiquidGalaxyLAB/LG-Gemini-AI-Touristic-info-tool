@@ -7,8 +7,10 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../../core/utils/app_utils.dart';
 import '../../../core/utils/balloon_utils.dart';
 import '../../../core/utils/kml_utils.dart';
+import '../../../core/utils/maps_utils.dart';
 import '../../../domain/model/itinerary.dart';
 import '../../../service/lg_service.dart';
+import '../../../service/location_service.dart';
 import '../../components/layout_blueprint.dart';
 import 'bloc/itinerary_bloc.dart';
 import 'bloc/itinerary_event.dart';
@@ -34,6 +36,8 @@ class _ItineraryPageState extends State<ItineraryPage> {
   int _selectedRoute = 0;
   Itinerary? _itinerary;
 
+  LatLng? latLng;
+
   @override
   Widget build(BuildContext context) {
     return LayoutBlueprint(
@@ -47,6 +51,39 @@ class _ItineraryPageState extends State<ItineraryPage> {
             )
           : null,
       controller: _controller,
+      shouldShowMapTourButton: !_showRouteDetails,
+      onMapTourButtonTap: () async {
+        if (_itinerary != null) {
+          await LGService().sendTour(
+            "Tour",
+            KmlUtils.createTour(_itinerary!.places
+                .map((e) => LatLng(
+                      e.latitude,
+                      e.longitude,
+                    ))
+                .toList()),
+          );
+          await LGService().startTour();
+        }
+      },
+      onMapOrbitButtonTap: () async {
+        if (!_showRouteDetails) {
+          await LGService().sendTour(
+            "Orbit",
+            KmlUtils.orbitAround(LatLng(
+              _itinerary!.places[_selectedPlace].latitude,
+              _itinerary!.places[_selectedPlace].longitude,
+            )),
+          );
+          await LGService().startOrbit();
+        } else if (latLng != null) {
+          await LGService().sendTour(
+            "Orbit",
+            KmlUtils.orbitAround(latLng!),
+          );
+          await LGService().startOrbit();
+        }
+      },
       panelLeft: ItineraryInputCard(
         onContinueClick: (params) {
           showErrorDialog = true;
@@ -68,7 +105,6 @@ class _ItineraryPageState extends State<ItineraryPage> {
             ),
           );
           return MainResponseCard(
-            controller: _controller,
             itinerary: _itinerary!,
             selectedPlace: _selectedPlace,
             selectedRoute: _selectedRoute,
@@ -78,15 +114,26 @@ class _ItineraryPageState extends State<ItineraryPage> {
                 _showRouteDetails = value;
               });
             },
-            onPlaceTap: (value) {
+            onPlaceTap: (value) async {
               setState(() {
                 _selectedPlace = value;
               });
+              await moveToPlace(
+                _controller,
+                LatLng(
+                  _itinerary!.places[_selectedPlace].latitude,
+                  _itinerary!.places[_selectedPlace].longitude,
+                ),
+              );
             },
-            onRouteTap: (value) {
+            onRouteTap: (value) async {
               setState(() {
                 _selectedRoute = value;
               });
+              latLng = await LocationService().getLatLngFromLocation(_itinerary!.places[_selectedRoute].name);
+              if (latLng != null) {
+                await moveToPlace(_controller, latLng!);
+              }
             },
           );
         },

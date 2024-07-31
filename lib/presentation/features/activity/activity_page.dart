@@ -44,6 +44,18 @@ class _ActivityPageState extends State<ActivityPage> {
             )
           : null,
       controller: _controller,
+      onMapOrbitButtonTap: () async {
+        await LGService().sendTour(
+          "Orbit",
+          KmlUtils.orbitAround(
+            LatLng(
+              _activities[_selected].latitude,
+              _activities[_selected].longitude,
+            ),
+          ),
+        );
+        await LGService().startOrbit();
+      },
       panelLeft: ActivityInputCard(
         onContinueClick: (params) {
           showErrorDialog = true;

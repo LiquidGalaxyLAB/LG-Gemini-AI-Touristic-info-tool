@@ -93,9 +93,6 @@ class _ControlPanelState extends State<ControlPanel> {
             icon: Icons.restart_alt_rounded,
             onPressed: () {
               LGService().rebootLG();
-              Future.delayed(const Duration(seconds: 10), () {
-                LGService().connect();
-              });
             },
             enabled: widget._connected,
           ),

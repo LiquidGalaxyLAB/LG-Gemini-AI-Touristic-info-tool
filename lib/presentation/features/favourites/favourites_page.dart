@@ -49,9 +49,20 @@ class _FavouritesPageState extends State<FavouritesPage> {
             )
           : null,
       controller: _controller,
+      onMapOrbitButtonTap: () async {
+        await LGService().sendTour(
+          "Orbit",
+          KmlUtils.orbitAround(
+            LatLng(
+              _touristPlaces[_selected].latitude,
+              _touristPlaces[_selected].longitude,
+            ),
+          ),
+        );
+        await LGService().startOrbit();
+      },
       panelLeft: blocBuilder<FavouritesBloc, T>(onSuccess: (result) {
         _touristPlaces = result;
-
         return ListView.builder(
           padding: EdgeInsets.zero,
           itemCount: _touristPlaces.length,
@@ -69,13 +80,13 @@ class _FavouritesPageState extends State<FavouritesPage> {
                     });
                     await LGService().sendKml(KmlUtils.createCircle(LatLng(
                       _touristPlaces[_selected].latitude,
-                      _touristPlaces[_selected].latitude,
+                      _touristPlaces[_selected].longitude,
                     )));
                     await moveToPlace(
                       _controller,
                       LatLng(
                         _touristPlaces[_selected].latitude,
-                        _touristPlaces[_selected].latitude,
+                        _touristPlaces[_selected].longitude,
                       ),
                     );
                   },

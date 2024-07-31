@@ -24,7 +24,10 @@ class _MainWrapperState extends State<MainWrapper> {
   }
 
   void _loadLocalPreferences() async {
-    _connectToLg();
+    int connectionMethod = await PreferencesUtils().getValue<int>(GeneralPreferences.connectionMethod.name) ?? 1;
+    if (connectionMethod == 0) {
+      _connectToLg();
+    }
   }
 
   void _connectToLg() async {
@@ -35,19 +38,18 @@ class _MainWrapperState extends State<MainWrapper> {
     String port = (await preferencesUtils.getValue(ConnectionPreferences.port.name)) ?? "";
     String screens = (await preferencesUtils.getValue(ConnectionPreferences.screens.name)) ?? "";
 
-    LGService().init(
-      onError: (data) {
-        _showSnackbar(data);
-      },
-      host: ip,
-      port: int.parse(port),
-      username: username,
-      password: password,
-      slaves: int.parse(screens),
-    );
+    if (username.isNotEmpty && password.isNotEmpty && ip.isNotEmpty && port.isNotEmpty && screens.isNotEmpty) {
+      LGService().init(
+        onError: (data) {
+          _showSnackbar(data);
+        },
+        host: ip,
+        port: int.parse(port),
+        username: username,
+        password: password,
+        slaves: int.parse(screens),
+      );
 
-    int connectionMethod = await PreferencesUtils().getValue<int>(GeneralPreferences.connectionMethod.name) ?? 1;
-    if (connectionMethod == 0) {
       final result = await LGService().connect();
       if (result) {
         _showSnackbar("Connected Automatically");

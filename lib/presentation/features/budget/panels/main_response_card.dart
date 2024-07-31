@@ -1,10 +1,6 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../../config/theme/app_theme.dart';
-import '../../../../core/utils/maps_utils.dart';
 import '../../../../domain/model/budget_plan.dart';
 import '../../../components/item_title_description.dart';
 import '../widgets/table_row_accommodation_card.dart';
@@ -13,7 +9,6 @@ import '../widgets/table_row_place_card.dart';
 import '../widgets/table_row_route_card.dart';
 
 class MainResponseCard extends StatefulWidget {
-  final Completer<GoogleMapController> _controller;
   final BudgetPlan _budgetPlan;
   final Function(int) _onTap;
   final Function(int) _onRouteTap;
@@ -28,7 +23,6 @@ class MainResponseCard extends StatefulWidget {
 
   const MainResponseCard({
     super.key,
-    required Completer<GoogleMapController> controller,
     required dynamic Function(int) onTap,
     required dynamic Function(int) onPlaceTap,
     required dynamic Function(int) onRouteTap,
@@ -40,8 +34,7 @@ class MainResponseCard extends StatefulWidget {
     required int selectedExpense,
     required int selectedAccommodation,
     required int selectedDetails,
-  })  : _controller = controller,
-        _selectedRoute = selectedRoute,
+  })  : _selectedRoute = selectedRoute,
         _selectedPlace = selectedPlace,
         _onAccommodationTap = onAccommodationTap,
         _onExpenseTap = onExpenseTap,
@@ -180,7 +173,6 @@ class _MainResponseCardState extends State<MainResponseCard> {
                 setState(() {
                   widget._onExpenseTap(index);
                 });
-                await moveToPlace(widget._controller, const LatLng(123.32, 213.21));
               },
             );
           },

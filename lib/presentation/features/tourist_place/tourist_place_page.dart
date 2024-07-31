@@ -48,6 +48,18 @@ class _TouristPlacePageState extends State<TouristPlacePage> {
             )
           : null,
       controller: _controller,
+      onMapOrbitButtonTap: () async {
+        await LGService().sendTour(
+          "Orbit",
+          KmlUtils.orbitAround(
+            LatLng(
+              _touristPlaces[_selected].latitude,
+              _touristPlaces[_selected].longitude,
+            ),
+          ),
+        );
+        await LGService().startOrbit();
+      },
       panelLeft: TouristPlaceInputCard(
         onContinueClick: (params) {
           showErrorDialog = true;

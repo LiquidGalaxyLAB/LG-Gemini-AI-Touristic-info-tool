@@ -44,6 +44,18 @@ class _RecommendationPageState extends State<RecommendationPage> {
             )
           : null,
       controller: _controller,
+      onMapOrbitButtonTap: () async {
+        await LGService().sendTour(
+          "Orbit",
+          KmlUtils.orbitAround(
+            LatLng(
+              _recommendations[_selected].latitude,
+              _recommendations[_selected].longitude,
+            ),
+          ),
+        );
+        await LGService().startOrbit();
+      },
       panelLeft: RecommendationInputCard(
         onContinueClick: (params) {
           showErrorDialog = true;

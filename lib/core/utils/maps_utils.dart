@@ -6,7 +6,7 @@ Future<void> moveToPlace(
   Completer<GoogleMapController> mapController,
   LatLng latLng, {
   double zoom = 18.0,
-  double tilt = 0.0,
+  double tilt = 4.0,
 }) async {
   final GoogleMapController controller = await mapController.future;
   await controller.animateCamera(
