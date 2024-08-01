@@ -2,10 +2,11 @@ import 'dart:developer';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:ssh2/ssh2.dart';
-import 'package:touristic/service/file_service.dart';
 
+import '../core/constants/constants.dart';
 import '../core/utils/balloon_utils.dart';
 import '../core/utils/kml_utils.dart';
+import 'file_service.dart';
 
 class LGService {
   static final LGService _instance = LGService._internal();
@@ -67,7 +68,7 @@ class LGService {
   Future<bool> connect() async {
     try {
       String? response = await _client.connect();
-      return response != null;
+      return response == "session_connected";
     } catch (e) {
       log('$e');
       return false;
@@ -85,7 +86,7 @@ class LGService {
   Future<void> _execute(String query) async {
     try {
       String? response = "session_connected";
-      if (!await isConnected()) {
+      if (firstTimeConnected && !await isConnected()) {
         response = await _client.connect();
         if (response != null && response.isNotEmpty) {
           log(response);

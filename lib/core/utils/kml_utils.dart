@@ -2,6 +2,8 @@ import 'dart:math';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import '../constants/constants.dart';
+
 class KmlUtils {
   static String lookAt(
     CameraPosition cameraPosition, {
@@ -31,7 +33,7 @@ class KmlUtils {
           <longitude>${latLng.longitude}</longitude>
           <latitude>${latLng.latitude}</latitude>
           <heading>$heading</heading>
-          <tilt>60</tilt>
+          <tilt>$tilt</tilt>
           <range>2000</range>
           <gx:fovy>60</gx:fovy>
           <altitude>$altitude</altitude>

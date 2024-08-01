@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import '../../../core/constants/constants.dart';
 import '../../../core/utils/app_utils.dart';
 import '../../../core/utils/balloon_utils.dart';
 import '../../../core/utils/kml_utils.dart';
@@ -47,7 +48,7 @@ class _BudgetPageState extends State<BudgetPage> {
       cameraPosition: const CameraPosition(target: LatLng(22.99899294474381, 78.7274369224906), zoom: 3),
       controller: _controller,
       onMapOrbitButtonTap: () async {
-        if(_selectedDetails == 1) {
+        if (_selectedDetails == 1) {
           await LGService().sendTour(
             "Orbit",
             KmlUtils.orbitAround(
@@ -103,6 +104,7 @@ class _BudgetPageState extends State<BudgetPage> {
             await moveToPlace(
               _controller,
               LatLng(_budgetPlan!.places[value].latitude, _budgetPlan!.places[value].longitude),
+              tilt: tilt,
             );
           },
           onRouteTap: (value) async {
@@ -112,7 +114,7 @@ class _BudgetPageState extends State<BudgetPage> {
             latLng = await LocationService().getLatLngFromLocation(_budgetPlan!.travelRoute[value].from);
             if (latLng != null) {
               await LGService().sendKml(KmlUtils.createCircle(latLng!));
-              await moveToPlace(_controller, latLng!);
+              await moveToPlace(_controller, latLng!, tilt: tilt);
             }
           },
           onExpenseTap: (value) {

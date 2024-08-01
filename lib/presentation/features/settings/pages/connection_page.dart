@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:touristic/core/constants/constants.dart';
 
 import '../../../../config/theme/app_theme.dart';
 import '../../../../core/enums/preferences.dart';
@@ -129,6 +130,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
     final result = await LGService().connect();
     if (result) {
       _isConnected();
+      firstTimeConnected = true;
       _showSnackBar("Connection successful");
 
       await LGService().showLogo();

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../config/routes/app_routes.dart';
 import '../config/theme/app_theme.dart';
+import '../core/constants/constants.dart';
 import '../core/enums/preferences.dart';
 import '../core/utils/preferences_utils.dart';
 import '../service/lg_service.dart';
@@ -52,6 +53,7 @@ class _MainWrapperState extends State<MainWrapper> {
 
       final result = await LGService().connect();
       if (result) {
+        firstTimeConnected = true;
         _showSnackbar("Connected Automatically");
       }
     }

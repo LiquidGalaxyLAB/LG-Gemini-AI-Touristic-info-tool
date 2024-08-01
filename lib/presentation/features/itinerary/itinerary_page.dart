@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import '../../../core/constants/constants.dart';
 import '../../../core/utils/app_utils.dart';
 import '../../../core/utils/balloon_utils.dart';
 import '../../../core/utils/kml_utils.dart';
@@ -124,6 +125,7 @@ class _ItineraryPageState extends State<ItineraryPage> {
                   _itinerary!.places[_selectedPlace].latitude,
                   _itinerary!.places[_selectedPlace].longitude,
                 ),
+                tilt: tilt,
               );
             },
             onRouteTap: (value) async {
@@ -132,7 +134,7 @@ class _ItineraryPageState extends State<ItineraryPage> {
               });
               latLng = await LocationService().getLatLngFromLocation(_itinerary!.places[_selectedRoute].name);
               if (latLng != null) {
-                await moveToPlace(_controller, latLng!);
+                await moveToPlace(_controller, latLng!, tilt: tilt);
               }
             },
           );

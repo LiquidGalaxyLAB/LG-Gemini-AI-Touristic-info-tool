@@ -11,6 +11,9 @@ import '../../config/theme/color/impl/red_color.dart';
 import '../../config/theme/color/impl/yellow_color.dart';
 import '../../config/theme/maps_theme.dart';
 
+const double tilt = 45.0;
+bool firstTimeConnected = false;
+
 const String geminiFlashLatest = "gemini-1.5-flash-latest";
 
 const String touristPlacesTable = "tourist_places";
