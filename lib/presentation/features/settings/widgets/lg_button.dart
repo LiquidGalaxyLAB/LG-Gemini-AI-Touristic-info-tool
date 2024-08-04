@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../config/theme/app_theme.dart';
 
-class LGButton extends StatelessWidget {
+class LGButton extends StatefulWidget {
   final String _label;
   final IconData _icon;
   final Function() _onPressed;
@@ -23,14 +23,27 @@ class LGButton extends StatelessWidget {
         _label = label;
 
   @override
+  State<LGButton> createState() => _LGButtonState();
+}
+
+class _LGButtonState extends State<LGButton> {
+  bool _loading = false;
+
+  @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: _styleSmall ? 170 : 350,
+      width: widget._styleSmall ? 170 : 350,
       height: 55,
       child: FilledButton(
-        onPressed: () {
-          if (_enabled) {
-            _onPressed();
+        onPressed: () async {
+          if (widget._enabled && !_loading) {
+            setState(() {
+              _loading = true;
+            });
+            await widget._onPressed();
+            setState(() {
+              _loading = false;
+            });
           }
         },
         style: FilledButton.styleFrom(
@@ -43,17 +56,28 @@ class LGButton extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              _label,
+              widget._label,
               style: TextStyle(
                 color: AppTheme.gray.shade300,
                 fontWeight: FontWeight.bold,
                 fontSize: 16,
               ),
             ),
-            Icon(
-              _icon,
-              color: AppTheme.gray.shade300,
-            ),
+            _loading
+                ? SizedBox(
+                    width: 24,
+                    height: 24,
+                    child: CircularProgressIndicator(
+                      color: AppTheme.color.shade600,
+                      strokeCap: StrokeCap.round,
+                      strokeWidth: 3,
+                    ),
+                  )
+                : Icon(
+                    widget._icon,
+                    color: AppTheme.gray.shade300,
+                    size: 24,
+                  ),
           ],
         ),
       ),

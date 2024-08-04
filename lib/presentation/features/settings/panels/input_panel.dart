@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../config/theme/app_theme.dart';
 import '../widgets/input_field.dart';
 
-class InputPanel extends StatelessWidget {
+class InputPanel extends StatefulWidget {
   static const double spacing = 12.0;
   final TextEditingController _userController;
   final TextEditingController _passController;
@@ -32,6 +32,13 @@ class InputPanel extends StatelessWidget {
         _connected = connected;
 
   @override
+  State<InputPanel> createState() => _InputPanelState();
+}
+
+class _InputPanelState extends State<InputPanel> {
+  bool _loading = false;
+
+  @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
@@ -41,15 +48,15 @@ class InputPanel extends StatelessWidget {
           InputField(
             label: "Username",
             hint: "lg",
-            controller: _userController,
+            controller: widget._userController,
             type: TextInputType.name,
             prefixIcon: Icons.person_rounded,
           ),
-          const SizedBox(height: spacing),
+          const SizedBox(height: InputPanel.spacing),
           InputField(
             label: "Password",
             hint: "lg",
-            controller: _passController,
+            controller: widget._passController,
             type: TextInputType.visiblePassword,
             prefixIcon: Icons.key_rounded,
             suffixIcons: const [
@@ -57,34 +64,42 @@ class InputPanel extends StatelessWidget {
               Icons.visibility_off_rounded,
             ],
           ),
-          const SizedBox(height: spacing),
+          const SizedBox(height: InputPanel.spacing),
           InputField(
             label: "IP Address",
             hint: "192.168.0.1",
-            controller: _ipController,
+            controller: widget._ipController,
             type: TextInputType.phone,
             prefixIcon: Icons.router_rounded,
           ),
-          const SizedBox(height: spacing),
+          const SizedBox(height: InputPanel.spacing),
           InputField(
             label: "Port Number",
             hint: "22",
-            controller: _portController,
+            controller: widget._portController,
             type: TextInputType.number,
             prefixIcon: Icons.account_tree_rounded,
           ),
-          const SizedBox(height: spacing),
+          const SizedBox(height: InputPanel.spacing),
           InputField(
             label: "Total Screens",
             hint: "3",
-            controller: _slavesController,
+            controller: widget._slavesController,
             type: TextInputType.number,
             prefixIcon: Icons.smart_screen_rounded,
           ),
           const SizedBox(height: 28),
           FilledButton(
-            onPressed: () {
-              _onPressed();
+            onPressed: () async {
+              if (!_loading) {
+                setState(() {
+                  _loading = true;
+                });
+                await widget._onPressed();
+                setState(() {
+                  _loading = false;
+                });
+              }
             },
             style: FilledButton.styleFrom(
               fixedSize: const Size(250, 50),
@@ -93,14 +108,24 @@ class InputPanel extends StatelessWidget {
               ),
               backgroundColor: AppTheme.color.shade700,
             ),
-            child: Text(
-              _connected ? "Disconnect" : "Connect",
-              style: TextStyle(
-                color: AppTheme.gray.shade200,
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
+            child: !_loading
+                ? Text(
+                    widget._connected ? "Disconnect" : "Connect",
+                    style: TextStyle(
+                      color: AppTheme.gray.shade200,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  )
+                : SizedBox(
+                    width: 24,
+                    height: 24,
+                    child: CircularProgressIndicator(
+                      color: AppTheme.color.shade50,
+                      strokeCap: StrokeCap.round,
+                      strokeWidth: 3,
+                    ),
+                  ),
           )
         ],
       ),

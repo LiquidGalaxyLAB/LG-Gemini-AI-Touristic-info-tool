@@ -9,9 +9,6 @@ import '../../../../service/lg_service.dart';
 import '../panels/input_panel.dart';
 import '../panels/status_panel.dart';
 
-const String connect = "Connect";
-const String disconnect = "Disconnect";
-
 class ConnectionPage extends StatefulWidget {
   const ConnectionPage({super.key});
 
@@ -56,7 +53,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
     );
   }
 
-  void _isConnected() async {
+  Future<void> _isConnected() async {
     final connected = await LGService().isConnected();
     setState(() {
       _connected = connected;
@@ -85,20 +82,22 @@ class _ConnectionPageState extends State<ConnectionPage> {
               ipController: _ipController,
               portController: _portController,
               slavesController: _slavesController,
-              onPressed: () {
-                if (_connected) {
-                  LGService().disconnect();
-                  _isConnected();
-                } else {
-                  _connectToLiquidGalaxy();
-                }
-              },
+              onPressed: _connect,
               connected: _connected,
             ),
           ),
         ],
       ),
     );
+  }
+
+  Future<void> _connect() async {
+    if (_connected) {
+      await LGService().disconnect();
+      await _isConnected();
+    } else {
+      await _connectToLiquidGalaxy();
+    }
   }
 
   bool _isValidData() {
