@@ -27,6 +27,7 @@ class _SideBarState extends State<SideBar> {
   Widget build(BuildContext context) {
     return Container(
       color: AppTheme.gray.shade1000,
+      width: _expanded ? 210 : 66,
       padding: const EdgeInsets.all(8.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -78,7 +79,6 @@ class _SideBarState extends State<SideBar> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
       children: items,
     );
   }
@@ -94,7 +94,8 @@ class _SideBarState extends State<SideBar> {
       onTap: () {
         onTap();
       },
-      child: Padding(
+      child: Container(
+        color: AppTheme.gray.shade1000,
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,

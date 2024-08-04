@@ -88,11 +88,8 @@ class _MainWrapperState extends State<MainWrapper> {
         ),
         child: Row(
           children: [
-            Container(
-              color: AppTheme.gray.shade900,
-              child: SideBar(
-                navigatorKey: _navigatorKey,
-              ),
+            SideBar(
+              navigatorKey: _navigatorKey,
             ),
             Expanded(
               child: Container(
