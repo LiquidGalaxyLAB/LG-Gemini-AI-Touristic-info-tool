@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../config/routes/app_routes.dart';
 import '../config/theme/app_theme.dart';
@@ -55,6 +56,17 @@ class _MainWrapperState extends State<MainWrapper> {
       if (result) {
         firstTimeConnected = true;
         _showSnackbar("Connected Automatically");
+
+        await LGService().showLogo();
+        await LGService().flyTo(
+          const CameraPosition(
+            target: LatLng(
+              22.99899294474381,
+              78.7274369224906,
+            ),
+            zoom: 3,
+          ),
+        );
       }
     }
   }
