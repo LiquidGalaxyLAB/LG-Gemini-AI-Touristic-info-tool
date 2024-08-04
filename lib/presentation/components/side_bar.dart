@@ -55,6 +55,9 @@ class _SideBarState extends State<SideBar> {
     final List<Widget> items = [];
     final list = dashboardItems.entries.toList();
 
+    items.add(_buildSideBarHeader());
+    items.add(const SizedBox(height: 12.0));
+
     for (int i = 0; i < dashboardItems.length; i++) {
       items.add(_buildSideBarItem(
         title: list[i].key,
@@ -80,6 +83,65 @@ class _SideBarState extends State<SideBar> {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: items,
+    );
+  }
+
+  Widget _buildSideBarHeader() {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12.0),
+        color: AppTheme.gray.shade900
+      ),
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Column(
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Image.asset(
+                "assets/images/app_logo.png",
+                width: _expanded ? 60 : 48,
+                height: _expanded ? 60 : 48,
+              ),
+              if (_expanded) const SizedBox(width: 12.0),
+              if (_expanded)
+                Expanded(
+                  child: Text(
+                    "LG Gemini AI Touristic info tool",
+                    style: TextStyle(color: AppTheme.gray.shade300, fontWeight: FontWeight.w600),
+                  ),
+                )
+            ],
+          ),
+          if (_expanded)
+            Container(
+              padding: const EdgeInsets.only(top: 12.0, left: 12.0),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 4.0),
+                      child: Text(
+                        "Build using Google  ",
+                        style: TextStyle(
+                          color: AppTheme.gray.shade300,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 12.0
+                        ),
+                      ),
+                    ),
+                    Image.asset(
+                      "assets/images/logo_gemini.png",
+                      width: 40,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+        ],
+      ),
     );
   }
 
