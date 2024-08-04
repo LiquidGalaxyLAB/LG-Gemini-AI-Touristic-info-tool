@@ -34,6 +34,15 @@ class AppTheme {
       useMaterial3: true,
       scaffoldBackgroundColor: AppTheme.gray.shade900,
       fontFamily: AppTheme.notoFont,
+      scrollbarTheme: ScrollbarThemeData(
+        thumbVisibility: const WidgetStatePropertyAll<bool>(true),
+        trackVisibility: const WidgetStatePropertyAll<bool>(true),
+        thumbColor: WidgetStatePropertyAll<Color>(AppTheme.gray.shade600),
+        trackColor: WidgetStatePropertyAll<Color>(AppTheme.gray.shade700),
+        thickness: const WidgetStatePropertyAll<double>(8.0),
+        radius: const Radius.circular(12.0),
+        interactive: true,
+      ),
       colorScheme: ColorScheme.fromSeed(
         seedColor: AppTheme.color.shade700,
         surface: AppTheme.gray.shade900,

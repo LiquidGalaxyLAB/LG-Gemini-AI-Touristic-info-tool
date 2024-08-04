@@ -18,7 +18,7 @@ class RecommendationInputCard extends StatefulWidget {
 }
 
 class _RecommendationInputCardState extends State<RecommendationInputCard> {
-  static const double spacing = 12.0;
+  static const double _spacing = 12.0;
 
   final _destinationController = TextEditingController();
 
@@ -49,30 +49,34 @@ class _RecommendationInputCardState extends State<RecommendationInputCard> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Expanded(
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                UserInputField(
-                  controller: _destinationController,
-                  inputType: TextInputType.text,
-                  hint: "Agra, India",
-                  title: "What's your target destination?",
-                ),
-                const SizedBox(height: spacing),
-                UserChoiceCard(
-                  choices: _style,
-                  title: "What is your travel style?",
-                  singleSelection: false,
-                  onSelectionChange: (values) {
-                    _selectedTravelStyle = values.map((element) => _style[element]).toList().join(", ");
-                  },
-                ),
-              ],
+          child: Scrollbar(
+            child: SingleChildScrollView(
+              primary: true,
+              padding: const EdgeInsets.only(right: 24.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  UserInputField(
+                    controller: _destinationController,
+                    inputType: TextInputType.text,
+                    hint: "Agra, India",
+                    title: "What's your target destination?",
+                  ),
+                  const SizedBox(height: _spacing),
+                  UserChoiceCard(
+                    choices: _style,
+                    title: "What is your travel style?",
+                    singleSelection: false,
+                    onSelectionChange: (values) {
+                      _selectedTravelStyle = values.map((element) => _style[element]).toList().join(", ");
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
         ),
-        const SizedBox(height: spacing / 2),
+        const SizedBox(height: _spacing),
         InputSubmitButton(onContinueClick: () {
           if (_destinationController.text.isEmpty) {
             showInvalidInputDialog(context);

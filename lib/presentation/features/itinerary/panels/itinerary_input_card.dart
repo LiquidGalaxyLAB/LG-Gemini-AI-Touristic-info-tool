@@ -45,37 +45,41 @@ class _ItineraryInputCardState extends State<ItineraryInputCard> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Expanded(
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                UserInputField(
-                  controller: _destinationController,
-                  inputType: TextInputType.text,
-                  hint: "India",
-                  title: "Where do you want to travel?",
-                ),
-                const SizedBox(height: _spacing),
-                UserChoiceCard(
-                  choices: _budget,
-                  title: "What's your budget in USD(\$)?",
-                  onSelectionChange: (values) {
-                    _selectedBudget = _budget[values[0]];
-                  },
-                ),
-                const SizedBox(height: _spacing),
-                UserChoiceCard(
-                  choices: _duration,
-                  title: "How long you are planning to tour?",
-                  onSelectionChange: (values) {
-                    _selectedDuration = _duration[values[0]];
-                  },
-                ),
-              ],
+          child: Scrollbar(
+            child: SingleChildScrollView(
+              primary: true,
+              padding: const EdgeInsets.only(right: 24.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  UserInputField(
+                    controller: _destinationController,
+                    inputType: TextInputType.text,
+                    hint: "India",
+                    title: "Where do you want to travel?",
+                  ),
+                  const SizedBox(height: _spacing),
+                  UserChoiceCard(
+                    choices: _budget,
+                    title: "What's your budget in USD(\$)?",
+                    onSelectionChange: (values) {
+                      _selectedBudget = _budget[values[0]];
+                    },
+                  ),
+                  const SizedBox(height: _spacing),
+                  UserChoiceCard(
+                    choices: _duration,
+                    title: "How long you are planning to tour?",
+                    onSelectionChange: (values) {
+                      _selectedDuration = _duration[values[0]];
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
         ),
-        const SizedBox(height: _spacing / 2),
+        const SizedBox(height: _spacing),
         InputSubmitButton(onContinueClick: () {
           if (_destinationController.text.isEmpty) {
             showInvalidInputDialog(context);
