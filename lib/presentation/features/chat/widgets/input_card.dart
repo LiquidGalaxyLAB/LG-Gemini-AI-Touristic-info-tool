@@ -27,7 +27,7 @@ class InputCard extends StatefulWidget {
 }
 
 class _InputCardState extends State<InputCard> {
-  Color color = AppTheme.color.shade700;
+  Color color = AppTheme.color.shade800;
 
   @override
   void initState() {
@@ -113,9 +113,7 @@ class _InputCardState extends State<InputCard> {
           IconButton(
             onPressed: () {
               String text = widget._controller.text;
-              if (text.isNotEmpty) {
-                widget._onSendClick(text);
-              }
+              widget._onSendClick(text);
             },
             icon: Icon(
               Icons.send_rounded,

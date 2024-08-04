@@ -50,12 +50,18 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   void _onSendClick(String message) {
-    _controller.clear();
-    _message = message;
-    _chats.add(ChatItem(isMe: true, message: _message, image: _image));
-    BlocProvider.of<ChatBloc>(context).add(GetChatReply(_chats));
-    _showImagePreview = false;
-    setState(() {});
+    if (message.isNotEmpty) {
+      _controller.clear();
+      _message = message;
+      _chats.add(ChatItem(isMe: true, message: _message, image: _image));
+      BlocProvider.of<ChatBloc>(context).add(GetChatReply(_chats));
+      _showImagePreview = false;
+      setState(() {});
+    } else {
+      if (_image != null) {
+        _showSnackbar("Please add a text prompt before sending the image.");
+      }
+    }
   }
 
   void _onAudioClick() {
@@ -178,5 +184,24 @@ class _ChatPageState extends State<ChatPage> {
         );
       },
     );
+  }
+
+  void _showSnackbar(String message) {
+    final snackBar = SnackBar(
+      content: Text(
+        message,
+        style: TextStyle(
+          color: AppTheme.gray.shade300,
+          fontSize: 16,
+          fontWeight: FontWeight.w400,
+        ),
+      ),
+      duration: const Duration(seconds: 3),
+      backgroundColor: AppTheme.gray.shade800,
+    );
+
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
   }
 }
