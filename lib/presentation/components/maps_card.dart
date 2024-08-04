@@ -28,10 +28,11 @@ class MapsCard extends StatefulWidget {
     Set<Polyline> polylines = const {},
     Set<Circle> circles = const {},
     bool shouldShowTourButton = false,
-    dynamic Function()? onOrbitButtonTap,
-    dynamic Function()? onTourButtonTap,
-  })  : _shouldShowTourButton = shouldShowTourButton, _onTourButtonTap = onTourButtonTap,
+    Function()? onOrbitButtonTap,
+    Function()? onTourButtonTap,
+  })  : _shouldShowTourButton = shouldShowTourButton,
         _onOrbitButtonTap = onOrbitButtonTap,
+        _onTourButtonTap = onTourButtonTap,
         _markers = markers,
         _circles = circles,
         _polygons = polygons,
@@ -80,58 +81,36 @@ class MapsCardState extends State<MapsCard> {
               padding: const EdgeInsets.all(8.0),
               child: Align(
                 alignment: Alignment.bottomRight,
-                child: Container(
-                  padding: const EdgeInsets.all(4.0),
-                  decoration: BoxDecoration(
-                    color: AppTheme.gray.shade900,
-                    borderRadius: const BorderRadius.all(Radius.circular(10)),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        GestureDetector(
-                          onTap: widget._onOrbitButtonTap,
-                          onTapDown: (_) {
-                            setState(() {
-                              orbitIconColor = AppTheme.color.shade700;
-                            });
-                          },
-                          onTapUp: (_) {
-                            setState(() {
-                              orbitIconColor = AppTheme.color.shade600;
-                            });
-                          },
-                          child: Icon(
-                            Icons.public_rounded,
-                            size: 24,
-                            color: orbitIconColor,
-                          ),
-                        ),
-                        if (widget._shouldShowTourButton) const SizedBox(height: 8.0),
-                        if (widget._shouldShowTourButton)
-                          GestureDetector(
-                            onTap: widget._onTourButtonTap,
-                            onTapDown: (_) {
-                              setState(() {
-                                tourIconColor = AppTheme.color.shade700;
-                              });
-                            },
-                            onTapUp: (_) {
-                              setState(() {
-                                tourIconColor = AppTheme.color.shade600;
-                              });
-                            },
-                            child: Icon(
-                              Icons.tour,
-                              size: 24,
-                              color: tourIconColor,
-                            ),
-                          )
-                      ],
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    IconButton(
+                      style: ButtonStyle(
+                        backgroundColor: WidgetStateProperty.all(AppTheme.color.shade700),
+                      ),
+                      highlightColor: AppTheme.color.shade500,
+                      onPressed: widget._onOrbitButtonTap,
+                      icon: Icon(
+                        Icons.public_rounded,
+                        size: 20,
+                        color: AppTheme.color.shade50,
+                      ),
                     ),
-                  ),
+                    if (widget._shouldShowTourButton) const SizedBox(height: 8.0),
+                    if (widget._shouldShowTourButton)
+                    IconButton(
+                      style: ButtonStyle(
+                        backgroundColor: WidgetStateProperty.all(AppTheme.color.shade700),
+                      ),
+                      highlightColor: AppTheme.color.shade500,
+                      onPressed: widget._onTourButtonTap,
+                      icon: Icon(
+                        Icons.tour,
+                        size: 20,
+                        color: AppTheme.color.shade50,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
