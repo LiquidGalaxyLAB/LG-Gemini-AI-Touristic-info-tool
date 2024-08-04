@@ -6,7 +6,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../core/constants/constants.dart';
 import '../../../core/utils/app_utils.dart';
-import '../../../core/utils/balloon_utils.dart';
 import '../../../core/utils/kml_utils.dart';
 import '../../../core/utils/maps_utils.dart';
 import '../../../domain/model/tourist_place.dart';
@@ -112,7 +111,7 @@ class _TouristPlacePageState extends State<TouristPlacePage> {
       ),
       panelRight: blocBuilder<TouristPlacesBloc, T>(
         onSuccess: (result) {
-          LGService().showBalloon(BalloonUtils().createBalloonForTouristPlace(result[_selected]));
+          LGService().showBalloon(result[_selected].generateBalloon());
           return TouristPlaceDetailsCard(
             touristPlace: result[_selected],
             liked: _liked.contains(_selected),

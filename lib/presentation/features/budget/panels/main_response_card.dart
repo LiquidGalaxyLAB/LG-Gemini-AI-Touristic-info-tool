@@ -83,17 +83,17 @@ class _MainResponseCardState extends State<MainResponseCard> {
               ),
               IconButton(
                 style: ButtonStyle(
-                  backgroundColor: WidgetStateProperty.all(AppTheme.color.shade300),
+                  backgroundColor: WidgetStateProperty.all(AppTheme.color.shade700),
                 ),
-                highlightColor: AppTheme.color.shade50,
+                highlightColor: AppTheme.color.shade500,
                 onPressed: () {
                   state = (state + 1) % _icons.length;
                   widget._onTap(state);
                 },
                 icon: Icon(
                   _icons[state],
-                  size: 24,
-                  color: AppTheme.color.shade600,
+                  size: 20,
+                  color: AppTheme.color.shade50,
                 ),
               ),
             ],

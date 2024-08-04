@@ -1,5 +1,9 @@
 import 'package:equatable/equatable.dart';
 
+import '../../config/theme/app_theme.dart';
+import "../../core/utils/data_utils.dart";
+import '../../core/utils/html_utils.dart';
+
 class BudgetPlan extends Equatable {
   final String name;
   final String startingPoint;
@@ -126,4 +130,78 @@ class AdditionalExpense extends Equatable {
         description,
         estimatedCost,
       ];
+}
+
+String _createPlaceCard(Place place) {
+  return createItemCard(
+      '${createInnerCard('Name', place.name)}'
+          '${createInnerCard('Coordinates', '${place.latitude}, ${place.longitude}')}'
+          '${createInnerCard('Average Meal Fee', place.averageMealCost)}'
+          '${createInnerCard('Guided Tour Fee', place.guidedTourFee)}'
+          '${createInnerCard('Entrance Fee', place.entranceFee)}'
+  );
+}
+
+String _createTravelRouteCard(TravelRoute travelRoute) {
+  return createItemCard(
+    'From ${travelRoute.from} to ${travelRoute.to} via ${travelRoute.mode} at USD ${travelRoute.cost}, Duration:${travelRoute.duration}',
+    surroundWithP: true,
+  );
+}
+
+String _createAccommodationCard(Accommodation accommodation) {
+  return createItemCard(
+      '${createInnerCard('Name', accommodation.name)}'
+          '${createInnerCard('Description', accommodation.description)}'
+          '${createInnerCard('Cost Per Night', accommodation.costPerNight)}'
+          '${createInnerCard('Duration', accommodation.duration)}'
+          '${createInnerCard('Total Cost', accommodation.totalCost)}'
+  );
+}
+
+String _createAdditionalExpenseCard(AdditionalExpense additionalExpense) {
+  return createItemCard(
+      '${createInnerCard('Name', additionalExpense.name)}'
+          '${createInnerCard('Description', additionalExpense.description)}'
+          '${createInnerCard('Estimated Cost', additionalExpense.estimatedCost)}'
+  );
+}
+
+extension GenerateBalloon on BudgetPlan {
+  String generateBalloon() {
+    return '''<?xml version="1.0" encoding="UTF-8"?>
+    <kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+    <Document>
+      <name>Budget Plan Data</name>
+      <Style id="budget_plan_style">
+        <BalloonStyle>
+          <textColor>${AppTheme.color.shade900.toHex()}</textColor>
+          <bgColor>${AppTheme.color.shade50.toHex()}</bgColor> <!-- Set the balloon background color here -->
+          <text>
+            <![CDATA[
+            <font size="+2">
+              ${createHeading(name)}
+              ${createSectionCard("Starting Point", startingPoint)}
+              ${createSectionCard("Places", places.map((e) => _createPlaceCard(e)).join())}
+              ${createSectionCard("Travel Route", travelRoute.map((e) => _createTravelRouteCard(e)).join())}
+              ${createSectionCard("Accommodation", accommodation.map((e) => _createAccommodationCard(e)).join())}
+              ${createSectionCard("Additional Expenses", additionalExpenses.map((e) => _createAdditionalExpenseCard(e)).join())}
+              ${createSectionCard("Total Cost", totalCost)}
+            </font>
+            ]]>
+          </text>
+          <bgColor>${AppTheme.color.shade200.toHex()}</bgColor>
+        </BalloonStyle>
+      </Style>
+      <Placemark>
+        <description><![CDATA[]]></description>
+        <styleUrl>#budget_plan_style</styleUrl>
+        <gx:balloonVisibility>1</gx:balloonVisibility>
+        <Point>
+          <coordinates>${places.isNotEmpty ? '${places[0].longitude},${places[0].latitude},0' : '0,0,0'}</coordinates>
+        </Point>
+      </Placemark>
+    </Document>
+    </kml>''';
+  }
 }

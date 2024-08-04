@@ -4,7 +4,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:ssh2/ssh2.dart';
 
 import '../core/constants/constants.dart';
-import '../core/utils/balloon_utils.dart';
 import '../core/utils/kml_utils.dart';
 import 'file_service.dart';
 
@@ -147,7 +146,7 @@ class LGService {
 
   Future<void> cleanBalloon() async {
     await _execute(
-        "chmod 777 /var/www/html/kml/slave_$_rightScreen.kml; echo '${BalloonUtils().emptyBalloon()}' > /var/www/html/kml/slave_$_rightScreen.kml");
+        "chmod 777 /var/www/html/kml/slave_$_rightScreen.kml; echo '${KmlUtils.emptyBalloon()}' > /var/www/html/kml/slave_$_rightScreen.kml");
   }
 
   Future<void> _upload(String path) async {

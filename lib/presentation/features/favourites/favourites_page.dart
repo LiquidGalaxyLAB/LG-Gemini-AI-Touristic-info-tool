@@ -6,7 +6,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../core/constants/constants.dart';
 import '../../../core/utils/app_utils.dart';
-import '../../../core/utils/balloon_utils.dart';
 import '../../../core/utils/kml_utils.dart';
 import '../../../core/utils/maps_utils.dart';
 import '../../../domain/model/tourist_place.dart';
@@ -101,26 +100,28 @@ class _FavouritesPageState extends State<FavouritesPage> {
       }),
       panelRight: blocBuilder<FavouritesBloc, T>(
         onSuccess: (result) {
-          LGService().showBalloon(BalloonUtils().createBalloonForTouristPlace(result[_selected]));
-          return result.isNotEmpty ? FavouriteDetailsCard(
-            touristPlace: result[_selected],
-            liked: true,
-            onIconClick: (place, isLiked) {
-              if (isLiked) {
-                BlocProvider.of<FavouritesBloc>(context).add(
-                  AddFavourite(place),
-                );
-              } else {
-                if (_touristPlaces.isNotEmpty) {
-                  _selected = 0;
-                  _touristPlaces.removeAt(_selected);
-                  BlocProvider.of<FavouritesBloc>(context).add(
-                    RemoveFavourite(place),
-                  );
-                }
-              }
-            },
-          ): Container();
+          LGService().showBalloon(result[_selected].generateBalloon());
+          return result.isNotEmpty
+              ? FavouriteDetailsCard(
+                  touristPlace: result[_selected],
+                  liked: true,
+                  onIconClick: (place, isLiked) {
+                    if (isLiked) {
+                      BlocProvider.of<FavouritesBloc>(context).add(
+                        AddFavourite(place),
+                      );
+                    } else {
+                      if (_touristPlaces.isNotEmpty) {
+                        _selected = 0;
+                        _touristPlaces.removeAt(_selected);
+                        BlocProvider.of<FavouritesBloc>(context).add(
+                          RemoveFavourite(place),
+                        );
+                      }
+                    }
+                  },
+                )
+              : Container();
         },
       ),
     );

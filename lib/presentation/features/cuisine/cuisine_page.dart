@@ -6,7 +6,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../core/constants/constants.dart';
 import '../../../core/utils/app_utils.dart';
-import '../../../core/utils/balloon_utils.dart';
 import '../../../core/utils/kml_utils.dart';
 import '../../../core/utils/maps_utils.dart';
 import '../../../domain/model/cuisine.dart';
@@ -106,7 +105,7 @@ class _CuisinePageState extends State<CuisinePage> {
         },
       ),
       panelRight: blocBuilder<CuisinesBloc, T>(onSuccess: (result) {
-        LGService().showBalloon(BalloonUtils().createBalloonForCuisine(result[_selected]));
+        LGService().showBalloon(result[_selected].generateBalloon());
         return CuisineDetailsCard(
           cuisine: _cuisines[_selected],
         );

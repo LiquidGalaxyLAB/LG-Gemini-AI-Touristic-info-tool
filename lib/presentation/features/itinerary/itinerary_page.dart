@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,7 +7,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../core/constants/constants.dart';
 import '../../../core/utils/app_utils.dart';
-import '../../../core/utils/balloon_utils.dart';
 import '../../../core/utils/kml_utils.dart';
 import '../../../core/utils/maps_utils.dart';
 import '../../../domain/model/itinerary.dart';
@@ -99,7 +99,7 @@ class _ItineraryPageState extends State<ItineraryPage> {
         },
         onSuccess: (result) {
           _itinerary = result;
-          LGService().showBalloon(BalloonUtils().createBalloonForItinerary(result));
+          log(result.generateBalloon());
           LGService().sendKml(
             KmlUtils.createPolyline(
               result.places.map((p) => LatLng(p.latitude, p.longitude)).toList(),

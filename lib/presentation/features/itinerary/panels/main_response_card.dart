@@ -65,17 +65,17 @@ class _MainResponseCardState extends State<MainResponseCard> {
               ),
               IconButton(
                 style: ButtonStyle(
-                  backgroundColor: WidgetStateProperty.all(AppTheme.color.shade300),
+                  backgroundColor: WidgetStateProperty.all(AppTheme.color.shade700),
                 ),
-                highlightColor: AppTheme.color.shade50,
+                highlightColor: AppTheme.color.shade500,
                 onPressed: () {
                   widget._onTap(!showRoute);
                   showRoute = !showRoute;
                 },
                 icon: Icon(
                   showRoute ? Icons.location_on_rounded : Icons.route_rounded,
-                  size: 24,
-                  color: AppTheme.color.shade600,
+                  size: 20,
+                  color: AppTheme.color.shade50,
                 ),
               ),
             ],
