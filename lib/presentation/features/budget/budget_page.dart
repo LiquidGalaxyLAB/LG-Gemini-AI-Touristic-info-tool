@@ -36,7 +36,7 @@ class _BudgetPageState extends State<BudgetPage> {
   int _selectedRoute = 0;
   int _selectedExpense = 0;
   int _selectedAccommodation = 0;
-  int _selectedDetails = 0;
+  int _selectedDetails = 1;
   BudgetPlan? _budgetPlan;
 
   LatLng? latLng;
@@ -77,7 +77,7 @@ class _BudgetPageState extends State<BudgetPage> {
         _selectedRoute = 0;
         _selectedExpense = 0;
         _selectedAccommodation = 0;
-        _selectedDetails = 0;
+        _selectedDetails = 1;
       }, onSuccess: (result) {
         _budgetPlan = result;
         LGService().showBalloon(result.generateBalloon());

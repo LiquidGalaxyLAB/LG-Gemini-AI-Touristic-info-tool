@@ -51,7 +51,7 @@ class MainResponseCard extends StatefulWidget {
 }
 
 class _MainResponseCardState extends State<MainResponseCard> {
-  int state = 0;
+  int state = 1;
   final List<IconData> _icons = [
     Icons.location_on_rounded,
     Icons.hotel_rounded,

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:touristic/service/location_service.dart';
 
 import '../../../core/constants/constants.dart';
 import '../../../core/utils/app_utils.dart';
@@ -52,10 +53,7 @@ class _TouristPlacePageState extends State<TouristPlacePage> {
         await LGService().sendTour(
           "Orbit",
           KmlUtils.orbitAround(
-            LatLng(
-              _touristPlaces[_selected].latitude,
-              _touristPlaces[_selected].longitude,
-            ),
+            await _getLatLng(),
           ),
         );
         await LGService().startOrbit();
@@ -112,6 +110,7 @@ class _TouristPlacePageState extends State<TouristPlacePage> {
       panelRight: blocBuilder<TouristPlacesBloc, T>(
         onSuccess: (result) {
           LGService().showBalloon(result[_selected].generateBalloon());
+          _syncLocation();
           return TouristPlaceDetailsCard(
             touristPlace: result[_selected],
             liked: _liked.contains(_selected),
@@ -136,5 +135,15 @@ class _TouristPlacePageState extends State<TouristPlacePage> {
         },
       ),
     );
+  }
+
+  Future<LatLng> _getLatLng() async {
+    LatLng? latLng = await LocationService().getLatLngFromLocation(_touristPlaces[_selected].name);
+    latLng ??= LatLng(_touristPlaces[_selected].latitude, _touristPlaces[_selected].longitude);
+    return latLng;
+  }
+
+  Future<void> _syncLocation() async {
+    moveToPlace(_controller, await _getLatLng());
   }
 }
