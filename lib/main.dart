@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Touristic IA',
+      title: 'LG Gemini AI Touristic info tool',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.appTheme(),
       initialRoute: SplashScreen.route,

@@ -77,12 +77,12 @@ class _AboutPageState extends State<AboutPage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Image.asset(
-              "assets/images/app_logo.png",
-              width: 450,
-              height: 250,
+              "assets/images/img_splash.png",
+              width: 520,
+              height: 375,
             ),
             const SizedBox(height: AboutPage.spacing),
-            _buildHeaderText("Touristic AI", fontSize: 28, fontColor: AppTheme.gray.shade300),
+            _buildHeaderText("LG Gemini AI Touristic info tool", fontSize: 28, fontColor: AppTheme.gray.shade300),
             const SizedBox(height: AboutPage.gap),
             _buildDescriptionText(appDescription),
             const SizedBox(height: AboutPage.spacing),
