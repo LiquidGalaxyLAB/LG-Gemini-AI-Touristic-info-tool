@@ -86,7 +86,7 @@ class _ItineraryPageState extends State<ItineraryPage> {
         }
       },
       panelLeft: ItineraryInputCard(
-        onContinueClick: (params) {
+        onContinueClick: (params) async {
           showErrorDialog = true;
           BlocProvider.of<ItineraryBloc>(context).add(GetItinerary(params));
         },

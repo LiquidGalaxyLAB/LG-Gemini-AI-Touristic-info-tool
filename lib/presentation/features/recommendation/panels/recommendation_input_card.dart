@@ -77,17 +77,19 @@ class _RecommendationInputCardState extends State<RecommendationInputCard> {
           ),
         ),
         const SizedBox(height: _spacing),
-        InputSubmitButton(onContinueClick: () {
-          if (_destinationController.text.isEmpty) {
-            showInvalidInputDialog(context);
-          } else {
-            widget._onContinueClick({
-              "destination": _destinationController.text,
-              "travel_style": _selectedTravelStyle,
-            });
-          }
-        }),
+        InputSubmitButton(onContinueClick: _onSubmitClick),
       ],
     );
+  }
+
+  Future<void> _onSubmitClick() async {
+    if (_destinationController.text.isEmpty) {
+      await showInvalidInputDialog(context);
+    } else {
+      await widget._onContinueClick({
+        "destination": _destinationController.text,
+        "travel_style": _selectedTravelStyle,
+      });
+    }
   }
 }

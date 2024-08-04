@@ -94,27 +94,29 @@ class _BudgetInputCardState extends State<BudgetInputCard> {
           ),
         ),
         const SizedBox(height: _spacing),
-        InputSubmitButton(onContinueClick: () {
-          if (_choices.isEmpty) {
-            showInvalidInputDialog(context);
-          } else {
-            widget._onContinueClick({
-              "itinerary": _choices
-                  .map((ele) => ele
-                      .replaceAll(',', ' ')
-                      .replaceAll(
-                        "  ",
-                        " ",
-                      )
-                      .trim())
-                  .join(", "),
-              "budget": _selectedBudget,
-              "duration": _selectedDuration,
-              "companions": _selectedCompanions,
-            });
-          }
-        }),
+        InputSubmitButton(onContinueClick: _onSubmitClick),
       ],
     );
+  }
+
+  Future<void> _onSubmitClick() async {
+    if (_choices.isEmpty) {
+      await showInvalidInputDialog(context);
+    } else {
+      await widget._onContinueClick({
+        "itinerary": _choices
+            .map((ele) => ele
+            .replaceAll(',', ' ')
+            .replaceAll(
+          "  ",
+          " ",
+        )
+            .trim())
+            .join(", "),
+        "budget": _selectedBudget,
+        "duration": _selectedDuration,
+        "companions": _selectedCompanions,
+      });
+    }
   }
 }

@@ -94,18 +94,20 @@ class _TouristPlaceInputCardState extends State<TouristPlaceInputCard> {
           ),
         ),
         const SizedBox(height: _spacing),
-        InputSubmitButton(onContinueClick: () {
-          if (_destinationController.text.isEmpty) {
-            showInvalidInputDialog(context);
-          } else {
-            widget._onContinueClick({
-              "destination": _destinationController.text,
-              "budget": _selectedBudget,
-              "interests": _selectedInterests,
-            });
-          }
-        }),
+        InputSubmitButton(onContinueClick: _onSubmitClick),
       ],
     );
+  }
+
+  Future<void> _onSubmitClick() async {
+    if (_destinationController.text.isEmpty) {
+      await showInvalidInputDialog(context);
+    } else {
+      await widget._onContinueClick({
+        "destination": _destinationController.text,
+        "budget": _selectedBudget,
+        "interests": _selectedInterests,
+      });
+    }
   }
 }
