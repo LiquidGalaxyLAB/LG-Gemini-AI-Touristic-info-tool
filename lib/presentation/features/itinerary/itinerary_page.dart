@@ -38,6 +38,36 @@ class _ItineraryPageState extends State<ItineraryPage> {
 
   LatLng? latLng;
 
+  Future<void> _onOrbitButtonClick() async {
+    if (!_showRouteDetails) {
+      await LGService().sendTour(
+        "Orbit",
+        KmlUtils.orbitAround(await _getLatLng()),
+      );
+      await LGService().startOrbit();
+    } else if (latLng != null) {
+      await LGService().sendTour(
+        "Orbit",
+        KmlUtils.orbitAround(latLng!),
+      );
+      await LGService().startOrbit();
+    }
+  }
+
+  Future<void> _onTourButtonClick() async {
+    if (_itinerary != null) {
+      List<LatLng> latLngList = await Future.wait(
+        _itinerary!.places.asMap().entries.map((e) => _getLatLng(idx: e.key)).toList(),
+      );
+
+      await LGService().sendTour(
+        "Tour",
+        KmlUtils.createTour(latLngList),
+      );
+      await LGService().startTour();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return LayoutBlueprint(
@@ -52,34 +82,8 @@ class _ItineraryPageState extends State<ItineraryPage> {
           : null,
       controller: _controller,
       shouldShowMapTourButton: !_showRouteDetails,
-      onMapTourButtonTap: () async {
-        if (_itinerary != null) {
-          List<LatLng> latLngList = await Future.wait(
-            _itinerary!.places.asMap().entries.map((e) => _getLatLng(idx: e.key)).toList(),
-          );
-
-          await LGService().sendTour(
-            "Tour",
-            KmlUtils.createTour(latLngList),
-          );
-          await LGService().startTour();
-        }
-      },
-      onMapOrbitButtonTap: () async {
-        if (!_showRouteDetails) {
-          await LGService().sendTour(
-            "Orbit",
-            KmlUtils.orbitAround(await _getLatLng()),
-          );
-          await LGService().startOrbit();
-        } else if (latLng != null) {
-          await LGService().sendTour(
-            "Orbit",
-            KmlUtils.orbitAround(latLng!),
-          );
-          await LGService().startOrbit();
-        }
-      },
+      onMapTourButtonTap: _onTourButtonClick,
+      onMapOrbitButtonTap: _onOrbitButtonClick,
       panelLeft: ItineraryInputCard(
         onContinueClick: (params) async {
           showErrorDialog = true;

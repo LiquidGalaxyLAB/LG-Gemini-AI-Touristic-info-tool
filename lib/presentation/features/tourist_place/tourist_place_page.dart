@@ -36,6 +36,16 @@ class _TouristPlacePageState extends State<TouristPlacePage> {
 
   final List<int> _liked = [];
 
+  Future<void> _onOrbitButtonClick() async {
+    await LGService().sendTour(
+      "Orbit",
+      KmlUtils.orbitAround(
+        await _getLatLng(),
+      ),
+    );
+    await LGService().startOrbit();
+  }
+
   @override
   Widget build(BuildContext context) {
     return LayoutBlueprint(
@@ -49,15 +59,7 @@ class _TouristPlacePageState extends State<TouristPlacePage> {
             )
           : null,
       controller: _controller,
-      onMapOrbitButtonTap: () async {
-        await LGService().sendTour(
-          "Orbit",
-          KmlUtils.orbitAround(
-            await _getLatLng(),
-          ),
-        );
-        await LGService().startOrbit();
-      },
+      onMapOrbitButtonTap: _onOrbitButtonClick,
       panelLeft: TouristPlaceInputCard(
         onContinueClick: (params) {
           showErrorDialog = true;

@@ -41,31 +41,33 @@ class _BudgetPageState extends State<BudgetPage> {
 
   LatLng? latLng;
 
+  Future<void> _onMapOrbitButtonTap() async {
+    if (_selectedDetails == 1) {
+      await LGService().sendTour(
+        "Orbit",
+        KmlUtils.orbitAround(
+          LatLng(
+            _budgetPlan!.places[_selectedPlace].latitude,
+            _budgetPlan!.places[_selectedPlace].longitude,
+          ),
+        ),
+      );
+      await LGService().startOrbit();
+    } else if (latLng != null) {
+      await LGService().sendTour(
+        "Orbit",
+        KmlUtils.orbitAround(latLng!),
+      );
+      await LGService().startOrbit();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return LayoutBlueprint(
       cameraPosition: const CameraPosition(target: LatLng(22.99899294474381, 78.7274369224906), zoom: 3),
       controller: _controller,
-      onMapOrbitButtonTap: () async {
-        if (_selectedDetails == 1) {
-          await LGService().sendTour(
-            "Orbit",
-            KmlUtils.orbitAround(
-              LatLng(
-                _budgetPlan!.places[_selectedPlace].latitude,
-                _budgetPlan!.places[_selectedPlace].longitude,
-              ),
-            ),
-          );
-          await LGService().startOrbit();
-        } else if (latLng != null) {
-          await LGService().sendTour(
-            "Orbit",
-            KmlUtils.orbitAround(latLng!),
-          );
-          await LGService().startOrbit();
-        }
-      },
+      onMapOrbitButtonTap: _onMapOrbitButtonTap,
       panelLeft: BudgetInputCard(
         onContinueClick: (params) {
           showErrorDialog = true;

@@ -36,6 +36,19 @@ class _FavouritesPageState extends State<FavouritesPage> {
     BlocProvider.of<FavouritesBloc>(context).add(const GetFavourites());
   }
 
+  Future<void> _onMapOrbitButtonTap() async {
+    await LGService().sendTour(
+      "Orbit",
+      KmlUtils.orbitAround(
+        LatLng(
+          _touristPlaces[_selected].latitude,
+          _touristPlaces[_selected].longitude,
+        ),
+      ),
+    );
+    await LGService().startOrbit();
+  }
+
   @override
   Widget build(BuildContext context) {
     return LayoutBlueprint(
@@ -49,18 +62,7 @@ class _FavouritesPageState extends State<FavouritesPage> {
             )
           : null,
       controller: _controller,
-      onMapOrbitButtonTap: () async {
-        await LGService().sendTour(
-          "Orbit",
-          KmlUtils.orbitAround(
-            LatLng(
-              _touristPlaces[_selected].latitude,
-              _touristPlaces[_selected].longitude,
-            ),
-          ),
-        );
-        await LGService().startOrbit();
-      },
+      onMapOrbitButtonTap: _onMapOrbitButtonTap,
       panelLeft: blocBuilder<FavouritesBloc, T>(onSuccess: (result) {
         _touristPlaces = result;
         return ListView.builder(

@@ -47,6 +47,8 @@ class MapsCard extends StatefulWidget {
 class MapsCardState extends State<MapsCard> {
   Color tourIconColor = AppTheme.color.shade600;
   Color orbitIconColor = AppTheme.color.shade600;
+  bool _orbitLoading = false;
+  bool _tourLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -89,27 +91,77 @@ class MapsCardState extends State<MapsCard> {
                         backgroundColor: WidgetStateProperty.all(AppTheme.color.shade700),
                       ),
                       highlightColor: AppTheme.color.shade500,
-                      onPressed: widget._onOrbitButtonTap,
-                      icon: Icon(
-                        Icons.public_rounded,
-                        size: 20,
-                        color: AppTheme.color.shade50,
-                      ),
+                      onPressed: () async {
+                        if (!_orbitLoading) {
+                          setState(() {
+                            _orbitLoading = true;
+                          });
+                          await widget._onOrbitButtonTap!();
+                          setState(() {
+                            _orbitLoading = false;
+                          });
+                        } else {
+                          await LGService().stopOrbit();
+                          setState(() {
+                            _orbitLoading = false;
+                          });
+                        }
+                      },
+                      icon: !_orbitLoading
+                          ? Icon(
+                              Icons.public_rounded,
+                              size: 20,
+                              color: AppTheme.color.shade50,
+                            )
+                          : SizedBox(
+                              width: 18,
+                              height: 18,
+                              child: CircularProgressIndicator(
+                                color: AppTheme.color.shade50,
+                                strokeCap: StrokeCap.round,
+                                strokeWidth: 3,
+                              ),
+                            ),
                     ),
                     if (widget._shouldShowTourButton) const SizedBox(height: 8.0),
                     if (widget._shouldShowTourButton)
-                    IconButton(
-                      style: ButtonStyle(
-                        backgroundColor: WidgetStateProperty.all(AppTheme.color.shade700),
+                      IconButton(
+                        style: ButtonStyle(
+                          backgroundColor: WidgetStateProperty.all(AppTheme.color.shade700),
+                        ),
+                        highlightColor: AppTheme.color.shade500,
+                        onPressed: () async {
+                          if (!_tourLoading) {
+                            setState(() {
+                              _tourLoading = true;
+                            });
+                            await widget._onTourButtonTap!();
+                            setState(() {
+                              _tourLoading = false;
+                            });
+                          } else {
+                            await LGService().stopOrbit();
+                            setState(() {
+                              _tourLoading = false;
+                            });
+                          }
+                        },
+                        icon: !_tourLoading
+                            ? Icon(
+                                Icons.tour,
+                                size: 20,
+                                color: AppTheme.color.shade50,
+                              )
+                            : SizedBox(
+                                width: 18,
+                                height: 18,
+                                child: CircularProgressIndicator(
+                                  color: AppTheme.color.shade50,
+                                  strokeCap: StrokeCap.round,
+                                  strokeWidth: 3,
+                                ),
+                              ),
                       ),
-                      highlightColor: AppTheme.color.shade500,
-                      onPressed: widget._onTourButtonTap,
-                      icon: Icon(
-                        Icons.tour,
-                        size: 20,
-                        color: AppTheme.color.shade50,
-                      ),
-                    ),
                   ],
                 ),
               ),

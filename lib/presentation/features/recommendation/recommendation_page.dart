@@ -31,6 +31,19 @@ class _RecommendationPageState extends State<RecommendationPage> {
   List<Recommendation> _recommendations = [];
   int _selected = 0;
 
+  Future<void> _onOrbitButtonClick() async {
+    await LGService().sendTour(
+      "Orbit",
+      KmlUtils.orbitAround(
+        LatLng(
+          _recommendations[_selected].latitude,
+          _recommendations[_selected].longitude,
+        ),
+      ),
+    );
+    await LGService().startOrbit();
+  }
+
   @override
   Widget build(BuildContext context) {
     return LayoutBlueprint(
@@ -44,18 +57,7 @@ class _RecommendationPageState extends State<RecommendationPage> {
             )
           : null,
       controller: _controller,
-      onMapOrbitButtonTap: () async {
-        await LGService().sendTour(
-          "Orbit",
-          KmlUtils.orbitAround(
-            LatLng(
-              _recommendations[_selected].latitude,
-              _recommendations[_selected].longitude,
-            ),
-          ),
-        );
-        await LGService().startOrbit();
-      },
+      onMapOrbitButtonTap: _onOrbitButtonClick,
       panelLeft: RecommendationInputCard(
         onContinueClick: (params) {
           showErrorDialog = true;

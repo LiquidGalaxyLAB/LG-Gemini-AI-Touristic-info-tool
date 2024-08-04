@@ -31,6 +31,19 @@ class _CuisinePageState extends State<CuisinePage> {
   int _selected = 0;
   List<Cuisine> _cuisines = [];
 
+  Future<void> _onMapOrbitButtonTap() async {
+    await LGService().sendTour(
+      "Orbit",
+      KmlUtils.orbitAround(
+        LatLng(
+          _cuisines[_selected].latitude,
+          _cuisines[_selected].longitude,
+        ),
+      ),
+    );
+    await LGService().startOrbit();
+  }
+
   @override
   Widget build(BuildContext context) {
     return LayoutBlueprint(
@@ -44,18 +57,7 @@ class _CuisinePageState extends State<CuisinePage> {
             )
           : null,
       controller: _controller,
-      onMapOrbitButtonTap: () async {
-        await LGService().sendTour(
-          "Orbit",
-          KmlUtils.orbitAround(
-            LatLng(
-              _cuisines[_selected].latitude,
-              _cuisines[_selected].longitude,
-            ),
-          ),
-        );
-        await LGService().startOrbit();
-      },
+      onMapOrbitButtonTap: _onMapOrbitButtonTap,
       panelLeft: CuisineInputCard(
         onContinueClick: (params) {
           showErrorDialog = true;

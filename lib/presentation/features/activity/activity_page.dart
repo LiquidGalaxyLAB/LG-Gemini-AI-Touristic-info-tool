@@ -31,6 +31,19 @@ class _ActivityPageState extends State<ActivityPage> {
   int _selected = 0;
   List<Activity> _activities = [];
 
+  Future<void> _onMapOrbitButtonTap() async {
+    await LGService().sendTour(
+      "Orbit",
+      KmlUtils.orbitAround(
+        LatLng(
+          _activities[_selected].latitude,
+          _activities[_selected].longitude,
+        ),
+      ),
+    );
+    await LGService().startOrbit();
+  }
+
   @override
   Widget build(BuildContext context) {
     return LayoutBlueprint(
@@ -44,18 +57,7 @@ class _ActivityPageState extends State<ActivityPage> {
             )
           : null,
       controller: _controller,
-      onMapOrbitButtonTap: () async {
-        await LGService().sendTour(
-          "Orbit",
-          KmlUtils.orbitAround(
-            LatLng(
-              _activities[_selected].latitude,
-              _activities[_selected].longitude,
-            ),
-          ),
-        );
-        await LGService().startOrbit();
-      },
+      onMapOrbitButtonTap: _onMapOrbitButtonTap,
       panelLeft: ActivityInputCard(
         onContinueClick: (params) {
           showErrorDialog = true;
