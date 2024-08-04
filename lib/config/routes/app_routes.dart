@@ -23,8 +23,8 @@ import '../../presentation/features/tourist_place/tourist_place_page.dart';
 import '../theme/app_theme.dart';
 
 class AppRoutes {
-  static const String chat = "/";
-  static const String place = "/place";
+  static const String chat = "/chat";
+  static const String place = "/";
   static const String budget = "/budget";
   static const String activity = "/activity";
   static const String recommendation = "/recommendation";
@@ -35,14 +35,14 @@ class AppRoutes {
   static const String about = "/about";
 
   static const Map<int, String> routeMap = {
-    0: AppRoutes.chat,
-    1: AppRoutes.place,
-    2: AppRoutes.budget,
-    3: AppRoutes.activity,
-    4: AppRoutes.recommendation,
-    5: AppRoutes.cuisine,
-    6: AppRoutes.itinerary,
-    7: AppRoutes.favourites,
+    0: AppRoutes.place,
+    1: AppRoutes.budget,
+    2: AppRoutes.activity,
+    3: AppRoutes.recommendation,
+    4: AppRoutes.cuisine,
+    5: AppRoutes.itinerary,
+    6: AppRoutes.favourites,
+    7: AppRoutes.chat,
     8: AppRoutes.settings,
     9: AppRoutes.about,
   };

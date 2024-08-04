@@ -20,7 +20,6 @@ const String touristPlacesTable = "tourist_places";
 const String appDatabase = "app_database.db";
 
 const Map<String, IconData> dashboardItems = {
-  "Chat": Icons.chat_rounded,
   "Tourist Place": Icons.tour_rounded,
   "Budget Plan": Icons.attach_money_rounded,
   "Activity": Icons.skateboarding_rounded,
@@ -28,6 +27,7 @@ const Map<String, IconData> dashboardItems = {
   "Local Cuisine": Icons.emoji_food_beverage_rounded,
   "Itinerary": Icons.location_on_rounded,
   "Favourites": Icons.favorite_rounded,
+  "Chat": Icons.chat_rounded,
   "Settings": Icons.settings_rounded,
   "About": Icons.info_rounded,
 };
