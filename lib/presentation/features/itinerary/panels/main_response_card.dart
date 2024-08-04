@@ -64,6 +64,10 @@ class _MainResponseCardState extends State<MainResponseCard> {
                 ),
               ),
               IconButton(
+                style: ButtonStyle(
+                  backgroundColor: WidgetStateProperty.all(AppTheme.color.shade300),
+                ),
+                highlightColor: AppTheme.color.shade50,
                 onPressed: () {
                   widget._onTap(!showRoute);
                   showRoute = !showRoute;
