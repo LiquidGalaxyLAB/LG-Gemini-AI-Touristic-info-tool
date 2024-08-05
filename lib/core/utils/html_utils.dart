@@ -10,7 +10,7 @@ String _createH2(String text) {
 String _createP(String text) {
   String color = AppTheme.color.shade900.toHex();
   String fontSize = "24px";
-  return '<p style="color:$color; margin: 0; font-size:$fontSize;">$text</p>';
+  return '<h3 style="color:$color; margin: 0; font-size:$fontSize;">$text</h3>';
 }
 
 String _createCard(String label, String content, int level) {

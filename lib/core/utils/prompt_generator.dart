@@ -74,7 +74,7 @@ example response:
 """;
 
 const String _promptItinerary =
-    """You are a Travel Guide, Given the inputs of destination {{destination}}, budget {{budget}} (in USD), and duration {{duration}} (in days), generate a JSON response containing a itinerary according to the user inputs. The itinerary should include its name, starting point, list of places according to the duration, and list of travel route accordingly to total places. Each place includes name, location, latitude, longitude, description, and list of highlights of that place. Each travel route should contain mode of transportation, starting point, end point, duration in minutes, list of highlights, and description. Ensure the response is in JSON format and does not include any extra text.
+    """You are a Travel Guide, Given the inputs of destination {{destination}}, budget {{budget}} (in USD), and duration {{duration}} (in days), generate a JSON response containing a itinerary according to the user inputs. The itinerary should include its name, starting point, list of places according to the duration, and list of travel route accordingly to total places. Each place includes name, location, latitude, longitude, description, and list of highlights of that place. Each travel route should contain mode of transportation, starting point, end point, duration in minutes, list of highlights, and description. Add units after duration also. Ensure the response is in JSON format and does not include any extra text.
 json format for 1 activity JSON object:
 {
   "name": "String",
@@ -121,7 +121,7 @@ example response:
 """;
 
 const String _promptRecommendations =
-    """You are a Travel Guide, Given the inputs of destination {{destination}}, and travel style {{travel_style}}, generate a JSON response containing a list of 3 recommendations related to the destination and the travel style. Each recommendation should include its name, description, highlights list, duration in minutes, cost in usd, latitude ,and longitude. The description should each be at least 60 words long and highlights should be concise and easy to understand. Ensure the response is in JSON format and does not include any extra text.
+    """You are a Travel Guide, Given the inputs of destination {{destination}}, and travel style {{travel_style}}, generate a JSON response containing a list of 3 recommendations related to the destination and the travel style. Each recommendation should include its name, description, highlights list, duration in minutes, cost in usd, latitude ,and longitude. The description should each be at least 60 words long and highlights should be concise and easy to understand. Add \$ symbol before cost and units after duration also. Ensure the response is in JSON format and does not include any extra text.
 json format for 1 recommendation JSON object:
 {
   "name": "String",
@@ -142,7 +142,7 @@ example response:
 """;
 
 const String _promptActivities =
-    """You are a Travel Guide, Given the inputs of destination {{destination}}, budget {{budget}} (in USD), and duration {{duration}} (in days), generate a JSON response containing a list of 3 activities related to the destination. Each activity should include its name, description, procedures steps list, precautions list, duration in minutes, cost in usd, latitude ,and longitude. The description should each be at least 60 words long and procedures and precautions should be concise and easy to understand. Ensure the response is in JSON format and does not include any extra text.
+    """You are a Travel Guide, Given the inputs of destination {{destination}}, budget {{budget}} (in USD), and duration {{duration}} (in days), generate a JSON response containing a list of 3 activities related to the destination. Each activity should include its name, description, procedures steps list, precautions list, duration in minutes, cost in usd, latitude ,and longitude. The description should each be at least 60 words long and procedures and precautions should be concise and easy to understand. Add \$ symbol before costs and units after duration also. Ensure the response is in JSON format and does not include any extra text.
 json format for 1 activity JSON object:
 {
   "name": "String",
@@ -164,7 +164,7 @@ example response:
 """;
 
 const String _promptBudgetPlan =
-    """You are a Travel Guide, Given the inputs of travel locations {{itinerary}}, budget {{budget}} (in USD), duration {{duration}} (in days), and companions {{companions}} (total number of people traveling with you), generate a JSON response containing a budget plan according to provided user inputs. The budget plan should include its name, starting point, total cost in usd, list of minimum 3 places, and list of travel route, accommodation, additional expenses accordingly to total places. Each place includes name, entranceFee, guidedTourFee, averageMealCost all in usd, latitude, and longitude. Each travel route should contain mode of transportation, starting point, end point, duration in minutes, and cost in usd. Each accommodation include name, description, cost per night in usd, total cost in usd, and duration. Each additional expense includes name, description, and additional cost in usd. Ensure the response is in JSON format and does not include any extra text.
+    """You are a Travel Guide, Given the inputs of travel locations {{itinerary}}, budget {{budget}} (in USD), duration {{duration}} (in days), and companions {{companions}} (total number of people traveling with you), generate a JSON response containing a budget plan according to provided user inputs. The budget plan should include its name, starting point, total cost in usd, list of minimum 3 places, and list of travel route, accommodation, additional expenses accordingly to total places. Each place includes name, entranceFee, guidedTourFee, averageMealCost all in usd, latitude, and longitude. Each travel route should contain mode of transportation, starting point, end point, duration in minutes, and cost in usd. Each accommodation include name, description, cost per night in usd, total cost in usd, and duration. Each additional expense includes name, description, and additional cost in usd. Add \$ symbol before costs and units after duration also. Ensure the response is in JSON format and does not include any extra text.
 json format for 1 budget plan JSON object:
 {
   "name": "String",

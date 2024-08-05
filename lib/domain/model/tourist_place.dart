@@ -51,7 +51,7 @@ extension GenerateTouristPlaceBalloon on TouristPlace {
       <name>Tourist Place Data</name>
       <Style id="tourist_place_style">
         <BalloonStyle>
-          <textColor>${AppTheme.color.shade900.toHex()}</textColor>
+          <textColor>#ffff0000</textColor>
           <bgColor>${AppTheme.color.shade50.toHex()}</bgColor> <!-- Set the balloon background color here -->
           <text>
             <![CDATA[

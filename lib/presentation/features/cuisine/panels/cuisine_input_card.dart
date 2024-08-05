@@ -21,6 +21,7 @@ class _CuisineInputCardState extends State<CuisineInputCard> {
   static const double _spacing = 12.0;
 
   final _destinationController = TextEditingController();
+  final _scrollController = ScrollController();
 
   final List<String> _preferences = [
     "Any",
@@ -47,8 +48,9 @@ class _CuisineInputCardState extends State<CuisineInputCard> {
       children: [
         Expanded(
           child: Scrollbar(
+            controller: _scrollController,
             child: SingleChildScrollView(
-              primary: true,
+              controller: _scrollController,
               padding: const EdgeInsets.only(right: 24.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

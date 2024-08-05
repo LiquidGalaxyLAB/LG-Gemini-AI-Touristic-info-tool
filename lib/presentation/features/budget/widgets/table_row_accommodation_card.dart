@@ -46,10 +46,10 @@ class TableRowAccommodationCard extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Expanded(flex: 4, child: Text("Name", style: headerStyle)),
+                Expanded(flex: 35, child: Text("Name", style: headerStyle)),
                 const SizedBox(width: 12),
                 Expanded(
-                  flex: 2,
+                  flex: 20,
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text("Duration", style: headerStyle),
@@ -57,7 +57,7 @@ class TableRowAccommodationCard extends StatelessWidget {
                 ),
                 const SizedBox(width: 12),
                 Expanded(
-                  flex: 2,
+                  flex: 20,
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text("Per night", style: headerStyle),
@@ -65,7 +65,7 @@ class TableRowAccommodationCard extends StatelessWidget {
                 ),
                 const SizedBox(width: 12),
                 Expanded(
-                  flex: 2,
+                  flex: 20,
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text("Total", style: headerStyle),
@@ -95,13 +95,13 @@ class TableRowAccommodationCard extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Expanded(flex: 3, child: _buildTableCell(_accommodation.name, _selected)),
+                Expanded(flex: 35, child: _buildTableCell(_accommodation.name, _selected)),
                 const SizedBox(width: 12),
-                Expanded(flex: 2, child: _buildTableCell(_accommodation.duration, _selected)),
+                Expanded(flex: 20, child: _buildTableCell(_accommodation.duration, _selected)),
                 const SizedBox(width: 12),
-                Expanded(flex: 2, child: _buildTableCell(_accommodation.costPerNight, _selected)),
+                Expanded(flex: 20, child: _buildTableCell(_accommodation.costPerNight, _selected)),
                 const SizedBox(width: 12),
-                Expanded(flex: 2, child: _buildTableCell(_accommodation.totalCost, _selected)),
+                Expanded(flex: 20, child: _buildTableCell(_accommodation.totalCost, _selected)),
               ],
             ),
           ),
