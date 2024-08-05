@@ -2,7 +2,7 @@ import 'package:floor/floor.dart';
 
 import 'package:equatable/equatable.dart';
 
-@Entity(tableName: 'tourist_places', primaryKeys: ['latitude', 'longitude'])
+@Entity(tableName: 'tourist_places', primaryKeys: ['name'])
 class TouristPlaceRequest extends Equatable {
   final String? name;
   final String? location;

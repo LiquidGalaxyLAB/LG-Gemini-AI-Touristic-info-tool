@@ -21,12 +21,14 @@ abstract class $AppDatabaseBuilderContract {
 class $FloorAppDatabase {
   /// Creates a database builder for a persistent database.
   /// Once a database is built, you should keep a reference to it and re-use it.
-  static $AppDatabaseBuilderContract databaseBuilder(String name) => _$AppDatabaseBuilder(name);
+  static $AppDatabaseBuilderContract databaseBuilder(String name) =>
+      _$AppDatabaseBuilder(name);
 
   /// Creates a database builder for an in memory database.
   /// Information stored in an in memory database disappears when the process is killed.
   /// Once a database is built, you should keep a reference to it and re-use it.
-  static $AppDatabaseBuilderContract inMemoryDatabaseBuilder() => _$AppDatabaseBuilder(null);
+  static $AppDatabaseBuilderContract inMemoryDatabaseBuilder() =>
+      _$AppDatabaseBuilder(null);
 }
 
 class _$AppDatabaseBuilder implements $AppDatabaseBuilderContract {
@@ -34,15 +36,7 @@ class _$AppDatabaseBuilder implements $AppDatabaseBuilderContract {
 
   final String? name;
 
-  final List<Migration> _migrations = [
-    Migration(
-      1,
-      2,
-      (database) async {
-        await database.execute('ALTER TABLE $touristPlacesTable ADD COLUMN location TEXT');
-      },
-    ),
-  ];
+  final List<Migration> _migrations = [];
 
   Callback? _callback;
 
@@ -60,7 +54,9 @@ class _$AppDatabaseBuilder implements $AppDatabaseBuilderContract {
 
   @override
   Future<AppDatabase> build() async {
-    final path = name != null ? await sqfliteDatabaseFactory.getDatabasePath(name!) : ':memory:';
+    final path = name != null
+        ? await sqfliteDatabaseFactory.getDatabasePath(name!)
+        : ':memory:';
     final database = _$AppDatabase();
     database.database = await database.open(
       path,
@@ -84,7 +80,7 @@ class _$AppDatabase extends AppDatabase {
     Callback? callback,
   ]) async {
     final databaseOptions = sqflite.OpenDatabaseOptions(
-      version: 2,
+      version: 1,
       onConfigure: (database) async {
         await database.execute('PRAGMA foreign_keys = ON');
         await callback?.onConfigure?.call(database);
@@ -93,13 +89,14 @@ class _$AppDatabase extends AppDatabase {
         await callback?.onOpen?.call(database);
       },
       onUpgrade: (database, startVersion, endVersion) async {
-        await MigrationAdapter.runMigrations(database, startVersion, endVersion, migrations);
+        await MigrationAdapter.runMigrations(
+            database, startVersion, endVersion, migrations);
 
         await callback?.onUpgrade?.call(database, startVersion, endVersion);
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `tourist_places` (`name` TEXT, `location` TEXT, `latitude` REAL, `longitude` REAL, `history` TEXT, `significance` TEXT, `cuisine` TEXT, `specialty` TEXT, PRIMARY KEY (`latitude`, `longitude`))');
+            'CREATE TABLE IF NOT EXISTS `tourist_places` (`name` TEXT, `location` TEXT, `latitude` REAL, `longitude` REAL, `history` TEXT, `significance` TEXT, `cuisine` TEXT, `specialty` TEXT, PRIMARY KEY (`name`))');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -109,7 +106,8 @@ class _$AppDatabase extends AppDatabase {
 
   @override
   TouristPlacesDao get touristPlacesDao {
-    return _touristPlacesDaoInstance ??= _$TouristPlacesDao(database, changeListener);
+    return _touristPlacesDaoInstance ??=
+        _$TouristPlacesDao(database, changeListener);
   }
 }
 
@@ -134,7 +132,7 @@ class _$TouristPlacesDao extends TouristPlacesDao {
         _touristPlaceRequestDeletionAdapter = DeletionAdapter(
             database,
             'tourist_places',
-            ['latitude', 'longitude'],
+            ['name'],
             (TouristPlaceRequest item) => <String, Object?>{
                   'name': item.name,
                   'location': item.location,
@@ -152,9 +150,11 @@ class _$TouristPlacesDao extends TouristPlacesDao {
 
   final QueryAdapter _queryAdapter;
 
-  final InsertionAdapter<TouristPlaceRequest> _touristPlaceRequestInsertionAdapter;
+  final InsertionAdapter<TouristPlaceRequest>
+      _touristPlaceRequestInsertionAdapter;
 
-  final DeletionAdapter<TouristPlaceRequest> _touristPlaceRequestDeletionAdapter;
+  final DeletionAdapter<TouristPlaceRequest>
+      _touristPlaceRequestDeletionAdapter;
 
   @override
   Future<List<TouristPlaceRequest>> getFavourites() async {
@@ -177,7 +177,8 @@ class _$TouristPlacesDao extends TouristPlacesDao {
 
   @override
   Future<void> insertFavourite(TouristPlaceRequest touristPlaceRequest) async {
-    await _touristPlaceRequestInsertionAdapter.insert(touristPlaceRequest, OnConflictStrategy.replace);
+    await _touristPlaceRequestInsertionAdapter.insert(
+        touristPlaceRequest, OnConflictStrategy.replace);
   }
 
   @override
