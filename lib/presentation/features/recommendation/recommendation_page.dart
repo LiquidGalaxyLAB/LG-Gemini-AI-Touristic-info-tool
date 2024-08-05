@@ -86,18 +86,7 @@ class _RecommendationPageState extends State<RecommendationPage> {
                       setState(() {
                         _selected = index;
                       });
-                      await LGService().sendKml(KmlUtils.createCircle(LatLng(
-                        _recommendations[_selected].latitude,
-                        _recommendations[_selected].longitude,
-                      )));
-                      await moveToPlace(
-                        _controller,
-                        LatLng(
-                          _recommendations[_selected].latitude,
-                          _recommendations[_selected].longitude,
-                        ),
-                        tilt: tilt,
-                      );
+                      await _syncLocation();
                     },
                   ),
                   if (index < _recommendations.length - 1) const SizedBox(height: 8)
@@ -108,11 +97,27 @@ class _RecommendationPageState extends State<RecommendationPage> {
         },
       ),
       panelRight: blocBuilder<RecommendationsBloc, T>(onSuccess: (result) {
-        LGService().showBalloon(result[_selected].generateBalloon());
+        _syncLocation();
         return RecommendationDetailsCard(
           recommendation: _recommendations[_selected],
         );
       }),
+    );
+  }
+
+  Future<void> _syncLocation() async {
+    await LGService().sendKml(KmlUtils.createCircle(LatLng(
+      _recommendations[_selected].latitude,
+      _recommendations[_selected].longitude,
+    )));
+    await LGService().showBalloon(_recommendations[_selected].generateBalloon());
+    await moveToPlace(
+      _controller,
+      LatLng(
+        _recommendations[_selected].latitude,
+        _recommendations[_selected].longitude,
+      ),
+      tilt: tilt,
     );
   }
 }

@@ -88,18 +88,7 @@ class _TouristPlacePageState extends State<TouristPlacePage> {
                       setState(() {
                         _selected = index;
                       });
-                      await LGService().sendKml(KmlUtils.createCircle(LatLng(
-                        _touristPlaces[_selected].latitude,
-                        _touristPlaces[_selected].longitude,
-                      )));
-                      await moveToPlace(
-                        _controller,
-                        LatLng(
-                          _touristPlaces[_selected].latitude,
-                          _touristPlaces[_selected].longitude,
-                        ),
-                        tilt: tilt,
-                      );
+                      await _syncLocation();
                     },
                   ),
                   if (index < _touristPlaces.length - 1) const SizedBox(height: 8)
@@ -111,7 +100,6 @@ class _TouristPlacePageState extends State<TouristPlacePage> {
       ),
       panelRight: blocBuilder<TouristPlacesBloc, T>(
         onSuccess: (result) {
-          LGService().showBalloon(result[_selected].generateBalloon());
           _syncLocation();
           return TouristPlaceDetailsCard(
             touristPlace: result[_selected],
@@ -146,6 +134,9 @@ class _TouristPlacePageState extends State<TouristPlacePage> {
   }
 
   Future<void> _syncLocation() async {
-    moveToPlace(_controller, await _getLatLng());
+    final latLng = await _getLatLng();
+    await LGService().sendKml(KmlUtils.createCircle(latLng));
+    await LGService().showBalloon(_touristPlaces[_selected].generateBalloon());
+    await moveToPlace(_controller, latLng, tilt: tilt);
   }
 }

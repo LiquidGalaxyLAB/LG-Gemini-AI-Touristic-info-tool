@@ -80,18 +80,7 @@ class _FavouritesPageState extends State<FavouritesPage> {
                     setState(() {
                       _selected = index;
                     });
-                    await LGService().sendKml(KmlUtils.createCircle(LatLng(
-                      _touristPlaces[_selected].latitude,
-                      _touristPlaces[_selected].longitude,
-                    )));
-                    await moveToPlace(
-                      _controller,
-                      LatLng(
-                        _touristPlaces[_selected].latitude,
-                        _touristPlaces[_selected].longitude,
-                      ),
-                      tilt: tilt,
-                    );
+                    await _sendKMLs();
                   },
                 ),
                 if (index < _touristPlaces.length - 1) const SizedBox(height: 8)
@@ -102,7 +91,7 @@ class _FavouritesPageState extends State<FavouritesPage> {
       }),
       panelRight: blocBuilder<FavouritesBloc, T>(
         onSuccess: (result) {
-          LGService().showBalloon(result[_selected].generateBalloon());
+          _sendKMLs();
           return result.isNotEmpty
               ? FavouriteDetailsCard(
                   touristPlace: result[_selected],
@@ -126,6 +115,22 @@ class _FavouritesPageState extends State<FavouritesPage> {
               : Container();
         },
       ),
+    );
+  }
+
+  Future<void> _sendKMLs() async {
+    await LGService().sendKml(KmlUtils.createCircle(LatLng(
+      _touristPlaces[_selected].latitude,
+      _touristPlaces[_selected].longitude,
+    )));
+    await LGService().showBalloon(_touristPlaces[_selected].generateBalloon());
+    await moveToPlace(
+      _controller,
+      LatLng(
+        _touristPlaces[_selected].latitude,
+        _touristPlaces[_selected].longitude,
+      ),
+      tilt: tilt,
     );
   }
 }

@@ -85,18 +85,7 @@ class _CuisinePageState extends State<CuisinePage> {
                       setState(() {
                         _selected = index;
                       });
-                      await LGService().sendKml(KmlUtils.createCircle(LatLng(
-                        _cuisines[_selected].latitude,
-                        _cuisines[_selected].longitude,
-                      )));
-                      await moveToPlace(
-                        _controller,
-                        LatLng(
-                          _cuisines[_selected].latitude,
-                          _cuisines[_selected].longitude,
-                        ),
-                        tilt: tilt,
-                      );
+                      _syncLocation();
                     },
                   ),
                   if (index < _cuisines.length - 1) const SizedBox(height: 8)
@@ -107,11 +96,27 @@ class _CuisinePageState extends State<CuisinePage> {
         },
       ),
       panelRight: blocBuilder<CuisinesBloc, T>(onSuccess: (result) {
-        LGService().showBalloon(result[_selected].generateBalloon());
+        _syncLocation();
         return CuisineDetailsCard(
           cuisine: _cuisines[_selected],
         );
       }),
+    );
+  }
+
+  Future<void> _syncLocation() async {
+    await LGService().sendKml(KmlUtils.createCircle(LatLng(
+      _cuisines[_selected].latitude,
+      _cuisines[_selected].longitude,
+    )));
+    await LGService().showBalloon(_cuisines[_selected].generateBalloon());
+    await moveToPlace(
+      _controller,
+      LatLng(
+        _cuisines[_selected].latitude,
+        _cuisines[_selected].longitude,
+      ),
+      tilt: tilt,
     );
   }
 }

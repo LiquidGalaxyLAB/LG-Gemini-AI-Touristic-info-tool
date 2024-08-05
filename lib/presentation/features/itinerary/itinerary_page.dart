@@ -98,12 +98,6 @@ class _ItineraryPageState extends State<ItineraryPage> {
         },
         onSuccess: (result) {
           _itinerary = result;
-          LGService().showBalloon(result.generateBalloon());
-          LGService().sendKml(
-            KmlUtils.createPolyline(
-              result.places.map((p) => LatLng(p.latitude, p.longitude)).toList(),
-            ),
-          );
           return MainResponseCard(
             itinerary: _itinerary!,
             selectedPlace: _selectedPlace,
@@ -118,23 +112,13 @@ class _ItineraryPageState extends State<ItineraryPage> {
               setState(() {
                 _selectedPlace = value;
               });
-              await moveToPlace(
-                _controller,
-                LatLng(
-                  _itinerary!.places[_selectedPlace].latitude,
-                  _itinerary!.places[_selectedPlace].longitude,
-                ),
-                tilt: tilt,
-              );
+              await _syncLocation();
             },
             onRouteTap: (value) async {
               setState(() {
                 _selectedRoute = value;
               });
-              latLng = await LocationService().getLatLngFromLocation(_itinerary!.places[_selectedRoute].name);
-              if (latLng != null) {
-                await moveToPlace(_controller, latLng!, tilt: tilt);
-              }
+              await _syncLocation();
             },
           );
         },
@@ -157,6 +141,11 @@ class _ItineraryPageState extends State<ItineraryPage> {
   }
 
   Future<void> _syncLocation() async {
-    moveToPlace(_controller, await _getLatLng(idx: _selectedPlace));
+    final latLng = await _getLatLng(idx: _selectedPlace);
+    LGService().sendKml(KmlUtils.createPolyline(
+      _itinerary!.places.map((p) => LatLng(p.latitude, p.longitude)).toList(),
+    ));
+    await LGService().showBalloon(_itinerary!.generateBalloon());
+    await moveToPlace(_controller, latLng, tilt: tilt);
   }
 }

@@ -82,12 +82,6 @@ class _BudgetPageState extends State<BudgetPage> {
         _selectedDetails = 1;
       }, onSuccess: (result) {
         _budgetPlan = result;
-        LGService().showBalloon(result.generateBalloon());
-        LGService().sendKml(
-          KmlUtils.createPolyline(
-            result.places.map((p) => LatLng(p.latitude, p.longitude)).toList(),
-          ),
-        );
         return MainResponseCard(
           budgetPlan: _budgetPlan!,
           onTap: (value) {
@@ -99,24 +93,15 @@ class _BudgetPageState extends State<BudgetPage> {
             setState(() {
               _selectedPlace = value;
             });
-            await LGService().sendKml(KmlUtils.createCircle(
-              LatLng(_budgetPlan!.places[value].latitude, _budgetPlan!.places[value].longitude),
-            ));
-            await moveToPlace(
-              _controller,
-              LatLng(_budgetPlan!.places[value].latitude, _budgetPlan!.places[value].longitude),
-              tilt: tilt,
-            );
+            latLng = LatLng(_budgetPlan!.places[value].latitude, _budgetPlan!.places[value].longitude);
+            await _syncLocation();
           },
           onRouteTap: (value) async {
             setState(() {
               _selectedRoute = value;
             });
             latLng = await LocationService().getLatLngFromLocation(_budgetPlan!.travelRoute[value].from);
-            if (latLng != null) {
-              await LGService().sendKml(KmlUtils.createCircle(latLng!));
-              await moveToPlace(_controller, latLng!, tilt: tilt);
-            }
+            await _syncLocation();
           },
           onExpenseTap: (value) {
             setState(() {
@@ -136,6 +121,7 @@ class _BudgetPageState extends State<BudgetPage> {
         );
       }),
       panelRight: blocBuilder<BudgetPlanBloc, T>(onSuccess: (result) {
+        _syncLocation();
         return _buildPanelRight();
       }),
     );
@@ -160,5 +146,14 @@ class _BudgetPageState extends State<BudgetPage> {
           route: _budgetPlan!.travelRoute[_selectedRoute],
         );
     }
+  }
+
+  Future<void> _syncLocation() async {
+    latLng = latLng ?? LatLng(_budgetPlan!.places[0].latitude, _budgetPlan!.places[0].longitude);
+    LGService().sendKml(KmlUtils.createPolyline(
+      _budgetPlan!.places.map((p) => LatLng(p.latitude, p.longitude)).toList(),
+    ));
+    await LGService().showBalloon(_budgetPlan!.generateBalloon());
+    await moveToPlace(_controller, latLng!, tilt: tilt);
   }
 }

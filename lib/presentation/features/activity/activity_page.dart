@@ -85,18 +85,7 @@ class _ActivityPageState extends State<ActivityPage> {
                       setState(() {
                         _selected = index;
                       });
-                      await LGService().sendKml(KmlUtils.createCircle(LatLng(
-                        _activities[_selected].latitude,
-                        _activities[_selected].longitude,
-                      )));
-                      await moveToPlace(
-                        _controller,
-                        LatLng(
-                          _activities[_selected].latitude,
-                          _activities[_selected].longitude,
-                        ),
-                        tilt: tilt,
-                      );
+                      await _syncLocation();
                     },
                   ),
                   if (index < _activities.length - 1) const SizedBox(height: 8)
@@ -107,11 +96,27 @@ class _ActivityPageState extends State<ActivityPage> {
         },
       ),
       panelRight: blocBuilder<ActivitiesBloc, T>(onSuccess: (result) {
-        LGService().showBalloon(result[_selected].generateBalloon());
+        _syncLocation();
         return ActivityDetailsCard(
           activity: _activities[_selected],
         );
       }),
+    );
+  }
+
+  Future<void> _syncLocation() async {
+    await LGService().sendKml(KmlUtils.createCircle(LatLng(
+      _activities[_selected].latitude,
+      _activities[_selected].longitude,
+    )));
+    await LGService().showBalloon(_activities[_selected].generateBalloon());
+    await moveToPlace(
+      _controller,
+      LatLng(
+        _activities[_selected].latitude,
+        _activities[_selected].longitude,
+      ),
+      tilt: tilt,
     );
   }
 }
