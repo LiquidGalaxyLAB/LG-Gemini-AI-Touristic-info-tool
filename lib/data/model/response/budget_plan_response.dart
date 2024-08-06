@@ -8,6 +8,8 @@ class BudgetPlanResponse extends Equatable {
   final List<AccommodationResponse>? accommodation;
   final List<AdditionalExpenseResponse>? additionalExpenses;
   final String? totalCost;
+  final double? latitude;
+  final double? longitude;
 
   const BudgetPlanResponse({
     this.name,
@@ -17,6 +19,8 @@ class BudgetPlanResponse extends Equatable {
     this.accommodation,
     this.additionalExpenses,
     this.totalCost,
+    this.latitude,
+    this.longitude,
   });
 
   @override
@@ -28,6 +32,8 @@ class BudgetPlanResponse extends Equatable {
     accommodation,
     additionalExpenses,
     totalCost,
+    latitude,
+    longitude,
   ];
 
   factory BudgetPlanResponse.fromJson(Map<String, dynamic> json) {
@@ -47,6 +53,8 @@ class BudgetPlanResponse extends Equatable {
           ?.map((item) => AdditionalExpenseResponse.fromJson(item as Map<String, dynamic>))
           .toList(),
       totalCost: json['totalCost'] as String?,
+      latitude: json['latitude'] as double?,
+      longitude: json['longitude'] as double?,
     );
   }
 }
@@ -57,6 +65,9 @@ class TravelRouteResponse extends Equatable {
   final String? to;
   final String? cost;
   final String? duration;
+  final String? location;
+  final double? latitude;
+  final double? longitude;
 
   const TravelRouteResponse({
     this.mode,
@@ -64,6 +75,9 @@ class TravelRouteResponse extends Equatable {
     this.to,
     this.cost,
     this.duration,
+    this.location,
+    this.latitude,
+    this.longitude,
   });
 
   @override
@@ -73,6 +87,9 @@ class TravelRouteResponse extends Equatable {
     to,
     cost,
     duration,
+    location,
+    latitude,
+    longitude,
   ];
 
   factory TravelRouteResponse.fromJson(Map<String, dynamic> json) {
@@ -82,6 +99,9 @@ class TravelRouteResponse extends Equatable {
       to: json['to'] as String?,
       cost: json['cost'] as String?,
       duration: json['duration'] as String?,
+      location: json['location'] as String?,
+      latitude: json['latitude'] as double?,
+      longitude: json['longitude'] as double?,
     );
   }
 }
@@ -93,6 +113,7 @@ class PlaceResponse extends Equatable {
   final String? averageMealCost;
   final double? latitude;
   final double? longitude;
+  final String? location;
 
   const PlaceResponse({
     this.name,
@@ -101,6 +122,7 @@ class PlaceResponse extends Equatable {
     this.averageMealCost,
     this.latitude,
     this.longitude,
+    this.location,
   });
 
   @override
@@ -111,6 +133,7 @@ class PlaceResponse extends Equatable {
     averageMealCost,
     latitude,
     longitude,
+    location,
   ];
 
   factory PlaceResponse.fromJson(Map<String, dynamic> json) {
@@ -121,6 +144,7 @@ class PlaceResponse extends Equatable {
       averageMealCost: json['averageMealCost'] as String?,
       latitude: json['latitude'] as double?,
       longitude: json['longitude'] as double?,
+      location: json['location'] as String?,
     );
   }
 }

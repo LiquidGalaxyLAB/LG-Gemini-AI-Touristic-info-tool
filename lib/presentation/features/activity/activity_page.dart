@@ -10,6 +10,7 @@ import '../../../core/utils/kml_utils.dart';
 import '../../../core/utils/maps_utils.dart';
 import '../../../domain/model/activitiy.dart';
 import '../../../service/lg_service.dart';
+import '../../../service/location_service.dart';
 import '../../components/layout_blueprint.dart';
 import '../../components/response_item_card.dart';
 import 'bloc/activities_bloc.dart';
@@ -105,18 +106,14 @@ class _ActivityPageState extends State<ActivityPage> {
   }
 
   Future<void> _syncLocation() async {
-    await LGService().sendKml(KmlUtils.createCircle(LatLng(
-      _activities[_selected].latitude,
-      _activities[_selected].longitude,
-    )));
+    LatLng latLng = await LocationService().getLatLngFromLocation(_activities[_selected].location) ??
+        LatLng(
+          _activities[_selected].latitude,
+          _activities[_selected].longitude,
+        );
+
+    await LGService().sendKml(KmlUtils.createCircle(latLng));
     await LGService().showBalloon(_activities[_selected].generateBalloon());
-    await moveToPlace(
-      _controller,
-      LatLng(
-        _activities[_selected].latitude,
-        _activities[_selected].longitude,
-      ),
-      tilt: tilt,
-    );
+    await moveToPlace(_controller, latLng, tilt: tilt);
   }
 }

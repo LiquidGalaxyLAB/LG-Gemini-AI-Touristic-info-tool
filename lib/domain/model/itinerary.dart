@@ -30,6 +30,9 @@ class TravelRoute extends Equatable {
   final String mode;
   final String from;
   final String to;
+  final String location;
+  final double latitude;
+  final double longitude;
   final String description;
   final String duration;
   final List<String> highlights;
@@ -38,6 +41,9 @@ class TravelRoute extends Equatable {
     required this.mode,
     required this.from,
     required this.to,
+    required this.location,
+    required this.latitude,
+    required this.longitude,
     required this.description,
     required this.duration,
     required this.highlights,
@@ -48,6 +54,9 @@ class TravelRoute extends Equatable {
         mode,
         from,
         to,
+        location,
+        latitude,
+        longitude,
         description,
         duration,
         highlights,

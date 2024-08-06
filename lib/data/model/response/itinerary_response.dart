@@ -42,6 +42,9 @@ class TravelRouteResponse extends Equatable {
   final String? description;
   final String? duration;
   final List<String>? highlights;
+  final String? location;
+  final double? latitude;
+  final double? longitude;
 
   const TravelRouteResponse({
     this.mode,
@@ -50,6 +53,9 @@ class TravelRouteResponse extends Equatable {
     this.description,
     this.duration,
     this.highlights,
+    this.location,
+    this.latitude,
+    this.longitude,
   });
 
   @override
@@ -60,6 +66,9 @@ class TravelRouteResponse extends Equatable {
         description,
         duration,
         highlights,
+        location,
+        latitude,
+        longitude,
       ];
 
   factory TravelRouteResponse.fromJson(Map<String, dynamic> json) {
@@ -69,9 +78,10 @@ class TravelRouteResponse extends Equatable {
       to: json['to'] as String?,
       description: json['description'] as String?,
       duration: json['duration'] as String?,
-      highlights: (json['highlights'] as List<dynamic>?)
-          ?.map((item) => item as String)
-          .toList(),
+      highlights: (json['highlights'] as List<dynamic>?)?.map((item) => item as String).toList(),
+      location: json['location'] as String?,
+      latitude: json['latitude'] as double?,
+      longitude: json['longitude'] as double?,
     );
   }
 }
@@ -110,9 +120,7 @@ class PlaceResponse extends Equatable {
       latitude: json['latitude'] as double?,
       longitude: json['longitude'] as double?,
       description: json['description'] as String?,
-      highlights: (json['highlights'] as List<dynamic>?)
-          ?.map((item) => item as String)
-          .toList(),
+      highlights: (json['highlights'] as List<dynamic>?)?.map((item) => item as String).toList(),
     );
   }
 }

@@ -10,6 +10,7 @@ import '../../../core/utils/kml_utils.dart';
 import '../../../core/utils/maps_utils.dart';
 import '../../../domain/model/recommendation.dart';
 import '../../../service/lg_service.dart';
+import '../../../service/location_service.dart';
 import '../../components/layout_blueprint.dart';
 import '../../components/response_item_card.dart';
 import 'bloc/recommendations_bloc.dart';
@@ -106,18 +107,13 @@ class _RecommendationPageState extends State<RecommendationPage> {
   }
 
   Future<void> _syncLocation() async {
-    await LGService().sendKml(KmlUtils.createCircle(LatLng(
-      _recommendations[_selected].latitude,
-      _recommendations[_selected].longitude,
-    )));
+    LatLng latLng = await LocationService().getLatLngFromLocation(_recommendations[_selected].location) ??
+        LatLng(
+          _recommendations[_selected].latitude,
+          _recommendations[_selected].longitude,
+        );
+    await LGService().sendKml(KmlUtils.createCircle(latLng));
     await LGService().showBalloon(_recommendations[_selected].generateBalloon());
-    await moveToPlace(
-      _controller,
-      LatLng(
-        _recommendations[_selected].latitude,
-        _recommendations[_selected].longitude,
-      ),
-      tilt: tilt,
-    );
+    await moveToPlace(_controller, latLng, tilt: tilt);
   }
 }

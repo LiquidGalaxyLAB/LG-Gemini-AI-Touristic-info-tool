@@ -10,6 +10,7 @@ class Recommendation extends Equatable {
   final String cost;
   final String duration;
   final List<String> highlights;
+  final String location;
   final double latitude;
   final double longitude;
 
@@ -19,6 +20,7 @@ class Recommendation extends Equatable {
     required this.cost,
     required this.duration,
     required this.highlights,
+    required this.location,
     required this.latitude,
     required this.longitude,
   });
@@ -30,6 +32,7 @@ class Recommendation extends Equatable {
         cost,
         duration,
         highlights,
+        location,
         latitude,
         longitude,
       ];

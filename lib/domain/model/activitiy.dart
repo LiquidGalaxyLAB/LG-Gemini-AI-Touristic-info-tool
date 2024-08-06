@@ -11,6 +11,7 @@ class Activity extends Equatable {
   final List<String> precautions;
   final String duration;
   final String cost;
+  final String location;
   final double latitude;
   final double longitude;
 
@@ -21,6 +22,7 @@ class Activity extends Equatable {
     required this.precautions,
     required this.duration,
     required this.cost,
+    required this.location,
     required this.latitude,
     required this.longitude,
   });
@@ -33,6 +35,7 @@ class Activity extends Equatable {
         precautions,
         duration,
         cost,
+        location,
         latitude,
         longitude,
       ];

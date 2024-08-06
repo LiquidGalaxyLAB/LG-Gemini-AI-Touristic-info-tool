@@ -10,6 +10,7 @@ import '../../../core/utils/kml_utils.dart';
 import '../../../core/utils/maps_utils.dart';
 import '../../../domain/model/cuisine.dart';
 import '../../../service/lg_service.dart';
+import '../../../service/location_service.dart';
 import '../../components/layout_blueprint.dart';
 import '../../components/response_item_card.dart';
 import 'bloc/cuisines_bloc.dart';
@@ -105,18 +106,13 @@ class _CuisinePageState extends State<CuisinePage> {
   }
 
   Future<void> _syncLocation() async {
-    await LGService().sendKml(KmlUtils.createCircle(LatLng(
-      _cuisines[_selected].latitude,
-      _cuisines[_selected].longitude,
-    )));
+    LatLng latLng = await LocationService().getLatLngFromLocation(_cuisines[_selected].location) ??
+        LatLng(
+          _cuisines[_selected].latitude,
+          _cuisines[_selected].longitude,
+        );
+    await LGService().sendKml(KmlUtils.createCircle(latLng));
     await LGService().showBalloon(_cuisines[_selected].generateBalloon());
-    await moveToPlace(
-      _controller,
-      LatLng(
-        _cuisines[_selected].latitude,
-        _cuisines[_selected].longitude,
-      ),
-      tilt: tilt,
-    );
+    await moveToPlace(_controller, latLng, tilt: tilt);
   }
 }

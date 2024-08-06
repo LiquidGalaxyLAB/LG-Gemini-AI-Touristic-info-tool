@@ -12,6 +12,7 @@ class Cuisine extends Equatable {
   final String duration;
   final List<String> ingredients;
   final List<String> recipe;
+  final String location;
   final double latitude;
   final double longitude;
 
@@ -23,6 +24,7 @@ class Cuisine extends Equatable {
     required this.duration,
     required this.ingredients,
     required this.recipe,
+    required this.location,
     required this.latitude,
     required this.longitude,
   });
@@ -36,6 +38,7 @@ class Cuisine extends Equatable {
         duration,
         ingredients,
         recipe,
+        location,
         latitude,
         longitude,
       ];

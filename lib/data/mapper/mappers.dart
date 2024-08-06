@@ -73,6 +73,9 @@ budget.BudgetPlan responseToBudgetPlan(
                   to: e.to ?? "",
                   cost: e.cost ?? "",
                   duration: e.duration ?? "",
+                  location: e.location ?? "",
+                  latitude: e.latitude ?? 0.0,
+                  longitude: e.longitude ?? 0.0,
                 ))
             .toList() ??
         [],
@@ -84,6 +87,7 @@ budget.BudgetPlan responseToBudgetPlan(
                   averageMealCost: e.averageMealCost ?? "",
                   latitude: e.latitude ?? 0,
                   longitude: e.longitude ?? 0,
+                  location: e.location ?? "",
                 ))
             .toList() ??
         [],
@@ -107,6 +111,8 @@ budget.BudgetPlan responseToBudgetPlan(
         [],
     startingPoint: response.startingPoint ?? "",
     totalCost: response.totalCost ?? "",
+    latitude: response.latitude ?? 0.0,
+    longitude: response.longitude ?? 0.0,
   );
 }
 
@@ -124,6 +130,7 @@ List<Cuisine>? responseToCuisines(
             recipe: cuisine.recipe ?? [],
             latitude: cuisine.latitude ?? 0,
             longitude: cuisine.longitude ?? 0,
+            location: cuisine.location ?? "",
           ))
       .toList();
 }
@@ -140,6 +147,7 @@ List<Recommendation>? responseToRecommendations(
             highlights: recommendation.highlights ?? [],
             latitude: recommendation.latitude ?? 0,
             longitude: recommendation.longitude ?? 0,
+            location: recommendation.location ?? "",
           ))
       .toList();
 }
@@ -157,6 +165,7 @@ List<Activity>? responseToActivities(
             cost: activity.cost ?? "",
             latitude: activity.latitude ?? 0,
             longitude: activity.longitude ?? 0,
+            location: activity.location ?? "",
           ))
       .toList();
 }
@@ -175,6 +184,9 @@ itinerary.Itinerary? responseToItinerary(
                   description: e.description ?? "",
                   duration: e.duration ?? "",
                   highlights: e.highlights ?? [],
+                  location: e.location ?? "",
+                  latitude: e.latitude ?? 0.0,
+                  longitude: e.longitude ?? 0.0,
                 ))
             .toList() ??
         [],

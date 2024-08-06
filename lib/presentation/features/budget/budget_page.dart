@@ -93,14 +93,16 @@ class _BudgetPageState extends State<BudgetPage> {
             setState(() {
               _selectedPlace = value;
             });
-            latLng = LatLng(_budgetPlan!.places[value].latitude, _budgetPlan!.places[value].longitude);
+            latLng ??= await LocationService().getLatLngFromLocation(_budgetPlan!.places[value].location);
+            latLng ??= LatLng(_budgetPlan!.places[value].latitude, _budgetPlan!.places[value].longitude);
             await _syncLocation();
           },
           onRouteTap: (value) async {
             setState(() {
               _selectedRoute = value;
             });
-            latLng = await LocationService().getLatLngFromLocation(_budgetPlan!.travelRoute[value].from);
+            latLng ??= await LocationService().getLatLngFromLocation(_budgetPlan!.travelRoute[value].from);
+            latLng ??= LatLng(_budgetPlan!.travelRoute[value].latitude, _budgetPlan!.travelRoute[value].longitude);
             await _syncLocation();
           },
           onExpenseTap: (value) {
@@ -149,7 +151,8 @@ class _BudgetPageState extends State<BudgetPage> {
   }
 
   Future<void> _syncLocation() async {
-    latLng = latLng ?? LatLng(_budgetPlan!.places[0].latitude, _budgetPlan!.places[0].longitude);
+    latLng ??= await LocationService().getLatLngFromLocation(_budgetPlan!.name);
+    latLng ??= LatLng(_budgetPlan!.places[0].latitude, _budgetPlan!.places[0].longitude);
     LGService().sendKml(KmlUtils.createPolyline(
       _budgetPlan!.places.map((p) => LatLng(p.latitude, p.longitude)).toList(),
     ));

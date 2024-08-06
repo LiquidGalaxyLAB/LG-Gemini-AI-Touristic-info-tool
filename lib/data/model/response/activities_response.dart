@@ -26,6 +26,7 @@ class ActivityResponse extends Equatable {
   final String? cost;
   final double? latitude;
   final double? longitude;
+  final String? location;
 
   const ActivityResponse({
     this.name,
@@ -36,6 +37,7 @@ class ActivityResponse extends Equatable {
     this.cost,
     this.latitude,
     this.longitude,
+    this.location,
   });
 
   @override
@@ -48,6 +50,7 @@ class ActivityResponse extends Equatable {
         cost,
         latitude,
         longitude,
+        location,
       ];
 
   factory ActivityResponse.fromJson(Map<String, dynamic> json) {
@@ -60,6 +63,7 @@ class ActivityResponse extends Equatable {
       cost: json['cost'] as String?,
       latitude: json['latitude'] as double?,
       longitude: json['longitude'] as double?,
+      location: json['location'] as String?,
     );
   }
 }

@@ -12,6 +12,8 @@ class BudgetPlan extends Equatable {
   final List<Accommodation> accommodation;
   final List<AdditionalExpense> additionalExpenses;
   final String totalCost;
+  final double latitude;
+  final double longitude;
 
   const BudgetPlan({
     required this.name,
@@ -21,6 +23,8 @@ class BudgetPlan extends Equatable {
     required this.accommodation,
     required this.additionalExpenses,
     required this.totalCost,
+    required this.latitude,
+    required this.longitude,
   });
 
   @override
@@ -32,6 +36,8 @@ class BudgetPlan extends Equatable {
         accommodation,
         additionalExpenses,
         totalCost,
+        latitude,
+        longitude,
       ];
 }
 
@@ -39,6 +45,9 @@ class TravelRoute extends Equatable {
   final String mode;
   final String from;
   final String to;
+  final String location;
+  final double latitude;
+  final double longitude;
   final String cost;
   final String duration;
 
@@ -46,6 +55,9 @@ class TravelRoute extends Equatable {
     required this.mode,
     required this.from,
     required this.to,
+    required this.location,
+    required this.latitude,
+    required this.longitude,
     required this.cost,
     required this.duration,
   });
@@ -55,6 +67,9 @@ class TravelRoute extends Equatable {
         mode,
         from,
         to,
+        location,
+        latitude,
+        longitude,
         cost,
         duration,
       ];
@@ -65,6 +80,7 @@ class Place extends Equatable {
   final String entranceFee;
   final String guidedTourFee;
   final String averageMealCost;
+  final String location;
   final double latitude;
   final double longitude;
 
@@ -73,6 +89,7 @@ class Place extends Equatable {
     required this.entranceFee,
     required this.guidedTourFee,
     required this.averageMealCost,
+    required this.location,
     required this.latitude,
     required this.longitude,
   });
@@ -83,6 +100,7 @@ class Place extends Equatable {
         entranceFee,
         guidedTourFee,
         averageMealCost,
+        location,
         latitude,
         longitude,
       ];
@@ -133,13 +151,11 @@ class AdditionalExpense extends Equatable {
 }
 
 String _createPlaceCard(Place place) {
-  return createItemCard(
-      '${createInnerCard('Name', place.name)}'
-          '${createInnerCard('Coordinates', '${place.latitude}, ${place.longitude}')}'
-          '${createInnerCard('Average Meal Fee', place.averageMealCost)}'
-          '${createInnerCard('Guided Tour Fee', place.guidedTourFee)}'
-          '${createInnerCard('Entrance Fee', place.entranceFee)}'
-  );
+  return createItemCard('${createInnerCard('Name', place.name)}'
+      '${createInnerCard('Coordinates', '${place.latitude}, ${place.longitude}')}'
+      '${createInnerCard('Average Meal Fee', place.averageMealCost)}'
+      '${createInnerCard('Guided Tour Fee', place.guidedTourFee)}'
+      '${createInnerCard('Entrance Fee', place.entranceFee)}');
 }
 
 String _createTravelRouteCard(TravelRoute travelRoute) {
@@ -150,21 +166,17 @@ String _createTravelRouteCard(TravelRoute travelRoute) {
 }
 
 String _createAccommodationCard(Accommodation accommodation) {
-  return createItemCard(
-      '${createInnerCard('Name', accommodation.name)}'
-          '${createInnerCard('Description', accommodation.description)}'
-          '${createInnerCard('Cost Per Night', accommodation.costPerNight)}'
-          '${createInnerCard('Duration', accommodation.duration)}'
-          '${createInnerCard('Total Cost', accommodation.totalCost)}'
-  );
+  return createItemCard('${createInnerCard('Name', accommodation.name)}'
+      '${createInnerCard('Description', accommodation.description)}'
+      '${createInnerCard('Cost Per Night', accommodation.costPerNight)}'
+      '${createInnerCard('Duration', accommodation.duration)}'
+      '${createInnerCard('Total Cost', accommodation.totalCost)}');
 }
 
 String _createAdditionalExpenseCard(AdditionalExpense additionalExpense) {
-  return createItemCard(
-      '${createInnerCard('Name', additionalExpense.name)}'
-          '${createInnerCard('Description', additionalExpense.description)}'
-          '${createInnerCard('Estimated Cost', additionalExpense.estimatedCost)}'
-  );
+  return createItemCard('${createInnerCard('Name', additionalExpense.name)}'
+      '${createInnerCard('Description', additionalExpense.description)}'
+      '${createInnerCard('Estimated Cost', additionalExpense.estimatedCost)}');
 }
 
 extension GenerateBalloon on BudgetPlan {
