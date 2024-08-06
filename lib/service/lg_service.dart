@@ -140,6 +140,9 @@ class LGService {
   }
 
   Future<void> showBalloon(String kml) async {
+    await cleanBalloon();
+    await _execute(
+        "chmod 777 /var/www/html/kml/slave_$_rightScreen.kml; echo '' > /var/www/html/kml/slave_$_rightScreen.kml");
     await _execute(
         "chmod 777 /var/www/html/kml/slave_$_rightScreen.kml; echo '$kml' > /var/www/html/kml/slave_$_rightScreen.kml");
   }
