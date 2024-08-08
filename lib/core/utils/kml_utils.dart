@@ -104,7 +104,7 @@ class KmlUtils {
           <name>Logo</name>
           <ScreenOverlay>
             <name>Logo</name>
-            <Icon><href>https://i.ibb.co/WxGDqrN/img-lg-slave.png</href></Icon>
+            <Icon><href>https://i.ibb.co/jHPB8s6/img-lg-slave.png</href></Icon>
             <overlayXY x="0" y="1" xunits="fraction" yunits="fraction"/>
             <screenXY x="0.025" y="0.95" xunits="fraction" yunits="fraction"/>
             <rotationXY x="0" y="0" xunits="fraction" yunits="fraction"/>

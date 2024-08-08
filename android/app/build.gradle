@@ -18,12 +18,12 @@ if (localPropertiesFile.exists()) {
 
 def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
 if (flutterVersionCode == null) {
-    flutterVersionCode = '10'
+    flutterVersionCode = '11'
 }
 
 def flutterVersionName = localProperties.getProperty('flutter.versionName')
 if (flutterVersionName == null) {
-    flutterVersionName = '1.0.10'
+    flutterVersionName = '1.0.11'
 }
 
 def minSdk = localProperties.getProperty('flutter.minSdkVersion').toInteger()

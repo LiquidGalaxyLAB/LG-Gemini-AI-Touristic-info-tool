@@ -54,20 +54,21 @@ class _ControlPanelState extends State<ControlPanel> {
             onPressed: LGService().cleanKml,
             enabled: widget._connected,
           ),
-          const SizedBox(height: ControlPanel.spacing),
-          LGButton(
-            label: "Set slaves refresh",
-            icon: Icons.av_timer_rounded,
-            onPressed: LGService().setRefresh,
-            enabled: widget._connected,
-          ),
-          const SizedBox(height: ControlPanel.spacing),
-          LGButton(
-            label: "Reset slaves refresh",
-            icon: Icons.timer_off_outlined,
-            onPressed: LGService().resetRefresh,
-            enabled: widget._connected,
-          ),
+          /// Uncomment if want slave refresh & reset slaves feature
+          // const SizedBox(height: ControlPanel.spacing),
+          // LGButton(
+          //   label: "Set slaves refresh",
+          //   icon: Icons.av_timer_rounded,
+          //   onPressed: LGService().setRefresh,
+          //   enabled: widget._connected,
+          // ),
+          // const SizedBox(height: ControlPanel.spacing),
+          // LGButton(
+          //   label: "Reset slaves refresh",
+          //   icon: Icons.timer_off_outlined,
+          //   onPressed: LGService().resetRefresh,
+          //   enabled: widget._connected,
+          // ),
           const SizedBox(height: ControlPanel.spacing),
           LGButton(
             label: "Relaunch",
