@@ -10,6 +10,7 @@ import '../../../core/utils/kml_utils.dart';
 import '../../../core/utils/maps_utils.dart';
 import '../../../domain/model/tourist_place.dart';
 import '../../../service/lg_service.dart';
+import '../../../service/location_service.dart';
 import '../../components/layout_blueprint.dart';
 import '../../components/response_item_card.dart';
 import 'bloc/favourites_bloc.dart';
@@ -80,7 +81,7 @@ class _FavouritesPageState extends State<FavouritesPage> {
                     setState(() {
                       _selected = index;
                     });
-                    await _sendKMLs();
+                    await _syncLocation();
                   },
                 ),
                 if (index < _touristPlaces.length - 1) const SizedBox(height: 8)
@@ -91,7 +92,7 @@ class _FavouritesPageState extends State<FavouritesPage> {
       }),
       panelRight: blocBuilder<FavouritesBloc, T>(
         onSuccess: (result) {
-          _sendKMLs();
+          _syncLocation();
           return result.isNotEmpty
               ? FavouriteDetailsCard(
                   touristPlace: result[_selected],
@@ -118,19 +119,16 @@ class _FavouritesPageState extends State<FavouritesPage> {
     );
   }
 
-  Future<void> _sendKMLs() async {
-    await LGService().sendKml(KmlUtils.createCircle(LatLng(
-      _touristPlaces[_selected].latitude,
-      _touristPlaces[_selected].longitude,
-    )));
+  Future<LatLng> _getLatLng() async {
+    LatLng? latLng = await LocationService().getLatLngFromLocation(_touristPlaces[_selected].name);
+    latLng ??= LatLng(_touristPlaces[_selected].latitude, _touristPlaces[_selected].longitude);
+    return latLng;
+  }
+
+  Future<void> _syncLocation() async {
+    final latLng = await _getLatLng();
+    await LGService().sendKml(KmlUtils.createCircle(latLng));
     await LGService().showBalloon(_touristPlaces[_selected].generateBalloon());
-    await moveToPlace(
-      _controller,
-      LatLng(
-        _touristPlaces[_selected].latitude,
-        _touristPlaces[_selected].longitude,
-      ),
-      tilt: tilt,
-    );
+    await moveToPlace(_controller, latLng, tilt: tilt);
   }
 }

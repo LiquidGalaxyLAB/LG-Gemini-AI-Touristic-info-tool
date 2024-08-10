@@ -53,6 +53,7 @@ class _ControlPanelState extends State<ControlPanel> {
             icon: Icons.clean_hands_rounded,
             onPressed: LGService().cleanKml,
             enabled: widget._connected,
+            twoSteps: true,
           ),
           /// Uncomment if want slave refresh & reset slaves feature
           // const SizedBox(height: ControlPanel.spacing),
@@ -75,6 +76,7 @@ class _ControlPanelState extends State<ControlPanel> {
             icon: Icons.reset_tv_rounded,
             onPressed: LGService().relaunchLG,
             enabled: widget._connected,
+            twoSteps: true,
           ),
           const SizedBox(height: ControlPanel.spacing),
           LGButton(
@@ -82,6 +84,7 @@ class _ControlPanelState extends State<ControlPanel> {
             icon: Icons.restart_alt_rounded,
             onPressed: LGService().rebootLG,
             enabled: widget._connected,
+            twoSteps: true,
           ),
           const SizedBox(height: ControlPanel.spacing),
           LGButton(
@@ -89,6 +92,7 @@ class _ControlPanelState extends State<ControlPanel> {
             icon: Icons.power_settings_new_rounded,
             onPressed: LGService().shutdownLG,
             enabled: widget._connected,
+            twoSteps: true,
           ),
         ],
       ),

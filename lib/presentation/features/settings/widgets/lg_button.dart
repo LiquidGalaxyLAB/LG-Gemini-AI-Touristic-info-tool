@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../config/theme/app_theme.dart';
+import 'confirmation_dialog.dart';
 
 class LGButton extends StatefulWidget {
   final String _label;
@@ -8,6 +9,7 @@ class LGButton extends StatefulWidget {
   final Function() _onPressed;
   final bool _enabled;
   final bool _styleSmall;
+  final bool _twoSteps;
 
   const LGButton({
     required String label,
@@ -15,8 +17,10 @@ class LGButton extends StatefulWidget {
     required dynamic Function() onPressed,
     required bool enabled,
     bool styleSmall = false,
+    bool twoSteps = false,
     super.key,
-  })  : _styleSmall = styleSmall,
+  })  : _twoSteps = twoSteps,
+        _styleSmall = styleSmall,
         _enabled = enabled,
         _onPressed = onPressed,
         _icon = icon,
@@ -36,14 +40,18 @@ class _LGButtonState extends State<LGButton> {
       height: 55,
       child: FilledButton(
         onPressed: () async {
-          if (widget._enabled && !_loading) {
-            setState(() {
-              _loading = true;
-            });
-            await widget._onPressed();
-            setState(() {
-              _loading = false;
-            });
+          if (widget._twoSteps) {
+            _showConfirmationDialog(context);
+          } else {
+            if (widget._enabled && !_loading) {
+              setState(() {
+                _loading = true;
+              });
+              await widget._onPressed();
+              setState(() {
+                _loading = false;
+              });
+            }
           }
         },
         style: FilledButton.styleFrom(
@@ -83,4 +91,31 @@ class _LGButtonState extends State<LGButton> {
       ),
     );
   }
+
+  Future<void> _showConfirmationDialog(BuildContext context) async {
+    if (context.mounted) {
+      await showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return ConfirmationDialog(
+            onClick: (res ) async {
+              if (res) {
+                if (widget._enabled && !_loading) {
+                  setState(() {
+                    _loading = true;
+                  });
+                  await widget._onPressed();
+                  setState(() {
+                    _loading = false;
+                  });
+                }
+              }
+            },
+            prompt: "Are you sure you want to perform '${widget._label}'?",
+          );
+        },
+      );
+    }
+  }
+
 }
