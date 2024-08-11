@@ -17,7 +17,7 @@ class KmlUtils {
 
   static String orbitAround(
     LatLng latLng, {
-    double zoom = 19,
+    double zoom = 17,
   }) {
     int heading = 0;
     String tags = "";

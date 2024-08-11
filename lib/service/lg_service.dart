@@ -157,18 +157,24 @@ class LGService {
         "chmod 777 /var/www/html/kml/slave_$_rightScreen.kml; echo '${KmlUtils.emptyBalloon()}' > /var/www/html/kml/slave_$_rightScreen.kml");
   }
 
-  Future<void> _upload(String path) async {
-    String? result = await _client.connectSFTP();
-    if (result == 'sftp_connected') {
-      await _client.sftpUpload(
-        path: path,
-        toPath: '/var/www/html',
-        callback: (progress) {
-          log('Sent $progress');
-        },
-      );
+  Future<void> _upload(String path, {int counter = 0}) async {
+    if (counter < 3) {
+      try {
+        String? result = await _client.connectSFTP();
+        if (result == 'sftp_connected') {
+          await _client.sftpUpload(
+            path: path,
+            toPath: '/var/www/html',
+            callback: (progress) {
+              log('Sent $progress');
+            },
+          );
+        }
+        _client.disconnectSFTP();
+      } on Exception catch (_) {
+        await _upload(path, counter: counter++);
+      }
     }
-    _client.disconnectSFTP();
   }
 
   Future<void> sendKml(

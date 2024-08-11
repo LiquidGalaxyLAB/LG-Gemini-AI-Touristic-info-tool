@@ -40,9 +40,7 @@ class _FavouritesPageState extends State<FavouritesPage> {
   Future<void> _onMapOrbitButtonTap() async {
     await LGService().sendTour(
       "Orbit",
-      KmlUtils.orbitAround(
-        await _getLatLng(),
-      ),
+      KmlUtils.orbitAround(await _getLatLng()),
     );
     await LGService().startOrbit();
   }
