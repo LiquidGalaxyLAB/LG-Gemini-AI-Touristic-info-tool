@@ -79,6 +79,9 @@ class MapsCardState extends State<MapsCard> {
               },
               onCameraMove: (cameraPosition) {
                 LGService().flyTo(cameraPosition);
+                setState(() {
+                  _isOrbitPlaying = false;
+                });
               },
             ),
             Padding(
@@ -178,6 +181,12 @@ class MapsCardState extends State<MapsCard> {
         setState(() {
           _isOrbitPlaying = true;
           _orbitLoading = false;
+        });
+        await Future.delayed(const Duration(seconds: 45)).then((_) {
+          setState(() {
+            _isOrbitPlaying = false;
+          });
+          LGService().stopOrbit();
         });
       }
     }
