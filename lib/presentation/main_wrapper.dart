@@ -55,6 +55,7 @@ class _MainWrapperState extends State<MainWrapper> {
       final result = await LGService().connect();
       if (result) {
         firstTimeConnected = true;
+        shouldTryReconnecting = true;
         _showSnackbar("Connected Automatically");
 
         await LGService().showLogo();

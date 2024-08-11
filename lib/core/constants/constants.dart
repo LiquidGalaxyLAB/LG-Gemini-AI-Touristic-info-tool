@@ -19,6 +19,8 @@ const String geminiFlashLatest = "gemini-1.5-flash-latest";
 const String touristPlacesTable = "tourist_places";
 const String appDatabase = "app_database.db";
 
+bool shouldTryReconnecting = false;
+
 const Map<String, IconData> dashboardItems = {
   "Tourist Place": Icons.tour_rounded,
   "Budget Plan": Icons.attach_money_rounded,

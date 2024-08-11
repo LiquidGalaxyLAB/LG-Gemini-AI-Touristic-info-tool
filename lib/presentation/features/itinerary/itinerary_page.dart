@@ -81,7 +81,7 @@ class _ItineraryPageState extends State<ItineraryPage> {
             )
           : null,
       controller: _controller,
-      shouldShowMapTourButton: !_showRouteDetails,
+      // shouldShowMapTourButton: !_showRouteDetails,
       onMapTourButtonTap: _onTourButtonClick,
       onMapOrbitButtonTap: _onOrbitButtonClick,
       panelLeft: ItineraryInputCard(

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:touristic/core/constants/constants.dart';
 
 import '../../../../config/theme/app_theme.dart';
+import '../../../../core/constants/constants.dart';
 import '../../../../core/enums/preferences.dart';
 import '../../../../core/utils/preferences_utils.dart';
 import '../../../../service/lg_service.dart';
@@ -128,6 +128,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
 
     final result = await LGService().connect();
     if (result) {
+      shouldTryReconnecting = true;
       _isConnected();
       firstTimeConnected = true;
       _showSnackBar("Connection successful");

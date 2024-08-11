@@ -50,6 +50,8 @@ class MapsCardState extends State<MapsCard> {
   bool _orbitLoading = false;
   bool _tourLoading = false;
 
+  bool _isOrbitPlaying = false;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -91,31 +93,16 @@ class MapsCardState extends State<MapsCard> {
                         backgroundColor: WidgetStateProperty.all(AppTheme.color.shade700),
                       ),
                       highlightColor: AppTheme.color.shade500,
-                      onPressed: () async {
-                        if (!_orbitLoading) {
-                          setState(() {
-                            _orbitLoading = true;
-                          });
-                          await widget._onOrbitButtonTap!();
-                          setState(() {
-                            _orbitLoading = false;
-                          });
-                        } else {
-                          await LGService().stopOrbit();
-                          setState(() {
-                            _orbitLoading = false;
-                          });
-                        }
-                      },
+                      onPressed: handleOrbitPressed,
                       icon: !_orbitLoading
                           ? Icon(
-                              Icons.public_rounded,
-                              size: 20,
+                              _isOrbitPlaying ? Icons.stop_rounded : Icons.public_rounded,
+                              size: 24,
                               color: AppTheme.color.shade50,
                             )
                           : SizedBox(
-                              width: 18,
-                              height: 18,
+                              width: 20,
+                              height: 20,
                               child: CircularProgressIndicator(
                                 color: AppTheme.color.shade50,
                                 strokeCap: StrokeCap.round,
@@ -130,22 +117,7 @@ class MapsCardState extends State<MapsCard> {
                           backgroundColor: WidgetStateProperty.all(AppTheme.color.shade700),
                         ),
                         highlightColor: AppTheme.color.shade500,
-                        onPressed: () async {
-                          if (!_tourLoading) {
-                            setState(() {
-                              _tourLoading = true;
-                            });
-                            await widget._onTourButtonTap!();
-                            setState(() {
-                              _tourLoading = false;
-                            });
-                          } else {
-                            await LGService().stopOrbit();
-                            setState(() {
-                              _tourLoading = false;
-                            });
-                          }
-                        },
+                        onPressed: handleTourPressed,
                         icon: !_tourLoading
                             ? Icon(
                                 Icons.tour,
@@ -170,5 +142,44 @@ class MapsCardState extends State<MapsCard> {
         ),
       ),
     );
+  }
+
+  Future<void> handleTourPressed() async {
+    if (!_tourLoading) {
+      setState(() {
+        _tourLoading = true;
+      });
+      await widget._onTourButtonTap!();
+      setState(() {
+        _tourLoading = false;
+      });
+    } else {
+      await LGService().stopOrbit();
+      setState(() {
+        _tourLoading = false;
+      });
+    }
+  }
+
+  Future<void> handleOrbitPressed() async {
+    if (_isOrbitPlaying) {
+      await LGService().stopOrbit();
+      setState(() {
+        _isOrbitPlaying = false;
+      });
+    } else {
+      if (!_orbitLoading) {
+        setState(() {
+          _orbitLoading = true;
+        });
+        await widget._onOrbitButtonTap!();
+        await Future.delayed(const Duration(milliseconds: 450));
+        await widget._onOrbitButtonTap!();
+        setState(() {
+          _isOrbitPlaying = true;
+          _orbitLoading = false;
+        });
+      }
+    }
   }
 }

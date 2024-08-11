@@ -58,7 +58,11 @@ class LGService {
 
   Future<bool> isConnected() async {
     try {
-      return await _client.isConnected();
+      bool isConnected = await _client.isConnected();
+      if (!isConnected && shouldTryReconnecting) {
+        isConnected = await connect();
+      }
+      return isConnected;
     } catch (e) {
       return false;
     }
@@ -77,6 +81,7 @@ class LGService {
   disconnect() async {
     try {
       await _client.disconnect();
+      shouldTryReconnecting = false;
     } catch (e) {
       _onError('Error disconnecting');
     }

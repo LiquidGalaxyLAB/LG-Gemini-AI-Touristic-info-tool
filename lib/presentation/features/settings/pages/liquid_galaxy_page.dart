@@ -41,8 +41,7 @@ class _LiquidGalaxyPageState extends State<LiquidGalaxyPage> {
               connected: _connected,
               iconData: Icons.settings_remote_rounded,
               title: "Control Liquid Galaxy",
-              description:
-                  "Control Liquid Galaxy remotely by performing various actions.",
+              description: "Control Liquid Galaxy remotely by performing various actions.",
             ),
           ),
           Expanded(
