@@ -46,10 +46,11 @@ class _BudgetPageState extends State<BudgetPage> {
       await LGService().sendTour(
         "Orbit",
         KmlUtils.orbitAround(
-          latLng ?? LatLng(
-            _budgetPlan!.places[_selectedPlace].latitude,
-            _budgetPlan!.places[_selectedPlace].longitude,
-          ),
+          latLng ??
+              LatLng(
+                _budgetPlan!.places[_selectedPlace].latitude,
+                _budgetPlan!.places[_selectedPlace].longitude,
+              ),
         ),
       );
       await LGService().startOrbit();
@@ -84,25 +85,24 @@ class _BudgetPageState extends State<BudgetPage> {
         _budgetPlan = result;
         return MainResponseCard(
           budgetPlan: _budgetPlan!,
-          onTap: (value) {
+          onTap: (value) async {
             setState(() {
               _selectedDetails = value;
             });
+            if (_selectedDetails < 2) {
+              await _syncLocation();
+            }
           },
           onPlaceTap: (value) async {
             setState(() {
               _selectedPlace = value;
             });
-            latLng = await LocationService().getLatLngFromLocation(_budgetPlan!.places[value].location);
-            latLng ??= LatLng(_budgetPlan!.places[value].latitude, _budgetPlan!.places[value].longitude);
             await _syncLocation();
           },
           onRouteTap: (value) async {
             setState(() {
               _selectedRoute = value;
             });
-            latLng = await LocationService().getLatLngFromLocation(_budgetPlan!.travelRoute[value].from);
-            latLng ??= LatLng(_budgetPlan!.travelRoute[value].latitude, _budgetPlan!.travelRoute[value].longitude);
             await _syncLocation();
           },
           onExpenseTap: (value) {
@@ -150,9 +150,21 @@ class _BudgetPageState extends State<BudgetPage> {
     }
   }
 
+  Future<LatLng> _getLatLng() async {
+    LatLng? latLng;
+    if (_selectedDetails == 0) {
+      latLng = await LocationService().getLatLngFromLocation(_budgetPlan!.travelRoute[_selectedPlace].location);
+      latLng ??=
+          LatLng(_budgetPlan!.travelRoute[_selectedPlace].latitude, _budgetPlan!.travelRoute[_selectedPlace].longitude);
+    } else {
+      latLng = await LocationService().getLatLngFromLocation(_budgetPlan!.places[_selectedPlace].name);
+      latLng ??= LatLng(_budgetPlan!.places[_selectedPlace].latitude, _budgetPlan!.places[_selectedPlace].longitude);
+    }
+    return latLng;
+  }
+
   Future<void> _syncLocation() async {
-    latLng ??= await LocationService().getLatLngFromLocation(_budgetPlan!.startingPoint);
-    latLng ??= LatLng(_budgetPlan!.places[0].latitude, _budgetPlan!.places[0].longitude);
+    latLng = await _getLatLng();
     LGService().sendKml(KmlUtils.createPolyline(
       _budgetPlan!.places.map((p) => LatLng(p.latitude, p.longitude)).toList(),
     ));

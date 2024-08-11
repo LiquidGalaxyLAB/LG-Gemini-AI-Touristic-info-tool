@@ -186,6 +186,8 @@ class LGService {
   }
 
   Future<void> cleanKml() async {
+    await stopOrbit();
+    await startTour();
     String query = 'echo "exittour=true" > /tmp/query.txt && > /var/www/html/kmls.txt';
     for (var i = 2; i <= _slaves; i++) {
       query += " && echo '${KmlUtils.emptyKml()}' > /var/www/html/kml/slave_$i.kml";

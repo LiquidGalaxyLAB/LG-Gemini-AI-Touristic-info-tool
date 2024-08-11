@@ -39,30 +39,18 @@ class _ItineraryPageState extends State<ItineraryPage> {
   LatLng? latLng;
 
   Future<void> _onOrbitButtonClick() async {
-    if (!_showRouteDetails) {
-      await LGService().sendTour(
-        "Orbit",
-        KmlUtils.orbitAround(await _getLatLng()),
-      );
-      await LGService().startOrbit();
-    } else if (latLng != null) {
-      await LGService().sendTour(
-        "Orbit",
-        KmlUtils.orbitAround(latLng!),
-      );
-      await LGService().startOrbit();
-    }
+    await LGService().sendTour(
+      "Orbit",
+      KmlUtils.orbitAround(await _getLatLng()),
+    );
+    await LGService().startOrbit();
   }
 
   Future<void> _onTourButtonClick() async {
     if (_itinerary != null) {
-      List<LatLng> latLngList = await Future.wait(
-        _itinerary!.places.asMap().entries.map((e) => _getLatLng(idx: e.key)).toList(),
-      );
-
       await LGService().sendTour(
         "Tour",
-        KmlUtils.createTour(latLngList),
+        KmlUtils.createTour(await _getLatLngList()),
       );
       await LGService().startTour();
     }
@@ -103,25 +91,22 @@ class _ItineraryPageState extends State<ItineraryPage> {
             selectedPlace: _selectedPlace,
             selectedRoute: _selectedRoute,
             showRouteTable: _showRouteDetails,
-            onTap: (value) {
+            onTap: (value) async {
               setState(() {
                 _showRouteDetails = value;
               });
+              await _syncLocation();
             },
             onPlaceTap: (value) async {
               setState(() {
                 _selectedPlace = value;
               });
-              latLng = await LocationService().getLatLngFromLocation(_itinerary!.places[value].location);
-              latLng ??= LatLng(_itinerary!.places[value].latitude, _itinerary!.places[value].longitude);
               await _syncLocation();
             },
             onRouteTap: (value) async {
               setState(() {
                 _selectedRoute = value;
               });
-              latLng = await LocationService().getLatLngFromLocation(_itinerary!.travelRoute[value].location);
-              latLng ??= LatLng(_itinerary!.travelRoute[value].latitude, _itinerary!.travelRoute[value].longitude);
               await _syncLocation();
             },
           );
@@ -138,14 +123,39 @@ class _ItineraryPageState extends State<ItineraryPage> {
     );
   }
 
-  Future<LatLng> _getLatLng({int idx = 0}) async {
-    LatLng? latLng = await LocationService().getLatLngFromLocation(_itinerary!.places[idx].name);
-    latLng ??= LatLng(_itinerary!.places[idx].latitude, _itinerary!.places[idx].longitude);
+  Future<LatLng> _getLatLng() async {
+    LatLng? latLng;
+    if (_showRouteDetails) {
+      latLng = await LocationService().getLatLngFromLocation(_itinerary!.travelRoute[_selectedPlace].location);
+      latLng ??=
+          LatLng(_itinerary!.travelRoute[_selectedPlace].latitude, _itinerary!.travelRoute[_selectedPlace].longitude);
+    } else {
+      latLng = await LocationService().getLatLngFromLocation(_itinerary!.places[_selectedPlace].name);
+      latLng ??= LatLng(_itinerary!.places[_selectedPlace].latitude, _itinerary!.places[_selectedPlace].longitude);
+    }
     return latLng;
   }
 
+  Future<List<LatLng>> _getLatLngList() async {
+    List<LatLng> latLngList;
+    if (_showRouteDetails) {
+      latLngList = await Future.wait(_itinerary!.travelRoute.map((e) async {
+        LatLng? latLng = await LocationService().getLatLngFromLocation(e.location);
+        latLng ??= LatLng(e.latitude, e.longitude);
+        return latLng;
+      }).toList());
+    } else {
+      latLngList = await Future.wait(_itinerary!.places.map((e) async {
+        LatLng? latLng = await LocationService().getLatLngFromLocation(e.name);
+        latLng ??= LatLng(e.latitude, e.longitude);
+        return latLng;
+      }).toList());
+    }
+    return latLngList;
+  }
+
   Future<void> _syncLocation() async {
-    latLng ??= await _getLatLng(idx: _selectedPlace);
+    latLng = await _getLatLng();
     LGService().sendKml(KmlUtils.createPolyline(
       _itinerary!.places.map((p) => LatLng(p.latitude, p.longitude)).toList(),
     ));
