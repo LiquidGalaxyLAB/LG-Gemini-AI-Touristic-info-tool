@@ -112,7 +112,7 @@ class _ItineraryPageState extends State<ItineraryPage> {
               setState(() {
                 _selectedPlace = value;
               });
-              latLng ??= await LocationService().getLatLngFromLocation(_itinerary!.places[value].location);
+              latLng = await LocationService().getLatLngFromLocation(_itinerary!.places[value].location);
               latLng ??= LatLng(_itinerary!.places[value].latitude, _itinerary!.places[value].longitude);
               await _syncLocation();
             },
@@ -120,7 +120,7 @@ class _ItineraryPageState extends State<ItineraryPage> {
               setState(() {
                 _selectedRoute = value;
               });
-              latLng ??= await LocationService().getLatLngFromLocation(_itinerary!.travelRoute[value].location);
+              latLng = await LocationService().getLatLngFromLocation(_itinerary!.travelRoute[value].location);
               latLng ??= LatLng(_itinerary!.travelRoute[value].latitude, _itinerary!.travelRoute[value].longitude);
               await _syncLocation();
             },

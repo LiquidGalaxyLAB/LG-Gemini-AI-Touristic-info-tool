@@ -36,10 +36,7 @@ class _RecommendationPageState extends State<RecommendationPage> {
     await LGService().sendTour(
       "Orbit",
       KmlUtils.orbitAround(
-        LatLng(
-          _recommendations[_selected].latitude,
-          _recommendations[_selected].longitude,
-        ),
+        await _getLatLng()
       ),
     );
     await LGService().startOrbit();
@@ -106,12 +103,14 @@ class _RecommendationPageState extends State<RecommendationPage> {
     );
   }
 
+  Future<LatLng> _getLatLng() async {
+    LatLng? latLng = await LocationService().getLatLngFromLocation(_recommendations[_selected].location);
+    latLng ??= LatLng(_recommendations[_selected].latitude, _recommendations[_selected].longitude);
+    return latLng;
+  }
+
   Future<void> _syncLocation() async {
-    LatLng latLng = await LocationService().getLatLngFromLocation(_recommendations[_selected].location) ??
-        LatLng(
-          _recommendations[_selected].latitude,
-          _recommendations[_selected].longitude,
-        );
+    LatLng latLng = await _getLatLng();
     await LGService().sendKml(KmlUtils.createCircle(latLng));
     await LGService().showBalloon(_recommendations[_selected].generateBalloon());
     await moveToPlace(_controller, latLng, tilt: tilt);

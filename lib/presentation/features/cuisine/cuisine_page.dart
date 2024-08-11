@@ -36,10 +36,7 @@ class _CuisinePageState extends State<CuisinePage> {
     await LGService().sendTour(
       "Orbit",
       KmlUtils.orbitAround(
-        LatLng(
-          _cuisines[_selected].latitude,
-          _cuisines[_selected].longitude,
-        ),
+        await _getLatLng(),
       ),
     );
     await LGService().startOrbit();
@@ -105,12 +102,14 @@ class _CuisinePageState extends State<CuisinePage> {
     );
   }
 
+  Future<LatLng> _getLatLng() async {
+    LatLng? latLng = await LocationService().getLatLngFromLocation(_cuisines[_selected].name);
+    latLng ??= LatLng(_cuisines[_selected].latitude, _cuisines[_selected].longitude);
+    return latLng;
+  }
+
   Future<void> _syncLocation() async {
-    LatLng latLng = await LocationService().getLatLngFromLocation(_cuisines[_selected].location) ??
-        LatLng(
-          _cuisines[_selected].latitude,
-          _cuisines[_selected].longitude,
-        );
+    final latLng = await _getLatLng();
     await LGService().sendKml(KmlUtils.createCircle(latLng));
     await LGService().showBalloon(_cuisines[_selected].generateBalloon());
     await moveToPlace(_controller, latLng, tilt: tilt);

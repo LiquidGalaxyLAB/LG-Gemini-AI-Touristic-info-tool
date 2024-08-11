@@ -41,10 +41,7 @@ class _FavouritesPageState extends State<FavouritesPage> {
     await LGService().sendTour(
       "Orbit",
       KmlUtils.orbitAround(
-        LatLng(
-          _touristPlaces[_selected].latitude,
-          _touristPlaces[_selected].longitude,
-        ),
+        await _getLatLng(),
       ),
     );
     await LGService().startOrbit();

@@ -46,7 +46,7 @@ class _BudgetPageState extends State<BudgetPage> {
       await LGService().sendTour(
         "Orbit",
         KmlUtils.orbitAround(
-          LatLng(
+          latLng ?? LatLng(
             _budgetPlan!.places[_selectedPlace].latitude,
             _budgetPlan!.places[_selectedPlace].longitude,
           ),
@@ -93,7 +93,7 @@ class _BudgetPageState extends State<BudgetPage> {
             setState(() {
               _selectedPlace = value;
             });
-            latLng ??= await LocationService().getLatLngFromLocation(_budgetPlan!.places[value].location);
+            latLng = await LocationService().getLatLngFromLocation(_budgetPlan!.places[value].location);
             latLng ??= LatLng(_budgetPlan!.places[value].latitude, _budgetPlan!.places[value].longitude);
             await _syncLocation();
           },
@@ -101,7 +101,7 @@ class _BudgetPageState extends State<BudgetPage> {
             setState(() {
               _selectedRoute = value;
             });
-            latLng ??= await LocationService().getLatLngFromLocation(_budgetPlan!.travelRoute[value].from);
+            latLng = await LocationService().getLatLngFromLocation(_budgetPlan!.travelRoute[value].from);
             latLng ??= LatLng(_budgetPlan!.travelRoute[value].latitude, _budgetPlan!.travelRoute[value].longitude);
             await _syncLocation();
           },
@@ -151,7 +151,7 @@ class _BudgetPageState extends State<BudgetPage> {
   }
 
   Future<void> _syncLocation() async {
-    latLng ??= await LocationService().getLatLngFromLocation(_budgetPlan!.name);
+    latLng ??= await LocationService().getLatLngFromLocation(_budgetPlan!.startingPoint);
     latLng ??= LatLng(_budgetPlan!.places[0].latitude, _budgetPlan!.places[0].longitude);
     LGService().sendKml(KmlUtils.createPolyline(
       _budgetPlan!.places.map((p) => LatLng(p.latitude, p.longitude)).toList(),

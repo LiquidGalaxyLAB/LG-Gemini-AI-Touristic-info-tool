@@ -36,10 +36,7 @@ class _ActivityPageState extends State<ActivityPage> {
     await LGService().sendTour(
       "Orbit",
       KmlUtils.orbitAround(
-        LatLng(
-          _activities[_selected].latitude,
-          _activities[_selected].longitude,
-        ),
+        await _getLatLng(),
       ),
     );
     await LGService().startOrbit();
@@ -105,13 +102,14 @@ class _ActivityPageState extends State<ActivityPage> {
     );
   }
 
-  Future<void> _syncLocation() async {
-    LatLng latLng = await LocationService().getLatLngFromLocation(_activities[_selected].location) ??
-        LatLng(
-          _activities[_selected].latitude,
-          _activities[_selected].longitude,
-        );
+  Future<LatLng> _getLatLng() async {
+    LatLng? latLng = await LocationService().getLatLngFromLocation(_activities[_selected].location);
+    latLng ??= LatLng(_activities[_selected].latitude, _activities[_selected].longitude);
+    return latLng;
+  }
 
+  Future<void> _syncLocation() async {
+    LatLng latLng = await _getLatLng();
     await LGService().sendKml(KmlUtils.createCircle(latLng));
     await LGService().showBalloon(_activities[_selected].generateBalloon());
     await moveToPlace(_controller, latLng, tilt: tilt);
