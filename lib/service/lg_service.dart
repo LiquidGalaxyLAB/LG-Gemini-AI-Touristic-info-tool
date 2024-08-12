@@ -171,8 +171,9 @@ class LGService {
           );
         }
         _client.disconnectSFTP();
-      } on Exception catch (_) {
+      } on Exception catch (e) {
         await _upload(path, counter: counter++);
+        log("$e");
       }
     }
   }
@@ -184,16 +185,19 @@ class LGService {
     if (!await isConnected()) {
       return;
     }
-    await cleanKml();
-    await showLogo();
-    final kmlFile = await FileService().createFile(file, kml);
-    await _upload(kmlFile.path);
-    await _execute('echo "http://lg1:81/$file" > /var/www/html/kmls.txt');
+    try {
+      await showLogo();
+      final kmlFile = await FileService().createFile(file, kml);
+      await _upload(kmlFile.path);
+      await _execute('echo "http://lg1:81/$file" > /var/www/html/kmls.txt');
+    } on Exception catch (e) {
+      log("$e");
+    }
   }
 
   Future<void> cleanKml() async {
     await stopOrbit();
-    await startTour();
+    await stopTour();
     String query = 'echo "exittour=true" > /tmp/query.txt && > /var/www/html/kmls.txt';
     for (var i = 2; i <= _slaves; i++) {
       query += " && echo '${KmlUtils.emptyKml()}' > /var/www/html/kml/slave_$i.kml";

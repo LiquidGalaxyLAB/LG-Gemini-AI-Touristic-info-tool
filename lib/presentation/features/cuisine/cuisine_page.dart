@@ -110,8 +110,8 @@ class _CuisinePageState extends State<CuisinePage> {
 
   Future<void> _syncLocation() async {
     final latLng = await _getLatLng();
-    await LGService().sendKml(KmlUtils.createCircle(latLng));
     await LGService().showBalloon(_cuisines[_selected].generateBalloon());
     await moveToPlace(_controller, latLng, tilt: tilt);
+    await LGService().sendKml(KmlUtils.createCircle(latLng));
   }
 }

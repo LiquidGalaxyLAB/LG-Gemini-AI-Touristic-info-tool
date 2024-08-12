@@ -165,10 +165,10 @@ class _BudgetPageState extends State<BudgetPage> {
 
   Future<void> _syncLocation() async {
     latLng = await _getLatLng();
-    LGService().sendKml(KmlUtils.createPolyline(
-      _budgetPlan!.places.map((p) => LatLng(p.latitude, p.longitude)).toList(),
-    ));
     await LGService().showBalloon(_budgetPlan!.generateBalloon());
     await moveToPlace(_controller, latLng!, tilt: tilt);
+    await LGService().sendKml(KmlUtils.createPolyline(
+      _budgetPlan!.places.map((p) => LatLng(p.latitude, p.longitude)).toList(),
+    ));
   }
 }

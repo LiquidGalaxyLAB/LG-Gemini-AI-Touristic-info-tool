@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -156,8 +157,9 @@ class _ItineraryPageState extends State<ItineraryPage> {
 
   Future<void> _syncLocation() async {
     latLng = await _getLatLng();
-    LGService().sendKml(KmlUtils.createPolyline(await _getLatLngList()));
     await LGService().showBalloon(_itinerary!.generateBalloon());
     await moveToPlace(_controller, latLng!, tilt: tilt);
+    log(_itinerary!.generateBalloon());
+    await LGService().sendKml(KmlUtils.createPolyline(await _getLatLngList()));
   }
 }

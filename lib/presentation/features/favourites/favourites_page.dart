@@ -122,8 +122,8 @@ class _FavouritesPageState extends State<FavouritesPage> {
 
   Future<void> _syncLocation() async {
     final latLng = await _getLatLng();
-    await LGService().sendKml(KmlUtils.createCircle(latLng));
     await LGService().showBalloon(_touristPlaces[_selected].generateBalloon());
     await moveToPlace(_controller, latLng, tilt: tilt);
+    await LGService().sendKml(KmlUtils.createCircle(latLng));
   }
 }

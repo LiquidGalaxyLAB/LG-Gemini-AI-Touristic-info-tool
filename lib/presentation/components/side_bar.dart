@@ -64,13 +64,15 @@ class _SideBarState extends State<SideBar> {
         iconData: list[i].value,
         selected: i == _selected.index,
         expanded: _expanded,
-        onTap: () {
+        onTap: () async {
           if (i != _selected.index) {
             Navigator.pushReplacementNamed(
               widget._navigatorKey.currentContext!,
               AppRoutes.routeMap[i]!,
             );
-            LGService().cleanBalloon();
+            await LGService().cleanBalloon();
+            await LGService().cleanKml();
+            await LGService().showLogo();
             setState(() {
               _selected = AppFeature.values[i];
             });
