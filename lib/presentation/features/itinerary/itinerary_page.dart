@@ -156,9 +156,7 @@ class _ItineraryPageState extends State<ItineraryPage> {
 
   Future<void> _syncLocation() async {
     latLng = await _getLatLng();
-    LGService().sendKml(KmlUtils.createPolyline(
-      _itinerary!.places.map((p) => LatLng(p.latitude, p.longitude)).toList(),
-    ));
+    LGService().sendKml(KmlUtils.createPolyline(await _getLatLngList()));
     await LGService().showBalloon(_itinerary!.generateBalloon());
     await moveToPlace(_controller, latLng!, tilt: tilt);
   }

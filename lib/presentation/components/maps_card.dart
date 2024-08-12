@@ -100,12 +100,12 @@ class MapsCardState extends State<MapsCard> {
                       icon: !_orbitLoading
                           ? Icon(
                               _isOrbitPlaying ? Icons.stop_rounded : Icons.public_rounded,
-                              size: 24,
+                              size: 26,
                               color: AppTheme.color.shade50,
                             )
                           : SizedBox(
-                              width: 20,
-                              height: 20,
+                              width: 22,
+                              height: 22,
                               child: CircularProgressIndicator(
                                 color: AppTheme.color.shade50,
                                 strokeCap: StrokeCap.round,
@@ -165,6 +165,11 @@ class MapsCardState extends State<MapsCard> {
   }
 
   Future<void> handleOrbitPressed() async {
+    if (!await LGService().isConnected()) {
+      _showSnackBar("Not connected to Liquid Galaxy");
+      return;
+    }
+
     if (_isOrbitPlaying) {
       await LGService().stopOrbit();
       setState(() {
@@ -189,6 +194,25 @@ class MapsCardState extends State<MapsCard> {
           LGService().stopOrbit();
         });
       }
+    }
+  }
+
+  void _showSnackBar(String msg) {
+    final snackBar = SnackBar(
+      content: Text(
+        msg,
+        style: TextStyle(
+          color: AppTheme.gray.shade300,
+          fontSize: 16,
+          fontWeight: FontWeight.w400,
+        ),
+      ),
+      duration: const Duration(seconds: 3),
+      backgroundColor: AppTheme.gray.shade800,
+    );
+
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
   }
 }
