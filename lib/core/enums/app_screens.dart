@@ -1,11 +1,11 @@
 enum AppScreens {
-  chat("/"),
-  place("/tourist_place"),
+  place("/"),
   budget("/budget_plan"),
   activity("/activity"),
   cuisine("/cuisine"),
   itinerary("/itinerary"),
   favourites("/favourites"),
+  chat("/chat"),
   settings("/settings"),
   about("/about");
 

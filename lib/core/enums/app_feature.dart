@@ -1,5 +1,4 @@
 enum AppFeature {
-  chat,
   touristPlace,
   budgetPlan,
   activities,
@@ -7,6 +6,7 @@ enum AppFeature {
   localCuisine,
   itinerary,
   favourites,
+  chat,
   settings,
   about
 }

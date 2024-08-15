@@ -23,7 +23,6 @@ import '../../presentation/features/tourist_place/tourist_place_page.dart';
 import '../theme/app_theme.dart';
 
 class AppRoutes {
-  static const String chat = "/chat";
   static const String place = "/";
   static const String budget = "/budget";
   static const String activity = "/activity";
@@ -31,6 +30,7 @@ class AppRoutes {
   static const String cuisine = "/cuisine";
   static const String itinerary = "/itinerary";
   static const String favourites = "/favourites";
+  static const String chat = "/chat";
   static const String settings = "/settings";
   static const String about = "/about";
 

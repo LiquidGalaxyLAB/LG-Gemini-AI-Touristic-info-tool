@@ -20,7 +20,7 @@ class SideBar extends StatefulWidget {
 
 class _SideBarState extends State<SideBar> {
   bool _expanded = true;
-  AppFeature _selected = AppFeature.chat;
+  AppFeature _selected = AppFeature.touristPlace;
   final items = dashboardItems.entries.toList();
 
   @override
@@ -70,12 +70,10 @@ class _SideBarState extends State<SideBar> {
               widget._navigatorKey.currentContext!,
               AppRoutes.routeMap[i]!,
             );
-            await LGService().cleanBalloon();
-            await LGService().cleanKml();
-            await LGService().showLogo();
             setState(() {
               _selected = AppFeature.values[i];
             });
+            await LGService().cleanBalloon();
           }
         },
       ));
