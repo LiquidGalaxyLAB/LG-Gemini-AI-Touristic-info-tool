@@ -145,11 +145,20 @@ class LGService {
   }
 
   Future<void> showBalloon(String kml) async {
-    await cleanBalloon();
-    await _execute(
-        "chmod 777 /var/www/html/kml/slave_$_rightScreen.kml; echo '' > /var/www/html/kml/slave_$_rightScreen.kml");
-    await _execute(
-        "chmod 777 /var/www/html/kml/slave_$_rightScreen.kml; echo '$kml' > /var/www/html/kml/slave_$_rightScreen.kml");
+    if (!await isConnected()) {
+      return;
+    }
+    try {
+      await cleanBalloon();
+      await _execute(
+          "chmod 777 /var/www/html/kml/slave_$_rightScreen.kml; echo '' > /var/www/html/kml/slave_$_rightScreen.kml");
+      final file = DateTime.now().millisecondsSinceEpoch.toString();
+      final kmlFile = await FileService().createFile(file, kml);
+      await _upload(kmlFile.path);
+      await _execute('cat /var/www/html/$file > /var/www/html/kml/slave_$_rightScreen.kml');
+    } on Exception catch (e) {
+      log("$e");
+    }
   }
 
   Future<void> cleanBalloon() async {
@@ -180,12 +189,13 @@ class LGService {
 
   Future<void> sendKml(
     String kml, {
-    String file = "touristicIA",
+    String? file,
   }) async {
     if (!await isConnected()) {
       return;
     }
     try {
+      file = file ?? DateTime.now().millisecondsSinceEpoch.toString();
       await showLogo();
       final kmlFile = await FileService().createFile(file, kml);
       await _upload(kmlFile.path);
@@ -203,6 +213,7 @@ class LGService {
       query += " && echo '${KmlUtils.emptyKml()}' > /var/www/html/kml/slave_$i.kml";
     }
     await _execute(query);
+    await showLogo();
   }
 
   Future<void> setRefresh() async {
