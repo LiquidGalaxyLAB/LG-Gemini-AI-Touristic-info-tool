@@ -73,7 +73,7 @@ class _SideBarState extends State<SideBar> {
             setState(() {
               _selected = AppFeature.values[i];
             });
-            await LGService().cleanBalloon();
+            await LGService().cleanKml();
           }
         },
       ));

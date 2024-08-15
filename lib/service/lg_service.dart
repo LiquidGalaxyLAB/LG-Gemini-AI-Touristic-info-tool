@@ -213,6 +213,7 @@ class LGService {
       query += " && echo '${KmlUtils.emptyKml()}' > /var/www/html/kml/slave_$i.kml";
     }
     await _execute(query);
+    await cleanBalloon();
     await showLogo();
   }
 
